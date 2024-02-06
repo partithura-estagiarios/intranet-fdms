@@ -1,3 +1,3 @@
 <template>
-  <RouterView />
+  <Rh_Divulga />
 </template>
