@@ -1,5 +1,6 @@
 import action from "./action";
 import text from "./text";
+import register from "./register";
 export default {
   action,
   caderno: {
@@ -27,4 +28,5 @@ export default {
     create: "Add one or more tags",
   },
   text,
+  register,
 };

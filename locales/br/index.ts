@@ -4,7 +4,7 @@ import tag from "./tag";
 import login from "./login";
 import action from "./action";
 import text from "./text";
-
+import register from "./register";
 export default {
   about: "Sobre",
   action,
@@ -15,4 +15,5 @@ export default {
   tag,
   login,
   text,
+  register,
 };
