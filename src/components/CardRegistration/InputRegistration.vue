@@ -13,7 +13,7 @@
           color="grey"
           class="cursor-pointer"
           @click="isPwdvisible = !isPwdvisible"
-          :name="isPwdvisible ? 'visibility_off' : 'visibility'"
+          :name="pwdIconName"
         />
       </template>
     </q-input>
@@ -26,14 +26,21 @@ const isPwdvisible = ref(true);
 const props = defineProps({
   objectInput: {
     type: Array,
-    default: [],
+    required: true,
   },
 });
-function verifyText(item: String) {
-  if (item.includes("ss")) {
-    return true;
-  }
-  return false;
-}
+
 const inputValues = ref(Array(props.objectInput.length).fill(""));
+
+const pwdIconName = computed(() => {
+  return isPwdvisible.value ? "visibility_off" : "visibility";
+});
+
+function verifyText(item: String) {
+  return item.includes("ss");
+}
+
+onMounted(() => {
+  console.log("Input Values:", props.objectInput);
+});
 </script>

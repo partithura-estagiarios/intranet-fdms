@@ -1,1 +1,1 @@
-export const data = ["username", "email", "password", "confirmPassoword"];
+export const data = ["username", "email", "password", "confirmPassword"];
