@@ -1,6 +1,7 @@
 import action from "./action";
 import text from "./text";
 import cardDocSig from "./cardDocSig";
+import form from "./form";
 export default {
   action,
   caderno: {
@@ -29,4 +30,5 @@ export default {
   },
   text,
   cardDocSig,
+  form,
 };

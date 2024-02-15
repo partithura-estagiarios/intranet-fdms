@@ -3,4 +3,5 @@ export default {
   title: "Title",
   settings: "Settings",
   integration: "Integration",
+  addRamal: "Add Ramal",
 };
