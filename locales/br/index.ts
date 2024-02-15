@@ -5,6 +5,7 @@ import login from "./login";
 import action from "./action";
 import text from "./text";
 import cardDocSig from "./cardDocSig";
+import register from "./register";
 
 export default {
   about: "Sobre",
@@ -17,4 +18,5 @@ export default {
   login,
   text,
   cardDocSig,
+  register,
 };

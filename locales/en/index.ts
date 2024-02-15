@@ -1,6 +1,8 @@
 import action from "./action";
 import text from "./text";
 import cardDocSig from "./cardDocSig";
+import register from "./register";
+
 export default {
   action,
   caderno: {
@@ -29,4 +31,5 @@ export default {
   },
   text,
   cardDocSig,
+  register,
 };
