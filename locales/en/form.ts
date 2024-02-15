@@ -1,6 +1,6 @@
 export default {
   nameOfRamal: "Nome do Ramal",
-  numberOfRamal: "Nome do Ramal",
-  userOfRamal: "Nome do Ramal",
+  numberOfRamal: "Número do Ramal",
+  userOfRamal: "Usuário do Ramal",
   confirm: "Confirm",
 };
