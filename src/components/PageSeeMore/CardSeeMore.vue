@@ -1,7 +1,7 @@
 <template>
-  <div class="fixed-center">
-    <div class="row q-pa-md justify-end">
-      <q-btn round color="indigo-8" icon="arrow_back" />
+  <div class="row pa-100 pt-44 overflow-hidden">
+    <div class="pa-5 pl-295">
+      <q-btn round color="indigo-8" icon="arrow_back" to="/rhDivulga" />
     </div>
     <q-card>
       <q-card-section class="bg-indigo-8 text-h6 row text-white">
@@ -36,4 +36,11 @@
 <script setup lang="ts">
 import text from "../../../locales/br/text";
 import { texts } from "./lib";
+
+onMounted(() => {
+  document.body.style.overflow = "hidden";
+});
+onUnmounted(() => {
+  document.body.style.overflow = "visible";
+});
 </script>
