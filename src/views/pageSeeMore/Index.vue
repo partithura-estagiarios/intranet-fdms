@@ -1,0 +1,3 @@
+<template>
+  <PSeeMore />
+</template>

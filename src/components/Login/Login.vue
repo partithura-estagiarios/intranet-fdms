@@ -31,6 +31,7 @@
             :label="$t('login.submitButton')"
             nelevated
             rounded
+            to="/home"
           />
         </q-card-actions>
       </q-card>

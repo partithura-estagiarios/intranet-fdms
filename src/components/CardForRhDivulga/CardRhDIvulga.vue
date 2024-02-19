@@ -15,7 +15,7 @@
       </q-card-actions>
       <q-card-actions vertical>
         <div class="text-lowercase q-pa-md absolute-bottom-right">
-          <q-btn color="indigo-8" no-caps>
+          <q-btn color="indigo-8" to="/pageSeeMore" no-caps>
             <div>{{ $t(text.seeMore) }}</div>
           </q-btn>
         </div>

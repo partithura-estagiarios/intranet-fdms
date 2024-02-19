@@ -1,4 +1,4 @@
-export const list = [
+export const institucional = [
   { name: "1", label: "integratedPolicy" },
   { name: "2", label: "missionVisionBusiness" },
   { name: "3", label: "principles" },
@@ -9,4 +9,16 @@ export const list = [
   { name: "8", label: "socialPolicyforDiversity" },
   { name: "9", label: "environmentalObjectsandGoals" },
   { name: "10", label: "environmentalCommitments" },
+];
+export const example = [
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
+  { name: "", label: "" },
 ];

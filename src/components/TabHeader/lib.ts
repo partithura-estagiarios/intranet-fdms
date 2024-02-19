@@ -1,10 +1,10 @@
 export const tabItems = [
-  { name: "inicio", label: "Inicio" },
-  { name: "rooms", label: "Agendar Sala" },
-  { name: "certifications", label: "Certificações" },
-  { name: "sig", label: "Documentação SIG" },
-  { name: "ramais", label: "Ramais" },
-  { name: "rh", label: "RH Divulga" },
-  { name: "cardup", label: "Cardápio" },
+  { name: "home", label: "home" },
+  { name: "rooms", label: "bookRoom" },
+  { name: "certifications", label: "certifications" },
+  { name: "docSig", label: "gisDocumentation" },
+  { name: "ramais", label: "extensions" },
+  { name: "rhDivulga", label: "hRdiscloses" },
+  { name: "cardup", label: "menu" },
 ];
 export default tabItems;

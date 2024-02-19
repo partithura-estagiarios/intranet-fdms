@@ -6,7 +6,7 @@
           <q-avatar class="border row" size="6em">
             <q-icon
               :name="item.icon"
-              color="indigo-8"
+              color="indigo-7"
               size="50px"
               class="q-gutter-x-ls q-gutter-y-sm"
             />
@@ -36,7 +36,7 @@ import { items } from "./lib";
 
 <style scoped>
 .border {
-  border: 5px solid rgb(20, 20, 105); /* Set border color to purple and width to 2 pixels */
+  border: 5px solid rgb(34, 34, 199); /* Set border color to purple and width to 2 pixels */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add box-shadow with desired values */
 }
 </style>

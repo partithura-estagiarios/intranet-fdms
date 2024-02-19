@@ -7,6 +7,7 @@ import text from "./text";
 import cardDocSig from "./cardDocSig";
 import register from "./register";
 
+import tab from "./tab";
 export default {
   about: "Sobre",
   action,
@@ -19,4 +20,5 @@ export default {
   text,
   cardDocSig,
   register,
+  tab,
 };

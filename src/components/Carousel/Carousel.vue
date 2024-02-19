@@ -10,7 +10,7 @@
       height="auto"
     >
       <q-carousel-slide name="style" class="row">
-        <Card />
+        <CardRhDIvulga />
         <Pagination
           :totalPages="totalPages"
           :currentPage="slide"
