@@ -39,8 +39,4 @@ const pwdIconName = computed(() => {
 function verifyText(item: String) {
   return item.includes("ss");
 }
-
-onMounted(() => {
-  console.log("Input Values:", props.objectInput);
-});
 </script>
