@@ -7,4 +7,5 @@ export default {
   next: "Next",
   integration: "Integration",
   addRamal: "Add Ramal",
+  searchRamal: "Search Ramal",
 };

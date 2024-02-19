@@ -14,8 +14,8 @@
         <q-card-section>
           <q-input
             white
-            v-model.lazy="label.nameOfRamal"
-            :label="$t(`form.${labels[0]}`)"
+            v-model="label.nameOfRamal"
+            :label="$t(`formRamal.nameOfRamal`)"
           />
         </q-card-section>
 
@@ -25,14 +25,14 @@
               white
               class="no-padding"
               v-model="label.numberOfRamal"
-              :label="$t(`form.${labels[1]}`)"
+              :label="$t(`formRamal.numberOfRamal`)"
             />
           </div>
           <div class="pl-12 col-5">
             <q-input
               white
               v-model="label.userOfRamal"
-              :label="$t(`form.${labels[2]}`)"
+              :label="$t(`formRamal.userOfRamal`)"
             />
           </div>
         </q-card-section>
@@ -40,7 +40,7 @@
         <q-card-actions align="right" class="pt-12 pa-5 text-green-8">
           <q-btn
             flat
-            :label="$t('form.confirm')"
+            :label="$t('formRamal.confirm')"
             @click="emits('close', false)"
           />
         </q-card-actions>
@@ -50,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import { labels } from "./lib";
 const props = defineProps({
   open: {
     type: Boolean,

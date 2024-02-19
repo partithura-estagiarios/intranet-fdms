@@ -5,7 +5,8 @@ import login from "./login";
 import action from "./action";
 import text from "./text";
 import cardDocSig from "./cardDocSig";
-
+import columns from "./columns";
+import formRamal from "./formRamal";
 export default {
   about: "Sobre",
   action,
@@ -17,4 +18,6 @@ export default {
   login,
   text,
   cardDocSig,
+  columns,
+  formRamal,
 };

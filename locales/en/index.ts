@@ -1,6 +1,8 @@
 import action from "./action";
 import text from "./text";
 import cardDocSig from "./cardDocSig";
+import columns from "./columns";
+import formRamal from "./formRamal";
 export default {
   action,
   caderno: {
@@ -29,4 +31,6 @@ export default {
   },
   text,
   cardDocSig,
+  columns,
+  formRamal,
 };

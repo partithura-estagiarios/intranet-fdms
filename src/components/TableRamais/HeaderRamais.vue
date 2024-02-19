@@ -3,11 +3,11 @@
     <div>
       <q-btn
         class="bg-green text-white ml-12"
-        label="Adicionar Ramal"
+        :label="$t('text.addRamal')"
         @click="openDialog()"
       />
     </div>
-    <q-input label="Buscar Ramal" v-model="search" color="indigo-8 ">
+    <q-input :label="$t('text.searchRamal')" v-model="search" color="indigo-8 ">
       <template v-slot:append>
         <q-icon
           name="search"

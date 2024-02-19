@@ -7,4 +7,5 @@ export default {
   next: "Próximo",
   integration: "Integração",
   addRamal: "Adicionar Ramal",
+  searchRamal: "Buscar Ramal",
 };

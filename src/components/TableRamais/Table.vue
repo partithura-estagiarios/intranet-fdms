@@ -11,7 +11,7 @@
     >
       <template v-slot:header-cell="props">
         <q-th :props="props" class="text-indigo">
-          {{ props.col.label }}
+          {{ $t(`columns.${props.col.name}`) }}
         </q-th>
       </template>
       <template v-slot:body-cell-icon="props">
@@ -23,7 +23,7 @@
       </template>
       <template v-slot:body-cell="props">
         <q-td :props="props" class="text-grey">
-          {{ props.value }}
+          {{ $t(`columns.${props.value}`, props.value) }}
         </q-td>
       </template>
     </q-table>
@@ -38,8 +38,9 @@
 </template>
 
 <script setup lang="ts">
-const search = ref();
 import { ramais, columns } from "./lib";
+
+const search = ref();
 </script>
 
 <style scoped>
