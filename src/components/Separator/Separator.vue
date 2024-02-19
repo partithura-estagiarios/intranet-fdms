@@ -1,6 +1,6 @@
 <template>
   <div class="line relative-position flex justify-center">
-    <div class="text bg-green relative-position" :style="{ width: large }">
+    <div class="text bg-green relative-position" :class="props.large">
       <h4 class="text-white text-bold gt-sm inline">{{ texto }}</h4>
     </div>
   </div>
