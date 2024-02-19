@@ -6,7 +6,7 @@
         class="overflow-hidden row no-wrap justify-center"
         v-for="(item, index) in imgs"
       >
-        <Card
+        <CardCertification
           v-if="index > 0"
           class="col-3 mt-12 card-left relative-position"
           offset="2"
@@ -15,26 +15,26 @@
           width="500px"
           height="1000px"
         />
-        <Button
+        <ButtonForCertification
           v-if="index > 0"
           direction="prev"
           icon="arrow_back"
           @navigation="(nav) => navSlides(nav)"
         />
-        <Card
+        <CardCertification
           :imgs-ex="item.img"
           :title="item.title"
           width="1200px"
           height="1000px"
         />
-        <Button
+        <ButtonForCertification
           v-if="index < imgs.length - 1"
           direction="next"
           icon="arrow_back"
           class="flip-horizontal"
           @navigation="(nav) => navSlides(nav)"
         />
-        <Card
+        <CardCertification
           v-if="index < imgs.length - 1"
           class="col-3 mt-12 card-right relative-position"
           offset="1"
