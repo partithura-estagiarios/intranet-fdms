@@ -11,18 +11,19 @@
     </q-item>
     <q-space />
     <q-tabs v-model="tab" class="font-tabs bg-transparent text-white q-pa-md">
-      <q-tab
+      <q-route-tab
         no-caps
         v-for="item in tabItems"
         :key="item.name"
         :name="item.name"
-        :label="item.label"
+        :label="$t('tab.' + item.label)"
         class="text-bold"
         :class="{ 'text-indigo-8 bg-white rounded-borders': tab === item.name }"
+        :to="'/' + item.name"
       />
     </q-tabs>
-
     <q-space />
+
     <q-btn size="xl" flat icon="settings" round class="setting_ico q-pa-md" />
   </q-tabs>
 </template>
