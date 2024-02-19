@@ -1,6 +1,6 @@
 <template>
   <BarUp v-if="showTabHeader" />
-
+  <BackgroundIntranet v-if="showTabHeader" />
   <RouterView />
 </template>
 <script setup lang="ts">
