@@ -1,6 +1,7 @@
 import action from "./action";
 import text from "./text";
 import cardDocSig from "./cardDocSig";
+import register from "./register";
 import tab from "./tab";
 
 export default {
@@ -31,5 +32,6 @@ export default {
   },
   text,
   cardDocSig,
+  register,
   tab,
 };
