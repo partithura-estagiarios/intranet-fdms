@@ -6,4 +6,5 @@ export default {
   previous: "Previous",
   next: "Next",
   integration: "Integration",
+  addRamal: "Add Ramal",
 };
