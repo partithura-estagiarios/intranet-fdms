@@ -7,6 +7,7 @@ import text from "./text";
 import cardDocSig from "./cardDocSig";
 import columns from "./columns";
 import formRamal from "./formRamal";
+import tab from "./tab";
 export default {
   about: "Sobre",
   action,
@@ -20,4 +21,5 @@ export default {
   cardDocSig,
   columns,
   formRamal,
+  tab,
 };
