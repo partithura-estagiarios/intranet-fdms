@@ -34,4 +34,6 @@ export default {
     ing: "Comprando",
     ed: "Comprado",
   },
+  login: "Realizar Login",
+  registerUser: "Registrar Usuário",
 };
