@@ -1,3 +1,3 @@
 <template>
-  <CarouselCertifications />
+  <CarouselCertifications class="pt-33" />
 </template>
