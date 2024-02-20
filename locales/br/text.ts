@@ -6,4 +6,6 @@ export default {
   previous: "Anterior",
   next: "Próximo",
   integration: "Integração",
+  addRamal: "Adicionar Ramal",
+  searchRamal: "Buscar Ramal",
 };

@@ -5,6 +5,8 @@ import login from "./login";
 import action from "./action";
 import text from "./text";
 import cardDocSig from "./cardDocSig";
+import columns from "./columns";
+import formRamal from "./formRamal";
 import register from "./register";
 
 import tab from "./tab";
@@ -19,6 +21,8 @@ export default {
   login,
   text,
   cardDocSig,
+  columns,
+  formRamal,
   register,
   tab,
 };
