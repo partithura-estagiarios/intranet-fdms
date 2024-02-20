@@ -1,7 +1,7 @@
 import { createClient, defaultPlugins } from "villus";
 import { getEnvironmentVariable } from "../helpers";
 
-const url = "http://localhost:4000";
+const url = getEnvironmentVariable("VITE_APP_ENDPOINT");
 
 export const villus = createClient({
   use: [...defaultPlugins()],
