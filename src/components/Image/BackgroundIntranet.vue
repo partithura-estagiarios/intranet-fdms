@@ -1,7 +1,7 @@
 <template>
   <q-img
     src="/INTRANET_BACKGROUND_ FUNDIMISA.png"
-    class="absolute opacity fixed-full"
+    class="absolute opacity position-fixed fixed-full"
   />
 </template>
 <style scoped>

@@ -5,7 +5,7 @@
       :icon="props.icon"
       class="bg-indigo-8"
       color="white"
-      rounded
+      round
       @click="navSlides()"
     />
   </div>

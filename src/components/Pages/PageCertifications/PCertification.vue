@@ -1,3 +1,8 @@
 <template>
-  <CarouselCertifications class="pt-33" />
+  <CarouselCertifications class="padding relative-position" />
 </template>
+<style scoped>
+.padding {
+  top: 10%;
+}
+</style>

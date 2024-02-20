@@ -7,12 +7,7 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <q-img
-        :src="props.imgsEx"
-        :height="props.height"
-        :width="props.width"
-        class="full-height"
-      />
+      <q-img :src="props.imgsEx" />
     </q-card-section>
   </q-card>
 </template>
@@ -23,14 +18,6 @@ const props = defineProps({
     default: "",
   },
   title: {
-    type: String,
-    default: "",
-  },
-  width: {
-    type: String,
-    default: "",
-  },
-  height: {
     type: String,
     default: "",
   },
