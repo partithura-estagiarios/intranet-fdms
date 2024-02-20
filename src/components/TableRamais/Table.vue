@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-xl box-shadow mt-10 mx-8">
+  <div class="q-pa-xl box-shadow mt-10 mx-8 relative-position bg-white">
     <HeaderRamais @ramal="(value) => (search = value)" />
     <q-table
       :rows="ramais"
