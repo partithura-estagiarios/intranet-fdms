@@ -3,15 +3,17 @@ import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import VueI18n from "@intlify/vite-plugin-vue-i18n";
 import AutoImport from "unplugin-auto-import/vite";
-import { resolve } from "node:path";
+import graphql from "@rollup/plugin-graphql";
+import path from "node:path";
 import Pages from "vite-plugin-pages";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import Unocss from "unocss/vite";
 
+// https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
-      "@": `${resolve(__dirname, "src")}/`,
+      "~": `${path.resolve(__dirname, "src")}/`,
     },
   },
   plugins: [
@@ -21,7 +23,7 @@ export default defineConfig({
     vue({
       template: { transformAssetUrls },
     }),
-
+    graphql(),
     quasar({
       sassVariables: "src/quasar-variables.sass",
     }),
@@ -32,6 +34,7 @@ export default defineConfig({
     }),
     AutoImport({
       imports: [
+        "quasar",
         "vue",
         "vue-router",
         "vue-i18n",
@@ -55,7 +58,7 @@ export default defineConfig({
     VueI18n({
       runtimeOnly: true,
       compositionOnly: true,
-      include: [resolve(__dirname, "./locales/**")],
+      include: [path.resolve(__dirname, "./locales/**")],
     }),
   ],
 });
