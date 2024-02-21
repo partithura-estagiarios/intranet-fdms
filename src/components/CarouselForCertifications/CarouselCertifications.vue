@@ -1,6 +1,6 @@
 <template>
-  <div class="div-carousel">
-    <q-carousel v-model="slide" class="full-height">
+  <div>
+    <q-carousel v-model="slide" class="full-height bg-transparent">
       <q-carousel-slide
         :name="index"
         class="overflow-hidden row no-wrap justify-center"
@@ -8,12 +8,9 @@
       >
         <CardCertification
           v-if="index > 0"
-          class="col-3 mt-12 card-left relative-position"
-          offset="2"
+          class="col-5 mt-12 card-left relative-position"
           :imgs-ex="imgs[index - 1].img"
           :title="imgs[index - 1].title"
-          width="500px"
-          height="1000px"
         />
         <ButtonForCertification
           v-if="index > 0"
@@ -24,8 +21,7 @@
         <CardCertification
           :imgs-ex="item.img"
           :title="item.title"
-          width="1200px"
-          height="1000px"
+          class="col-5 relative-position"
         />
         <ButtonForCertification
           v-if="index < imgs.length - 1"
@@ -36,12 +32,9 @@
         />
         <CardCertification
           v-if="index < imgs.length - 1"
-          class="col-3 mt-12 card-right relative-position"
-          offset="1"
+          class="col-5 mt-12 card-right relative-position"
           :imgs-ex="imgs[index + 1].img"
           :title="imgs[index + 1].title"
-          width="500px"
-          height="1000px"
         />
       </q-carousel-slide>
     </q-carousel>

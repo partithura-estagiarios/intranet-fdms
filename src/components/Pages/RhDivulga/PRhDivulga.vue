@@ -1,9 +1,9 @@
 <template>
-  <ImageRh class="padding" />
-  <Separator texto="DESTAQUES" large="300px" class="pt-8" />
+  <ImageRh img="RH_DIVULGA.png" class="padding" />
+  <Separator texto="DESTAQUES" large="px-20" class="pt-7 z-top" />
   <CarouselAtendimentoRh />
   <Carousel />
-  <Separator texto="OUTROS" large="300px" />
+  <Separator texto="OUTROS" large="px-20" />
   <Item class="pt-12" />
 </template>
 <style scoped>
