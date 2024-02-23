@@ -24,7 +24,7 @@
     </q-tabs>
     <q-space />
 
-    <q-btn size="xl" flat icon="settings" round class="setting_ico q-pa-md" />
+    <bt-drop-set />
   </q-tabs>
 </template>
 
