@@ -14,10 +14,13 @@
           <h5 class="text-subtitle1 text-bold">
             {{ $t("login.enterYourCredentials") }}
           </h5>
-
-          <q-form class="q-gutter-md">
-            <Input :objectInput="data" />
-          </q-form>
+          <div class="q-gutter-md">
+            <Input
+              :objectInput="loginForm"
+              @dataLogin="handleDataLogin"
+              :fieldAlone="submitLoginForm"
+            />
+          </div>
           <br />
           <a class="underline text-bold" color="blue">{{
             $t("login.iForgotMyPassword")
@@ -31,7 +34,7 @@
             :label="$t('login.submitButton')"
             nelevated
             rounded
-            to="/home"
+            @click="submitLoginForm"
           />
         </q-card-actions>
       </q-card>
@@ -40,7 +43,32 @@
 </template>
 
 <script setup lang="ts">
-import { data } from "./lib";
+import GetUser from "../../graphql/user/Login.gql";
+import { User } from "../../entities/login";
+import { router } from "../../modules";
+const { t } = useI18n();
+
+const loginForm: User = reactive({
+  labelInputName: "",
+  labelEmail: "",
+  labelInputPassword: "",
+});
+const handleDataLogin = (form: User) => {
+  Object.assign(loginForm, form);
+};
+
+const submitLoginForm = async () => {
+  const { auth } = await runQuery(GetUser, {
+    name: loginForm.labelInputName!,
+    password: loginForm.labelInputPassword,
+    email: loginForm.labelEmail,
+  });
+  if (auth) {
+    router.push("/home");
+    return positiveNotify(t("login.loginSuccessful"));
+  }
+  negativeNotify(t("login.enterYourCredentials"));
+};
 </script>
 
 <style scoped>
