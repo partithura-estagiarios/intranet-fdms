@@ -1,0 +1,6 @@
+query GetCertification {
+  getCertifications {
+    name
+    image
+  }
+}
