@@ -1,5 +1,5 @@
-import { createApp, watch } from "vue";
-import { Quasar } from "quasar";
+import { createApp } from "vue";
+import { Quasar, Notify } from "quasar";
 
 import { i18n, pinia, router, villus } from "./modules";
 import App from "./App.vue";
@@ -10,7 +10,9 @@ import "./style.css";
 import "uno.css";
 
 createApp(App)
-  .use(Quasar)
+  .use(Quasar, {
+    plugins: { Notify },
+  })
   .use(villus)
   .use(router)
   .use(pinia)

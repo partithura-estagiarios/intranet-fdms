@@ -9,4 +9,5 @@ export default {
   labelEmail: "Seu Email",
   iForgotMyPassword: "Esqueci minha senha",
   enterYourCredentials: "Digite suas credências",
+  loginSuccessful: "Login realizado com sucesso",
 };

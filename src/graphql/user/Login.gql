@@ -1,0 +1,8 @@
+query GetUser($name: String!, $password: String!, $email: String!) {
+  auth(name: $name, password: $password, email: $email) {
+    id
+    name
+    password
+    email
+  }
+}

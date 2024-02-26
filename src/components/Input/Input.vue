@@ -1,19 +1,20 @@
 <template>
-  <div class="q-px-md" v-for="(item, index) in props.objectInput" :key="index">
+  <div class="q-px-md" v-for="(label, key) in props.objectInput" :key="key">
     <q-input
       rounded
       white
       standout="bg-grey-4 text"
-      v-model="inputValues[index]"
-      :label="(item as string)"
+      v-model="props.objectInput[key]"
+      :label="$t('login.' + key)"
+      :type="isPwd ? 'password' : 'text'"
     >
       <template v-slot:append>
         <q-icon
-          v-show="item == 'Sua senha'"
+          v-show="verifyLabelPasswor(key)"
           color="grey"
           class="cursor-pointer"
-          @click="isPwdvisible = !isPwdvisible"
-          :name="isPwdvisible ? 'visibility_off' : 'visibility'"
+          @click="isPwd = !isPwd"
+          :name="isPwdVisible"
         />
       </template>
     </q-input>
@@ -21,14 +22,19 @@
 </template>
 
 <script setup lang="ts">
-const isPwdvisible = ref(true);
-
-const props = defineProps({
-  objectInput: {
-    type: Array,
-    default: [],
-  },
+const isPwd = ref(true);
+const isPwdVisible = computed(() => {
+  return isPwd.value ? "visibility_off" : "visibility";
 });
 
-const inputValues = ref(Array(props.objectInput.length).fill(""));
+const emits = defineEmits(["dataLogin"]);
+const props = defineProps({
+  objectInput: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+function verifyLabelPasswor(label: string) {
+  return label.includes("ss");
+}
 </script>
