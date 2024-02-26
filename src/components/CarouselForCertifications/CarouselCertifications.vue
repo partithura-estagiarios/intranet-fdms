@@ -16,7 +16,7 @@
           v-if="index > 0"
           direction="prev"
           icon="arrow_back"
-          @navigation="(nav) => navSlides(nav)"
+          @navigation="(nav: string) => navSlides(nav)"
         />
         <CardCertification
           :imgs-ex="(item.image as string)"
@@ -28,7 +28,7 @@
           direction="next"
           icon="arrow_back"
           class="flip-horizontal"
-          @navigation="(nav) => navSlides(nav)"
+          @navigation="(nav: string) => navSlides(nav)"
         />
         <CardCertification
           v-if="index < certifications.length - 1"
@@ -59,8 +59,6 @@ onMounted(async () => {
       }
     );
   }
-
-  console.log(certifications.value);
 });
 const slide = ref(0);
 
