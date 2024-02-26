@@ -6,15 +6,15 @@
       standout="bg-grey-4 text"
       v-model="props.objectInput[key]"
       :label="$t('login.' + key)"
-      :type="isPwdvisible ? 'password' : 'text'"
+      :type="isPwd ? 'password' : 'text'"
     >
       <template v-slot:append>
         <q-icon
           v-show="verifyLabelPasswor(key)"
           color="grey"
           class="cursor-pointer"
-          @click="isPwdvisible = !isPwdvisible"
-          :name="isPwdvisible ? 'visibility_off' : 'visibility'"
+          @click="isPwd = !isPwd"
+          :name="isPwdVisible"
         />
       </template>
     </q-input>
@@ -22,7 +22,11 @@
 </template>
 
 <script setup lang="ts">
-const isPwdvisible = ref(false);
+const isPwd = ref(true);
+const isPwdVisible = computed(() => {
+  return isPwd.value ? "visibility_off" : "visibility";
+});
+
 const emits = defineEmits(["dataLogin"]);
 const props = defineProps({
   objectInput: {
@@ -31,8 +35,6 @@ const props = defineProps({
   },
 });
 function verifyLabelPasswor(label: string) {
-  if (label.includes("ss")) {
-    return true;
-  }
+  return label.includes("ss");
 }
 </script>

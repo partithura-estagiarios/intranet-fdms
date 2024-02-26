@@ -43,27 +43,25 @@
 </template>
 
 <script setup lang="ts">
-import GetUser from "../../graphql/user/Login.gql";
-import { User } from "../../entities/login";
+import { User, UserStorage } from "../../entities/login";
 import { router } from "../../modules";
-const { t } = useI18n();
+import { useUsers } from "../../stores/user";
 
+const userStorage = useUsers();
+const { t } = useI18n();
 const loginForm: User = reactive({
-  labelInputName: "",
-  labelEmail: "",
-  labelInputPassword: "",
+  labelInputName: "admin",
+  labelEmail: "admin@admin.com",
+  labelInputPassword: "admin",
 });
 const handleDataLogin = (form: User) => {
   Object.assign(loginForm, form);
 };
 
 const submitLoginForm = async () => {
-  const { auth } = await runQuery(GetUser, {
-    name: loginForm.labelInputName!,
-    password: loginForm.labelInputPassword,
-    email: loginForm.labelEmail,
-  });
-  if (auth) {
+  const response = await userStorage.getUser(loginForm);
+  if (response.auth) {
+    userStorage.StateUser = response.auth as unknown as UserStorage;
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }
