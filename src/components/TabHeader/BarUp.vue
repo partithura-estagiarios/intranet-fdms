@@ -6,7 +6,7 @@
   >
     <q-item clickable to="/home" class="q-mx-md q-mt-sm">
       <q-toolbar-title class="q-px-md">
-        <img src="/logo_fundimisa.png" />
+        <img src="/ico/logo_fundimisa.png" />
       </q-toolbar-title>
     </q-item>
     <q-space />

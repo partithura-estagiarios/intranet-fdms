@@ -4,7 +4,7 @@
   <CarouselAtendimentoRh />
   <Carousel />
   <Separator texto="OUTROS" large="px-20" />
-  <Item class="pt-12" />
+  <Item sistema="rh" class="pt-12" />
 </template>
 <style scoped>
 .padding {

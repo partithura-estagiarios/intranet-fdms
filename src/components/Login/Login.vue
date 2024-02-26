@@ -6,7 +6,7 @@
       <q-card class="my-card q-pa-xl shadow-1 justify-center bordered">
         <q-card-section vertical class="q-gutter-md" align="center">
           <q-avatar rounded size="150px">
-            <img src="ico_fundimisa.png" />
+            <img src="ico/ico_fundimisa.png" />
           </q-avatar>
           <p class="text-bold text-black text-h4">INTRANET FUNDIMISA</p>
         </q-card-section>
