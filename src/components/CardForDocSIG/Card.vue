@@ -9,7 +9,10 @@
       <q-card-section horizontal>
         <q-card-section class="row no-padding">
           <div class="q-pa-md">
-            <List :tabSelect="selectCard" @showImage="updateSelectImg" />
+            <List
+              :tabSelect="selectCard"
+              @showImage="(title) => (updateSelectImg = title)"
+            />
           </div>
         </q-card-section>
         <q-card class="q-pa-md box-shadow">
@@ -20,15 +23,28 @@
   </div>
 </template>
 <script setup lang="ts">
+import { extracImage } from "./lib";
 const selectCard = ref("");
-const selectImg = ref("");
-
+const selectImg = ref();
+import { title } from "process";
+import getDocSig from "../../graphql/docSig/DocSig.gql";
+import { DocSig } from "../../entities/docSig";
 const updateSelectCard = (item: string) => {
   selectCard.value = item;
 };
-const updateSelectImg = (item: string) => {
-  selectImg.value = "/pi_p.png";
-};
+onMounted(() => {
+  updateSelectImg.value = "integratedPolicy";
+});
+const updateSelectImg = ref();
+watchEffect(() => {
+  updateImg();
+});
+async function updateImg() {
+  const result = await runQuery(getDocSig, {
+    title: updateSelectImg.value,
+  });
+  selectImg.value = extracImage(result as DocSig);
+}
 </script>
 <style scoped>
 .box-shadow {

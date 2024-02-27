@@ -1,0 +1,5 @@
+query GetDocSig($title: String!) {
+  getDocSig(title: $title) {
+    image
+  }
+}
