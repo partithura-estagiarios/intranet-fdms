@@ -1,0 +1,3 @@
+mutation AddRamal($newRamal: RamalInput!) {
+  addRamal(newRamal: $newRamal)
+}

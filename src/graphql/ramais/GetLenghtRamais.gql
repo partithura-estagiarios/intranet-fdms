@@ -1,5 +1,5 @@
-query GetRamais {
-  getRamais {
+query GetLenghtRamais {
+  getLenghtRamais {
     id
     name
     sector
