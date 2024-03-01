@@ -4,6 +4,10 @@ export default {
   labelInputPassword: "Sua senha",
   hintName: "Sua matrícula",
   hintPassword: "6 primeiros números do seu cpf",
-  submitButton: "Enviar",
+  submitButton: "Entrar",
   warning: "Por favor digite algo!",
+  labelEmail: "Seu Email",
+  iForgotMyPassword: "Esqueci minha senha",
+  enterYourCredentials: "Digite suas credências",
+  loginSuccessful: "Login realizado com sucesso",
 };

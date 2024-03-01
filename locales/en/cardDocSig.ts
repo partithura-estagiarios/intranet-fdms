@@ -1,0 +1,16 @@
+export default {
+  fispq: "FISPQ",
+  institutional: "Institucional",
+  processes: "Processos",
+  listofPPEs: "Lista de EPI`S",
+  integratedPolicy: "Integrated Policy",
+  missionVisionBusiness: "Mission/Vision/Business",
+  principles: "Principles",
+  codeofEthics: "Code of Ethics",
+  disciplinaryPractices: "Disciplinary Practices",
+  representatives: "Representatives",
+  policyforSexualHarassment: "Policy for Sexual Harassment",
+  socialPolicyforDiversity: "Social Policy for Diversity",
+  environmentalObjectsandGoals: "Environmental Objects and Goals",
+  environmentalCommitments: "Environmental Commitments",
+};

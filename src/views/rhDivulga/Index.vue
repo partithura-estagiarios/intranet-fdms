@@ -1,0 +1,3 @@
+<template>
+  <PRhDivulga />
+</template>

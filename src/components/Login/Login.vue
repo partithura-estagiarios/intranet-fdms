@@ -1,0 +1,76 @@
+<template>
+  <q-img src="/INTRANET_FUNDIMISA.png" class="absolute opacity fixed-full" />
+
+  <div class="column fixed-center">
+    <div class="row">
+      <q-card class="my-card q-pa-xl shadow-1 justify-center bordered">
+        <q-card-section vertical class="q-gutter-md" align="center">
+          <q-avatar rounded size="150px">
+            <img src="ico/ico_fundimisa.png" />
+          </q-avatar>
+          <p class="text-bold text-black text-h4">INTRANET FUNDIMISA</p>
+        </q-card-section>
+        <q-card-section vertical class="q-gutter-md" align="center">
+          <h5 class="text-subtitle1 text-bold">
+            {{ $t("login.enterYourCredentials") }}
+          </h5>
+          <div class="q-gutter-md">
+            <Input
+              :objectInput="loginForm"
+              @dataLogin="handleDataLogin"
+              :fieldAlone="submitLoginForm"
+            />
+          </div>
+          <br />
+          <a class="underline text-bold" color="blue">{{
+            $t("login.iForgotMyPassword")
+          }}</a>
+        </q-card-section>
+        <q-card-actions class="q-px-md">
+          <q-btn
+            color="green-8"
+            size="lg"
+            class="envy full-width relative-position"
+            :label="$t('login.submitButton')"
+            nelevated
+            rounded
+            @click="submitLoginForm"
+          />
+        </q-card-actions>
+      </q-card>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { User, UserStorage } from "../../entities/login";
+import { router } from "../../modules";
+import { useUsers } from "../../stores/user";
+
+const userStorage = useUsers();
+const { t } = useI18n();
+const loginForm: User = reactive({
+  labelInputName: "admin",
+  labelEmail: "admin@admin.com",
+  labelInputPassword: "admin",
+});
+const handleDataLogin = (form: User) => {
+  Object.assign(loginForm, form);
+};
+
+const submitLoginForm = async () => {
+  const response = await userStorage.getUser(loginForm);
+  if (response.auth) {
+    userStorage.StateUser = response.auth as unknown as UserStorage;
+    router.push("/home");
+    return positiveNotify(t("login.loginSuccessful"));
+  }
+  negativeNotify(t("login.enterYourCredentials"));
+};
+</script>
+
+<style scoped>
+.underline {
+  text-decoration: underline;
+}
+</style>

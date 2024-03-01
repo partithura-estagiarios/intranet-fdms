@@ -1,5 +1,11 @@
 import action from "./action";
 import text from "./text";
+import cardDocSig from "./cardDocSig";
+import columns from "./columns";
+import formRamal from "./formRamal";
+import register from "./register";
+import tab from "./tab";
+
 export default {
   action,
   caderno: {
@@ -27,4 +33,9 @@ export default {
     create: "Add one or more tags",
   },
   text,
+  cardDocSig,
+  columns,
+  formRamal,
+  register,
+  tab,
 };

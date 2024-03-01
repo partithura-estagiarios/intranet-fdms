@@ -1,17 +1,12 @@
 <template>
-  <HelloWorld />
+  <BarUp v-if="showTabHeader" />
+  <BackgroundIntranet v-if="showTabHeader" />
+  <RouterView />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script setup lang="ts">
+const exceptionRoutes = ["/login"];
+const showTabHeader = computed(() => {
+  const currentRoute = useRoute();
+  return !exceptionRoutes.some((route) => currentRoute.path.includes(route));
+});
+</script>
