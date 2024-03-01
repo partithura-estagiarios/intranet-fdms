@@ -8,4 +8,6 @@ export default {
   integration: "Integração",
   addRamal: "Adicionar Ramal",
   searchRamal: "Buscar Ramal",
+  editRamal: "Editar Ramal",
+  deleteRamal: "Deletar Ramal",
 };
