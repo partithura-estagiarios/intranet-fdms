@@ -7,6 +7,7 @@ export async function runQuery(
   const { data } = await useQuery({
     query,
     variables,
+    cachePolicy: "network-only",
   }).execute();
 
   return data as Record<string, string | number>;

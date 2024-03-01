@@ -21,7 +21,8 @@ export const columns = [
   },
 ];
 export const maxRows = 8;
-export function spliceArray(ramais: Object[]) {
-  return chunk(ramais, maxRows);
+export function pagesForTable(ramais: Object[]) {
+  const result = chunk(ramais, 8).length;
+  return result;
 }
-export const firstPage = 1;
+export const firstPage = "1";
