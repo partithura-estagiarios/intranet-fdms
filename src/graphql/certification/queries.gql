@@ -4,3 +4,6 @@ query GetCertifications($title: String) {
     image
   }
 }
+query GetTitlesSigs {
+  getTitlesSigs
+}

@@ -1,8 +1,0 @@
-query GetLenghtRamais {
-  getLenghtRamais {
-    id
-    name
-    sector
-    number
-  }
-}
