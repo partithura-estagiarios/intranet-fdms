@@ -9,7 +9,7 @@
         <CardCertification
           v-if="index > 0"
           class="col-5 mt-12 card-left relative-position"
-          :imgs-ex="(certifications[index - 1].image as string)"
+          :imgs-ex="certifications[index - 1].image as string"
           :title="certifications[index - 1].name as string"
         />
         <ButtonForCertification
@@ -19,8 +19,8 @@
           @navigation="(nav: string) => navSlides(nav)"
         />
         <CardCertification
-          :imgs-ex="(item.image as string)"
-          :title="(item.name as string)"
+          :imgs-ex="item.image as string"
+          :title="item.name as string"
           class="col-5 relative-position"
         />
         <ButtonForCertification
@@ -33,8 +33,8 @@
         <CardCertification
           v-if="index < certifications.length - 1"
           class="col-5 mt-12 card-right relative-position"
-          :imgs-ex="(certifications[index + 1].image as string)"
-          :title="(certifications[index + 1].name as string)"
+          :imgs-ex="certifications[index + 1].image as string"
+          :title="certifications[index + 1].name as string"
         />
       </q-carousel-slide>
     </q-carousel>
@@ -42,21 +42,21 @@
 </template>
 
 <script setup lang="ts">
-import GetCertification from "../../graphql/certification/Certification.gql";
+import GetCertifications from "../../graphql/certification/Certification.gql";
 import { Certification } from "../../entities/certification";
 const certifications = ref<Certification[]>([]);
 
 onMounted(async () => {
-  const getCertifications = await runQuery(GetCertification, { title: "iso" });
-  if (Array.isArray(getCertifications.getCertifications)) {
-    certifications.value = getCertifications.getCertifications.map(
-      (certification: any) => {
-        return {
-          name: certification.name.toString(),
-          image: certification.image.toString(),
-        } as Certification;
-      }
-    );
+  const { getCertifications } = await runQuery(GetCertifications, {
+    title: "iso",
+  });
+  if (Array.isArray(getCertifications)) {
+    certifications.value = getCertifications.map((certification: any) => {
+      return {
+        name: certification.name.toString(),
+        image: certification.image.toString(),
+      } as Certification;
+    });
   }
 });
 const slide = ref(0);
