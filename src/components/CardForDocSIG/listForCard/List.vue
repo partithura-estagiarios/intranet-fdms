@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import GetCertifications from "../../../graphql/certification/Certification.gql";
+import GetCertifications from "../../../graphql/certification/queries.gql";
 import { getFirstImage } from "../lib";
 const link = ref();
 const emits = defineEmits(["showImage", "envityImgs"]);

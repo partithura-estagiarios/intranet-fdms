@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import GetCertifications from "../../graphql/certification/Certification.gql";
+import GetCertifications from "../../graphql/certification/queries.gql";
 import { Certification } from "../../entities/certification";
 const certifications = ref<Certification[]>([]);
 

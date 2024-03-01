@@ -31,8 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import GetSystem from "../../graphql/system/System.gql";
-import { System } from "../../entities/system";
+import GetSystems from "../../graphql/system/queries.gql";
 const props = defineProps({
   sistema: {
     type: String!,
@@ -42,7 +41,7 @@ const props = defineProps({
 const sistemas: System = ref([]);
 
 onMounted(async () => {
-  const { getSystem } = await runQuery(GetSystem, { sistema: props.sistema });
+  const { getSystem } = await runQuery(GetSystems, { sistema: props.sistema });
   sistemas.value = getSystem;
 });
 </script>
