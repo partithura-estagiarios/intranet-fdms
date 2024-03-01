@@ -1,23 +1,24 @@
 import { MaybeRef } from "@vueuse/core";
 import { useQuery, useMutation } from "villus";
-export async function runQuery(
-  query: MaybeRef<Document> | string,
-  variables: Record<string, string> | null = null
-): Promise<Record<string, string | number>> {
+
+export async function runQuery<T>(
+  query: MaybeRef<Document | string>,
+  variables: Record<string, string> | null = null,
+): Promise<T> {
   const { data } = await useQuery({
     query,
     variables,
     cachePolicy: "network-only",
   }).execute();
 
-  return data as Record<string, string | number>;
+  return data as T;
 }
 
-export async function runMutation(
+export async function runMutation<T>(
   query: MaybeRef<Document>,
-  variables: Record<string, string>
-): Promise<Record<string, Record<string, string>>> {
+  variables: Record<string, string>,
+): Promise<T> {
   const { data } = await useMutation(query).execute(variables);
 
-  return data as Record<string, Record<string, string>>;
+  return data as T;
 }

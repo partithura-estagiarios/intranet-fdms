@@ -9,26 +9,37 @@
       <q-card-section horizontal>
         <q-card-section class="row no-padding">
           <div class="q-pa-md">
-            <List :tabSelect="selectCard" @showImage="updateSelectImg" />
+            <List
+              :tabSelect="selectCard"
+              @showImage="(title) => (selectTitle = title)"
+              @envityImgs="(imgsForCard) => (imgs = imgsForCard)"
+            />
           </div>
         </q-card-section>
         <q-card class="q-pa-md box-shadow">
-          <q-img :src="selectImg" width="1000px" />
+          <q-img :src="selecImage" width="1000px" />
         </q-card>
       </q-card-section>
     </q-card>
   </div>
 </template>
 <script setup lang="ts">
+import { extracImage } from "./lib";
 const selectCard = ref("");
-const selectImg = ref("");
-
+const selectTitle = ref();
+const imgs = ref();
+const selecImage = ref();
 const updateSelectCard = (item: string) => {
   selectCard.value = item;
 };
-const updateSelectImg = (item: string) => {
-  selectImg.value = "/pi_p.png";
-};
+watchEffect(() => {
+  if (selectTitle.value) {
+    updateImg(selectTitle.value);
+  }
+});
+function updateImg(title: String) {
+  selecImage.value = extracImage(title, imgs.value);
+}
 </script>
 <style scoped>
 .box-shadow {

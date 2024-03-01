@@ -1,0 +1,9 @@
+query GetCertifications($title: String) {
+  getCertifications(title: $title) {
+    name
+    image
+  }
+}
+query GetTitlesSigs {
+  getTitlesSigs
+}

@@ -38,20 +38,20 @@
 import { firstPage } from "../TableRamais/lib";
 const emits = defineEmits(["changePage"]);
 const props = defineProps({
-  pages: { type: Number, required: true },
+  pages: { type: String, required: true },
 });
 const buttonColors = ref<string[]>(Array(10).fill("transparent"));
 const activeButtonIndex = ref();
-
 const changeColor = (index: number) => {
+  const indexPage = index - 1;
   if (activeButtonIndex.value !== null) {
     buttonColors.value[activeButtonIndex.value - 1] = "transparent";
   }
   buttonColors.value[index - 1] = "green-8";
   activeButtonIndex.value = index;
-  emits("changePage", index);
+  emits("changePage", indexPage);
 };
 onMounted(() => {
-  changeColor(firstPage);
+  changeColor(Number(firstPage));
 });
 </script>
