@@ -16,8 +16,11 @@
 <script setup lang="ts">
 import { tabItems } from "./lib";
 const emits = defineEmits(["showCard"]);
-const tab = ref("");
+const tab = ref("institutional");
 
+onMounted(() => {
+  showLabel("institutional");
+});
 function showLabel(item: string) {
   emits("showCard", item);
 }
