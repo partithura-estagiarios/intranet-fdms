@@ -10,14 +10,15 @@
     "lint": "eslint .",
     "prepare": "husky install",
     "postinstall": "yarn husky install",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "codegen:watch": "yarn run codegen --watch"
   },
   "dependencies": {
     "@quasar/extras": "^1.15.7",
     "@rollup/plugin-graphql": "^2.0.2",
     "@vueuse/core": "^9.6.0",
     "graphql": "^16.6.0",
+    "lodash.chunk": "^4.2.0",
     "pinia": "^2.0.27",
     "quasar": "^2.10.2",
     "villus": "^2.0.1",
@@ -28,6 +29,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/introspection": "^4.0.3",
     "@intlify/vite-plugin-vue-i18n": "^6.0.3",
     "@quasar/vite-plugin": "^1.2.3",
     "@storybook/addon-actions": "^6.5.14",

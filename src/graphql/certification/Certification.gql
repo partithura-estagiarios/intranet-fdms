@@ -1,4 +1,4 @@
-query GetCertification($title: String) {
+query GetCertifications($title: String) {
   getCertifications(title: $title) {
     name
     image

@@ -20,13 +20,20 @@
     <DialogAddRamal
       :open="dialogVisible"
       @close="(value) => (dialogVisible = value)"
+      @add-ramal="(item) => (receivedRamal = item)"
     />
   </div>
 </template>
 <script setup lang="ts">
 const dialogVisible = ref(false);
-const emits = defineEmits(["ramal"]);
+const emits = defineEmits(["ramal", "envityRamal-table"]);
 const search = ref();
+const receivedRamal = ref();
+watchEffect(() => {
+  if (receivedRamal) {
+    emits("envityRamal-table", receivedRamal);
+  }
+});
 function openDialog() {
   dialogVisible.value = true;
 }
