@@ -47,8 +47,7 @@ import { Certification } from "../../entities/certification";
 const certifications = ref<Certification[]>([]);
 
 onMounted(async () => {
-  const getCertifications = await runQuery(GetCertification);
-
+  const getCertifications = await runQuery(GetCertification, { title: "iso" });
   if (Array.isArray(getCertifications.getCertifications)) {
     certifications.value = getCertifications.getCertifications.map(
       (certification: any) => {
