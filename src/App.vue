@@ -6,7 +6,8 @@
 <script setup lang="ts">
 const exceptionRoutes = ["/login"];
 const showTabHeader = computed(() => {
-  const currentRoute = useRoute();
-  return !exceptionRoutes.some((route) => currentRoute.path.includes(route));
+  return !exceptionRoutes.some((route) =>
+    window.location.pathname.includes(route),
+  );
 });
 </script>
