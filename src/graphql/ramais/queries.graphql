@@ -1,0 +1,16 @@
+query GetRamaisForPage($page: ID!) {
+  getRamaisForPage(page: $page) {
+    id
+    name
+    sector
+    number
+  }
+}
+query GetLenghtRamais {
+  getLenghtRamais {
+    id
+    name
+    sector
+    number
+  }
+}
