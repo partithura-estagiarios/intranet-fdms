@@ -1,36 +1,28 @@
 <template>
-  <q-list v-for="item in filteredInstitutional" class="text-indigo-8">
+  <q-list v-for="item in institutional" class="text-indigo-8">
     <q-item
       clickable
-      @click="setLink(item)"
-      :class="{ 'text-white bg-green rounded-borders': link === item }"
+      @click="setLink(item.name)"
+      :class="{ 'text-white bg-green rounded-borders': link === item.name }"
     >
-      <q-item-section>{{ $t("cardDocSig." + item) }}</q-item-section>
+      <q-item-section>{{ $t("cardDocSig." + item.name) }}</q-item-section>
     </q-item>
   </q-list>
 </template>
 
 <script setup lang="ts">
-import GetTitlesSIg from "../../../graphql/docSig/GetTitlesSIg.gql";
-const props = defineProps({
-  tabSelect: {
-    type: String,
-    default: "",
-  },
-});
-
-const emits = defineEmits(["showImage"]);
+import GetCertifications from "../../../graphql/certification/Certification.gql";
+import { getFirstImage } from "../lib";
+const link = ref();
+const emits = defineEmits(["showImage", "envityImgs"]);
 const institutional = ref();
-const link = ref("integratedPolicy");
-
 onMounted(async () => {
-  institutional.value = await runQuery(GetTitlesSIg);
-});
-
-const filteredInstitutional = computed(() => {
-  if (props.tabSelect === "institutional") {
-    return institutional.value.getTitlesSigs;
-  }
+  const { getCertifications } = await runQuery(GetCertifications, {
+    title: "docSig",
+  });
+  institutional.value = getCertifications;
+  emits("envityImgs", institutional.value);
+  setLink(getFirstImage(institutional.value));
 });
 
 function setLink(item: string) {

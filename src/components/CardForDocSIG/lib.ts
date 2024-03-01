@@ -1,5 +1,6 @@
-import { DocSig } from "../../entities/docSig";
-export function extracImage(docSig: DocSig) {
-  const images = docSig.getDocSig.map((item) => item.image);
-  return images;
+export function extracImage(name, imgs) {
+  return imgs.find((element) => element.name == name).image;
+}
+export function getFirstImage(docSig) {
+  return docSig[0].name;
 }

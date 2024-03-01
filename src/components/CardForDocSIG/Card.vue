@@ -11,12 +11,13 @@
           <div class="q-pa-md">
             <List
               :tabSelect="selectCard"
-              @showImage="(title) => (updateSelectImg = title)"
+              @showImage="(title) => (selectTitle = title)"
+              @envityImgs="(imgsForCard) => (imgs = imgsForCard)"
             />
           </div>
         </q-card-section>
         <q-card class="q-pa-md box-shadow">
-          <q-img :src="selectImg" width="1000px" />
+          <q-img :src="selecImage" width="1000px" />
         </q-card>
       </q-card-section>
     </q-card>
@@ -25,25 +26,19 @@
 <script setup lang="ts">
 import { extracImage } from "./lib";
 const selectCard = ref("");
-const selectImg = ref();
-import { title } from "process";
-import getDocSig from "../../graphql/docSig/DocSig.gql";
-import { DocSig } from "../../entities/docSig";
+const selectTitle = ref();
+const imgs = ref();
+const selecImage = ref();
 const updateSelectCard = (item: string) => {
   selectCard.value = item;
 };
-onMounted(() => {
-  updateSelectImg.value = "integratedPolicy";
-});
-const updateSelectImg = ref();
 watchEffect(() => {
-  updateImg();
+  if (selectTitle.value) {
+    updateImg(selectTitle.value);
+  }
 });
-async function updateImg() {
-  const result = await runQuery(getDocSig, {
-    title: updateSelectImg.value,
-  });
-  selectImg.value = extracImage(result as DocSig);
+function updateImg(title: String) {
+  selecImage.value = extracImage(title, imgs.value);
 }
 </script>
 <style scoped>
