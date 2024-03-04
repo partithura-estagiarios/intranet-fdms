@@ -1,5 +1,5 @@
-query GetCertifications($title: String) {
-  getCertifications(title: $title) {
+query LoadCertifications($title: String) {
+  loadCertifications(title: $title) {
     name
     image
   }
