@@ -49,8 +49,7 @@
 <script setup lang="ts">
 import { columns, maxRows, firstPage, pagesForTable } from "./lib";
 import { Column } from "../../entities/column";
-import GetRamaisForPage from "../../graphql/ramais/GetRamaisForPage.gql";
-import GetLenghtRamais from "../../graphql/ramais/GetLenghtRamais.gql";
+import * as Query from "../../graphql/ramais/queries.gql";
 const ramais = ref();
 const pages = ref();
 const indexSelection = ref();
@@ -59,19 +58,18 @@ const pagination = ref({
   rowsPerPage: maxRows,
 });
 async function getRamais() {
-  const { getRamaisForPage } = await runQuery(GetRamaisForPage, {
+  const { getRamaisForPage } = await runQuery(Query.GetRamaisForPage, {
     page: indexSelection.value,
   });
   ramais.value = getRamaisForPage;
 }
 onMounted(async () => {
   getRamais();
-  const { getLenghtRamais } = await runQuery(GetLenghtRamais);
+  const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais);
   pages.value = pagesForTable(getLenghtRamais);
 });
 watchEffect(() => {
   if (indexSelection.value >= 0) {
-    console.log(indexSelection.value);
     getRamais();
   }
 });
@@ -85,3 +83,9 @@ watchEffect(() => {
   border-radius: 15px;
 }
 </style>
+
+export function GetRamaisForPage(GetRamaisForPage: any, arg1: { page: any; }): {
+getRamaisForPage: any; } | PromiseLike<{ getRamaisForPage: any; }> { throw new
+Error("Function not implemented."); } export function
+GetLenghtRamais(GetLenghtRamais: any): { getLenghtRamais: any; } | PromiseLike<{
+getLenghtRamais: any; }> { throw new Error("Function not implemented."); }

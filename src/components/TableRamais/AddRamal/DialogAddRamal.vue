@@ -64,9 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import DeleteRamal from "../../../graphql/ramais/DeleteRamal.gql";
-import EditRamal from "../../../graphql/ramais/EditRamal.gql";
-import AddRamal from "../../../graphql/ramais/AddRamal.gql";
+import * as Mutation from "../../../graphql/ramais/mutations.gql";
 
 const props = defineProps({
   open: {
@@ -96,11 +94,11 @@ async function optionRamal(option: string, ramal: Object) {
   console.log(props.option);
   switch (props.option) {
     case "deleteRamal":
-      await runMutation(DeleteRamal, { id: ramal.id });
+      await runMutation(Mutation.DeleteRamal, { id: ramal.id });
     case "editRamal":
-      await runMutation(EditRamal, { ramal: ramal });
+      await runMutation(Mutation.EditRamal, { ramal: ramal });
     case "addRamal":
-      await runMutation(AddRamal, { newRamal: ramal });
+      await runMutation(Mutation.AddRamal, { newRamal: ramal });
     default:
       emits("close");
       emits("reloadTable");
