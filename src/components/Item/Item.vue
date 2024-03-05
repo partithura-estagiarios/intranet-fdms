@@ -44,7 +44,7 @@ onMounted(async () => {
   const { loadSystems } = await runQuery(LoadSystems, {
     sistema: props.sistema,
   });
-  sistemas.value = getSystem;
+  sistemas.value = loadSystems;
 });
 </script>
 
