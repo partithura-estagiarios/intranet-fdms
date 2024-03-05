@@ -3,10 +3,3 @@ export interface User {
   labelEmail: string;
   labelInputPassword: string;
 }
-export interface UserStorage {
-  id: string;
-  name: string;
-  password: string;
-  email: string;
-  token: string;
-}
