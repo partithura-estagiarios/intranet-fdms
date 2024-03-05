@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import GetUser from "../graphql/user/Login.gql";
+import GetUser from "../graphql/user/queries.gql";
 import { User, UserStorage } from "../entities/login";
 
 const id = "users";
@@ -9,6 +9,7 @@ const StateUser: UserStorage = {
   name: "",
   password: "",
   email: "",
+  token: "",
 };
 
 export const useUsers = defineStore(id, {
@@ -28,6 +29,5 @@ export const useUsers = defineStore(id, {
       });
     },
   },
+  persist: true,
 });
-
-export const profileStore = useUsers();
