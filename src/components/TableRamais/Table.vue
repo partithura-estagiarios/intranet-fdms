@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { columns, spliceArray, maxRows, firstPage } from "./lib";
+import { columns, firstPage } from "./lib";
 import GetRamais from "../../graphql/ramais/GetRamais.gql";
 import { Column } from "../../entities/column";
 import { Ramal } from "../../entities/ramal";
@@ -50,7 +50,7 @@ const definiteRamais = ref();
 const pages = ref();
 async function getRamais() {
   const { getRamais } = await runQuery(GetRamais);
-  ramais.value = spliceArray(getRamais);
+  ramais.value = getRamais;
   pages.value = ramais.value.length;
   definiteRamais.value = ramais.value[firstPage - 1];
 }

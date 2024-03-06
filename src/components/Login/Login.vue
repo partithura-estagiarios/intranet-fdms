@@ -59,9 +59,9 @@ const handleDataLogin = (form: User) => {
 };
 
 const submitLoginForm = async () => {
-  const response = await userStorage.getUser(loginForm);
-  if (response.auth) {
-    userStorage.StateUser = response.auth as unknown as UserStorage;
+  const { auth } = await userStorage.getUser(loginForm);
+  if (Object.keys(auth).length !== null) {
+    userStorage.StateUser = auth as UserStorage;
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }

@@ -42,12 +42,12 @@
 </template>
 
 <script setup lang="ts">
-import GetCertifications from "../../graphql/certification/Certification.gql";
+import LoadCertifications from "../../graphql/certification/queries.gql";
 import { Certification } from "../../entities/certification";
 const certifications = ref<Certification[]>([]);
 
 onMounted(async () => {
-  const { getCertifications } = await runQuery(GetCertifications, {
+  const { loadCertifications } = await runQuery(LoadCertifications, {
     title: "iso",
   });
   if (Array.isArray(getCertifications)) {

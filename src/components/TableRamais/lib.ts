@@ -20,8 +20,5 @@ export const columns = [
     label: "",
   },
 ];
-export const maxRows = 8;
-export function spliceArray(ramais: Object[]) {
-  return chunk(ramais, maxRows);
-}
+
 export const firstPage = 1;
