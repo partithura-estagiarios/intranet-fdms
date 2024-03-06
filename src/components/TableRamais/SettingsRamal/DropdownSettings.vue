@@ -38,7 +38,6 @@ const selectOption = ref();
 const dialogVisible = ref(false);
 const ramalForEdition = ref();
 function openDialog(option: String) {
-  console.log(option);
   dialogVisible.value = true;
   selectOption.value = option;
   ramalForEdition.value = props.ramal;

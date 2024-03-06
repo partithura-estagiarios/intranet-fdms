@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { columns, maxRows, firstPage, pagesForTable } from "./lib";
+import { columns, maxRows, pagesForTable } from "./lib";
 import { Column } from "../../entities/column";
 import * as Query from "../../graphql/ramais/queries.gql";
 const ramais = ref();
@@ -64,7 +64,7 @@ async function getRamais() {
   ramais.value = getRamaisForPage;
 }
 onMounted(async () => {
-  getRamais();
+  await getRamais();
   const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais);
   pages.value = pagesForTable(getLenghtRamais);
 });

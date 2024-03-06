@@ -88,10 +88,9 @@ const label = reactive({
   name: "",
 });
 const labelDefinite = computed(() => {
-  return props.ramal ? props.ramal : label;
+  return props.ramal ?? label;
 });
 async function optionRamal(option: string, ramal: Object) {
-  console.log(props.option);
   switch (props.option) {
     case "deleteRamal":
       await runMutation(Mutation.DeleteRamal, { id: ramal.id });
