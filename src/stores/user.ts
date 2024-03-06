@@ -5,7 +5,7 @@ import { router } from "../modules";
 
 const id = "users";
 
-const UserStorage = {
+const userStorage = {
   id: "",
   name: "",
   password: "",
@@ -16,7 +16,7 @@ const UserStorage = {
 export const useUsers = defineStore(id, {
   state: () => {
     return {
-      StateUser: { ...UserStorage },
+      stateUser: { ...userStorage },
     };
   },
   getters: {},
@@ -31,7 +31,7 @@ export const useUsers = defineStore(id, {
     },
     logout: () => {
       const user = useUsers();
-      user.StateUser = UserStorage;
+      user.stateUser = userStorage;
       return router.push("/login");
     },
   },
