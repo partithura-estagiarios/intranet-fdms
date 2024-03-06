@@ -16,7 +16,8 @@ router.beforeEach((to, from, next) => {
   const userStorage = useUsers();
   if (!userStorage.stateUser.token && to.path !== "/login") {
     next("/login");
-  } else if (userStorage.stateUser.token && to.path === "/login") {
+  }
+  if (userStorage.stateUser.token && to.path === "/login") {
     next(false);
   }
   next();

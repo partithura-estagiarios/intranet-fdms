@@ -29,7 +29,7 @@ import { item } from "./lib";
 import { useUsers } from "../../../stores";
 import { router } from "../../../modules";
 
-const on_off = ref(false);
+const on = ref(false);
 
 function verifyTabs(tab: String) {
   if (tab == "logout") {
@@ -39,11 +39,11 @@ function verifyTabs(tab: String) {
   return router.push("/" + tab);
 }
 const showList = computed(() => {
-  return on_off.value;
+  return on.value;
 });
 
 function toggleDropdown() {
-  on_off.value = !on_off.value;
+  on.value = !on.value;
 }
 </script>
 <style scoped>
