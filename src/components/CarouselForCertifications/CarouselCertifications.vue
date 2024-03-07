@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="position-relative pt-20">
     <q-carousel v-model="slide" class="full-height bg-transparent">
       <q-carousel-slide
         :name="index"
@@ -50,8 +50,8 @@ onMounted(async () => {
   const { loadCertifications } = await runQuery(LoadCertifications, {
     title: "iso",
   });
-  if (Array.isArray(getCertifications)) {
-    certifications.value = getCertifications.map((certification: any) => {
+  if (Array.isArray(loadCertifications)) {
+    certifications.value = loadCertifications.map((certification: any) => {
       return {
         name: certification.name.toString(),
         image: certification.image.toString(),

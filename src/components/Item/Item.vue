@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-center">
+  <div class="row justify-center pt-4">
     <div v-for="item in sistemas">
       <q-item>
         <q-item-section class="border-radius-inherit">

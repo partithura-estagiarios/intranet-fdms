@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed-center">
+  <div class="fixed-center pt-22">
     <q-card>
       <q-card-section class="bg-indigo-8 text-h6 row text-white">
         <div class="col-12">

@@ -1,6 +1,6 @@
 import { createClient, defaultPlugins } from "villus";
 import { getEnvironmentVariable } from "../helpers";
-import { useUsers } from "../stores/user"; // Substitua pelo caminho correto para useUsers
+import { useUsers } from "../stores/user";
 
 const url = getEnvironmentVariable("VITE_APP_ENDPOINT");
 function somePlugin({ afterQuery, useResult, operation }) {
@@ -13,7 +13,7 @@ function somePlugin({ afterQuery, useResult, operation }) {
   });
 }
 function authPlugin({ opContext }: { opContext: FetchOptions }) {
-  const { token } = useUsers().StateUser;
+  const { token } = useUsers().stateUser;
 
   if (token) {
     opContext.headers.Authorization = `Bearer ${token}`;
@@ -26,6 +26,6 @@ interface FetchOptions extends RequestInit {
 }
 
 export const villus = createClient({
-  use: [authPlugin, somePlugin, ...defaultPlugins()],
+  use: [authPlugin, ...defaultPlugins(), somePlugin],
   url,
 });
