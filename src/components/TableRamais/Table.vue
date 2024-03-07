@@ -83,9 +83,3 @@ watchEffect(() => {
   border-radius: 15px;
 }
 </style>
-
-export function GetRamaisForPage(GetRamaisForPage: any, arg1: { page: any; }): {
-getRamaisForPage: any; } | PromiseLike<{ getRamaisForPage: any; }> { throw new
-Error("Function not implemented."); } export function
-GetLenghtRamais(GetLenghtRamais: any): { getLenghtRamais: any; } | PromiseLike<{
-getLenghtRamais: any; }> { throw new Error("Function not implemented."); }
