@@ -13,7 +13,7 @@ function somePlugin({ afterQuery, useResult, operation }) {
   });
 }
 function authPlugin({ opContext }: { opContext: FetchOptions }) {
-  const { token } = useUsers().StateUser;
+  const { token } = useUsers().stateUser;
 
   if (token) {
     opContext.headers.Authorization = `Bearer ${token}`;
