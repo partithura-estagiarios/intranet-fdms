@@ -1,4 +1,3 @@
-import { chunk } from "lodash";
 export const columns = [
   {
     name: "name",
@@ -20,5 +19,9 @@ export const columns = [
     label: "",
   },
 ];
+export const maxRows = 8;
+export function pagesForTable(ramais: Object[]) {
+  return Math.ceil(ramais.length / 8);
+}
 
 export const firstPage = 1;

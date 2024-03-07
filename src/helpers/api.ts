@@ -8,6 +8,7 @@ export async function runQuery<T>(
   const { data } = await useQuery({
     query,
     variables,
+    cachePolicy: "network-only",
   }).execute();
 
   return data as T;
