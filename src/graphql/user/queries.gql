@@ -4,5 +4,6 @@ query GetUser($name: String!, $password: String!, $email: String!) {
     name
     password
     email
+    token
   }
 }

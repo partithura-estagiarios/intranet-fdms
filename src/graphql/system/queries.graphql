@@ -1,9 +1,0 @@
-query GetSystems($sistema: String!) {
-  getSystem(sistema: $sistema) {
-    system_id
-    icon
-    label
-    sublabel
-    sistema
-  }
-}

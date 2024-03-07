@@ -23,4 +23,5 @@ export const maxRows = 8;
 export function pagesForTable(ramais: Object[]) {
   return Math.ceil(ramais.length / 8);
 }
+
 export const firstPage = 1;

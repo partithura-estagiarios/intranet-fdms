@@ -1,0 +1,9 @@
+query LoadSystems($sistema: String!) {
+  loadSystems(sistema: $sistema) {
+    system_id
+    icon
+    label
+    sublabel
+    sistema
+  }
+}
