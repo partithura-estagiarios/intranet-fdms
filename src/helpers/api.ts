@@ -10,7 +10,6 @@ export async function runQuery<T>(
     variables,
     cachePolicy: "network-only",
   }).execute();
-
   return data as T;
 }
 
