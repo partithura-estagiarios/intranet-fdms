@@ -6,11 +6,12 @@
       no-caps
       size="19px"
       @click="changeColor(activeButtonIndex - 1)"
+      :disable="activeButtonIndex == firstPage"
     >
       <label>{{ $t("text.previous") }}</label>
     </q-btn>
     <q-badge
-      v-for="index in getArray()"
+      v-for="index in quantPages"
       @click="changeColor(index)"
       :color="buttonColors[index - 1]"
       class="btns-pag text-indigo-8 cursor-pointer"
@@ -30,6 +31,7 @@
       no-caps
       size="19px"
       @click="changeColor(activeButtonIndex + 1)"
+      :disable="activeButtonIndex == quantPages[quantPages.length - 1]"
     >
       <label>{{ $t("text.next") }}</label>
     </q-btn>
@@ -38,19 +40,16 @@
 
 <script setup lang="ts">
 import { firstPage } from "../TableRamais/lib";
-
 const emits = defineEmits(["changePage"]);
 const props = defineProps({
   pages: { type: Number, required: true },
 });
 
-function getArray() {
-  return Array.from({ length: props.pages }, (_, index) => index + 1);
-}
+const quantPages = ref();
+
 const buttonColors = ref<string[]>(Array(10).fill("transparent"));
 const activeButtonIndex = ref();
 const changeColor = (index: number) => {
-  console.log(index);
   if (activeButtonIndex.value !== null) {
     buttonColors.value[activeButtonIndex.value - 1] = "transparent";
   }
@@ -60,5 +59,9 @@ const changeColor = (index: number) => {
 };
 onMounted(() => {
   changeColor(firstPage);
+  quantPages.value = Array.from(
+    { length: props.pages },
+    (_, index) => index + 1,
+  );
 });
 </script>
