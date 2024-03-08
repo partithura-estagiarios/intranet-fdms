@@ -36,6 +36,7 @@
             flat
             :label="$t('register.register')"
             @click="registerUser()"
+            :disable="!validateNewUser()"
           />
         </div>
       </q-card-actions>
@@ -45,6 +46,7 @@
 
 <script setup lang="ts">
 import Register from "../../graphql/user/mutations.gql";
+import { registerUserSchema } from "../../modules/zod";
 const { t } = useI18n();
 
 const registerForm = reactive({
@@ -53,15 +55,19 @@ const registerForm = reactive({
   password: "",
   confirmPassword: "",
 });
+
 const isPwdvisible = ref(true);
 
 const pwdIconName = computed(() => {
   return isPwdvisible.value ? "visibility_off" : "visibility";
 });
+function validateNewUser() {
+  const { success } = registerUserSchema.safeParse(registerForm);
+  return success;
+}
 async function registerUser() {
-  const { confirmPassword, ...userForm } = registerForm;
-  const { register } = await runMutation(Register, { newUser: userForm });
-  console.log(register);
+  const { confirmPassword, ...userNew } = registerForm;
+  const { register } = await runMutation(Register, { newUser: userNew });
   if (register) {
     return positiveNotify(t("register.registerSucess"));
   }
