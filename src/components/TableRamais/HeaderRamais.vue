@@ -26,7 +26,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import * as Query from "../../graphql/ramais/queries.gql";
+import SearchRamal from "../../graphql/ramais/queries.gql";
 const dialogVisible = ref(false);
 const emits = defineEmits(["envityRamal-table"]);
 const search = ref();
@@ -37,7 +37,7 @@ function openDialog() {
 }
 
 async function searchRamalInBack() {
-  const { searchRamal } = await runQuery(Query.SearchRamal, {
+  const { searchRamal } = await runQuery(SearchRamal, {
     word: search.value,
   });
   emits("envityRamal-table", searchRamal);
