@@ -1,8 +1,9 @@
 import { MaybeRef } from "@vueuse/core";
 import { useQuery, useMutation } from "villus";
+import { DocumentNode } from "graphql"; // Importe DocumentNode de uma biblioteca relacionada, como graphql
 
 export async function runQuery<T>(
-  query: MaybeRef<Document | string>,
+  query: MaybeRef<DocumentNode | string>,
   variables: Record<string, string> | null = null,
 ): Promise<T> {
   const { data } = await useQuery({
@@ -15,7 +16,7 @@ export async function runQuery<T>(
 }
 
 export async function runMutation<T>(
-  query: MaybeRef<Document>,
+  query: DocumentNode | string,
   variables: Record<string, string>,
 ): Promise<T> {
   const { data } = await useMutation(query).execute(variables);
