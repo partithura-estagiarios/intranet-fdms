@@ -8,7 +8,7 @@ import cardDocSig from "./cardDocSig";
 import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
-
+import errors from "../br/errors";
 import tab from "./tab";
 export default {
   about: "Sobre",
@@ -25,4 +25,5 @@ export default {
   formRamal,
   register,
   tab,
+  errors,
 };

@@ -5,6 +5,7 @@ import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
 import tab from "./tab";
+import errors from "./errors";
 
 export default {
   action,
@@ -38,4 +39,5 @@ export default {
   formRamal,
   register,
   tab,
+  errors,
 };
