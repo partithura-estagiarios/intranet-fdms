@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-center">
     <div v-for="item in sistemas">
-      <q-item>
+      <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
           <q-avatar class="border row" size="6em">
             <q-icon
@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import LoadSystems from "../../graphql/system/queries.gql";
+import { router } from "../../modules/router";
 const props = defineProps({
   sistema: {
     type: String!,
@@ -46,6 +47,12 @@ onMounted(async () => {
   });
   sistemas.value = loadSystems;
 });
+function goToRoute(rout: String) {
+  if (rout.includes("https")) {
+    return window.open(`${rout}`);
+  }
+  return router.push(`${rout}`);
+}
 </script>
 
 <style scoped>
