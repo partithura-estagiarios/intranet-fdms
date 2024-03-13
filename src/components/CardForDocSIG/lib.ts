@@ -1,7 +1,4 @@
 export function extractImage(name, imgs) {
-  console.log("Name:", name);
-  console.log("Imgs:", imgs);
-
   return imgs.find((element) => element.name === name)?.image;
 }
 
