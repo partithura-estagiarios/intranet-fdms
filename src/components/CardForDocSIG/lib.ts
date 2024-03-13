@@ -1,8 +1,8 @@
-export function extractImage(
-  name: string,
-  imgs: { name: string; image: any }[],
-) {
-  return imgs.find((element: { name: string }) => element.name === name)?.image;
+export function extractImage(name, imgs) {
+  console.log("Name:", name);
+  console.log("Imgs:", imgs);
+
+  return imgs.find((element) => element.name === name)?.image;
 }
 
 export function getFirstImage(docSig: { name: string }[]) {

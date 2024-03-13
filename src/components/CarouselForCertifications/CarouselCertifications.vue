@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative pt-20">
+  <div class="position-relative">
     <q-carousel v-model="slide" class="full-height bg-transparent">
       <q-carousel-slide
         :name="index"
@@ -51,7 +51,7 @@ onMounted(async () => {
     title: "iso",
   });
   if (Array.isArray(loadCertifications)) {
-    certifications.value = loadCertifications.map((certification: any) => {
+    certifications.value = loadCertifications.map((certification: unknown) => {
       return {
         name: certification.name.toString(),
         image: certification.image.toString(),
@@ -68,3 +68,8 @@ function navSlides(direction: string) {
   return slide.value++;
 }
 </script>
+<style scoped>
+.position-relative {
+  padding-top: 5%;
+}
+</style>
