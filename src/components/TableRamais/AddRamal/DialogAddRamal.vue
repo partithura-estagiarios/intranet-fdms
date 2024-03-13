@@ -90,17 +90,20 @@ const label = reactive({
 const labelDefinite = computed(() => {
   return props.ramal ?? label;
 });
+
 async function optionRamal(option: string, ramal: Object) {
   switch (props.option) {
     case "deleteRamal":
       await runMutation(Mutation.DeleteRamal, { id: ramal.id });
+      break;
     case "editRamal":
       await runMutation(Mutation.EditRamal, { ramal: ramal });
+      break;
     case "addRamal":
       await runMutation(Mutation.AddRamal, { newRamal: ramal });
-    default:
-      emits("close");
-      emits("reloadTable");
+      break;
   }
+  emits("close");
+  emits("reloadTable");
 }
 </script>
