@@ -90,6 +90,7 @@ const label = reactive({
 const labelDefinite = computed(() => {
   return props.ramal ?? label;
 });
+
 async function optionRamal(option: string, ramal: Object) {
   switch (props.option) {
     case "deleteRamal":
@@ -111,5 +112,7 @@ async function optionRamal(option: string, ramal: Object) {
       emits("close");
       emits("reloadTable");
   }
+  emits("close");
+  emits("reloadTable");
 }
 </script>

@@ -1,13 +1,14 @@
 <template>
-  <div class="q-pa-xl box-shadow mx-8 relative-position bg-white">
-    <HeaderRamais @ramal="(value) => (search = value)" />
+  <div class="q-pa-xl box-shadow mx-8 pt-3 relative-position bg-white">
+    <HeaderRamais
+      @envityRamal-table="(ramaisSearch) => (resultSearchRamal = ramaisSearch)"
+    />
     <q-table
       :rows="ramais"
       :columns="columns as Column[]"
       flat
       hide-bottom
       v-model:pagination="pagination"
-      :filter="search"
     >
       <template v-slot:header-cell="props">
         <q-th :props="props" class="text-indigo">
@@ -20,9 +21,8 @@
             <DropdownSettings
               :options="['deleteRamal', 'editRamal']"
               :ramal="props.row"
-              :pages="pages"
               @envity-ramal-custom="(item) => (ramalOfTable = item)"
-              @reload="getRamais"
+              @reload="getRamais(saveIndexPages)"
             />
           </q-avatar>
         </q-td>
@@ -37,7 +37,7 @@
     <Pagination
       class="text-right"
       :pages="pages"
-      @change-page="(index) => (indexSelection = index)"
+      @change-page="(index) => getRamais(index) && getRamais(index)"
     />
     <SeparatorForEmergence
       :texto="'400 RAMAL DE EMERGÊNCIA'"
@@ -47,30 +47,40 @@
 </template>
 
 <script setup lang="ts">
-import { columns, maxRows, pagesForTable } from "./lib";
+import { columns, pagesOfTable, firstPage } from "./lib";
 import { Column } from "../../entities/column";
 import * as Query from "../../graphql/ramais/queries.gql";
 const ramais = ref();
 const pages = ref();
-const indexSelection = ref();
-const search = ref();
+const resultSearchRamal = ref();
 const pagination = ref({
-  rowsPerPage: maxRows,
+  rowsPerPage: pagesOfTable,
 });
-async function getRamais() {
+const saveIndexPages = ref();
+async function getRamais(page: Number) {
+  saveIndexPages.value = page;
   const { getRamaisForPage } = await runQuery(Query.GetRamaisForPage, {
-    page: indexSelection.value,
+    page: page - 1,
   });
+  console.log(
+    await runQuery(Query.GetRamaisForPage, {
+      page: page - 1,
+    }),
+  );
   ramais.value = getRamaisForPage;
 }
+async function getSizeOfRamais() {
+  const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais, {
+    maxPages: pagesOfTable,
+  });
+  pages.value = getLenghtRamais;
+}
 onMounted(async () => {
-  await getRamais();
-  const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais);
-  pages.value = pagesForTable(getLenghtRamais);
+  getSizeOfRamais();
 });
 watchEffect(() => {
-  if (indexSelection.value >= 0) {
-    getRamais();
+  if (resultSearchRamal) {
+    ramais.value = resultSearchRamal.value;
   }
 });
 </script>

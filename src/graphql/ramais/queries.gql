@@ -6,6 +6,16 @@ query GetRamaisForPage($page: ID!) {
     number
   }
 }
-query GetLenghtRamais($maxPages: String!) {
+
+query GetLenghtRamais($maxPages: ID!) {
   getLenghtRamais(maxPages: $maxPages)
+}
+
+query SearchRamal($word: String!) {
+  searchRamal(word: $word) {
+    id
+    name
+    sector
+    number
+  }
 }
