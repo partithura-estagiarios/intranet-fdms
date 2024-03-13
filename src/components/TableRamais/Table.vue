@@ -2,7 +2,7 @@
   <div class="q-pa-xl box-shadow mx-8 relative-position bg-white">
     <HeaderRamais @ramal="(value) => (search = value)" />
     <q-table
-      :rows="definiteRamais"
+      :rows="ramais"
       :columns="columns as Column[]"
       flat
       hide-bottom
@@ -17,7 +17,13 @@
       <template v-slot:body-cell-icon="props">
         <q-td :props="props">
           <q-avatar>
-            <q-icon name="settings" />
+            <DropdownSettings
+              :options="['deleteRamal', 'editRamal']"
+              :ramal="props.row"
+              :pages="pages"
+              @envity-ramal-custom="(item) => (ramalOfTable = item)"
+              @reload="getRamais"
+            />
           </q-avatar>
         </q-td>
       </template>
@@ -41,31 +47,31 @@
 </template>
 
 <script setup lang="ts">
-import { columns, firstPage } from "./lib";
-import GetRamais from "../../graphql/ramais/GetRamais.gql";
+import { columns, maxRows, pagesForTable } from "./lib";
 import { Column } from "../../entities/column";
-import { Ramal } from "../../entities/ramal";
+import * as Query from "../../graphql/ramais/queries.gql";
 const ramais = ref();
-const definiteRamais = ref();
 const pages = ref();
-async function getRamais() {
-  const { getRamais } = await runQuery(GetRamais);
-  ramais.value = getRamais;
-  pages.value = ramais.value.length;
-  definiteRamais.value = ramais.value[firstPage - 1];
-}
-onMounted(() => {
-  getRamais();
-});
 const indexSelection = ref();
-watchEffect(() => {
-  if (indexSelection.value) {
-    definiteRamais.value = ramais.value[indexSelection.value - 1];
-  }
-});
 const search = ref();
 const pagination = ref({
   rowsPerPage: maxRows,
+});
+async function getRamais() {
+  const { getRamaisForPage } = await runQuery(Query.GetRamaisForPage, {
+    page: indexSelection.value,
+  });
+  ramais.value = getRamaisForPage;
+}
+onMounted(async () => {
+  await getRamais();
+  const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais);
+  pages.value = pagesForTable(getLenghtRamais);
+});
+watchEffect(() => {
+  if (indexSelection.value >= 0) {
+    getRamais();
+  }
 });
 </script>
 

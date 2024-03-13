@@ -21,6 +21,7 @@
       :open="dialogVisible"
       @close="(value) => (dialogVisible = value)"
       @add-ramal="(item) => (receivedRamal = item)"
+      :option="'addRamal'"
     />
   </div>
 </template>
