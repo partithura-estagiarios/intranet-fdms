@@ -1,0 +1,6 @@
+query GetRooms {
+  getRooms {
+    id
+    location
+  }
+}

@@ -1,0 +1,24 @@
+query GetScheduleRoomQuery {
+  getScheduleRoom {
+    id
+    user_created {
+      name
+      ramal_number
+      user_registration
+      email
+    }
+    location
+    description {
+      rules
+      total_people
+    }
+    initial_time
+    final_time
+    support {
+      computer
+      projector
+      water
+      coffee
+    }
+  }
+}

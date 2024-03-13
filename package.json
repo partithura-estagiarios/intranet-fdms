@@ -15,10 +15,12 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.9",
+    "@quasar/quasar-ui-qcalendar": "^4.0.0-beta.19",
     "@rollup/plugin-graphql": "^2.0.4",
     "@vueuse/core": "^10.9.0",
     "graphql": "^16.8.1",
     "lodash.chunk": "^4.2.0",
+    "luxon": "^3.4.4",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "quasar": "^2.14.6",
