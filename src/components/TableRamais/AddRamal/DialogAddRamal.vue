@@ -94,10 +94,19 @@ async function optionRamal(option: string, ramal: Object) {
   switch (props.option) {
     case "deleteRamal":
       await runMutation(Mutation.DeleteRamal, { id: ramal.id });
+      emits("close");
+      emits("reloadTable");
+      break;
     case "editRamal":
       await runMutation(Mutation.EditRamal, { ramal: ramal });
+      emits("close");
+      emits("reloadTable");
+      break;
     case "addRamal":
       await runMutation(Mutation.AddRamal, { newRamal: ramal });
+      emits("close");
+      emits("reloadTable");
+      break;
     default:
       emits("close");
       emits("reloadTable");
