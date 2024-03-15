@@ -1,14 +1,7 @@
 <template>
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: nowrap;
-    "
-  >
-    <div style="font-size: 2em">{{ formattedMonth }}</div>
-  </div>
+  <q-card class="text-h3 text-uppercase text-indigo-8">
+    {{ formattedMonth }}
+  </q-card>
 </template>
 
 <script setup lang="ts">
@@ -39,4 +32,3 @@ const locale = computed(() => {
   return "en-CA";
 });
 </script>
-<style scoped></style>

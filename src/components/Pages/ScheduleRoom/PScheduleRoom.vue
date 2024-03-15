@@ -1,8 +1,15 @@
 <template>
-  <div class="row justify-center">
-    <NavigationScheduleRoom @select-month="(item) => (selectedDate = item)" />
-
+  <div class="fit column wrap justify-center items-center content-center">
     <Month :select-date="selectedDate" />
+    <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
+    <div class="row">
+      <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
+        <div class="row items-center">
+          <q-badge rounded :color="item.color" class="mr-2" />
+          <span>{{ item.name }}</span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="subcontent">
     <div class="row justify-center">
@@ -19,17 +26,7 @@
           :day-height="0"
         >
           <template #day="{ scope: { timestamp } }">
-            <template v-for="event in events" :key="event.id">
-              <div class="my-event" v-if="event.final_date == timestamp.date">
-                {{
-                  (event.description.rules,
-                  "-",
-                  event.initial_time,
-                  event.final_time)
-                }}
-                <q-tooltip>{{ event.support }}</q-tooltip>
-              </div>
-            </template>
+            <ExpansionEvent :data="timestamp.date" :events="events" />
           </template>
         </q-calendar-month>
       </div>
@@ -42,81 +39,46 @@ import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
+import * as Query from "../../../graphql/scheduleRoom/queries.gql";
+import { formatDate, insertColor, rooms } from "./lib";
 
-import GetScheduleRoomQuery from "../../../graphql/scheduleRoom/getScheduleRoom.gql";
-import { item } from "../../TabHeader/ButtonDropdownSettings/lib";
+const selectedDate = ref(today());
+const events = ref();
+const instance = getCurrentInstance();
+
+function onToday() {
+  instance.refs.calendar.moveToToday();
+}
+
+function onPrev() {
+  instance.refs.calendar.prev();
+}
+
+function onNext() {
+  instance.refs.calendar.next();
+}
+
 onMounted(async () => {
-  const { getScheduleRoom } = await runQuery(GetScheduleRoomQuery);
+  const { getScheduleRoom } = await runQuery(Query.GetScheduleRoom);
   if (getScheduleRoom.length > 0) {
     getScheduleRoom.forEach((event) => {
       event.initial_time = new Date(event.initial_time);
       event.final_time = new Date(event.final_time);
-      event.final_date = getFormattedDate(event.final_time);
+      event.final_date = formatDate(event.final_time);
+      event.colorRoom = insertColor(event.location);
     });
     events.value = getScheduleRoom;
   }
 });
-
-function getFormattedDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-const selectedDate = ref(today());
-
-const events = ref();
 </script>
 
 <style scoped>
 .calendarM {
   display: flex;
-  max-width: 800px;
+  max-width: 100%;
   width: 100%;
 }
-.my-event {
-  position: relative;
-  font-size: 12px;
-  width: 100%;
-  margin: 1px 0 0 0;
-  justify-content: center;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  cursor: pointer;
-}
-.title {
-  position: relative;
+.display-flex {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-.text-white {
-  color: white;
-}
-.bg-blue {
-  background: blue;
-}
-.bg-green {
-  background: green;
-}
-.bg-orange {
-  background: orange;
-}
-.bg-red {
-  background: red;
-}
-.bg-teal {
-  background: teal;
-}
-.bg-grey {
-  background: grey;
-}
-.bg-purple {
-  background: purple;
-}
-.rounded-border {
-  border-radius: 2px;
 }
 </style>

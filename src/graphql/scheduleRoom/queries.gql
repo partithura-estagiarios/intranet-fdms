@@ -1,4 +1,10 @@
-query GetScheduleRoomQuery {
+query GetRooms {
+  getRooms {
+    id
+    location
+  }
+}
+query GetScheduleRoom {
   getScheduleRoom {
     id
     user_created {

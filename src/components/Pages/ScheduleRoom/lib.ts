@@ -1,3 +1,5 @@
+import { event } from "quasar";
+
 export const countryCodes = {
   AD: "ca", // 'Andorra', Catalan
   AE: "ar", // 'دولة الإمارات العربية المتحدة', Arabic
@@ -159,4 +161,38 @@ export const monthsAux = [
   { label: "label.monhs.ocober", value: 10 },
   { label: "label.monhs.november", value: 11 },
   { label: "label.monhs.december", value: 12 },
+];
+export function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Adiciona zero à esquerda se o mês for menor que 10
+  const day = String(date.getDate()).padStart(2, "0"); // Adiciona zero à esquerda se o dia for menor que 10
+  return `${year}-${month}-${day}`;
+}
+export function insertColor(room: String) {
+  switch (room) {
+    case "SALA A":
+      return "red";
+      break;
+  }
+  switch (room) {
+    case "SALA B":
+      return "green";
+      break;
+  }
+  switch (room) {
+    case "SALA C":
+      return "yellow";
+      break;
+  }
+  switch (room) {
+    case "SALA DE REUNIÃO":
+      return "orange";
+      break;
+  }
+}
+export const rooms = [
+  { name: "SALA A", color: "red" },
+  { name: "SALA B", color: "green" },
+  { name: "SALA C", color: "yellow" },
+  { name: "SALA DE REUNIÃO", color: "orange" },
 ];
