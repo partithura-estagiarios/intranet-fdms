@@ -29,6 +29,6 @@ const locale = computed(() => {
   if (country.value) {
     return countryCodes[country.value];
   }
-  return "en-CA";
+  return "pt-BR";
 });
 </script>

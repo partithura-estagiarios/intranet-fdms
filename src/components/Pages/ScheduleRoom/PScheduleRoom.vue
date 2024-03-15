@@ -13,7 +13,7 @@
   </div>
   <div class="subcontent">
     <div class="row justify-center">
-      <div class="calendarM">
+      <div class="calendarM row window-width">
         <q-calendar-month
           ref="calendar"
           v-model="selectedDate"
@@ -71,14 +71,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style scoped>
-.calendarM {
-  display: flex;
-  max-width: 100%;
-  width: 100%;
-}
-.display-flex {
-  display: flex;
-}
-</style>
