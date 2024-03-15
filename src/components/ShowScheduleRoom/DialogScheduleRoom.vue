@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="card">
     <q-card class="my-card" v-if="room">
-      <header-d
+      <DialogHeader
         @close="(item) => (card = item)"
         :option="room.description.rules"
       />
@@ -43,6 +43,7 @@
 
 <script setup lang="ts">
 import * as Query from "../../graphql/scheduleRoom/queries.gql";
+import DialogHeader from "../HeaderDialog/DialogHeader.vue";
 import { getHoursMinutes } from "./lib";
 const card = ref(true);
 const room = ref();
