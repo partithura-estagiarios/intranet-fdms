@@ -1,5 +1,5 @@
 <template>
-  <div class="padding-item justify-center q-px-xl">
+  <div class="row justify-center q-px-xl q-pa-md">
     <div v-for="item in sistemas">
       <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
@@ -59,8 +59,5 @@ function goToRoute(rout: String) {
 .border {
   border: 5px solid rgb(34, 34, 199);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-.padding-item {
-  padding-top: 2%;
 }
 </style>
