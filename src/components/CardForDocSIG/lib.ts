@@ -1,4 +1,5 @@
-export function extractImage(name, imgs) {
+import { Certification } from "../../entities/certification";
+export function extractImage(name: String, imgs: Certification[]) {
   return imgs.find((element) => element.name === name)?.image;
 }
 

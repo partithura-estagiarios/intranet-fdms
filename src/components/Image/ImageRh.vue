@@ -11,6 +11,6 @@ const props = defineProps({
 </script>
 <style scoped>
 .img {
-  top: 50px;
+  top: 5vh;
 }
 </style>
