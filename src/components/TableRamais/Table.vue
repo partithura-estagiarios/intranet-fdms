@@ -62,11 +62,7 @@ async function getRamais(page: Number) {
   const { getRamaisForPage } = await runQuery(Query.GetRamaisForPage, {
     page: page - 1,
   });
-  console.log(
-    await runQuery(Query.GetRamaisForPage, {
-      page: page - 1,
-    }),
-  );
+
   ramais.value = getRamaisForPage;
 }
 async function getSizeOfRamais() {

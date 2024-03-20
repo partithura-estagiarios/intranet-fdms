@@ -61,7 +61,6 @@ const pwdIconName = computed(() => {
 async function registerUser() {
   const { confirmPassword, ...userForm } = registerForm;
   const { register } = await runMutation(Register, { newUser: userForm });
-  console.log(register);
   if (register) {
     return positiveNotify(t("register.registerSucess"));
   }

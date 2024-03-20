@@ -1,3 +1,3 @@
 <template>
-  <add-schedule-room />
+  <AddScheduleRoom />
 </template>
