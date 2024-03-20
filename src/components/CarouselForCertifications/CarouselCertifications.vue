@@ -56,7 +56,7 @@ onMounted(async () => {
         return {
           name: certification.name.toString(),
           image: certification.image.toString(),
-        } as Certification;
+        };
       },
     );
   }

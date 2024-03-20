@@ -1,6 +1,5 @@
 <template>
-  <ImageRh img="Welcome_Intranet.png" class="padding" />
-  <Separator texto="SISTEMAS" large="px-20" />
+  <ImageRh img="Welcome_Intranet.png" />
+  <Separator :texto="$t('text.systems')" large="q-px-xl" />
   <Item sistema="gestao" />
 </template>
-<style scoped></style>

@@ -10,4 +10,5 @@ export default {
   searchRamal: "Search Ramal",
   editRamal: "Edit Ramal",
   deleteRamal: "Delete Ramal",
+  systems: "SYSTEMS",
 };
