@@ -44,17 +44,17 @@ export function verifyReceivedDate(date) {
 }
 export function adaptScheduleToRoom(schedule) {
   return {
-    user_created: {
+    userCreated: {
       name: schedule.inputs.name.value,
-      ramal_number: schedule.inputs.ramal.value,
-      user_registration: schedule.inputs.userRegistration.value,
+      ramalNumber: schedule.inputs.ramal.value,
+      userRegistration: schedule.inputs.userRegistration.value,
       email: schedule.inputs.email.value,
-      total_people: schedule.inputs.totalPeople.value,
+      totalPeople: schedule.inputs.totalPeople.value,
     },
     location: schedule.options.value,
     description: schedule.inputsLongs.description,
-    initial_time: schedule.dateInfos.initialTime.value,
-    final_time: schedule.dateInfos.finalTime.value,
+    initialTime: schedule.dateInfos.initialTime.value,
+    finalTime: schedule.dateInfos.finalTime.value,
     support: {
       computer: schedule.booleanInfos.computer.value,
       projector: schedule.booleanInfos.projector.value,
