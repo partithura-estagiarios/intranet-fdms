@@ -8,7 +8,7 @@ import path from "node:path";
 import Pages from "vite-plugin-pages";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import Unocss from "unocss/vite";
-
+import vuePlugin from "@quasar/quasar-ui-qcalendar";
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
