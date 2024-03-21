@@ -21,11 +21,11 @@
         bg-color="white "
         class="border q-px-md"
         v-model="formScheduleRoom.inputsLongs.description"
-        label="Descrição do Evento"
+        :label="$t('text.descriptionOfEvent')"
       />
     </div>
     <div class="bg-indigo-8 text-white q-px-xl q-py-none">
-      Materiais de Apoio
+      {{ $t("text.supportMaterialExtras") }}
     </div>
     <div class="content row relative-position q-px-sl justify-between">
       <CheckBoxRoom
@@ -38,7 +38,7 @@
         bg-color="white "
         class="border q-px-md"
         v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
-        label="Outras Ex: Canetas, Folhas A4"
+        :label="$t('text.otherMaterials')"
       />
     </div>
   </div>

@@ -20,4 +20,9 @@ export default {
   ramal: "Ramal",
   supportMaterial: "Support material",
   organizer: "Organizer",
+  otherMaterials: "Other Ex: Pens, A4 sheets",
+  descriptionOfEvent: "Description of the event",
+  selectRoom: "Select the Room",
+  startDateandTime: "Start Date and Time",
+  endDateandTime: "End Date and Time",
 };

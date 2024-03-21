@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="props.showCard" class="">
+  <q-dialog v-model="props.showCard">
     <q-card class="my-card row q-px-">
       <q-card-section class="row no-wrap no-scroll">
         <q-date

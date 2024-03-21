@@ -4,7 +4,7 @@
       :label="index"
       bg-color="white "
       class="border"
-      :type="verifyInput(item.value)"
+      :type="verifyTypeOfInput(item.value)"
       v-model="item.value"
     >
       <template #prepend>
@@ -27,9 +27,7 @@ const props = defineProps({
     default: {},
   },
 });
-function verifyInput(item) {
-  return verifyTypeOfInput(item);
-}
+
 const formInputNormal = reactive(props.inputs);
 watchEffect(() => {
   emits("envityDates", formInputNormal);

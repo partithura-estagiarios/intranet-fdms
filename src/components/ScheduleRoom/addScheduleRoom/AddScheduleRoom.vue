@@ -6,7 +6,11 @@
         <InputSection @envity-room="(room) => (roomSchedule = room)" />
       </q-card-section>
       <q-card-section align="right">
-        <q-btn color="green" label="Confirmar" @click="saveRoom()" />
+        <q-btn
+          color="green"
+          :label="$t('formRamal.confirm')"
+          @click="saveRoom()"
+        />
       </q-card-section>
     </q-card>
   </q-dialog>

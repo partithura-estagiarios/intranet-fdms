@@ -1,13 +1,13 @@
 <template>
   <InputTime
     class="col-6"
-    label="Data e Hora de Início"
+    :label="$t('text.startDateAndTime')"
     :dateInput="date1"
     @envity-dates="(item) => (date1 = item)"
   />
   <InputTime
     class="col-6"
-    label="Data e Hora Final"
+    :label="$t('text.endDateAndTime')"
     @envity-dates="(item) => (date2 = item)"
     :dateInput="date2"
   />
