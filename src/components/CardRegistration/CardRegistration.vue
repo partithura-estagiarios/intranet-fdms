@@ -48,6 +48,7 @@
 import Register from "../../graphql/user/mutations.gql";
 import { registerUserSchema } from "../../modules/zod";
 import { getError } from "./lib";
+
 const { t } = useI18n();
 
 const registerForm = reactive({
@@ -63,8 +64,7 @@ const pwdIconName = computed(() => {
   return isPwdvisible.value ? "visibility_off" : "visibility";
 });
 function validateNewUser() {
-  const { success } = registerUserSchema.safeParse(registerForm);
-  return success;
+  return registerUserSchema.safeParse(registerForm).success;
 }
 async function registerUser() {
   const { confirmPassword, ...userForm } = registerForm;
