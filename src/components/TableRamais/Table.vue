@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { columns, pagesOfTable, firstPage } from "./lib";
+import { columns, pagesOfTable } from "./lib";
 import { Column } from "../../entities/column";
 import * as Query from "../../graphql/ramais/queries.gql";
 const ramais = ref();

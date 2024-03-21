@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed-center">
+  <div class="fixed-center relative-position card">
     <q-card>
       <q-card-section class="bg-indigo-8 text-h6 row text-white">
         <div class="col-12">
@@ -24,9 +24,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { extracImage } from "./lib";
+import { extractImage } from "./lib";
 const selectCard = ref("");
-const selectTitle = ref();
+const selectTitle = ref("");
 const imgs = ref();
 const selecImage = ref();
 const updateSelectCard = (item: string) => {
@@ -38,11 +38,14 @@ watchEffect(() => {
   }
 });
 function updateImg(title: String) {
-  selecImage.value = extracImage(title, imgs.value);
+  selecImage.value = extractImage(title, imgs.value);
 }
 </script>
 <style scoped>
 .box-shadow {
   box-shadow: 0.5px 4px 9px rgba(0, 0, 0, 0.1);
+}
+.card {
+  padding-top: 5%;
 }
 </style>

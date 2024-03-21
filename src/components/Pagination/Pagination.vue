@@ -31,7 +31,7 @@
       no-caps
       size="19px"
       @click="changeColor(activeButtonIndex + 1)"
-      :disable="activeButtonIndex == quantPages[quantPages.length - 1]"
+      :disable="activeButtonIndex == props.pages"
     >
       <label>{{ $t("text.next") }}</label>
     </q-btn>
@@ -59,9 +59,5 @@ const changeColor = (index: number) => {
 };
 onMounted(() => {
   changeColor(firstPage);
-  quantPages.value = Array.from(
-    { length: props.pages },
-    (_, index) => index + 1,
-  );
 });
 </script>

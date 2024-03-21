@@ -33,6 +33,6 @@ interface FetchOptions extends RequestInit {
 }
 
 export const villus = createClient({
-  use: [authPlugin, somePlugin, ...defaultPlugins()],
+  use: [authPlugin, ...defaultPlugins(), somePlugin],
   url,
 });

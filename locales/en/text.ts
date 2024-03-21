@@ -10,6 +10,7 @@ export default {
   searchRamal: "Search Ramal",
   editRamal: "Edit Ramal",
   deleteRamal: "Delete Ramal",
+  systems: "SYSTEMS",
   coffee: "Coffe",
   projector: "Projector",
   water: "Water",
