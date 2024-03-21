@@ -1,6 +1,5 @@
 import { createApp } from "vue";
 import { Quasar, Notify } from "quasar";
-
 import { i18n, pinia, router, villus } from "./modules";
 import App from "./App.vue";
 

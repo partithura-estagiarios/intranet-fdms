@@ -67,12 +67,9 @@ function validateNewUser() {
   return success;
 }
 async function registerUser() {
-  const { confirmPassword, ...userNew } = registerForm;
-  const { register } = await runMutation(Register, {
-    newUser: userNew,
-  });
-  const { success, message } = register;
-  if (success) {
+  const { confirmPassword, ...userForm } = registerForm;
+  const { register } = await runMutation(Register, { newUser: userForm });
+  if (register) {
     return positiveNotify(t("register.registerSucess"));
   }
   negativeNotify(t("errors." + getError(message)));

@@ -12,7 +12,7 @@
         <q-icon
           name="search"
           color="indigo-8"
-          @click="emits('ramal', search)"
+          @click="searchRamalInBack()"
           class="cursor-pointer"
         />
       </template>
@@ -26,16 +26,20 @@
   </div>
 </template>
 <script setup lang="ts">
+import SearchRamal from "../../graphql/ramais/queries.gql";
 const dialogVisible = ref(false);
-const emits = defineEmits(["ramal", "envityRamal-table"]);
+const emits = defineEmits(["envityRamal-table"]);
 const search = ref();
 const receivedRamal = ref();
-watchEffect(() => {
-  if (receivedRamal) {
-    emits("envityRamal-table", receivedRamal);
-  }
-});
+
 function openDialog() {
   dialogVisible.value = true;
+}
+
+async function searchRamalInBack() {
+  const { searchRamal } = await runQuery(SearchRamal, {
+    word: search.value,
+  });
+  emits("envityRamal-table", searchRamal);
 }
 </script>
