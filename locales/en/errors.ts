@@ -1,3 +1,3 @@
 export default {
-  errorEmail: "Email duplicate",
+  errorEmail: "Duplicate e-mail",
 };
