@@ -1,16 +1,44 @@
 <template>
-  <div class="fit column wrap justify-center items-center content-center">
+  <div
+    class="fit column wrap justify-center items-center content-center padding-top"
+  >
     <Month :select-date="selectedDate" />
     <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
     <div class="row">
       <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
         <div class="row items-center">
           <q-badge rounded :color="item.color" class="mr-2" />
-          <span>{{ item.name }}</span>
+          <span>{{ $t(`text.${item.name}`) }}</span>
         </div>
       </div>
     </div>
   </div>
+  <div class="row q-px-md q-pa-sm">
+    <q-btn
+      color="green"
+      text-color="white"
+      :label="$t('text.addRoom')"
+      class="row"
+      @click="(card = true), (selectDate = '')"
+    />
+    <div class="q-px-md q-pa-md">
+      {{ $t("text.selectDayForRoom") }}
+    </div>
+  </div>
+  <q-dialog v-model="card">
+    <div class="my-card relative-position no-scroll">
+      <q-card class="no-scroll" flat>
+        <DialogHeader
+          @close="(item) => (card = item)"
+          :option="$t('text.organizerEvent')"
+        />
+        <AddScheduleRoom
+          @reload="loadSchedule(), (card = false)"
+          :selectDate="selectDate"
+        />
+      </q-card>
+    </div>
+  </q-dialog>
   <div class="subcontent">
     <div class="row justify-center">
       <div class="calendarM row window-width">
@@ -20,10 +48,11 @@
           animated
           bordered
           focusable
+          locale="pt-br"
           hoverable
-          no-active-date
           :day-min-height="60"
           :day-height="0"
+          @click-date="onClickHeadDay"
         >
           <template #day="{ scope: { timestamp } }">
             <ExpansionEvent :data="timestamp.date" :events="events" />
@@ -41,11 +70,16 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import * as Query from "../../../graphql/scheduleRoom/queries.gql";
 import { formatDate, insertColor, rooms } from "./lib";
-
 const selectedDate = ref(today());
 const events = ref();
 const instance = getCurrentInstance();
-
+const card = ref(false);
+const selectDate = ref();
+function onClickHeadDay(item) {
+  selectDate.value =
+    item.scope.timestamp.date + " " + item.scope.timestamp.time;
+  card.value = true;
+}
 function onToday() {
   instance.refs.calendar.moveToToday();
 }
@@ -57,8 +91,7 @@ function onPrev() {
 function onNext() {
   instance.refs.calendar.next();
 }
-
-onMounted(async () => {
+async function loadSchedule() {
   const { getScheduleRoom } = await runQuery(Query.GetScheduleRoom);
   if (getScheduleRoom.length > 0) {
     getScheduleRoom.forEach((event) => {
@@ -69,5 +102,17 @@ onMounted(async () => {
     });
     events.value = getScheduleRoom;
   }
+}
+onMounted(() => {
+  loadSchedule();
 });
 </script>
+<style scoped>
+.padding-top {
+  position: relative;
+  padding-top: 10vh;
+}
+.my-card {
+  top: 4vh;
+}
+</style>

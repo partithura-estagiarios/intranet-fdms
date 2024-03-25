@@ -5,7 +5,7 @@
       bg-color="white"
       class="border"
       readonly
-      :label="date"
+      :label="dateReceived"
       v-bind="$attrs"
     >
       <template #before>
@@ -23,16 +23,16 @@
       @close="
         (down, date) => {
           card = down;
+          dateReceived = date;
           emits('envityDates', date);
         }
       "
-      :final-time="date"
+      :final-time="dateReceived"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { verifyReceivedDate } from "../../addScheduleRoom/lib";
 const emits = defineEmits(["envityDates", "envityHour"]);
 const props = defineProps({
   label: {
@@ -46,12 +46,12 @@ const props = defineProps({
 });
 
 const card = ref(false);
-const date = ref();
+const dateReceived = ref();
 watchEffect(() => {
-  if (verifyReceivedDate(props.dateInput)) {
-    return (date.value = verifyReceivedDate(props.dateInput));
+  if (props.dateInput) {
+    return (dateReceived.value = props.dateInput);
   }
-  return (date.value = props.label);
+  return (dateReceived.value = props.label);
 });
 </script>
 

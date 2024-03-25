@@ -1,8 +1,8 @@
 <template>
   <div v-for="(item, index) in formInputNormal" class="q-pa-sm col-6">
     <q-input
-      :label="index"
-      bg-color="white "
+      :label="$t('userScheduleRoom.' + index)"
+      bg-color="white"
       class="border"
       :type="verifyTypeOfInput(item.value)"
       v-model="item.value"
