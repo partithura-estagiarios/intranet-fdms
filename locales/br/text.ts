@@ -16,7 +16,6 @@ export default {
   flipSharp: "Quadro",
   water: "Água",
   computer: "Computador",
-  equipament_song: "Som",
   hourInitial: "Hora de início",
   hourFinal: "Hora de término",
   participants: "Participantes",
@@ -36,7 +35,7 @@ export default {
   roomC: "Sala C",
   roomOfReunion: "Sala de Reunião",
   selectDayForRoom: "Ou selecione um dia",
-  yourName: "",
+  yourName: "Seu nome",
   helpers: `Outros: {materiais}`,
   equipamentSong: "Equipamento de Som",
 };

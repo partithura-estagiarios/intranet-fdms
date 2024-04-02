@@ -13,7 +13,6 @@ export default {
   systems: "SYSTEMS",
   coffee: "Coffe",
   flipSharp: "flipSharp",
-  equipament_song: "Song",
   projector: "Projector",
   water: "Water",
   computer: "Computer",
@@ -38,4 +37,5 @@ export default {
   selectDayForRoom: "Or select a day",
   helpers: `Others: {materiais}`,
   equipamentSong: "Equipament of Song",
+  yourName: "Seu nome",
 };
