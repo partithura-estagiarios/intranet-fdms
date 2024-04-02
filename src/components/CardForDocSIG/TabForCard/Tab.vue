@@ -17,7 +17,6 @@
 import { tabItems } from "./lib";
 const emits = defineEmits(["showCard"]);
 const tab = ref("institutional");
-
 onMounted(() => {
   showLabel("institutional");
 });

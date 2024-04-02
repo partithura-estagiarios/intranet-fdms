@@ -26,4 +26,6 @@ export default {
   selectRoom: "Selecione a Sala",
   startDateAndTime: "Data e Hora de Início",
   endDateAndTime: "Data e Hora Final",
+  addArchive: "Adicionar Arquivo",
+  searchArchive: "Procurar Arquivo",
 };
