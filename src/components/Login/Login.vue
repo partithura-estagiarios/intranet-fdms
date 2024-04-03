@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { User, Auth } from "../../entities/login";
+import { User } from "../../entities/login";
 import { router } from "../../modules";
 import { useUsers } from "../../stores/user";
 
@@ -56,12 +56,12 @@ const handleDataLogin = (form: User) => {
 
 const submitLoginForm = async () => {
   const { auth } = await userStorage.getUser(loginForm);
-  if (Object.keys(auth).length !== null) {
+  if (auth) {
     userStorage.stateUser = auth;
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }
-  negativeNotify(t("login.enterYourCredentials"));
+  return negativeNotify(t("auth.invalidCredentials"));
 };
 </script>
 

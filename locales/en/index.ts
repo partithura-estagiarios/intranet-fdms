@@ -5,7 +5,7 @@ import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
 import tab from "./tab";
-
+import auth from "./auth";
 export default {
   action,
   caderno: {
@@ -38,4 +38,5 @@ export default {
   formRamal,
   register,
   tab,
+  auth,
 };
