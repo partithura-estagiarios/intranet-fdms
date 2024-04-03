@@ -35,7 +35,6 @@ export default {
   roomC: "Sala C",
   roomOfReunion: "Sala de Reunião",
   selectDayForRoom: "Ou selecione um dia",
-  yourName: "Seu nome",
   helpers: `Outros: {materiais}`,
   equipamentSong: "Equipamento de Som",
 };

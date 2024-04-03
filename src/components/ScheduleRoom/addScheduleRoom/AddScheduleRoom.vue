@@ -36,7 +36,6 @@ async function saveRoom() {
   const dataFinal = DateTime.fromJSDate(dateTest2);
   roomSchedule.value.initialTime = dataInicial.toISO();
   roomSchedule.value.finalTime = dataFinal.toISO();
-  console.log(roomSchedule.value);
   await runMutation(Mutation.CreateScheduleRoom, { room: roomSchedule.value });
   emits("reload", true);
 }
