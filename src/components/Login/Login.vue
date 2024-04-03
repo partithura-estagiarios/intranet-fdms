@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { User, UserStorage } from "../../entities/login";
+import { User, Auth } from "../../entities/login";
 import { router } from "../../modules";
 import { useUsers } from "../../stores/user";
 
@@ -55,11 +55,9 @@ const handleDataLogin = (form: User) => {
 };
 
 const submitLoginForm = async () => {
-  const some = await userStorage.getUser(loginForm);
-  console.log({ some });
-  const { auth } = some;
+  const { auth } = await userStorage.getUser(loginForm);
   if (Object.keys(auth).length !== null) {
-    userStorage.stateUser = auth as UserStorage;
+    userStorage.stateUser = auth;
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }
