@@ -22,7 +22,6 @@
               @close="(val) => (card = val)"
               :option="event.description.rules"
             />
-            {{ event }}
             <q-separator />
             <DialogScheduleRoom :event-show="testEvent" />
           </q-card>
@@ -33,7 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
 import { formatDate } from "./lib";
 import DialogScheduleRoom from "../../ShowScheduleRoom/DialogScheduleRoom.vue";
 

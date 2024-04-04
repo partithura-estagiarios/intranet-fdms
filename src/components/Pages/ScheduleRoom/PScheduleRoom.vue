@@ -68,7 +68,7 @@ import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
-import * as Query from "../../../graphql/scheduleRoom/queries.gql";
+import * as ScheduleRoomQuery from "../../../graphql/scheduleRoom/queries.gql";
 import { formatDate, insertColor, rooms } from "./lib";
 const selectedDate = ref(today());
 const events = ref();
@@ -92,7 +92,7 @@ function onNext() {
   instance.refs.calendar.next();
 }
 async function loadSchedule() {
-  const { getScheduleRoom } = await runQuery(Query.GetScheduleRoom);
+  const { getScheduleRoom } = await runQuery(ScheduleRoomQuery.GetScheduleRoom);
   if (getScheduleRoom.length > 0) {
     getScheduleRoom.forEach((event) => {
       event.initial_time = new Date(event.initial_time);

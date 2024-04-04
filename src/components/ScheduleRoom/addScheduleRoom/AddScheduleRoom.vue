@@ -20,6 +20,7 @@
 import * as Mutation from "../../../graphql/scheduleRoom/mutations.gql";
 import { adaptScheduleToRoom } from "../addScheduleRoom/lib";
 import { DateTime } from "luxon";
+const { t } = useI18n();
 const props = defineProps({
   selectDate: {
     type: String,
@@ -36,7 +37,13 @@ async function saveRoom() {
   const dataFinal = DateTime.fromJSDate(dateTest2);
   roomSchedule.value.initialTime = dataInicial.toISO();
   roomSchedule.value.finalTime = dataFinal.toISO();
-  await runMutation(Mutation.CreateScheduleRoom, { room: roomSchedule.value });
-  emits("reload", true);
+  if (
+    await runMutation(Mutation.CreateScheduleRoom, { room: roomSchedule.value })
+  ) {
+    positiveNotify(t("userScheduleRoom.reunionAccept"));
+    return emits("reload", true);
+  }
+  negativeNotify(t("userScheduleRoom.timeError"));
+  return emits("reload", true);
 }
 </script>
