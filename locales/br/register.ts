@@ -7,4 +7,6 @@ export default {
   register: "Cadastrar",
   registerSucess: "Usuário registrado com sucessso",
   errorRegister: "Houve um erro durante a tentativa de registro",
+  ramal_number: "Ramal",
+  user_registration: "Matrícula",
 };

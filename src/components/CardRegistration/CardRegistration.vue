@@ -47,7 +47,6 @@
 <script setup lang="ts">
 import Register from "../../graphql/user/mutations.gql";
 import { registerUserSchema } from "../../modules/zod";
-import { getError } from "./lib";
 
 const { t } = useI18n();
 
@@ -56,6 +55,8 @@ const registerForm = reactive({
   email: "",
   password: "",
   confirmPassword: "",
+  ramal_number: null,
+  user_registration: null,
 });
 
 const isPwdvisible = ref(true);
@@ -69,10 +70,10 @@ function validateNewUser() {
 async function registerUser() {
   const { confirmPassword, ...userForm } = registerForm;
   const { register } = await runMutation(Register, { newUser: userForm });
-  if (register) {
+  if (register.success) {
     return positiveNotify(t("register.registerSucess"));
   }
-  negativeNotify(t("errors." + getError(message)));
+  negativeNotify(t("register." + register.message));
 }
 function verifyText(item: string) {
   return item.includes("ss");

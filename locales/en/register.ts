@@ -6,5 +6,7 @@ export default {
   confirmPassword: "Confirm password",
   register: "Register",
   registerSucess: "User registered successfully",
-  errorRegister: "There was an error while trying to register",
+  users: "Emai",
+  ramal_number: "Ramal",
+  user_registration: "Registration",
 };

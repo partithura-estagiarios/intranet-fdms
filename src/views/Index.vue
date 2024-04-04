@@ -8,6 +8,6 @@
 import { router } from "../modules";
 
 onMounted(() => {
-  router.push("/scheduleRoom");
+  router.push("/login");
 });
 </script>
