@@ -9,4 +9,6 @@ export default {
   errorRegister: "Houve um erro durante a tentativa de registro",
   ramal_number: "Ramal",
   user_registration: "Matrícula",
+  users: "Credenciais Repetidas",
+  duplicatePassword: "Senha Repetida",
 };

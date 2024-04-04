@@ -73,7 +73,7 @@ async function registerUser() {
   if (register.success) {
     return positiveNotify(t("register.registerSucess"));
   }
-  negativeNotify(t("register." + register.message));
+  negativeNotify(t(`${register.message}`));
 }
 function verifyText(item: string) {
   return item.includes("ss");
