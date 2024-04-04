@@ -1,8 +1,12 @@
+import { Certification } from "../../entities/certification";
 export function extractImage(
   name: string,
-  imgs: { name: string; image: any }[],
-) {
-  return imgs.find((element: { name: string }) => element.name === name)?.image;
+  imgs: Certification[],
+): string | unknown {
+  const image = imgs.find((element) => element.name === name)?.image;
+  if (image) {
+    return image;
+  }
 }
 
 export function getFirstImage(docSig: { name: string }[]) {

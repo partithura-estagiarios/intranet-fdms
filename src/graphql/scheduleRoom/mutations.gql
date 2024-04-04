@@ -1,0 +1,3 @@
+mutation CreateScheduleRoom($room: NewScheduleRoom!) {
+  createScheduleRoom(room: $room)
+}

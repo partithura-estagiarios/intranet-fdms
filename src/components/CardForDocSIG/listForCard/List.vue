@@ -20,7 +20,7 @@ onMounted(async () => {
   const { loadCertifications } = await runQuery(LoadCertifications, {
     title: "docSig",
   });
-  institutional.value = getCertifications;
+  institutional.value = loadCertifications;
   emits("envityImgs", institutional.value);
   setLink(getFirstImage(institutional.value));
 });

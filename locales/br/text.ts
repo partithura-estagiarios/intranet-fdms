@@ -10,6 +10,7 @@ export default {
   searchRamal: "Buscar Ramal",
   editRamal: "Editar Ramal",
   deleteRamal: "Deletar Ramal",
+  systems: "SISTEMAS",
   coffee: "Café",
   projector: "Projetor",
   water: "Água",
@@ -20,4 +21,9 @@ export default {
   ramal: "Ramal",
   supportMaterial: "Material de apoio",
   organizer: "Organizador",
+  otherMaterials: "Outras Ex: Canetas, Folhas A4",
+  descriptionOfEvent: "Descrição do Evento",
+  selectRoom: "Selecione a Sala",
+  startDateAndTime: "Data e Hora de Início",
+  endDateAndTime: "Data e Hora Final",
 };

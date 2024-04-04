@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="padding-carousel">
     <q-carousel v-model="slide" class="full-height bg-transparent">
       <q-carousel-slide
         :name="index"
@@ -50,13 +50,15 @@ onMounted(async () => {
   const { loadCertifications } = await runQuery(LoadCertifications, {
     title: "iso",
   });
-  if (Array.isArray(getCertifications)) {
-    certifications.value = getCertifications.map((certification: any) => {
-      return {
-        name: certification.name.toString(),
-        image: certification.image.toString(),
-      } as Certification;
-    });
+  if (Array.isArray(loadCertifications)) {
+    certifications.value = loadCertifications.map(
+      (certification: unknown): Certification => {
+        return {
+          name: certification.name.toString(),
+          image: certification.image.toString(),
+        };
+      },
+    );
   }
 });
 const slide = ref(0);
@@ -68,3 +70,8 @@ function navSlides(direction: string) {
   return slide.value++;
 }
 </script>
+<style scoped>
+.padding-carousel {
+  padding-top: 5%;
+}
+</style>

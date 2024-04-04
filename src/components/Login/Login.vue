@@ -15,11 +15,7 @@
             {{ $t("login.enterYourCredentials") }}
           </h5>
           <div class="q-gutter-md">
-            <Input
-              :objectInput="loginForm"
-              @dataLogin="handleDataLogin"
-              :fieldAlone="submitLoginForm"
-            />
+            <Input :objectInput="loginForm" @dataLogin="handleDataLogin" />
           </div>
           <br />
           <a class="underline text-bold" color="blue">{{
@@ -59,9 +55,11 @@ const handleDataLogin = (form: User) => {
 };
 
 const submitLoginForm = async () => {
-  const { auth } = await userStorage.getUser(loginForm);
+  const some = await userStorage.getUser(loginForm);
+  console.log({ some });
+  const { auth } = some;
   if (Object.keys(auth).length !== null) {
-    userStorage.StateUser = auth as UserStorage;
+    userStorage.stateUser = auth as UserStorage;
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }

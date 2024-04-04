@@ -1,10 +1,5 @@
 <template>
   <ImageRh img="Welcome_Intranet.png" />
-  <Separator texto="SISTEMAS" large="px-20" class="overlap" />
+  <Separator :texto="$t('text.systems')" large="q-px-xl" />
   <Item sistema="gestao" />
 </template>
-<style scoped>
-.overlap {
-  bottom: 4%;
-}
-</style>
