@@ -46,8 +46,7 @@
 
 <script setup lang="ts">
 import Register from "../../graphql/user/mutations.gql";
-import { registerUserSchema } from "../../modules/zod";
-
+import { registerUserSchema } from "../../validation";
 const { t } = useI18n();
 
 const registerForm = reactive({
