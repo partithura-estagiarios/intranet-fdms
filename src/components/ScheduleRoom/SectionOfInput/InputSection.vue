@@ -66,6 +66,9 @@ watchEffect(() => {
 onUnmounted(() => {
   resetObject(formScheduleRoom);
 });
+onMounted(() => {
+  resetObject(formScheduleRoom);
+});
 </script>
 <style scoped>
 .border {

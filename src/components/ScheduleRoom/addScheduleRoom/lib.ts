@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export const inputsForScheduleRoom = {
   inputs: {
     name: { value: "", icon: "person" },
@@ -28,25 +30,19 @@ export const inputsForScheduleRoom = {
     equipament_song: { value: false, icon: "surround_sound" },
   },
 };
+
 export function resetObject(obj) {
-  obj.inputs.name.value = "";
-  obj.inputs.userRegistration.value = null;
-  obj.inputs.ramal.value = null;
-  obj.inputs.email.value = "";
-  obj.inputs.totalPeople.value = null;
-
-  obj.options.value = inputsForScheduleRoom.options.value;
-
-  obj.dateInfos.initialTime.value = null;
-  obj.dateInfos.finalTime.value = null;
-
-  obj.inputsLongs.supportMaterialExtras = "";
-  obj.inputsLongs.description = "";
-
-  for (let key in obj.booleanInfos) {
-    obj.booleanInfos[key].value = false;
-  }
-
+  _.forEach(obj, (value, key) => {
+    if (_.isObject(value) && !_.isArray(value)) {
+      resetObject(value);
+    }
+    if (key === "value") {
+      obj[key] = _.isBoolean(value) ? false : _.isString(value) ? "" : value;
+    }
+    if (key === "description" || key === "supportMaterialExtras") {
+      obj[key] = "";
+    }
+  });
   return obj;
 }
 

@@ -76,8 +76,8 @@ const instance = getCurrentInstance();
 const card = ref(false);
 const selectDate = ref();
 function onClickHeadDay(item) {
-  selectDate.value =
-    item.scope.timestamp.date + " " + item.scope.timestamp.time;
+  const { date, time } = item.scope.timestamp;
+  selectDate.value = date + " " + time;
   card.value = true;
 }
 function onToday() {

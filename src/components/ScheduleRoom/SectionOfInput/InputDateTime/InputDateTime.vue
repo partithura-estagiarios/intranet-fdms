@@ -2,23 +2,23 @@
   <InputTime
     class="col-6"
     :label="$t('text.startDateAndTime')"
-    :dateInput="date1"
-    @envity-dates="(item) => (date1Formated = item)"
+    :dateInput="dateInitial"
+    @envity-dates="(item) => (dateInitialFormated = item)"
   />
   <InputTime
     class="col-6"
     :label="$t('text.endDateAndTime')"
-    @envity-dates="(item) => (date2Formated = item)"
-    :dateInput="date2"
+    @envity-dates="(item) => (dateFinalFormated = item)"
+    :dateInput="dateFinal"
   />
 </template>
 
 <script setup lang="ts">
 const emits = defineEmits(["envityDates"]);
-const date1 = ref();
-const date2 = ref();
-const date1Formated = ref();
-const date2Formated = ref();
+const dateInitial = ref();
+const dateFinal = ref();
+const dateInitialFormated = ref();
+const dateFinalFormated = ref();
 
 const props = defineProps({
   selectDate: {
@@ -28,9 +28,9 @@ const props = defineProps({
 });
 watchEffect(() => {
   if (props.selectDate) {
-    date1.value = props.selectDate;
-    date2.value = props.selectDate;
+    dateInitial.value = props.selectDate;
+    dateFinal.value = props.selectDate;
   }
-  emits("envityDates", date1Formated.value, date2Formated.value);
+  emits("envityDates", dateInitialFormated.value, dateFinalFormated.value);
 });
 </script>

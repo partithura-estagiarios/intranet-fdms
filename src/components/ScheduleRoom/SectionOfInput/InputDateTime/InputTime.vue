@@ -48,10 +48,8 @@ const props = defineProps({
 const card = ref(false);
 const dateReceived = ref();
 watchEffect(() => {
-  if (props.dateInput) {
-    return (dateReceived.value = props.dateInput);
-  }
-  return (dateReceived.value = props.label);
+  const value = props.dateInput || props.label;
+  dateReceived.value = value;
 });
 </script>
 

@@ -20,7 +20,7 @@
           <q-card class="my-card">
             <DialogHeader
               @close="(val) => (card = val)"
-              :option="event.description.rules"
+              :option="event.rules"
             />
             <q-separator />
             <DialogScheduleRoom :event-show="testEvent" />

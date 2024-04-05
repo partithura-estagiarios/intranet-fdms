@@ -12,7 +12,7 @@
       {{ $t("text.organizer") }}: {{ room.user_created.name }}
       <q-space class="q-px-md" />
       {{ $t("text.participants") }}:
-      {{ room.description.total_people }}
+      {{ room.total_peoples }}
       <q-space class="q-px-md" />
       {{ $t("text.ramal") }}:
       {{ room.user_created.ramal_number }}
@@ -36,7 +36,7 @@ import { DateTime } from "luxon";
 const props = defineProps({
   eventShow: {
     type: Object,
-    default: {},
+    default: () => ({}),
   },
 });
 

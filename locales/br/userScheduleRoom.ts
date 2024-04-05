@@ -4,6 +4,6 @@ export default {
   ramal: "Seu Ramal ou Telefone",
   email: "Seu email",
   totalPeople: "Total de pessoas",
-  timeError: "Já uma reunião agendada nesse horário",
+  timeError: "Já há uma reunião agendada nesse horário",
   reunionAccept: "Reunião marcada com sucesso",
 };

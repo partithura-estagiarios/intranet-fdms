@@ -14,10 +14,8 @@ query GetScheduleRoom {
       email
     }
     location
-    description {
-      rules
-      total_people
-    }
+    rules
+    total_peoples
     initial_time
     final_time
     support {
