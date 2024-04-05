@@ -7,7 +7,7 @@
       >
         <q-badge rounded :color="event.colorRoom">
           <q-tooltip>
-            {{ event.user_created.name }}
+            {{ event.userCreated.name }}
           </q-tooltip>
         </q-badge>
       </div>
@@ -15,7 +15,7 @@
     <template v-for="event in getEventsByDate(props.data)">
       <div>
         <q-badge rounded :color="event.colorRoom" @click="selectEvent(event)" />
-        {{ event.user_created.name }}
+        {{ event.userCreated.name }}
         <q-dialog v-model="card">
           <q-card class="my-card">
             <DialogHeader
@@ -52,10 +52,10 @@ function selectEvent(event) {
   testEvent.value = event;
 }
 function hasEventsForDate(date) {
-  return props.events.some((event) => formatDate(event.final_time) === date);
+  return props.events.some((event) => formatDate(event.finalTime) === date);
 }
 
 function getEventsByDate(date) {
-  return props.events.filter((event) => formatDate(event.final_time) === date);
+  return props.events.filter((event) => formatDate(event.finalTime) === date);
 }
 </script>

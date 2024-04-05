@@ -97,9 +97,9 @@ async function loadSchedule() {
   );
   if (loadScheduleRoom.length > 0) {
     loadScheduleRoom.forEach((event) => {
-      event.initial_time = new Date(event.initial_time);
-      event.final_time = new Date(event.final_time);
-      event.final_date = formatDate(event.final_time);
+      event.initialTime = new Date(event.initialTime);
+      event.finalTime = new Date(event.finalTime);
+      event.finalDate = formatDate(event.finalTime);
       event.colorRoom = insertColor(event.location);
     });
     events.value = loadScheduleRoom;

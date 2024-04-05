@@ -7,17 +7,19 @@ query GetRooms {
 query LoadScheduleRoom {
   loadScheduleRoom {
     id
-    user_created {
+    userCreated {
       name
-      ramal_number
-      user_registration
+      ramalNumber
+      userRegistration
       email
     }
     location
+
     rules
-    total_peoples
-    initial_time
-    final_time
+    totalPeoples
+
+    initialTime
+    finalTime
     support {
       computer
       projector

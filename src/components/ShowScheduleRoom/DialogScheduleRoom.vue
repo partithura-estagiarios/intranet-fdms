@@ -1,21 +1,21 @@
 <template>
   <q-card-section>
     <div class="row text-weight-bold">
-      {{ $t("text.hourInitial") }}: {{ formatDateTime(room.initial_time) }}
+      {{ $t("text.hourInitial") }}: {{ formatDateTime(room.initialTime) }}
       <q-space class="q-px-md" /> {{ $t("text.hourFinal") }}:
-      {{ formatDateTime(room.final_time) }}
+      {{ formatDateTime(room.finalTime) }}
     </div>
   </q-card-section>
   <q-separator />
   <q-card-section class="row">
     <div class="row text-weight-bold">
-      {{ $t("text.organizer") }}: {{ room.user_created.name }}
+      {{ $t("text.organizer") }}: {{ room.userCreated.name }}
       <q-space class="q-px-md" />
       {{ $t("text.participants") }}:
-      {{ room.total_peoples }}
+      {{ room.totalPeoples }}
       <q-space class="q-px-md" />
       {{ $t("text.ramal") }}:
-      {{ room.user_created.ramal_number }}
+      {{ room.userCreated.ramalNumber }}
     </div>
   </q-card-section>
   <q-separator />

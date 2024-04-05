@@ -56,7 +56,6 @@ const handleDataLogin = (form: User) => {
 
 const submitLoginForm = async () => {
   const some = await userStorage.getUser(loginForm);
-  console.log({ some });
   const { auth } = some;
   if (Object.keys(auth).length !== null) {
     userStorage.stateUser = auth as UserStorage;
