@@ -4,8 +4,8 @@ query GetRooms {
     location
   }
 }
-query GetScheduleRoom {
-  getScheduleRoom {
+query LoadScheduleRoom {
+  loadScheduleRoom {
     id
     user_created {
       name

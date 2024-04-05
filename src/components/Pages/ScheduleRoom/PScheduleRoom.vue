@@ -92,15 +92,17 @@ function onNext() {
   instance.refs.calendar.next();
 }
 async function loadSchedule() {
-  const { getScheduleRoom } = await runQuery(ScheduleRoomQuery.GetScheduleRoom);
-  if (getScheduleRoom.length > 0) {
-    getScheduleRoom.forEach((event) => {
+  const { loadScheduleRoom } = await runQuery(
+    ScheduleRoomQuery.LoadScheduleRoom,
+  );
+  if (loadScheduleRoom.length > 0) {
+    loadScheduleRoom.forEach((event) => {
       event.initial_time = new Date(event.initial_time);
       event.final_time = new Date(event.final_time);
       event.final_date = formatDate(event.final_time);
       event.colorRoom = insertColor(event.location);
     });
-    events.value = getScheduleRoom;
+    events.value = loadScheduleRoom;
   }
 }
 onMounted(() => {
