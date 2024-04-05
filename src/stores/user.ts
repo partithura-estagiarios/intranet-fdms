@@ -23,7 +23,6 @@ export const useUsers = defineStore(id, {
 
   actions: {
     getUser: async (form: User): Promise<Auth> => {
-      // Supondo que runQuery é uma função que executa a consulta GraphQL
       const userData = await runQuery<Auth>(GetUser, {
         name: form.labelInputName!,
         password: form.labelInputPassword,
