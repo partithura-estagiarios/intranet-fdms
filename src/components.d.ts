@@ -51,6 +51,7 @@ declare module 'vue' {
     PSeeMore: typeof import('./components/Pages/PageSeeMoreCard/PSeeMore.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScheduleRoom: typeof import('./components/ScheduleRoom/ScheduleRoom.vue')['default']
     SelectRoom: typeof import('./components/ScheduleRoom/SectionOfInput/SelectRoom.vue')['default']
     Separator: typeof import('./components/Separator/Separator.vue')['default']
     SeparatorForEmergence: typeof import('./components/TableRamais/SeparatorForEmergence.vue')['default']
