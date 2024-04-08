@@ -46,21 +46,6 @@ import LoadCertifications from "../../graphql/certification/queries.gql";
 import { Certification } from "../../entities/certification";
 const certifications = ref<Certification[]>([]);
 
-onMounted(async () => {
-  const { loadCertifications } = await runQuery(LoadCertifications, {
-    title: "iso",
-  });
-  if (Array.isArray(loadCertifications)) {
-    certifications.value = loadCertifications.map(
-      (certification: unknown): Certification => {
-        return {
-          name: certification.name.toString(),
-          image: certification.image.toString(),
-        };
-      },
-    );
-  }
-});
 const slide = ref(0);
 
 function navSlides(direction: string) {

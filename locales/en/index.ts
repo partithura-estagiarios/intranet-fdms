@@ -6,6 +6,7 @@ import formRamal from "./formRamal";
 import register from "./register";
 import tab from "./tab";
 import auth from "./auth";
+import userScheduleRoom from "./userScheduleRoom";
 export default {
   userScheduleRoom,
   action,

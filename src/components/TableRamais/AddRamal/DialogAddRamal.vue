@@ -39,7 +39,7 @@
           </q-card-section>
         </div>
         <div v-else>
-          <q-card-section>
+          <!-- <q-card-section>
             <span class="text-grey text-h6">
               {{
                 $t("formRamal.deleteRamalMessage", {
@@ -49,14 +49,14 @@
                 })
               }}
             </span>
-          </q-card-section>
+          </q-card-section> -->
         </div>
         <q-card-actions align="right" class="pt-12 pa-5 text-green-8">
-          <q-btn
+          <!-- <q-btn
             flat
             :label="$t('formRamal.confirm')"
             @click="optionRamal(props.option, labelDefinite)"
-          />
+          /> -->
         </q-card-actions>
       </q-card>
     </q-responsive>
@@ -91,28 +91,28 @@ const labelDefinite = computed(() => {
   return props.ramal ?? label;
 });
 
-async function optionRamal(option: string, ramal: Object) {
-  switch (props.option) {
-    case "deleteRamal":
-      await runMutation(Mutation.DeleteRamal, { id: ramal.id });
-      emits("close");
-      emits("reloadTable");
-      break;
-    case "editRamal":
-      await runMutation(Mutation.EditRamal, { ramal: ramal });
-      emits("close");
-      emits("reloadTable");
-      break;
-    case "addRamal":
-      await runMutation(Mutation.AddRamal, { newRamal: ramal });
-      emits("close");
-      emits("reloadTable");
-      break;
-    default:
-      emits("close");
-      emits("reloadTable");
-  }
-  emits("close");
-  emits("reloadTable");
-}
+// async function optionRamal(option: string, ramal: Object) {
+//   switch (props.option) {
+//     case "deleteRamal":
+//       await runMutation(Mutation.DeleteRamal, { id: ramal.id });
+//       emits("close");
+//       emits("reloadTable");
+//       break;
+//     case "editRamal":
+//       await runMutation(Mutation.EditRamal, { ramal: ramal });
+//       emits("close");
+//       emits("reloadTable");
+//       break;
+//     case "addRamal":
+//       await runMutation(Mutation.AddRamal, { newRamal: ramal });
+//       emits("close");
+//       emits("reloadTable");
+//       break;
+//     default:
+//       emits("close");
+//       emits("reloadTable");
+//   }
+//   emits("close");
+//   emits("reloadTable");
+// }
 </script>

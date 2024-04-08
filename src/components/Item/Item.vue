@@ -39,10 +39,10 @@ const props = defineProps({
     required: true,
   },
 });
-const sistemas: System = ref([]);
+const sistemas = ref();
 
 onMounted(async () => {
-  const { loadSystems } = await runQuery(LoadSystems, {
+  const { loadSystems }: { loadSystems: Object } = await runQuery(LoadSystems, {
     sistema: props.sistema,
   });
   sistemas.value = loadSystems;
