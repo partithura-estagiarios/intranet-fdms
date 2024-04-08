@@ -47,8 +47,8 @@ export function insertColor(room: String) {
   }
 }
 export const rooms = [
-  { name: "SALA_A", color: "red" },
-  { name: "SALA_B", color: "green" },
-  { name: "SALA_C", color: "yellow" },
-  { name: "SALA_DE_REUNIÃO", color: "orange" },
+  { name: "roomA", color: "red" },
+  { name: "roomB", color: "green" },
+  { name: "roomC", color: "yellow" },
+  { name: "roomOfReunion", color: "orange" },
 ];

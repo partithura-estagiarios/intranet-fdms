@@ -1,12 +1,17 @@
 <template>
   <div
     v-for="(item, index) in checkBoxes"
-    class="q-pa-sm col-6 q-gutter-md"
+    class="q-pa-sm col-6 q-gutter-sl"
     :key="index"
   >
     <div class="q-gutter-md row items-center">
       <div class="col">
-        <q-input :label="index" bg-color="white" class="border" readonly>
+        <q-input
+          :label="$t('text.' + index)"
+          bg-color="white"
+          class="border"
+          readonly
+        >
           <template #prepend>
             <q-icon
               :name="item.icon"

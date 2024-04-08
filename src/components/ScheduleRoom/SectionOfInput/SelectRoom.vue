@@ -4,7 +4,7 @@
       v-model="model"
       :options="props.options.rooms"
       bg-color="white"
-      label="Selecione uma sala"
+      :label="$t('text.selectRoom')"
       color="indigo-8"
       class="col-4 border"
     >

@@ -15,8 +15,9 @@
           (formScheduleRoom.dateInfos.initialTime.value = item1)
         )
       "
+      :selectDate="props.selectDate"
     />
-    <div class="col-12 q-px-sm pt-4 pb-4">
+    <div class="col-12 q-pa-sm">
       <q-input
         bg-color="white "
         class="border q-px-md"
@@ -24,8 +25,10 @@
         :label="$t('text.descriptionOfEvent')"
       />
     </div>
-    <div class="bg-indigo-8 text-white q-px-xl q-py-none">
-      {{ $t("text.supportMaterialExtras") }}
+    <div
+      class="bg-indigo-8 text-white q-pa-md text-h6 q-px-xl relative-position"
+    >
+      {{ $t("text.supportMaterial") }}
     </div>
     <div class="content row relative-position q-px-sl justify-between">
       <CheckBoxRoom
@@ -33,7 +36,7 @@
         @envity-dates="(items) => (formScheduleRoom.booleanInfos = items)"
       />
     </div>
-    <div class="col-12 q-px-sm pt-4 pb-4">
+    <div class="col-12">
       <q-input
         bg-color="white "
         class="border q-px-md"
@@ -45,11 +48,26 @@
 </template>
 
 <script setup lang="ts">
-import { inputsForScheduleRoom } from "../addScheduleRoom/lib";
+import { inputsForScheduleRoom, resetObject } from "../addScheduleRoom/lib";
 const formScheduleRoom = reactive(inputsForScheduleRoom);
+const props = defineProps({
+  selectDate: {
+    type: String,
+    default: "",
+  },
+});
+
 const emits = defineEmits(["envityRoom"]);
+
 watchEffect(() => {
   emits("envityRoom", formScheduleRoom);
+});
+
+onUnmounted(() => {
+  resetObject(formScheduleRoom);
+});
+onMounted(() => {
+  resetObject(formScheduleRoom);
 });
 </script>
 <style scoped>

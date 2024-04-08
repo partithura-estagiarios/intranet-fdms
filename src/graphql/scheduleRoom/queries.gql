@@ -4,27 +4,30 @@ query GetRooms {
     location
   }
 }
-query GetScheduleRoom {
-  getScheduleRoom {
+query LoadScheduleRoom {
+  loadScheduleRoom {
     id
-    user_created {
+    userCreated {
       name
-      ramal_number
-      user_registration
+      ramalNumber
+      userRegistration
       email
     }
     location
-    description {
-      rules
-      total_people
-    }
-    initial_time
-    final_time
+
+    rules
+    totalPeoples
+
+    initialTime
+    finalTime
     support {
       computer
       projector
       water
       coffee
+      flipSharp
+      equipamentSong
+      helpers
     }
   }
 }

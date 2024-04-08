@@ -5,8 +5,10 @@ import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
 import tab from "./tab";
+import userScheduleRoom from "./userScheduleRoom";
 
 export default {
+  userScheduleRoom,
   action,
   caderno: {
     title: "Notebooks",

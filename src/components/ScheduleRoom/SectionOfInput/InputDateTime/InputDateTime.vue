@@ -2,25 +2,35 @@
   <InputTime
     class="col-6"
     :label="$t('text.startDateAndTime')"
-    :dateInput="date1"
-    @envity-dates="(item) => (date1 = item)"
+    :dateInput="dateInitial"
+    @envity-dates="(item) => (dateInitialFormated = item)"
   />
   <InputTime
     class="col-6"
     :label="$t('text.endDateAndTime')"
-    @envity-dates="(item) => (date2 = item)"
-    :dateInput="date2"
+    @envity-dates="(item) => (dateFinalFormated = item)"
+    :dateInput="dateFinal"
   />
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits, watchEffect } from "vue";
-
 const emits = defineEmits(["envityDates"]);
-const date1 = ref();
-const date2 = ref();
+const dateInitial = ref();
+const dateFinal = ref();
+const dateInitialFormated = ref();
+const dateFinalFormated = ref();
 
+const props = defineProps({
+  selectDate: {
+    type: String,
+    default: "",
+  },
+});
 watchEffect(() => {
-  emits("envityDates", date1.value, date2.value);
+  if (props.selectDate) {
+    dateInitial.value = props.selectDate;
+    dateFinal.value = props.selectDate;
+  }
+  emits("envityDates", dateInitialFormated.value, dateFinalFormated.value);
 });
 </script>
