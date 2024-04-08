@@ -17,13 +17,17 @@ const formattedMonth = computed(() => {
   return monthFormatter().format(date) + " " + date.getFullYear();
 });
 const country = ref("BR");
-function monthFormatter() {
+function monthFormatter(): Intl.DateTimeFormat {
   try {
     return new Intl.DateTimeFormat(locale.value || undefined, {
       month: "long",
       timeZone: "UTC",
     });
-  } catch (e) {}
+  } catch (e) {
+    console.error("Failed to create DateTimeFormat:", e);
+    // Retornar um formato de data padrão em caso de erro
+    return new Intl.DateTimeFormat("en-US", { month: "long" });
+  }
 }
 const locale = computed(() => {
   if (country.value) {

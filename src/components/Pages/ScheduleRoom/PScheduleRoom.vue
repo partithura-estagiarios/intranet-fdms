@@ -68,41 +68,48 @@ import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
-import * as ScheduleRoomQuery from "../../../graphql/scheduleRoom/queries.gql";
 import { formatDate, insertColor, rooms } from "./lib";
+import { CalendarItem, Event } from "../../../entities/scheduleRoom";
+import ScheduleRoomLoad from "../../../graphql/scheduleRoom/queries.gql";
 const selectedDate = ref(today());
 const events = ref();
 const instance = getCurrentInstance();
 const card = ref(false);
 const selectDate = ref();
-function onClickHeadDay(item) {
+function onClickHeadDay(item: CalendarItem) {
   const { date, time } = item.scope.timestamp;
   selectDate.value = date + " " + time;
   card.value = true;
 }
 function onToday() {
-  instance.refs.calendar.moveToToday();
+  if (instance && instance.refs && instance.refs.calendar) {
+    (instance.refs.calendar as QCalendarMonth).moveToToday();
+  }
 }
 
 function onPrev() {
-  instance.refs.calendar.prev();
+  if (instance && instance.refs && instance.refs.calendar) {
+    (instance.refs.calendar as QCalendarMonth).prev();
+  }
 }
 
 function onNext() {
-  instance.refs.calendar.next();
+  if (instance && instance.refs && instance.refs.calendar) {
+    (instance.refs.calendar as QCalendarMonth).next();
+  }
 }
 async function loadSchedule() {
-  const { loadScheduleRoom } = await runQuery(
-    ScheduleRoomQuery.LoadScheduleRoom,
-  );
-  if (loadScheduleRoom.length > 0) {
-    loadScheduleRoom.forEach((event) => {
+  const { scheduleRoomLoad } = (await runQuery(ScheduleRoomLoad)) as {
+    scheduleRoomLoad: Event[];
+  };
+  if (scheduleRoomLoad.length > 0) {
+    scheduleRoomLoad.forEach((event) => {
       event.initialTime = new Date(event.initialTime);
       event.finalTime = new Date(event.finalTime);
       event.finalDate = formatDate(event.finalTime);
       event.colorRoom = insertColor(event.location);
     });
-    events.value = loadScheduleRoom;
+    events.value = scheduleRoomLoad;
   }
 }
 onMounted(() => {

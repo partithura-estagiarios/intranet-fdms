@@ -11,6 +11,7 @@
           bg-color="white"
           class="border"
           readonly
+          v-model="inputValue"
         >
           <template #prepend>
             <q-icon
@@ -36,6 +37,7 @@ const props = defineProps({
     default: () => ({}),
   },
 });
+const inputValue = ref("");
 const checkBoxes = reactive(props.checks);
 watchEffect(() => {
   emits("envityDates", checkBoxes);

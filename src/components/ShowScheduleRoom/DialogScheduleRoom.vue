@@ -47,7 +47,7 @@ watchEffect(() => {
     room.value = props.eventShow;
   }
 });
-function formatDateTime(dateTime) {
+function formatDateTime(dateTime: Date) {
   return DateTime.fromJSDate(dateTime).toFormat("HH:mm");
 }
 </script>

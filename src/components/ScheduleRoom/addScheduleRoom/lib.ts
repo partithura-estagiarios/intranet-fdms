@@ -1,5 +1,5 @@
-import _ from "lodash";
-
+import lodash from "lodash";
+import { InputsForScheduleRoom } from "../../../entities/scheduleRoom";
 export const inputsForScheduleRoom = {
   inputs: {
     name: { value: "", icon: "person" },
@@ -27,17 +27,21 @@ export const inputsForScheduleRoom = {
     water: { value: false, icon: "water_drop" },
     coffee: { value: false, icon: "local_cafe" },
     flipSharp: { value: false, icon: "filter_frames" },
-    equipament_song: { value: false, icon: "surround_sound" },
+    equipamentSong: { value: false, icon: "surround_sound" },
   },
 };
 
-export function resetObject(obj) {
-  _.forEach(obj, (value, key) => {
-    if (_.isObject(value) && !_.isArray(value)) {
+export function resetObject(obj: any) {
+  lodash.forEach(obj, (value, key) => {
+    if (lodash.isObject(value) && !lodash.isArray(value)) {
       resetObject(value);
     }
     if (key === "value") {
-      obj[key] = _.isBoolean(value) ? false : _.isString(value) ? "" : value;
+      obj[key] = lodash.isBoolean(value)
+        ? false
+        : lodash.isString(value)
+          ? ""
+          : value;
     }
     if (key === "description" || key === "supportMaterialExtras") {
       obj[key] = "";
@@ -46,13 +50,13 @@ export function resetObject(obj) {
   return obj;
 }
 
-export function verifyTypeOfInput(input) {
+export function verifyTypeOfInput(input: number) {
   if (input == null) {
     return "number";
   }
 }
 
-export function adaptScheduleToRoom(schedule) {
+export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
   return {
     userCreated: {
       name: schedule.inputs.name.value,
@@ -71,8 +75,8 @@ export function adaptScheduleToRoom(schedule) {
       water: schedule.booleanInfos.water.value,
       coffee: schedule.booleanInfos.coffee.value,
       flipSharp: schedule.booleanInfos.flipSharp.value,
-      equipamentSong: schedule.booleanInfos.equipament_song.value,
-      helpers: schedule.inputsLongs.supportMaterialExtras, // Não precisa acessar 'value' diretamente
+      equipamentSong: schedule.booleanInfos.equipamentSong.value,
+      helpers: schedule.inputsLongs.supportMaterialExtras,
     },
   };
 }

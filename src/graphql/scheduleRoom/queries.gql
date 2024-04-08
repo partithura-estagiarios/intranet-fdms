@@ -1,11 +1,5 @@
-query GetRooms {
-  getRooms {
-    id
-    location
-  }
-}
-query LoadScheduleRoom {
-  loadScheduleRoom {
+query ScheduleRoomLoad {
+  scheduleRoomLoad {
     id
     userCreated {
       name
@@ -14,10 +8,8 @@ query LoadScheduleRoom {
       email
     }
     location
-
     rules
     totalPeoples
-
     initialTime
     finalTime
     support {

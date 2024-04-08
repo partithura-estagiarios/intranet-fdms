@@ -1,8 +1,6 @@
-import { event } from "quasar";
-
-export const countryCodes = {
-  BR: "pt-BR", // 'Brasil', Portuguese Brazil
-  US: "en-US", // 'United States of America', English USA
+export const countryCodes: { [key: string]: string } = {
+  BR: "pt-BR",
+  US: "en-US",
 };
 export const monthsAux = [
   { label: "label.monhs.january", value: 1 },
@@ -24,28 +22,21 @@ export function formatDate(date: Date): string {
   const day = String(date.getDate()).padStart(2, "0"); // Adiciona zero à esquerda se o dia for menor que 10
   return `${year}-${month}-${day}`;
 }
-export function insertColor(room: String) {
+export function insertColor(room: string): string {
   switch (room) {
     case "SALA A":
       return "red";
-      break;
-  }
-  switch (room) {
     case "SALA B":
       return "green";
-      break;
-  }
-  switch (room) {
     case "SALA C":
       return "yellow";
-      break;
-  }
-  switch (room) {
     case "SALA DE REUNIÃO":
       return "orange";
-      break;
+    default:
+      return "";
   }
 }
+
 export const rooms = [
   { name: "roomA", color: "red" },
   { name: "roomB", color: "green" },

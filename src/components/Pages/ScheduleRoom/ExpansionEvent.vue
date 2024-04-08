@@ -34,28 +34,34 @@
 <script setup lang="ts">
 import { formatDate } from "./lib";
 import DialogScheduleRoom from "../../ShowScheduleRoom/DialogScheduleRoom.vue";
-
+import { Event } from "../../../entities/scheduleRoom";
 const props = defineProps({
   data: {
     type: String,
     default: "",
   },
   events: {
-    type: Array,
-    default: [],
+    type: Array as () => Event[],
+    default: () => [],
   },
 });
 const card = ref();
 const testEvent = ref();
-function selectEvent(event) {
+function selectEvent(event: object) {
   card.value = true;
   testEvent.value = event;
 }
-function hasEventsForDate(date) {
-  return props.events.some((event) => formatDate(event.finalTime) === date);
+function hasEventsForDate(date: string) {
+  return props.events.some((event) => {
+    const eventDate = new Date(event.finalTime); // Converter string para Date
+    return formatDate(eventDate) === date;
+  });
 }
 
-function getEventsByDate(date) {
-  return props.events.filter((event) => formatDate(event.finalTime) === date);
+function getEventsByDate(date: string) {
+  return props.events.filter((event) => {
+    const eventDate = new Date(event.finalTime); // Converter string para Date
+    return formatDate(eventDate) === date;
+  });
 }
 </script>

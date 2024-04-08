@@ -7,6 +7,7 @@
       readonly
       :label="dateReceived"
       v-bind="$attrs"
+      v-model="inputValue"
     >
       <template #before>
         <q-icon
@@ -44,6 +45,7 @@ const props = defineProps({
     default: "",
   },
 });
+const inputValue = ref("");
 
 const card = ref(false);
 const dateReceived = ref();

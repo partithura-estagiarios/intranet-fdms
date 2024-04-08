@@ -41,7 +41,7 @@ const props = defineProps({
 });
 
 const dateTime = ref();
-const updateDateTime = (newValue) => {
+const updateDateTime = (newValue: string) => {
   dateTime.value = newValue;
 };
 watchEffect(() => {

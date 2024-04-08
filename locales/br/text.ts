@@ -36,5 +36,5 @@ export default {
   roomOfReunion: "Sala de Reunião",
   selectDayForRoom: "Ou selecione um dia",
   helpers: `Outros: {materiais}`,
-  equipamentSong: "Equipamento de Som",
+  equipamentSong: "Som",
 };
