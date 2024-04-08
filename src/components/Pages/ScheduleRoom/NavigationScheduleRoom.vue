@@ -7,7 +7,7 @@
         style="margin: 2px"
         @click="$emit('today')"
       >
-        Today
+        {{ $t("text.now") }}
       </q-btn>
       <q-btn
         no-caps
@@ -15,7 +15,7 @@
         style="margin: 2px"
         @click="$emit('prev')"
       >
-        &lt; Prev
+        &lt; {{ $t("text.previous") }}
       </q-btn>
       <q-btn
         no-caps
@@ -23,7 +23,8 @@
         style="margin: 2px"
         @click="$emit('next')"
       >
-        Next &gt;
+        {{ $t("text.next") }}
+        &gt;
       </q-btn>
     </div>
   </div>

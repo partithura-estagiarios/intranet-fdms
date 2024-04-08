@@ -7,6 +7,7 @@ import register from "./register";
 import tab from "./tab";
 import auth from "./auth";
 export default {
+  userScheduleRoom,
   action,
   caderno: {
     title: "Notebooks",

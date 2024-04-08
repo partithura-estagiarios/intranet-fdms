@@ -9,9 +9,10 @@ import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
 import auth from "./auth";
-
+import userScheduleRoom from "./userScheduleRoom";
 import tab from "./tab";
 export default {
+  userScheduleRoom,
   about: "Sobre",
   action,
   home: "Casa",

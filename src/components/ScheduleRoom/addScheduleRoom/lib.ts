@@ -1,4 +1,5 @@
-import { DateTime } from "luxon";
+import _ from "lodash";
+
 export const inputsForScheduleRoom = {
   inputs: {
     name: { value: "", icon: "person" },
@@ -30,18 +31,27 @@ export const inputsForScheduleRoom = {
   },
 };
 
+export function resetObject(obj) {
+  _.forEach(obj, (value, key) => {
+    if (_.isObject(value) && !_.isArray(value)) {
+      resetObject(value);
+    }
+    if (key === "value") {
+      obj[key] = _.isBoolean(value) ? false : _.isString(value) ? "" : value;
+    }
+    if (key === "description" || key === "supportMaterialExtras") {
+      obj[key] = "";
+    }
+  });
+  return obj;
+}
+
 export function verifyTypeOfInput(input) {
   if (input == null) {
     return "number";
   }
 }
 
-export function verifyReceivedDate(date) {
-  if (date != "") {
-    return date;
-  }
-  return false;
-}
 export function adaptScheduleToRoom(schedule) {
   return {
     userCreated: {
