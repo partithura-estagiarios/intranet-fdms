@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import GetUser from "../graphql/user/queries.gql";
 import { User } from "../entities/login";
 import { router } from "../modules";
-
+import { Auth } from "../entities/login";
 const id = "users";
 
 const userStorage = {
@@ -22,12 +22,14 @@ export const useUsers = defineStore(id, {
   getters: {},
 
   actions: {
-    getUser: async (form: User) => {
-      return await runQuery(GetUser, {
+    getUser: async (form: User): Promise<Auth> => {
+      const userData = await runQuery<Auth>(GetUser, {
         name: form.labelInputName!,
         password: form.labelInputPassword,
         email: form.labelEmail,
       });
+
+      return userData;
     },
     logout: () => {
       const user = useUsers();

@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { User, UserStorage } from "../../entities/login";
+import { User } from "../../entities/login";
 import { router } from "../../modules";
 import { useUsers } from "../../stores/user";
 
@@ -62,7 +62,7 @@ const submitLoginForm = async () => {
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }
-  negativeNotify(t("login.enterYourCredentials"));
+  return negativeNotify(t("auth.invalidCredentials"));
 };
 </script>
 

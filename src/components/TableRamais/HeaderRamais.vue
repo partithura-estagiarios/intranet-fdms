@@ -1,8 +1,8 @@
 <template>
-  <div class="row justify-between q-pa-md">
-    <div>
+  <div class="row justify-between">
+    <div class="q-pa-md">
       <q-btn
-        class="bg-green text-white ml-12"
+        class="bg-green text-white q-px-md"
         :label="$t('text.addRamal')"
         @click="openDialog()"
       />

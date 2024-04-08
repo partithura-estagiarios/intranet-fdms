@@ -5,8 +5,7 @@ import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
 import tab from "./tab";
-import userScheduleRoom from "./userScheduleRoom";
-
+import auth from "./auth";
 export default {
   userScheduleRoom,
   action,
@@ -40,4 +39,5 @@ export default {
   formRamal,
   register,
   tab,
+  auth,
 };

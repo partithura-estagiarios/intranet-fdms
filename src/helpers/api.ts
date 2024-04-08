@@ -13,9 +13,7 @@ export async function runQuery<T>(
     variables,
     cachePolicy: "network-only",
   }).execute();
-  if (error !== null) {
-    negativeNotify(error.message.slice(GRAPHQL_ERROR_MARKER));
-  }
+
   return data as T;
 }
 
@@ -24,8 +22,6 @@ export async function runMutation<T>(
   variables: Record<string, string>,
 ): Promise<T> {
   const { data, error } = await useMutation(query).execute(variables);
-  if (error !== null) {
-    negativeNotify(error.message.slice(GRAPHQL_ERROR_MARKER));
-  }
+
   return data as T;
 }
