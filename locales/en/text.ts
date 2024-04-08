@@ -36,6 +36,5 @@ export default {
   roomOfReunion: "Room of Reunion",
   selectDayForRoom: "Or select a day",
   helpers: `Others: {materiais}`,
-  equipamentSong: "Equipament of Song",
-  yourName: "Seu nome",
+  equipamentSong: "Song",
 };
