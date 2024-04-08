@@ -38,7 +38,7 @@ watchEffect(() => {
   }
 });
 function updateImg(title: String) {
-  selecImage.value = extractImage(title, imgs.value);
+  selecImage.value = extractImage(title as string, imgs.value);
 }
 </script>
 <style scoped>

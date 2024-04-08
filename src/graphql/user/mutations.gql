@@ -1,3 +1,6 @@
 mutation Register($newUser: NewUser!) {
-  register(newUser: $newUser)
+  register(newUser: $newUser) {
+    success
+    message
+  }
 }

@@ -1,7 +1,5 @@
 export interface User {
-  labelInputName: string;
-  labelEmail: string;
-  labelInputPassword: string;
+  [x: string]: string;
 }
 export interface Auth {
   auth: {

@@ -25,8 +25,8 @@ export const useUsers = defineStore(id, {
     getUser: async (form: User): Promise<Auth> => {
       const userData = await runQuery<Auth>(GetUser, {
         name: form.labelInputName!,
-        password: form.labelInputPassword,
-        email: form.labelEmail,
+        password: form.labelInputPassword!,
+        email: form.labelEmail!,
       });
 
       return userData;

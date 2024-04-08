@@ -38,7 +38,22 @@ function verifyLabelPasswor(label: string) {
   return label.includes("ss");
 }
 
-function chooseVibility(key: string): string {
+function chooseVibility(
+  key: string,
+):
+  | "number"
+  | "textarea"
+  | "time"
+  | "text"
+  | "search"
+  | "password"
+  | "email"
+  | "tel"
+  | "file"
+  | "url"
+  | "date"
+  | "datetime-local"
+  | undefined {
   if (key !== "labelInputPassword" || !isPwd.value) {
     return "text";
   }
