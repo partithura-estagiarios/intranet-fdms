@@ -10,7 +10,6 @@
             class="position-options col"
             @show-card="(item) => (selectCard = item)"
             @search-files="(item) => (selectHyperText = item)"
-            v-if="selectCard == 'processes'"
           />
         </div>
       </q-card-section>
@@ -26,14 +25,7 @@
         </q-card-section>
         <q-card class="q-pa-md box-shadow">
           <q-img :src="selecImage" width="1000px" v-show="!selectHyperText" />
-          <ul>
-            <li v-for="file in selectHyperText" class="row">
-              <a href="#" @click="filesStorage.displayImage(file)" class="col">
-                {{ file }}
-              </a>
-              <q-btn icon="delete" @click="deleteFile(file)" />
-            </li>
-          </ul>
+          <CardProcess :files="selectHyperText" />
         </q-card>
       </q-card-section>
     </q-card>
@@ -48,7 +40,6 @@ const selectTitle = ref("");
 const imgs = ref();
 const selecImage = ref();
 const selectHyperText = ref();
-const attHyperText = ref();
 const updateSelectCard = (item: string) => {
   selectCard.value = item;
 };
@@ -67,10 +58,6 @@ function updateImg(title: String) {
 }
 function updateProcess() {
   selectHyperText.value = imgs.value[0];
-}
-function deleteFile(file) {
-  console.log(file);
-  selectHyperText.value = filesStorage.deleteFile(file);
 }
 </script>
 <style scoped>

@@ -41,7 +41,6 @@ export const useFiles = defineStore(id, {
 
         if (response.ok) {
           const filename = await response.text();
-          return console.log("Arquivo enviado com sucesso:", filename);
         }
         throw new Error("Erro ao enviar arquivo para o servidor");
       } catch (error) {
@@ -80,7 +79,7 @@ export const useFiles = defineStore(id, {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Arquivo excluído:", data);
+          return data;
         } else {
           console.error("Erro ao excluir arquivo:", response.statusText);
         }
