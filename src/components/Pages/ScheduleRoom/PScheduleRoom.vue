@@ -4,16 +4,8 @@
   >
     <Month :select-date="selectedDate" />
     <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
-    <div class="row">
-      <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
-        <div class="row items-center">
-          <q-badge rounded :color="item.color" class="mr-2" />
-          <span>{{ $t(`text.${item.name}`) }}</span>
-        </div>
-      </div>
-    </div>
   </div>
-  <div class="row q-px-md q-pa-sm">
+  <div class="row q-px-md q-pa-sm justify-center">
     <q-btn
       color="green"
       text-color="white"
@@ -21,7 +13,7 @@
       class="row"
       @click="(card = true), (selectDate = '')"
     />
-    <div class="q-px-md q-pa-md">
+    <div class="q-px-md q-pa-md text-green-8">
       {{ $t("text.selectDayForRoom") }}
     </div>
   </div>
@@ -39,25 +31,32 @@
       </q-card>
     </div>
   </q-dialog>
-  <div class="subcontent">
-    <div class="row justify-center">
-      <div class="calendarM row window-width">
-        <q-calendar-month
-          ref="calendar"
-          v-model="selectedDate"
-          animated
-          bordered
-          focusable
-          locale="pt-br"
-          hoverable
-          :day-min-height="60"
-          :day-height="0"
-          @click-date="onClickHeadDay"
-        >
-          <template #day="{ scope: { timestamp } }">
-            <ExpansionEvent :data="timestamp.date" :events="events" />
-          </template>
-        </q-calendar-month>
+  <div class="q-pa-md row justify-center">
+    <div class="text-h5 calendar-size text-uppercase">
+      <q-calendar-month
+        class="bg-transparent"
+        ref="calendar"
+        v-model="selectedDate"
+        animated
+        bordered
+        focusable
+        locale="pt-br"
+        hoverable
+        short-weekday-label
+        :day-min-height="100"
+        @click-date="onClickHeadDay"
+      >
+        <template #day="{ scope: { timestamp } }">
+          <ExpansionEvent :data="timestamp.date" :events="events" />
+        </template>
+      </q-calendar-month>
+    </div>
+  </div>
+  <div class="row justify-center">
+    <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
+      <div class="row items-center">
+        <q-badge rounded :color="item.color" class="mr-2" />
+        <span>{{ $t(`text.${item.name}`) }}</span>
       </div>
     </div>
   </div>
@@ -123,5 +122,8 @@ onMounted(() => {
 }
 .my-card {
   top: 4vh;
+}
+.calendar-size {
+  width: 100vh;
 }
 </style>

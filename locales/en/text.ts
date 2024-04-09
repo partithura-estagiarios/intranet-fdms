@@ -37,4 +37,5 @@ export default {
   selectDayForRoom: "Or select a day",
   helpers: `Others: {materiais}`,
   equipamentSong: "Song",
+  until: "Until",
 };

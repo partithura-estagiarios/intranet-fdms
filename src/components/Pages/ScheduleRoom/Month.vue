@@ -1,5 +1,5 @@
 <template>
-  <q-card class="text-h3 text-uppercase text-white bg-green">
+  <q-card class="text-h3 text-uppercase text-white bg-black">
     {{ formattedMonth }}
   </q-card>
 </template>

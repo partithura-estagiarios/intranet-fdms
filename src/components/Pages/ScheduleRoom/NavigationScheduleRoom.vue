@@ -7,7 +7,7 @@
         style="margin: 2px"
         @click="$emit('today')"
       >
-        {{ $t("text.now") }}
+        {{ $t("text.now").toUpperCase() }}
       </q-btn>
       <q-btn
         no-caps
@@ -15,7 +15,7 @@
         style="margin: 2px"
         @click="$emit('prev')"
       >
-        &lt; {{ $t("text.previous") }}
+        &lt; {{ $t("text.previous").toUpperCase() }}
       </q-btn>
       <q-btn
         no-caps
@@ -23,7 +23,7 @@
         style="margin: 2px"
         @click="$emit('next')"
       >
-        {{ $t("text.next") }}
+        {{ $t("text.next").toUpperCase() }}
         &gt;
       </q-btn>
     </div>

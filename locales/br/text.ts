@@ -34,7 +34,8 @@ export default {
   roomB: "Sala B",
   roomC: "Sala C",
   roomOfReunion: "Sala de Reunião",
-  selectDayForRoom: "Ou selecione um dia",
+  selectDayForRoom: "Ou clique em um dia",
   helpers: `Outros: {materiais}`,
   equipamentSong: "Som",
+  until: "Até",
 };

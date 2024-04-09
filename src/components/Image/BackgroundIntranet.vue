@@ -1,11 +1,11 @@
 <template>
   <q-img
     src="/INTRANET_BACKGROUND_ FUNDIMISA.png"
-    class="absolute opacity position-fixed fixed-full"
+    class="absolute fixed-full camada"
   />
 </template>
 <style scoped>
-.opacity {
-  opacity: 0.4;
+.camada {
+  z-index: -1;
 }
 </style>
