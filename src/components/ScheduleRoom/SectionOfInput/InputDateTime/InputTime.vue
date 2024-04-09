@@ -8,6 +8,7 @@
       :label="dateReceived"
       v-bind="$attrs"
       v-model="inputValue"
+      @click="card = true"
     >
       <template #before>
         <q-icon

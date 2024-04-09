@@ -1,5 +1,5 @@
 <template>
-  <q-img src="/INTRANET_FUNDIMISA.png" class="absolute opacity fixed-full" />
+  <q-img src="/INTRANET_FUNDIMISA.png" class="absolute fixed-full" />
 
   <div class="column fixed-center">
     <div class="row">
