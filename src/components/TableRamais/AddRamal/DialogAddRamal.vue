@@ -39,24 +39,20 @@
           </q-card-section>
         </div>
         <div v-else>
-          <!-- <q-card-section>
+          <q-card-section>
             <span class="text-grey text-h6">
               {{
                 $t("formRamal.deleteRamalMessage", {
-                  numero: props.ramal.number,
-                  nome: props.ramal.name,
-                  setor: props.ramal.sector,
+                  numero: labelDefinite.number,
+                  nome: labelDefinite.name,
+                  setor: labelDefinite.sector,
                 })
               }}
             </span>
-          </q-card-section> -->
+          </q-card-section>
         </div>
         <q-card-actions align="right" class="pt-12 pa-5 text-green-8">
-          <!-- <q-btn
-            flat
-            :label="$t('formRamal.confirm')"
-            @click="optionRamal(props.option, labelDefinite)"
-          /> -->
+          <q-btn flat :label="$t('formRamal.confirm')" @click="optionRamal()" />
         </q-card-actions>
       </q-card>
     </q-responsive>
@@ -64,8 +60,10 @@
 </template>
 
 <script setup lang="ts">
-import * as Mutation from "../../../graphql/ramais/mutations.gql";
-
+import DeleteRamal from "../../../graphql/ramais/DeleteRamal.gql";
+import EditRamal from "../../../graphql/ramais/EditRamal.gql";
+import AddRamal from "../../../graphql/ramais/AddRamal.gql";
+import { NewRamal } from "../../../entities/ramal";
 const props = defineProps({
   open: {
     type: Boolean,
@@ -91,28 +89,26 @@ const labelDefinite = computed(() => {
   return props.ramal ?? label;
 });
 
-// async function optionRamal(option: string, ramal: Object) {
-//   switch (props.option) {
-//     case "deleteRamal":
-//       await runMutation(Mutation.DeleteRamal, { id: ramal.id });
-//       emits("close");
-//       emits("reloadTable");
-//       break;
-//     case "editRamal":
-//       await runMutation(Mutation.EditRamal, { ramal: ramal });
-//       emits("close");
-//       emits("reloadTable");
-//       break;
-//     case "addRamal":
-//       await runMutation(Mutation.AddRamal, { newRamal: ramal });
-//       emits("close");
-//       emits("reloadTable");
-//       break;
-//     default:
-//       emits("close");
-//       emits("reloadTable");
-//   }
-//   emits("close");
-//   emits("reloadTable");
-// }
+async function optionRamal() {
+  switch (props.option) {
+    case "deleteRamal":
+      await runMutation(DeleteRamal, { id: labelDefinite.value.id });
+      emits("close");
+      emits("reloadTable");
+      break;
+    case "editRamal":
+      await runMutation(EditRamal, { ramal: labelDefinite.value });
+      emits("close");
+      emits("reloadTable");
+      break;
+    case "addRamal":
+      const new
+      await runMutation(AddRamal, { newRamal: labelDefinite.value });
+      emits("reloadTable");
+      break;
+    default:
+      emits("close");
+      emits("reloadTable");
+  }
+}
 </script>

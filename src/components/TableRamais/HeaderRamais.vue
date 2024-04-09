@@ -9,13 +9,20 @@
     </div>
     <q-input :label="$t('text.searchRamal')" v-model="search" color="indigo-8 ">
       <template v-slot:append>
-        <!-- <q-icon
+        <q-icon
           name="search"
           color="indigo-8"
-          <!-- @click="searchRamalInBack()" -->
-        class="cursor-pointer" /> -->
+          @click="searchRamalInBack()"
+          class="cursor-pointer"
+        />
       </template>
     </q-input>
+    <DialogAddRamal
+      :open="dialogVisible"
+      @close="(value) => (dialogVisible = value)"
+      @add-ramal="(item) => (receivedRamal = item)"
+      :option="'addRamal'"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -29,10 +36,10 @@ function openDialog() {
   dialogVisible.value = true;
 }
 
-// async function searchRamalInBack() {
-//   const { searchRamal } = await runQuery(Query.SearchRamal, {
-//     word: search.value,
-//   });
-//   emits("envityRamal-table", searchRamal);
-// }
+async function searchRamalInBack() {
+  const { searchRamal } = await runQuery(Query.SearchRamal, {
+    word: search.value,
+  });
+  emits("envityRamal-table", searchRamal);
+}
 </script>

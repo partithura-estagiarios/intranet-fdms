@@ -1,0 +1,3 @@
+mutation DeleteRamal($id: ID!) {
+  deleteRamal(id: $id)
+}
