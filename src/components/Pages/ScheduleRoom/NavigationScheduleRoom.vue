@@ -3,27 +3,27 @@
     <div class="q-pa-md q-gutter-sm row">
       <q-btn
         no-caps
-        class="button text-indigo-8"
+        class="button text-indigo-8 text-uppercase"
         style="margin: 2px"
         @click="$emit('today')"
       >
-        {{ $t("text.now").toUpperCase() }}
+        {{ $t("text.now") }}
       </q-btn>
       <q-btn
         no-caps
-        class="button text-indigo-8"
+        class="button text-indigo-8 text-uppercase"
         style="margin: 2px"
         @click="$emit('prev')"
       >
-        &lt; {{ $t("text.previous").toUpperCase() }}
+        &lt; {{ $t("text.previous") }}
       </q-btn>
       <q-btn
         no-caps
-        class="button text-indigo-8"
+        class="button text-indigo-8 text-uppercase"
         style="margin: 2px"
         @click="$emit('next')"
       >
-        {{ $t("text.next").toUpperCase() }}
+        {{ $t("text.next") }}
         &gt;
       </q-btn>
     </div>
