@@ -34,7 +34,6 @@
   <div class="q-pa-md row justify-center">
     <div class="text-h5 calendar-size text-uppercase">
       <q-calendar-month
-        class="bg-transparent"
         ref="calendar"
         v-model="selectedDate"
         animated
