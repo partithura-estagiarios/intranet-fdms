@@ -60,7 +60,6 @@ const submitLoginForm = async () => {
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }
-  console.log(auth);
   return negativeNotify(t("auth.invalidCredentials"));
 };
 </script>
