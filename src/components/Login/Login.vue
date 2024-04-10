@@ -46,7 +46,6 @@ import { useUsers } from "../../stores/user";
 const userStorage = useUsers();
 const { t } = useI18n();
 const loginForm: User = reactive({
-  labelInputName: "admin",
   labelEmail: "admin@admin.com",
   labelInputPassword: "admin",
 });
@@ -55,13 +54,13 @@ const handleDataLogin = (form: User) => {
 };
 
 const submitLoginForm = async () => {
-  const some = await userStorage.getUser(loginForm);
-  const { auth } = some;
-  if (Object.keys(auth).length !== null) {
+  const { auth } = await userStorage.getUser(loginForm);
+  if (auth) {
     userStorage.stateUser = auth;
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }
+  console.log(auth);
   return negativeNotify(t("auth.invalidCredentials"));
 };
 </script>
