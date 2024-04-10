@@ -46,9 +46,9 @@ import { useUsers } from "../../stores/user";
 const userStorage = useUsers();
 const { t } = useI18n();
 const loginForm: User = reactive({
-  labelInputName: "admin",
-  labelEmail: "admin@admin.com",
-  labelInputPassword: "admin",
+  labelInputName: "",
+  labelEmail: "",
+  labelInputPassword: "",
 });
 const handleDataLogin = (form: User) => {
   Object.assign(loginForm, form);
