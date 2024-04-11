@@ -63,7 +63,6 @@
 import DeleteRamal from "../../../graphql/ramais/DeleteRamal.gql";
 import EditRamal from "../../../graphql/ramais/EditRamal.gql";
 import AddRamal from "../../../graphql/ramais/AddRamal.gql";
-import { NewRamal } from "../../../entities/ramal";
 const props = defineProps({
   open: {
     type: Boolean,
@@ -80,7 +79,6 @@ const props = defineProps({
 });
 const emits = defineEmits(["close", "reloadTable"]);
 const label = reactive({
-  id: null,
   sector: "",
   number: "",
   name: "",
@@ -102,8 +100,7 @@ async function optionRamal() {
       emits("reloadTable");
       break;
     case "addRamal":
-      const new
-      await runMutation(AddRamal, { newRamal: labelDefinite.value });
+      const result = await runMutation(AddRamal, { data: labelDefinite.value });
       emits("reloadTable");
       break;
     default:
