@@ -50,12 +50,6 @@ export function resetObject(obj: any) {
   return obj;
 }
 
-export function verifyTypeOfInput(input: number) {
-  if (input == null) {
-    return "number";
-  }
-}
-
 export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
   return {
     userCreated: {

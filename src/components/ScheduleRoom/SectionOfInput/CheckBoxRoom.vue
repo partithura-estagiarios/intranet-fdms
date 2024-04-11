@@ -8,7 +8,6 @@
       <div class="col">
         <q-input
           :label="$t('text.' + index)"
-          bg-color="white"
           class="border"
           readonly
           v-model="inputValue"

@@ -8,7 +8,6 @@
   <div class="row q-px-md q-pa-sm justify-center">
     <q-btn
       color="green"
-      text-color="white"
       :label="$t('text.addRoom')"
       class="row"
       @click="(card = true), (selectDate = '')"

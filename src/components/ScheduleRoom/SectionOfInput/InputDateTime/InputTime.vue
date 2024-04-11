@@ -1,8 +1,6 @@
 <template>
-  <div class="q-pa-sm">
+  <div class="q-pa-sl">
     <q-input
-      filled
-      bg-color="white"
       class="border"
       readonly
       :label="dateReceived"
@@ -10,7 +8,7 @@
       v-model="inputValue"
       @click="card = true"
     >
-      <template #before>
+      <template #prepend>
         <q-icon
           name="event"
           class="bg-indigo-8 full-height q-px-md"

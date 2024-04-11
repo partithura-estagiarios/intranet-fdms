@@ -1,16 +1,19 @@
 <template>
-  <InputTime
-    class="col-6"
-    :label="$t('text.startDateAndTime')"
-    :dateInput="dateInitial"
-    @envity-dates="(item) => (dateInitialFormated = item)"
-  />
-  <InputTime
-    class="col-6"
-    :label="$t('text.endDateAndTime')"
-    @envity-dates="(item) => (dateFinalFormated = item)"
-    :dateInput="dateFinal"
-  />
+  <div class="row justify-around">
+    <InputTime
+      :label="$t('text.startDateAndTime')"
+      class="col q-mr-sm"
+      :dateInput="dateInitial"
+      @envity-dates="(item) => (dateInitialFormated = item)"
+    />
+
+    <InputTime
+      :label="$t('text.endDateAndTime')"
+      class="col"
+      @envity-dates="(item) => (dateFinalFormated = item)"
+      :dateInput="dateFinal"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">

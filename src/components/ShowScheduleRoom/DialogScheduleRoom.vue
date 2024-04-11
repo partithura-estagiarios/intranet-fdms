@@ -57,7 +57,6 @@ watchEffect(() => {
 function renameKeysOfSupport(materialsSup: SuPMaterials) {
   if (materialsSup["helpers"]) {
     helpersValueFromMaterialSup.value = materialsSup["helpers"];
-    console.log(helpersValueFromMaterialSup.value);
     delete materialsSup["helpers"];
   }
   return renameKeys(materialsSup);

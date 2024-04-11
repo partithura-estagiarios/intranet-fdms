@@ -1,11 +1,9 @@
 <template>
-  <div class="q-pa-sm col-6">
+  <div class="q-pa-sl q-pt-md col-6">
     <q-select
       v-model="model"
       :options="props.options.rooms"
-      bg-color="white"
       :label="$t('text.selectRoom')"
-      color="indigo-8"
       class="col-4 border"
     >
       <template #prepend>
