@@ -1,5 +1,5 @@
-query GetUser($name: String!, $password: String!, $email: String!) {
-  auth(name: $name, password: $password, email: $email) {
+query GetUser($password: String!, $email: String!) {
+  auth(password: $password, email: $email) {
     id
     name
     password
