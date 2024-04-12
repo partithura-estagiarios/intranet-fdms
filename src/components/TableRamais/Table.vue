@@ -2,6 +2,7 @@
   <div class="q-pa-xl box-shadow mx-8 pt-3 relative-position bg-white">
     <HeaderRamais
       @envityRamal-table="(ramaisSearch) => (resultSearchRamal = ramaisSearch)"
+      @reload="getRamais(saveIndexPages)"
     />
     <q-table
       :rows="ramais"
@@ -64,6 +65,7 @@ async function getRamais(page: Number) {
   });
 
   ramais.value = getRamaisForPage;
+  getSizeOfRamais();
 }
 async function getSizeOfRamais() {
   const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais, {
@@ -75,8 +77,9 @@ onMounted(async () => {
   getSizeOfRamais();
 });
 watchEffect(() => {
-  if (resultSearchRamal) {
+  if (resultSearchRamal.value) {
     ramais.value = resultSearchRamal.value;
+    console.log(ramais.value);
   }
 });
 </script>

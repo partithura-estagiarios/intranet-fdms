@@ -13,7 +13,6 @@
     :option="selectOption"
     @close="(value) => (dialogVisible = value)"
     :ramal="ramalForEdition"
-    @reloadTable="attTable"
   >
   </DialogAddRamal>
 </template>
@@ -31,9 +30,6 @@ const props = defineProps({
 });
 const emits = defineEmits(["envityRamalCustom", "reload"]);
 
-function attTable() {
-  emits("reload");
-}
 const selectOption = ref();
 const dialogVisible = ref(false);
 const ramalForEdition = ref();
@@ -42,4 +38,9 @@ function openDialog(option: String) {
   selectOption.value = option;
   ramalForEdition.value = props.ramal;
 }
+watchEffect(() => {
+  if (!dialogVisible.value) {
+    emits("reload");
+  }
+});
 </script>

@@ -7,8 +7,13 @@ import register from "./register";
 import tab from "./tab";
 import auth from "./auth";
 import userScheduleRoom from "./userScheduleRoom";
+import erroRamal from "./erroRamal";
+import sucessRamal from "./sucessRamal";
+
 export default {
   userScheduleRoom,
+  erroRamal,
+  sucessRamal,
   action,
   caderno: {
     title: "Notebooks",

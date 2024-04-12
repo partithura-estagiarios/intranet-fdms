@@ -63,9 +63,13 @@
 </template>
 
 <script setup lang="ts">
+import AddRamal from "../../../graphql/ramais/AddRamal.gql";
 import DeleteRamal from "../../../graphql/ramais/DeleteRamal.gql";
 import EditRamal from "../../../graphql/ramais/EditRamal.gql";
-import AddRamal from "../../../graphql/ramais/AddRamal.gql";
+
+import { Ramal } from "../../../modules/graphql/graphql";
+import { resetFields } from "./lib";
+
 const props = defineProps({
   open: {
     type: Boolean,
@@ -80,7 +84,8 @@ const props = defineProps({
     required: false,
   },
 });
-const emits = defineEmits(["close", "reloadTable"]);
+const { t } = useI18n();
+const emits = defineEmits(["close"]);
 const label = reactive({
   id: "",
   sector: "",
@@ -92,14 +97,31 @@ const labelDefinite = computed(() => {
 });
 
 async function optionRamal() {
-  const { id, ...newRamal } = labelDefinite.value;
-  const { data } = await runMutation(AddRamal, { newRamal: newRamal });
-  console.log;
-  if (data) {
-    console.log(data);
-    positiveNotify(`Ramal ${data.number} adicionado com sucesso`);
+  let result;
+  switch (props.option) {
+    case "addRamal":
+      const { id, ...newRamal } = labelDefinite.value;
+      result = await runMutation(AddRamal, {
+        newRamal: newRamal,
+      });
+      resetFields(labelDefinite.value);
+      emits("close");
+      break;
+    case "editRamal":
+      result = await runMutation(EditRamal, { ramal: labelDefinite.value });
+      emits("close");
+
+      break;
+    case "deleteRamal":
+      result = await runMutation(DeleteRamal, { id: labelDefinite.value.id });
+      emits("close");
+      break;
+    default:
   }
-  emits("close");
-  emits("reloadTable");
+
+  if (result) {
+    return positiveNotify(t("sucessRamal." + props.option));
+  }
+  return negativeNotify(t("erroRamal." + props.option));
 }
 </script>

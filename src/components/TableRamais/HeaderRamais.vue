@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import * as Query from "../../graphql/ramais/queries.gql";
 const dialogVisible = ref(false);
-const emits = defineEmits(["envityRamal-table"]);
+const emits = defineEmits(["envityRamal-table", "reload"]);
 const search = ref();
 const receivedRamal = ref();
 
@@ -42,4 +42,9 @@ async function searchRamalInBack() {
   });
   emits("envityRamal-table", searchRamal);
 }
+watchEffect(() => {
+  if (!dialogVisible.value) {
+    emits("reload");
+  }
+});
 </script>
