@@ -3,7 +3,7 @@ export const tabItems = [
   { name: "rooms", label: "bookRoom" },
   // { name: "certifications", label: "certifications" },
   // { name: "docSig", label: "gisDocumentation" },
-  // { name: "ramais", label: "extensions" },
+  { name: "ramais", label: "extensions" },
   // { name: "rhDivulga", label: "hRdiscloses" },
   // { name: "cardup", label: "menu" },
 ];

@@ -1,0 +1,8 @@
+mutation AddRamal($newRamal: NewRamal!) {
+  addRamal(newRamal: $newRamal) {
+    id
+    name
+    sector
+    number
+  }
+}

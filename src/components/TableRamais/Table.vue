@@ -2,6 +2,7 @@
   <div class="q-pa-xl box-shadow mx-8 pt-3 relative-position bg-white">
     <HeaderRamais
       @envityRamal-table="(ramaisSearch) => (resultSearchRamal = ramaisSearch)"
+      @reload="getRamais(saveIndexPages)"
     />
     <q-table
       :rows="ramais"
@@ -15,7 +16,7 @@
           {{ $t(`${props.col.label}`) }}
         </q-th>
       </template>
-      <!-- <template v-slot:body-cell-icon="props">
+      <template v-slot:body-cell-icon="props">
         <q-td :props="props">
           <q-avatar>
             <DropdownSettings
@@ -26,7 +27,7 @@
             />
           </q-avatar>
         </q-td>
-      </template> -->
+      </template>
       <template v-slot:body-cell="props">
         <q-td :props="props" class="text-grey">
           {{ $t(`columns.${props.value}`, props.value) }}
@@ -34,10 +35,10 @@
       </template>
     </q-table>
     <q-separator />
-    <!-- <Pagination
+    <Pagination
       class="text-right"
       :pages="pages"
-       @change-page="(index) => getRamais(index) && getRamais(index)" -->
+      @change-page="(index) => getRamais(index) && getRamais(index)"
     />
     <SeparatorForEmergence
       :texto="'400 RAMAL DE EMERGÊNCIA'"
@@ -57,26 +58,28 @@ const pagination = ref({
   rowsPerPage: pagesOfTable,
 });
 const saveIndexPages = ref();
-// async function getRamais(page: Number) {
-//   saveIndexPages.value = page;
-//   const { getRamaisForPage } = await runQuery(Query.GetRamaisForPage, {
-//     page: page - 1,
-//   });
+async function getRamais(page: Number) {
+  saveIndexPages.value = page;
+  const { getRamaisForPage } = await runQuery(Query.GetRamaisForPage, {
+    page: page - 1,
+  });
 
-//   ramais.value = getRamaisForPage;
-// }
-// async function getSizeOfRamais() {
-//   const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais, {
-//     maxPages: pagesOfTable,
-//   });
-//   pages.value = getLenghtRamais;
-// }
-// onMounted(async () => {
-//   getSizeOfRamais();
-// });
+  ramais.value = getRamaisForPage;
+  getSizeOfRamais();
+}
+async function getSizeOfRamais() {
+  const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais, {
+    maxPages: pagesOfTable,
+  });
+  pages.value = getLenghtRamais;
+}
+onMounted(async () => {
+  getSizeOfRamais();
+});
 watchEffect(() => {
-  if (resultSearchRamal) {
+  if (resultSearchRamal.value) {
     ramais.value = resultSearchRamal.value;
+    console.log(ramais.value);
   }
 });
 </script>

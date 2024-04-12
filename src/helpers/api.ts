@@ -19,7 +19,7 @@ export async function runQuery<T>(
 
 export async function runMutation<T>(
   query: DocumentNode | string,
-  variables: Record<string, string>,
+  variables: Record<string, unknown>,
 ): Promise<T> {
   const { data, error } = await useMutation(query).execute(variables);
 
