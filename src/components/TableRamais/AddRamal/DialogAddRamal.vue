@@ -17,6 +17,7 @@
               white
               v-model="labelDefinite.sector"
               :label="$t(`formRamal.nameOfRamal`)"
+              type="text"
             />
           </q-card-section>
 
@@ -27,6 +28,7 @@
                 class="no-padding"
                 v-model="labelDefinite.number"
                 :label="$t(`formRamal.numberOfRamal`)"
+                type="number"
               />
             </div>
             <div class="pl-12 col-5">
@@ -34,6 +36,7 @@
                 white
                 v-model="labelDefinite.name"
                 :label="$t(`formRamal.userOfRamal`)"
+                type="text"
               />
             </div>
           </q-card-section>
@@ -79,6 +82,7 @@ const props = defineProps({
 });
 const emits = defineEmits(["close", "reloadTable"]);
 const label = reactive({
+  id: "",
   sector: "",
   number: "",
   name: "",
@@ -88,24 +92,14 @@ const labelDefinite = computed(() => {
 });
 
 async function optionRamal() {
-  switch (props.option) {
-    case "deleteRamal":
-      await runMutation(DeleteRamal, { id: labelDefinite.value.id });
-      emits("close");
-      emits("reloadTable");
-      break;
-    case "editRamal":
-      await runMutation(EditRamal, { ramal: labelDefinite.value });
-      emits("close");
-      emits("reloadTable");
-      break;
-    case "addRamal":
-      const result = await runMutation(AddRamal, { data: labelDefinite.value });
-      emits("reloadTable");
-      break;
-    default:
-      emits("close");
-      emits("reloadTable");
+  const { id, ...newRamal } = labelDefinite.value;
+  const { data } = await runMutation(AddRamal, { newRamal: newRamal });
+  console.log;
+  if (data) {
+    console.log(data);
+    positiveNotify(`Ramal ${data.number} adicionado com sucesso`);
   }
+  emits("close");
+  emits("reloadTable");
 }
 </script>
