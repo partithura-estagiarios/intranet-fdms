@@ -1,8 +1,8 @@
 <template>
   <div class="q-pa-xl box-shadow mx-8 pt-3 relative-position bg-white">
     <HeaderRamais
-      @envityRamal-table="(ramaisSearch) => (resultSearchRamal = ramaisSearch)"
-      @reload="getRamais(saveIndexPages)"
+      @envityRamal-table="(wordRamal) => searchRamal(wordRamal)"
+      @reload="reloadRamais"
     />
     <q-table
       :rows="ramais"
@@ -22,8 +22,7 @@
             <DropdownSettings
               :options="['deleteRamal', 'editRamal']"
               :ramal="props.row"
-              @envity-ramal-custom="(item) => (ramalOfTable = item)"
-              @reload="getRamais(saveIndexPages)"
+              @reloadAfterActionRamal="reloadRamais"
             />
           </q-avatar>
         </q-td>
@@ -38,7 +37,7 @@
     <Pagination
       class="text-right"
       :pages="pages"
-      @change-page="(index) => getRamais(index) && getRamais(index)"
+      @change-page="(index) => getRamais(index)"
     />
     <SeparatorForEmergence
       :texto="'400 RAMAL DE EMERGÊNCIA'"
@@ -48,40 +47,55 @@
 </template>
 
 <script setup lang="ts">
+import RamaisForPageLoad from "../../graphql/ramais/RamaisForPageLoad.gql";
 import { columns, pagesOfTable } from "./lib";
 import { Column } from "../../entities/column";
-import * as Query from "../../graphql/ramais/queries.gql";
+import GetLenghtRamais from "../../graphql/ramais/GetLenghtRamais.gql";
+import { Ramal } from "../../modules/graphql/graphql";
+import SearchRamal from "../../graphql/ramais/SearchRamal.gql";
+const searchRamalWord = ref();
 const ramais = ref();
 const pages = ref();
-const resultSearchRamal = ref();
 const pagination = ref({
   rowsPerPage: pagesOfTable,
 });
 const saveIndexPages = ref();
-async function getRamais(page: Number) {
+async function getRamais(page: number) {
   saveIndexPages.value = page;
-  const { getRamaisForPage } = await runQuery(Query.GetRamaisForPage, {
-    page: page - 1,
-  });
+  const { ramaisForPageLoad }: { ramaisForPageLoad: Array<Ramal> } =
+    await runQuery(RamaisForPageLoad, {
+      page: page.toString(),
+    });
 
-  ramais.value = getRamaisForPage;
+  ramais.value = ramaisForPageLoad;
   getSizeOfRamais();
 }
 async function getSizeOfRamais() {
-  const { getLenghtRamais } = await runQuery(Query.GetLenghtRamais, {
-    maxPages: pagesOfTable,
-  });
+  const { getLenghtRamais }: { getLenghtRamais: String } = await runQuery(
+    GetLenghtRamais,
+    {
+      maxPages: pagesOfTable.toString(),
+    },
+  );
   pages.value = getLenghtRamais;
 }
-onMounted(async () => {
-  getSizeOfRamais();
-});
-watchEffect(() => {
-  if (resultSearchRamal.value) {
-    ramais.value = resultSearchRamal.value;
-    console.log(ramais.value);
+
+async function searchRamal(word: string) {
+  searchRamalWord.value = word;
+  const { searchRamal }: { searchRamal: Ramal[] } = await runQuery(
+    SearchRamal,
+    {
+      word: word,
+    },
+  );
+  ramais.value = searchRamal;
+}
+async function reloadRamais() {
+  if (!searchRamalWord.value) {
+    return await getRamais(saveIndexPages.value);
   }
-});
+  await searchRamal(searchRamalWord.value);
+}
 </script>
 
 <style scoped>
