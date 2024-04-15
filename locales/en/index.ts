@@ -9,8 +9,10 @@ import auth from "./auth";
 import userScheduleRoom from "./userScheduleRoom";
 import erroRamal from "./erroRamal";
 import sucessRamal from "./sucessRamal";
+import emailDirector from "./emailDirector";
 
 export default {
+  emailDirector,
   userScheduleRoom,
   erroRamal,
   sucessRamal,

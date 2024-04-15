@@ -18,6 +18,10 @@
               <q-item-label class="text-indigo-8 text-h6 text-weight-bolder">
                 {{ item.label }}
               </q-item-label>
+              <DialogContatDirector
+                @close="openModalCeo = false"
+                :open="openModalCeo"
+              />
 
               <q-item-label class="text-indigo text-h6">
                 {{ item.sublabel }}
@@ -40,7 +44,7 @@ const props = defineProps({
   },
 });
 const sistemas = ref();
-
+const openModalCeo = ref();
 onMounted(async () => {
   const { loadSystems }: { loadSystems: Object } = await runQuery(LoadSystems, {
     sistema: props.sistema,
@@ -50,6 +54,9 @@ onMounted(async () => {
 function goToRoute(rout: String) {
   if (rout.includes("https")) {
     return window.open(`${rout}`);
+  }
+  if (rout.includes("local")) {
+    return (openModalCeo.value = true);
   }
   return router.push(`${rout}`);
 }
