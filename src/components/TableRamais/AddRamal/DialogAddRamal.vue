@@ -67,7 +67,6 @@ import AddRamal from "../../../graphql/ramais/AddRamal.gql";
 import DeleteRamal from "../../../graphql/ramais/DeleteRamal.gql";
 import EditRamal from "../../../graphql/ramais/EditRamal.gql";
 
-import { Ramal } from "../../../modules/graphql/graphql";
 import { resetFields } from "./lib";
 
 const props = defineProps({

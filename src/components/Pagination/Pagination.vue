@@ -11,7 +11,7 @@
       <label>{{ $t("text.previous") }}</label>
     </q-btn>
     <q-badge
-      v-for="index in quantPages"
+      v-for="(num, index) in buttonColors"
       @click="changeColor(index)"
       :color="buttonColors[index - 1]"
       class="btns-pag text-indigo-8 cursor-pointer"
@@ -21,7 +21,7 @@
       unelevated
     >
       <span :class="{ 'text-white': activeButtonIndex === index }">{{
-        index
+        index + 1
       }}</span>
     </q-badge>
 
@@ -31,7 +31,7 @@
       no-caps
       size="19px"
       @click="changeColor(activeButtonIndex + 1)"
-      :disable="activeButtonIndex == props.pages"
+      :disable="activeButtonIndex == props.pages - 1"
     >
       <label>{{ $t("text.next") }}</label>
     </q-btn>
@@ -45,9 +45,7 @@ const props = defineProps({
   pages: { type: Number, required: true },
 });
 
-const quantPages = ref();
-
-const buttonColors = ref<string[]>(Array(10).fill("transparent"));
+const buttonColors = ref<string[]>(Array(props.pages).fill("transparent"));
 const activeButtonIndex = ref();
 const changeColor = (index: number) => {
   if (activeButtonIndex.value !== null) {
@@ -60,4 +58,11 @@ const changeColor = (index: number) => {
 onMounted(() => {
   changeColor(firstPage);
 });
+watch(
+  () => props.pages,
+  (newPages: number) => {
+    buttonColors.value = Array(newPages).fill("transparent");
+    changeColor(firstPage);
+  },
+);
 </script>
