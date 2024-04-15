@@ -13,8 +13,9 @@ import userScheduleRoom from "./userScheduleRoom";
 import tab from "./tab";
 import erroRamal from "./erroRamal";
 import sucessRamal from "./sucessRamal";
-
+import emailDirector from "./emailDirector";
 export default {
+  emailDirector,
   userScheduleRoom,
   sucessRamal,
   erroRamal,
