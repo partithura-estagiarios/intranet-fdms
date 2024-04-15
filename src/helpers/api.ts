@@ -6,7 +6,7 @@ const GRAPHQL_ERROR_MARKER = 9;
 
 export async function runQuery<T>(
   query: MaybeRef<DocumentNode | string>,
-  variables: Record<string, string> | null = null,
+  variables: Record<string, unknown> | null = null,
 ): Promise<T> {
   const { data, error } = await useQuery({
     query,

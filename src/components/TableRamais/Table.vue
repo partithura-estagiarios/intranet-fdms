@@ -64,7 +64,7 @@ async function getRamais(page: number) {
   saveIndexPages.value = page;
   const { ramaisForPageLoad }: { ramaisForPageLoad: Array<Ramal> } =
     await runQuery(RamaisForPageLoad, {
-      page: page.toString(),
+      page: saveIndexPages.value,
     });
 
   ramais.value = ramaisForPageLoad;
@@ -74,7 +74,7 @@ async function getSizeOfRamais() {
   const { getLenghtRamais }: { getLenghtRamais: String } = await runQuery(
     GetLenghtRamais,
     {
-      maxPages: pagesOfTable.toString(),
+      maxPages: pagesOfTable,
     },
   );
   pages.value = getLenghtRamais;
