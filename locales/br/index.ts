@@ -8,9 +8,16 @@ import cardDocSig from "./cardDocSig";
 import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
-
+import auth from "./auth";
+import userScheduleRoom from "./userScheduleRoom";
 import tab from "./tab";
+import erroRamal from "./erroRamal";
+import sucessRamal from "./sucessRamal";
+
 export default {
+  userScheduleRoom,
+  sucessRamal,
+  erroRamal,
   about: "Sobre",
   action,
   home: "Casa",
@@ -25,4 +32,5 @@ export default {
   formRamal,
   register,
   tab,
+  auth,
 };

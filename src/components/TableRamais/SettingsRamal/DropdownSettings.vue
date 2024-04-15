@@ -11,9 +11,13 @@
   <DialogAddRamal
     :open="dialogVisible"
     :option="selectOption"
-    @close="(value) => (dialogVisible = value)"
+    @close="
+      (value) => {
+        dialogVisible = value;
+        $emit('reloadAfterActionRamal');
+      }
+    "
     :ramal="ramalForEdition"
-    @reloadTable="attTable"
   >
   </DialogAddRamal>
 </template>
@@ -29,13 +33,10 @@ const props = defineProps({
     required: false,
   },
 });
-const emits = defineEmits(["envityRamalCustom", "reload"]);
+const emits = defineEmits(["reloadAfterActionRamal"]);
 
-function attTable() {
-  emits("reload");
-}
 const selectOption = ref();
-const dialogVisible = ref(false);
+const dialogVisible = ref();
 const ramalForEdition = ref();
 function openDialog(option: String) {
   dialogVisible.value = true;

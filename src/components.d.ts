@@ -43,6 +43,7 @@ declare module 'vue' {
     Month: typeof import('./components/Pages/ScheduleRoom/Month.vue')['default']
     NavigationScheduleRoom: typeof import('./components/Pages/ScheduleRoom/NavigationScheduleRoom.vue')['default']
     OptionsForProces: typeof import('./components/CardForDocSIG/OptionsForProces.vue')['default']
+
     Pagination: typeof import('./components/Pagination/Pagination.vue')['default']
     PCertification: typeof import('./components/Pages/PageCertifications/PCertification.vue')['default']
     PDocSig: typeof import('./components/Pages/PageDocSig/PDocSig.vue')['default']

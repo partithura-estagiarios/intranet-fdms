@@ -1,34 +1,60 @@
 <template>
-  <div class="fit column wrap justify-center items-center content-center">
+  <div
+    class="fit column wrap justify-center items-center content-center padding-top"
+  >
     <Month :select-date="selectedDate" />
     <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
-    <div class="row">
-      <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
-        <div class="row items-center">
-          <q-badge rounded :color="item.color" class="mr-2" />
-          <span>{{ item.name }}</span>
-        </div>
-      </div>
+  </div>
+  <div class="row q-px-md q-pa-sm justify-center">
+    <q-btn
+      color="green"
+      :label="$t('text.addRoom')"
+      class="row"
+      @click="(card = true), (selectDate = '')"
+    />
+    <div class="q-px-md q-pa-md text-green-8">
+      {{ $t("text.selectDayForRoom") }}
     </div>
   </div>
-  <div class="subcontent">
-    <div class="row justify-center">
-      <div class="calendarM row window-width">
-        <q-calendar-month
-          ref="calendar"
-          v-model="selectedDate"
-          animated
-          bordered
-          focusable
-          hoverable
-          no-active-date
-          :day-min-height="60"
-          :day-height="0"
-        >
-          <template #day="{ scope: { timestamp } }">
-            <ExpansionEvent :data="timestamp.date" :events="events" />
-          </template>
-        </q-calendar-month>
+  <q-dialog v-model="card">
+    <div class="my-card relative-position no-scroll">
+      <q-card class="no-scroll" flat>
+        <DialogHeader
+          @close="(item) => (card = item)"
+          :option="$t('text.organizerEvent')"
+        />
+        <AddScheduleRoom
+          @reload="loadSchedule(), (card = false)"
+          :selectDate="selectDate"
+        />
+      </q-card>
+    </div>
+  </q-dialog>
+  <div class="q-pa-md row justify-center">
+    <div class="text-h5 calendar-size text-uppercase">
+      <q-calendar-month
+        ref="calendar"
+        v-model="selectedDate"
+        animated
+        bordered
+        focusable
+        locale="pt-br"
+        hoverable
+        short-weekday-label
+        :day-min-height="100"
+        @click-date="onClickHeadDay"
+      >
+        <template #day="{ scope: { timestamp } }">
+          <ExpansionEvent :data="timestamp.date" :events="events" />
+        </template>
+      </q-calendar-month>
+    </div>
+  </div>
+  <div class="row justify-center">
+    <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
+      <div class="row items-center">
+        <q-badge rounded :color="item.color" class="mr-2" />
+        <span>{{ $t(`text.${item.name}`) }}</span>
       </div>
     </div>
   </div>
@@ -39,35 +65,63 @@ import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
-import * as Query from "../../../graphql/scheduleRoom/queries.gql";
 import { formatDate, insertColor, rooms } from "./lib";
-
+import { CalendarItem, Event } from "../../../entities/scheduleRoom";
+import ScheduleRoomLoad from "../../../graphql/scheduleRoom/queries.gql";
 const selectedDate = ref(today());
 const events = ref();
 const instance = getCurrentInstance();
-
+const card = ref(false);
+const selectDate = ref();
+function onClickHeadDay(item: CalendarItem) {
+  const { date, time } = item.scope.timestamp;
+  selectDate.value = date + " " + time;
+  card.value = true;
+}
 function onToday() {
-  instance.refs.calendar.moveToToday();
+  if (instance && instance.refs && instance.refs.calendar) {
+    (instance.refs.calendar as QCalendarMonth).moveToToday();
+  }
 }
 
 function onPrev() {
-  instance.refs.calendar.prev();
+  if (instance && instance.refs && instance.refs.calendar) {
+    (instance.refs.calendar as QCalendarMonth).prev();
+  }
 }
 
 function onNext() {
-  instance.refs.calendar.next();
+  if (instance && instance.refs && instance.refs.calendar) {
+    (instance.refs.calendar as QCalendarMonth).next();
+  }
 }
-
-onMounted(async () => {
-  const { getScheduleRoom } = await runQuery(Query.GetScheduleRoom);
-  if (getScheduleRoom.length > 0) {
-    getScheduleRoom.forEach((event) => {
-      event.initial_time = new Date(event.initial_time);
-      event.final_time = new Date(event.final_time);
-      event.final_date = formatDate(event.final_time);
+async function loadSchedule() {
+  const { scheduleRoomLoad } = (await runQuery(ScheduleRoomLoad)) as {
+    scheduleRoomLoad: Event[];
+  };
+  if (scheduleRoomLoad.length > 0) {
+    scheduleRoomLoad.forEach((event) => {
+      event.initialTime = new Date(event.initialTime);
+      event.finalTime = new Date(event.finalTime);
+      event.finalDate = formatDate(event.finalTime);
       event.colorRoom = insertColor(event.location);
     });
-    events.value = getScheduleRoom;
+    events.value = scheduleRoomLoad;
   }
+}
+onMounted(() => {
+  loadSchedule();
 });
 </script>
+<style scoped>
+.padding-top {
+  position: relative;
+  padding-top: 10vh;
+}
+.my-card {
+  top: 4vh;
+}
+.calendar-size {
+  width: 100vh;
+}
+</style>

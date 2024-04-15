@@ -11,3 +11,11 @@ export const router = createRouter({
     return { top: 0 };
   },
 });
+
+router.beforeEach((to, from, next) => {
+  const userStorage = useUsers();
+  if (userStorage.stateUser.token && to.path === "/login") {
+    return next("/home");
+  }
+  return next();
+});

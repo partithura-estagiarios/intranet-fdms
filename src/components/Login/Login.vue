@@ -1,5 +1,5 @@
 <template>
-  <q-img src="/INTRANET_FUNDIMISA.png" class="absolute opacity fixed-full" />
+  <q-img src="/INTRANET_FUNDIMISA.png" class="absolute fixed-full" />
 
   <div class="column fixed-center">
     <div class="row">
@@ -15,11 +15,7 @@
             {{ $t("login.enterYourCredentials") }}
           </h5>
           <div class="q-gutter-md">
-            <Input
-              :objectInput="loginForm"
-              @dataLogin="handleDataLogin"
-              :fieldAlone="submitLoginForm"
-            />
+            <Input :objectInput="loginForm" @dataLogin="handleDataLogin" />
           </div>
           <br />
           <a class="underline text-bold" color="blue">{{
@@ -43,14 +39,13 @@
 </template>
 
 <script setup lang="ts">
-import { User, UserStorage } from "../../entities/login";
+import { User } from "../../entities/login";
 import { router } from "../../modules";
 import { useUsers } from "../../stores/user";
 
 const userStorage = useUsers();
 const { t } = useI18n();
 const loginForm: User = reactive({
-  labelInputName: "admin",
   labelEmail: "admin@admin.com",
   labelInputPassword: "admin",
 });
@@ -60,12 +55,12 @@ const handleDataLogin = (form: User) => {
 
 const submitLoginForm = async () => {
   const { auth } = await userStorage.getUser(loginForm);
-  if (Object.keys(auth).length !== null) {
-    userStorage.stateUser = auth as UserStorage;
+  if (auth) {
+    userStorage.stateUser = auth;
     router.push("/home");
     return positiveNotify(t("login.loginSuccessful"));
   }
-  negativeNotify(t("login.enterYourCredentials"));
+  return negativeNotify(t("auth.invalidCredentials"));
 };
 </script>
 

@@ -6,7 +6,7 @@
       standout="bg-grey-4 text"
       v-model="props.objectInput[key]"
       :label="$t('login.' + key)"
-      :type="isPwd ? 'password' : 'text'"
+      :type="chooseVibility(key)"
     >
       <template v-slot:append>
         <q-icon
@@ -36,5 +36,27 @@ const props = defineProps({
 });
 function verifyLabelPasswor(label: string) {
   return label.includes("ss");
+}
+
+function chooseVibility(
+  key: string,
+):
+  | "number"
+  | "textarea"
+  | "time"
+  | "text"
+  | "search"
+  | "password"
+  | "email"
+  | "tel"
+  | "file"
+  | "url"
+  | "date"
+  | "datetime-local"
+  | undefined {
+  if (key !== "labelInputPassword" || !isPwd.value) {
+    return "text";
+  }
+  return "password";
 }
 </script>

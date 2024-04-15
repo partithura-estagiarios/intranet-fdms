@@ -34,10 +34,17 @@ const loadInsitucional = async () => {
   const { loadCertifications } = await runQuery(LoadCertifications, {
     title: "docSig",
   });
+onMounted(async () => {
+  const { loadCertifications }: { loadCertifications: object } = await runQuery(
+    LoadCertifications,
+    {
+      title: "docSig",
+    },
+  );
   institutional.value = loadCertifications;
   emits("envityImgs", institutional.value);
   setLink(getFirstImage(institutional.value));
-};
+});
 const loadProcess = async () => {
   const files = await filesStorage.fetchFileList();
   institutional.value = [files];

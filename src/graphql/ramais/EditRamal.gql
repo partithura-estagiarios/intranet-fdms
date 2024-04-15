@@ -1,0 +1,3 @@
+mutation EditRamal($ramal: RamalInput) {
+  editRamal(ramal: $ramal)
+}
