@@ -37,4 +37,5 @@ export default {
   login: "Login",
   registerUser: "Register User",
   logout: "Log out of account",
+  createFolder: "Create a folder",
 };

@@ -16,15 +16,10 @@
       <q-card-section horizontal>
         <q-card-section class="row no-padding">
           <div class="q-pa-md">
-            <List
-              :tabSelect="selectCard"
-              @showImage="(title) => (selectTitle = title)"
-              @envityImgs="(imgsForCard) => (imgs = imgsForCard)"
-            />
+            <List :tabSelect="selectCard" />
           </div>
         </q-card-section>
         <q-card class="q-pa-md box-shadow">
-          <q-img :src="selecImage" width="1000px" v-show="!selectHyperText" />
           <CardProcess :files="selectHyperText" />
         </q-card>
       </q-card-section>
@@ -32,33 +27,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { extractImage } from "./lib";
-import { useFiles } from "../../stores/files";
-const filesStorage = useFiles();
 const selectCard = ref("");
 const selectTitle = ref("");
-const imgs = ref();
-const selecImage = ref();
+const process = ref();
 const selectHyperText = ref();
 const updateSelectCard = (item: string) => {
   selectCard.value = item;
 };
-watchEffect(() => {
-  if (selectTitle.value) {
-    selectHyperText.value = false;
-    updateImg(selectTitle.value);
-  }
-  if (selectTitle.value == undefined) {
-    selecImage.value = false;
-    updateProcess();
-  }
-});
-function updateImg(title: String) {
-  selecImage.value = extractImage(title as string, imgs.value);
-}
-function updateProcess() {
-  selectHyperText.value = imgs.value[0];
-}
 </script>
 <style scoped>
 .box-shadow {

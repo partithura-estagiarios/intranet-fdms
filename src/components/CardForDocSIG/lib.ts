@@ -8,7 +8,3 @@ export function extractImage(
     return image;
   }
 }
-
-export function getFirstImage(docSig: { name: string }[]) {
-  return docSig[0]?.name as string;
-}

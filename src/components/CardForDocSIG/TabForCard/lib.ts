@@ -1,6 +1,6 @@
 export const tabItems = [
-  { name: "fispq" },
-  { name: "institutional" },
+  //   { name: "fispq" },
+  //   { name: "institutional" },
   { name: "processes" },
-  { name: "listofPPEs" },
+  //   { name: "listofPPEs" },
 ];

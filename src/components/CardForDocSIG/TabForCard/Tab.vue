@@ -8,7 +8,6 @@
       :label="$t(`cardDocSig.${item.name}`)"
       class="text-bold"
       :class="{ 'text-indigo-8 bg-white rounded-borders': tab === item.name }"
-      @click="showLabel(item.name)"
     />
   </q-tabs>
 </template>
@@ -16,11 +15,8 @@
 <script setup lang="ts">
 import { tabItems } from "./lib";
 const emits = defineEmits(["showCard"]);
-const tab = ref("institutional");
+const tab = ref("processes");
 onMounted(() => {
-  showLabel("institutional");
+  emits("showCard", "processes");
 });
-function showLabel(item: string) {
-  emits("showCard", item);
-}
 </script>

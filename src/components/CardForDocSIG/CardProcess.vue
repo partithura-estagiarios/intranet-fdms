@@ -32,7 +32,7 @@ const props = defineProps({
   },
 });
 const filesStorage = useFiles();
-async function deleteFile(file) {
+async function deleteFile(file: string) {
   const files = await filesStorage.deleteFile(file);
 }
 </script>

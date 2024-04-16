@@ -37,4 +37,5 @@ export default {
   login: "Realizar Login",
   registerUser: "Registrar Usuário",
   logout: "Sair da conta",
+  createFolder: "Criar uma pasta",
 };

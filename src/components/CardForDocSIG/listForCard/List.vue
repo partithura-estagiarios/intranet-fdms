@@ -1,66 +1,50 @@
 <template>
-  <q-list v-for="item in institutional" class="text-indigo-8">
+  <q-list v-for="item in past" class="text-indigo-8">
     <q-item
       clickable
-      @click="setLink(item.name)"
-      :class="{ 'text-white bg-green rounded-borders': link === item.name }"
+      :class="{ 'text-white bg-green rounded-borders': link === item }"
+      @click="setLink(item)"
     >
       <q-item-section>
-        {{
-          item.name === undefined
-            ? $t("cardDocSig.processes")
-            : $t("cardDocSig." + item.name)
-        }}
+        {{ item }}
       </q-item-section>
     </q-item>
   </q-list>
 </template>
 
 <script setup lang="ts">
-import LoadCertifications from "../../../graphql/certification/queries.gql";
 import { useFiles } from "../../../stores/files";
+const emits = defineEmits(["showImage"]);
+
 const filesStorage = useFiles();
-import { getFirstImage } from "../lib";
 const props = defineProps({
   tabSelect: {
     type: String,
-    default: "institutional",
+    required: true,
   },
 });
-const link = ref();
-const emits = defineEmits(["showImage", "envityImgs"]);
-const institutional = ref();
-const loadInsitucional = async () => {
-  const { loadCertifications } = await runQuery(LoadCertifications, {
-    title: "docSig",
-  });
-onMounted(async () => {
-  const { loadCertifications }: { loadCertifications: object } = await runQuery(
-    LoadCertifications,
-    {
-      title: "docSig",
-    },
-  );
-  institutional.value = loadCertifications;
-  emits("envityImgs", institutional.value);
-  setLink(getFirstImage(institutional.value));
-});
-const loadProcess = async () => {
+const link = ref<string | null>(null);
+const past = ref<string[]>([]);
+
+async function loadArchives() {
   const files = await filesStorage.fetchFileList();
-  institutional.value = [files];
-  emits("envityImgs", institutional.value);
-  setLink(getFirstImage(institutional.value));
-};
+  const filesList: string[] = [];
+  const foldersList: string[] = [];
+  files.forEach((item: string) => {
+    if (item.includes("png")) {
+      return filesList.push(item);
+    }
+    foldersList.push(item);
+  });
+  past.value = foldersList;
+}
 function setLink(item: string) {
   link.value = item;
   emits("showImage", link.value);
 }
 watchEffect(async () => {
-  if (props.tabSelect == "institutional") {
-    loadInsitucional();
-  }
-  if (props.tabSelect == "processes" || "attFiles") {
-    loadProcess();
+  if (props.tabSelect) {
+    loadArchives();
   }
 });
 </script>
