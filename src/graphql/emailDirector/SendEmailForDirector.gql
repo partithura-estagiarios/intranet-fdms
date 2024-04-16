@@ -1,3 +1,3 @@
-mutation SendEmail($to: String, $registration: String, $body: String!) {
+mutation SendEmail($to: String, $registration: Int, $body: String!) {
   sendEmail(to: $to, registration: $registration, body: $body)
 }
