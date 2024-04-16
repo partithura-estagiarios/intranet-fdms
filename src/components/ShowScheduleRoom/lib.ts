@@ -24,7 +24,7 @@ export function renameKeys(materialsSup: SuPMaterials) {
 
   Object.keys(materialsSup).forEach((key) => {
     const validKey = key as ValidKeys;
-    if (translations[validKey]) {
+    if (translations[validKey] && materialsSup[validKey] === true) {
       materialsSup[validKey] = translations[validKey];
     }
   });
