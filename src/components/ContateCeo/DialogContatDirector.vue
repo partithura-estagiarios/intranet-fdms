@@ -2,7 +2,7 @@
   <div>
     <q-dialog v-model="props.open" persistent>
       <q-card>
-        <q-form>
+        <q-form @submit.prevent.stop>
           <q-card-section class="bg-indigo-8 row justify-between text-white">
             <div class="q-pa-md text-h5">
               {{ $t("emailDirector.contactTheDirector") }}
@@ -26,7 +26,7 @@
             </div>
             <div class="pl-12 col-5">
               <q-input
-                v-model="label.registration"
+                v-model.number="label.registration"
                 :label="$t(`emailDirector.registration`)"
                 type="number"
               />
@@ -46,6 +46,7 @@
               :label="$t('emailDirector.save')"
               class="text-indigo-8"
               @click="sendEmail"
+              type="submit"
             ></q-btn>
           </q-card-section>
         </q-form>
@@ -57,6 +58,7 @@
 <script setup lang="ts">
 const emits = defineEmits(["close"]);
 import SendEmailForDirector from "../../graphql/emailDirector/SendEmailForDirector.gql";
+import { LabelEmail } from "../../entities/emailDirector";
 const { t } = useI18n();
 const props = defineProps({
   open: {
@@ -64,18 +66,20 @@ const props = defineProps({
     default: false,
   },
 });
-const label = reactive({
+const initialLabel = {
   name: "",
-  registration: "",
+  registration: null,
   email: "",
-});
+};
+
+const label: LabelEmail = reactive({ ...initialLabel });
 async function sendEmail() {
-  if (!label.email.trim()) {
+  if (!label.email) {
     return;
   }
   const result = await runMutation(SendEmailForDirector, {
     to: label.name,
-    registration: label.registration,
+    registration: label.registration ? label.registration : null,
     body: label.email,
   });
   if (result) {
@@ -89,13 +93,11 @@ function verifyEmail(val: string) {
   if (!val) {
     return t("emailDirector.writeSomething");
   }
-  return true;
+  return !!val;
 }
 watchEffect(() => {
   if (props.open) {
-    label.name = "";
-    label.registration = "";
-    label.email = "";
+    Object.assign(label, initialLabel);
   }
 });
 </script>
