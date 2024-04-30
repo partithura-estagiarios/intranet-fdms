@@ -5,6 +5,7 @@ import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
 import tab from "./tab";
+import errors from "./errors";
 import auth from "./auth";
 import userScheduleRoom from "./userScheduleRoom";
 import erroRamal from "./erroRamal";
@@ -47,5 +48,6 @@ export default {
   formRamal,
   register,
   tab,
+  errors,
   auth,
 };
