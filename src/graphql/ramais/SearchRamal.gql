@@ -1,0 +1,8 @@
+query SearchRamal($word: String!) {
+  searchRamal(word: $word) {
+    id
+    name
+    sector
+    number
+  }
+}

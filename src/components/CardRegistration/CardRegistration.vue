@@ -16,7 +16,7 @@
               v-model="registerForm[index]"
               :label="$t(`register.${index}`)"
             >
-              <template v-slot:append>
+              <!-- <template v-slot:append>
                 <q-icon
                   v-show="verifyText(index as string)"
                   color="grey"
@@ -24,20 +24,21 @@
                   @click="isPwdvisible = !isPwdvisible"
                   :name="pwdIconName"
                 />
-              </template>
+              </template> -->
             </q-input>
           </div>
         </q-form>
       </q-card-section>
       <q-card-actions class="justify-center q-pa-xl">
         <div class="bg-green-8 row text-white px-14" rounded>
-          <q-btn
+          <!-- <q-btn
             size="xl"
             flat
             :label="$t('register.register')"
             @click="registerUser()"
             :disable="!validateNewUser()"
           />
+          /> -->
         </div>
       </q-card-actions>
     </q-card>
@@ -63,6 +64,7 @@ const isPwdvisible = ref(true);
 const pwdIconName = computed(() => {
   return isPwdvisible.value ? "visibility_off" : "visibility";
 });
+<<<<<<< HEAD
 function validateNewUser() {
   return registerUserSchema.safeParse(registerForm).success;
 }
@@ -77,6 +79,19 @@ async function registerUser() {
 function verifyText(item: string) {
   return item.includes("ss");
 }
+=======
+// async function registerUser() {
+//   const { confirmPassword, ...userForm } = registerForm;
+//   // const { register } = await runMutation(Register, { newUser: userForm });
+//   if (register) {
+//     return positiveNotify(t("register.registerSucess"));
+//   }
+//   negativeNotify(t("register.errorRegister"));
+// }
+// function verifyText(item: string) {
+//   return item.includes("ss");
+// }
+>>>>>>> develop
 </script>
 
 <style scoped>

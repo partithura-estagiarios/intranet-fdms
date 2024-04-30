@@ -17,9 +17,12 @@ const link = ref();
 const emits = defineEmits(["showImage", "envityImgs"]);
 const institutional = ref();
 onMounted(async () => {
-  const { loadCertifications } = await runQuery(LoadCertifications, {
-    title: "docSig",
-  });
+  const { loadCertifications }: { loadCertifications: object } = await runQuery(
+    LoadCertifications,
+    {
+      title: "docSig",
+    },
+  );
   institutional.value = loadCertifications;
   emits("envityImgs", institutional.value);
   setLink(getFirstImage(institutional.value));

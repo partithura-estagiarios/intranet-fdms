@@ -1,5 +1,5 @@
 <template>
-  <q-img class="img" :src="props.img" />
+  <q-img :src="props.img" />
 </template>
 <script setup lang="ts">
 const props = defineProps({
@@ -9,8 +9,3 @@ const props = defineProps({
   },
 });
 </script>
-<style scoped>
-.img {
-  top: 5vh;
-}
-</style>

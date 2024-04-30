@@ -1,34 +1,44 @@
 <template>
-  <div class="row justify-between q-pa-md">
-    <div>
+  <div class="row justify-between">
+    <div class="q-pa-md">
       <q-btn
-        class="bg-green text-white ml-12"
+        class="bg-green text-white q-px-md"
         :label="$t('text.addRamal')"
         @click="openDialog()"
       />
     </div>
-    <q-input :label="$t('text.searchRamal')" v-model="search" color="indigo-8 ">
+    <q-input
+      :label="$t('text.searchRamal')"
+      v-model="search"
+      color="indigo-8 "
+      @keyup.enter="searchRamalInBack()"
+    >
       <template v-slot:append>
         <q-icon
           name="search"
           color="indigo-8"
-          @click="searchRamalInBack()"
           class="cursor-pointer"
+          @click="searchRamalInBack()"
         />
       </template>
     </q-input>
     <DialogAddRamal
       :open="dialogVisible"
-      @close="(value) => (dialogVisible = value)"
-      @add-ramal="(item) => (receivedRamal = item)"
+      @close="
+        (value) => {
+          dialogVisible = value;
+          $emit('reload');
+        }
+      "
+      @add-ramal="(item: Ramal) => (receivedRamal = item)"
       :option="'addRamal'"
     />
   </div>
 </template>
 <script setup lang="ts">
-import * as Query from "../../graphql/ramais/queries.gql";
+import { Ramal } from "../../entities/ramal";
 const dialogVisible = ref(false);
-const emits = defineEmits(["envityRamal-table"]);
+const emits = defineEmits(["envityRamal-table", "reload"]);
 const search = ref();
 const receivedRamal = ref();
 
@@ -37,9 +47,6 @@ function openDialog() {
 }
 
 async function searchRamalInBack() {
-  const { searchRamal } = await runQuery(Query.SearchRamal, {
-    word: search.value,
-  });
-  emits("envityRamal-table", searchRamal);
+  emits("envityRamal-table", search.value);
 }
 </script>

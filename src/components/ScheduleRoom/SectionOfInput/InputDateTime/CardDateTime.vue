@@ -7,6 +7,7 @@
           mask="YYYY-MM-DD HH:mm"
           color="indigo-8"
           class="rounded-borders col-6"
+          @input="updateDateTime"
         />
         <div class="col-1"></div>
         <q-time
@@ -15,6 +16,7 @@
           format24h
           color="indigo-8"
           class="rounded-borders col-5"
+          @input="updateDateTime"
         />
       </q-card-section>
       <q-card-section>
@@ -29,11 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watchEffect } from "vue";
-import { verifyReceivedDate } from "../../addScheduleRoom/lib";
-
 const emits = defineEmits(["close"]);
-
 const props = defineProps({
   showCard: { type: Boolean, required: true },
   finalTime: {
@@ -43,10 +41,13 @@ const props = defineProps({
 });
 
 const dateTime = ref();
-
+const updateDateTime = (newValue: string) => {
+  dateTime.value = newValue;
+};
 watchEffect(() => {
-  if (verifyReceivedDate(props.finalTime)) {
-    dateTime.value = verifyReceivedDate(props.finalTime);
+  if (props.finalTime) {
+    return (dateTime.value = props.finalTime);
   }
+  updateDateTime;
 });
 </script>

@@ -1,5 +1,5 @@
 export interface Ramal {
-  name: String;
-  sector: String;
-  number: String;
+  name: string;
+  number: number;
+  sector: string;
 }

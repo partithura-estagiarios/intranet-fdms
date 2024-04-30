@@ -1,14 +1,14 @@
 <template>
-  <div class="q-pa-sm">
+  <div class="q-pa-sl">
     <q-input
-      filled
-      bg-color="white"
       class="border"
       readonly
-      :label="date"
+      :label="dateReceived"
       v-bind="$attrs"
+      v-model="inputValue"
+      @click="card = true"
     >
-      <template #before>
+      <template #prepend>
         <q-icon
           name="event"
           class="bg-indigo-8 full-height q-px-md"
@@ -23,16 +23,16 @@
       @close="
         (down, date) => {
           card = down;
+          dateReceived = date;
           emits('envityDates', date);
         }
       "
-      :final-time="date"
+      :final-time="dateReceived"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { verifyReceivedDate } from "../../addScheduleRoom/lib";
 const emits = defineEmits(["envityDates", "envityHour"]);
 const props = defineProps({
   label: {
@@ -44,14 +44,13 @@ const props = defineProps({
     default: "",
   },
 });
+const inputValue = ref("");
 
 const card = ref(false);
-const date = ref();
+const dateReceived = ref();
 watchEffect(() => {
-  if (verifyReceivedDate(props.dateInput)) {
-    return (date.value = verifyReceivedDate(props.dateInput));
-  }
-  return (date.value = props.label);
+  const value = props.dateInput || props.label;
+  dateReceived.value = value;
 });
 </script>
 

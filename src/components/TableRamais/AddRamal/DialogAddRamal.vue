@@ -17,6 +17,7 @@
               white
               v-model="labelDefinite.sector"
               :label="$t(`formRamal.nameOfRamal`)"
+              type="text"
             />
           </q-card-section>
 
@@ -27,6 +28,7 @@
                 class="no-padding"
                 v-model="labelDefinite.number"
                 :label="$t(`formRamal.numberOfRamal`)"
+                type="number"
               />
             </div>
             <div class="pl-12 col-5">
@@ -34,6 +36,7 @@
                 white
                 v-model="labelDefinite.name"
                 :label="$t(`formRamal.userOfRamal`)"
+                type="text"
               />
             </div>
           </q-card-section>
@@ -43,20 +46,16 @@
             <span class="text-grey text-h6">
               {{
                 $t("formRamal.deleteRamalMessage", {
-                  numero: props.ramal.number,
-                  nome: props.ramal.name,
-                  setor: props.ramal.sector,
+                  numero: labelDefinite.number,
+                  nome: labelDefinite.name,
+                  setor: labelDefinite.sector,
                 })
               }}
             </span>
           </q-card-section>
         </div>
         <q-card-actions align="right" class="pt-12 pa-5 text-green-8">
-          <q-btn
-            flat
-            :label="$t('formRamal.confirm')"
-            @click="optionRamal(props.option, labelDefinite)"
-          />
+          <q-btn flat :label="$t('formRamal.confirm')" @click="optionRamal()" />
         </q-card-actions>
       </q-card>
     </q-responsive>
@@ -64,7 +63,11 @@
 </template>
 
 <script setup lang="ts">
-import * as Mutation from "../../../graphql/ramais/mutations.gql";
+import AddRamal from "../../../graphql/ramais/AddRamal.gql";
+import DeleteRamal from "../../../graphql/ramais/DeleteRamal.gql";
+import EditRamal from "../../../graphql/ramais/EditRamal.gql";
+
+import { resetFields } from "./lib";
 
 const props = defineProps({
   open: {
@@ -80,9 +83,10 @@ const props = defineProps({
     required: false,
   },
 });
-const emits = defineEmits(["close", "reloadTable"]);
+const { t } = useI18n();
+const emits = defineEmits(["close"]);
 const label = reactive({
-  id: null,
+  id: "",
   sector: "",
   number: "",
   name: "",
@@ -91,28 +95,32 @@ const labelDefinite = computed(() => {
   return props.ramal ?? label;
 });
 
-async function optionRamal(option: string, ramal: Object) {
+async function optionRamal() {
+  let result;
   switch (props.option) {
-    case "deleteRamal":
-      await runMutation(Mutation.DeleteRamal, { id: ramal.id });
+    case "addRamal":
+      const { id, ...newRamal } = labelDefinite.value;
+      result = await runMutation(AddRamal, {
+        newRamal: newRamal,
+      });
+      resetFields(labelDefinite.value);
       emits("close");
-      emits("reloadTable");
       break;
     case "editRamal":
-      await runMutation(Mutation.EditRamal, { ramal: ramal });
+      result = await runMutation(EditRamal, { ramal: labelDefinite.value });
       emits("close");
-      emits("reloadTable");
+
       break;
-    case "addRamal":
-      await runMutation(Mutation.AddRamal, { newRamal: ramal });
+    case "deleteRamal":
+      result = await runMutation(DeleteRamal, { id: labelDefinite.value.id });
       emits("close");
-      emits("reloadTable");
       break;
     default:
-      emits("close");
-      emits("reloadTable");
   }
-  emits("close");
-  emits("reloadTable");
+
+  if (result) {
+    return positiveNotify(t("sucessRamal." + props.option));
+  }
+  return negativeNotify(t("erroRamal." + props.option));
 }
 </script>

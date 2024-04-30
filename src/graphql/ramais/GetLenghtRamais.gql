@@ -1,0 +1,3 @@
+query GetLenghtRamais($maxPages: Int!) {
+  getLenghtRamais(maxPages: $maxPages)
+}

@@ -1,0 +1,8 @@
+query RamaisForPageLoad($page: Int!) {
+  ramaisForPageLoad(page: $page) {
+    id
+    name
+    sector
+    number
+  }
+}

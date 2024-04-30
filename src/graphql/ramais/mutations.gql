@@ -1,9 +1,0 @@
-mutation AddRamal($newRamal: RamalInput!) {
-  addRamal(newRamal: $newRamal)
-}
-mutation DeleteRamal($id: ID!) {
-  deleteRamal(id: $id)
-}
-mutation EditRamal($ramal: RamalInput) {
-  editRamal(ramal: $ramal)
-}
