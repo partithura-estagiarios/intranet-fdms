@@ -1,0 +1,12 @@
+query LoadFiles($folder: String!) {
+  loadFiles(folder: $folder) {
+    folders {
+      folderParent
+      folderNow
+    }
+    archives {
+      path
+      name
+    }
+  }
+}

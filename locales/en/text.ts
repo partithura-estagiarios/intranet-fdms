@@ -40,4 +40,8 @@ export default {
   helpers: `Others: {materiais}`,
   equipamentSong: "Song",
   until: "Until",
+  folder: "Folder",
+  file: "File",
+  files: "Files",
+  sourceFolders: "Source Folders",
 };

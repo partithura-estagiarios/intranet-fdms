@@ -1,0 +1,83 @@
+<template>
+  <q-card-section>
+    <div v-for="folder in folders" :key="folder.id">
+      <div class="row" v-if="folder.folderNow !== ''">
+        {{ folder.folderNow }} <q-icon name="folder" />
+        <q-btn icon="delete" @click="deleteFiles('', folder.folderNow)" />
+      </div>
+    </div>
+    <div v-for="archive in archives" :key="archive.id">
+      <q-icon name="picture_as_pdf" />
+      {{ archive.name }}
+      <q-btn
+        icon="delete"
+        @click="
+          () => {
+            deleteFiles(archive.path, archive.name);
+          }
+        "
+      />
+    </div>
+  </q-card-section>
+</template>
+
+<script setup lang="ts">
+import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
+import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
+import { useFiles } from "../../../stores/files";
+import { Files } from "../../../entities/files";
+const emits = defineEmits(["close"]);
+const props = defineProps({
+  folder: {
+    type: String,
+    default: "",
+  },
+});
+const { t } = useI18n();
+const fileStorage = useFiles();
+const folders = ref();
+const archives = ref();
+async function loadFiles(folder: string) {
+  try {
+    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+      folder: folder,
+    });
+    archives.value = loadFiles.archives;
+    folders.value = loadFiles.folders;
+  } catch (error) {
+    console.error("Error loading files:", error);
+  }
+}
+async function deleteFiles(path: string, name: string) {
+  try {
+    const result = await fileStorage.deleteFile(path, name);
+    if (result) {
+      return window.location.reload();
+    }
+    return negativeNotify(t("action.stillFiles"));
+  } catch (error) {
+    console.error("Error delete file:", error);
+  }
+}
+
+async function loadFolderSource() {
+  try {
+    const { loadRootFolders }: { loadRootFolders: Array<object> } =
+      await runQuery(LoadRootFolders);
+    const newFolders = loadRootFolders.map((item: any) => ({
+      ...item,
+      folderNow: item.name,
+    }));
+    folders.value = [...newFolders];
+  } catch (error) {
+    console.error("Error loading root folders:", error);
+  }
+}
+
+watchEffect(() => {
+  if (props.folder === "Pastas de origem") {
+    return loadFolderSource();
+  }
+  return loadFiles(props.folder);
+});
+</script>

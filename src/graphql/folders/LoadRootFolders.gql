@@ -1,0 +1,6 @@
+query LoadRootFolders {
+  loadRootFolders {
+    id
+    name
+  }
+}

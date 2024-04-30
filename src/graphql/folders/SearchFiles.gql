@@ -1,0 +1,12 @@
+query searchFiles($keyword: String!) {
+  searchFiles(keyword: $keyword) {
+    archives {
+      path
+      name
+    }
+    folders {
+      folderParent
+      folderNow
+    }
+  }
+}

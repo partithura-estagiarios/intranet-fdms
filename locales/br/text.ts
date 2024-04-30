@@ -40,4 +40,9 @@ export default {
   helpers: `Outros: {materiais}`,
   equipamentSong: "Som",
   until: "Até",
+  folder: "Pasta",
+  file: "Arquivo",
+  folders: "Pastas",
+  files: "Arquivos",
+  sourceFolders: "Pastas de origem",
 };

@@ -6,31 +6,14 @@
       >
         <div class="col-12">
           <Tab @showCard="updateSelectCard" />
-          <OptionsForProces
-            class="position-options col"
-            @show-card="(item) => (selectCard = item)"
-            @search-files="(item) => (selectHyperText = item)"
-          />
         </div>
       </q-card-section>
-      <q-card-section horizontal>
-        <q-card-section class="row no-padding">
-          <div class="q-pa-md">
-            <List :tabSelect="selectCard" />
-          </div>
-        </q-card-section>
-        <q-card class="q-pa-md box-shadow">
-          <CardProcess :files="selectHyperText" />
-        </q-card>
-      </q-card-section>
+      <CardProcess />
     </q-card>
   </div>
 </template>
 <script setup lang="ts">
 const selectCard = ref("");
-const selectTitle = ref("");
-const process = ref();
-const selectHyperText = ref();
 const updateSelectCard = (item: string) => {
   selectCard.value = item;
 };

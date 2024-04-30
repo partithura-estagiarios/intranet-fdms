@@ -37,5 +37,12 @@ export default {
   login: "Login",
   registerUser: "Register User",
   logout: "Log out of account",
-  createFolder: "Create a folder",
+  addFolder: "Add a folder",
+  addFile: "Add a File",
+  deleteFile: "Delete a File",
+  writeFolder: "Write the folder name",
+  confirm: "Confirm",
+  selectTheFolder: "Select the folder",
+  folderAlreadyExists: "This folder already exists, choose another name",
+  stillFiles: "There are still files in the folder, delete them first",
 };

@@ -1,111 +1,89 @@
 import { defineStore } from "pinia";
 import { getEnvironmentVariable } from "../helpers";
-const backUrl = getEnvironmentVariable(
+import InsertFolders from "../graphql/folders/InsertFolders.gql";
+import SearchPath from "../graphql/folders/SearchPath.gql";
+const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
 );
-export const backRouteReceivedArchives = getEnvironmentVariable(
-  "VITE_ROUTE_FOR_ENVITY_ARCHIVES_FOR_SERVER_EXPRESS",
-);
-const backRouteGetArchives = getEnvironmentVariable(
-  "VITE_ROUTE_FOR_GET_ARCHIVES",
-);
-const backRouteGetRoute = getEnvironmentVariable(
-  "VITE_ROUTE_OF_LOCATION_ARCHIVES",
-);
+
 const id = "files";
 
 export const useFiles = defineStore(id, {
-  state: () => ({
-    stateFiles: [],
-  }),
-
-  getters: {},
+  state: () => ({}),
   actions: {
-    fetchFileList: async () => {
-      const response = await fetch(`${backUrl}${backRouteGetArchives}`);
-      if (response.ok) {
-        return await response.json();
-      }
-      throw new Error("Error fetching file list from the server");
-    },
-    createPath: async (folderName: string) => {
+    displayPdf: async (filePath: string) => {
       try {
-        const response = await fetch(`${backUrl}/create-folder`, {
+        const response = await fetch(
+          `${server_express_url}/serve-pdf/${filePath}`,
+        );
+        if (response.ok) {
+          const pdfUrl = URL.createObjectURL(await response.blob());
+          return window.open(pdfUrl, "_blank");
+        }
+        console.error("Erro ao exibir PDF:", response.statusText);
+      } catch (error) {
+        console.error("Erro ao exibir PDF:", error);
+      }
+    },
+    insertFile: async (folder: string, file: any) => {
+      const { searchPath }: { searchPath: string } = await runQuery(
+        SearchPath,
+        { folder: folder },
+      );
+      try {
+        if (typeof file === "string") {
+          const { insertFolders }: { insertFolders: Boolean } =
+            await runMutation(InsertFolders, {
+              folder: file,
+              path: searchPath.toString(),
+            });
+          return insertFolders;
+        }
+        const formData = new FormData();
+        formData.append("file", file);
+        const response = await fetch(`${server_express_url}/inserir-arquivo`, {
           method: "POST",
+          body: formData,
+          headers: {
+            "search-path": searchPath,
+          },
+        });
+        return response.ok;
+      } catch (error) {
+        console.error("Erro ao inserir arquivo:", error);
+      }
+    },
+    deleteFile: async (path: string, file: any) => {
+      if (!file.includes(".")) {
+        const { searchPath }: { searchPath: string } = await runQuery(
+          SearchPath,
+          { folder: file },
+        );
+        try {
+          const { insertFolders }: { insertFolders: Boolean } =
+            await runMutation(InsertFolders, {
+              folder: file,
+              path: searchPath.toString(),
+              exclude: true,
+            });
+          return insertFolders;
+        } catch (error) {
+          return false;
+        }
+      }
+      try {
+        const response = await fetch(`${server_express_url}/excluir-arquivo`, {
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ folderName }),
+          body: JSON.stringify({ filePath: path, fileName: file }),
         });
-
-        if (response.ok) {
-          return await response.json();
-        } else {
-          throw new Error("Erro ao criar a pasta");
-        }
+        return response.ok;
       } catch (error) {
-        console.error("Erro:", error);
-        return null;
+        console.error("Erro ao excluir o arquivo:", error);
+        throw error;
       }
     },
-    // sendFileToServer: async (file: string) => {
-    //   try {
-    //     const formData = new FormData();
-    //     formData.append("file", file);
-
-    //     const response = await fetch(`${backUrl}${backRouteReceivedArchives}`, {
-    //       method: "POST",
-    //       body: formData,
-    //       credentials: "include",
-    //     });
-
-    //     if (response.ok) {
-    //       const filename = await response.text();
-    //     }
-    //     throw new Error("Erro ao enviar arquivo para o servidor");
-    //   } catch (error) {
-    //     console.error("Erro:", error);
-    //   }
   },
-  // displayImage: async (filename: string) => {
-  //   try {
-  //     const response = await fetch(`${backUrl}/get-image/${filename}`);
-  //     if (response.ok) {
-  //       const imageUrl = URL.createObjectURL(await response.blob());
-  //       return window.open(imageUrl, "_blank");
-  //     }
-  //     console.error("Erro ao exibir imagem:", response.statusText);
-  //   } catch (error) {
-  //     console.error("Erro ao exibir imagem:", error);
-  //   }
-  //   },
-  //   // searchFile: async (keyword: string) => {
-  //   //   try {
-  //   //     const response = await fetch(`${backUrl}/searchfile/${keyword}`);
-  //   //     if (response.ok) {
-  //   //       const data = await response.json();
-  //   //       return data;
-  //   //     }
-  //   //     console.error("Erro ao buscar arquivo:", response.statusText);
-  //   //   } catch (error) {
-  //   //     console.error("Erro ao buscar arquivo:", error);
-  //   //   }
-  //   },
-  //   // deleteFile: async (filename: string) => {
-  //   //   try {
-  //   //     const response = await fetch(`${backUrl}/delete-file/${filename}`, {
-  //   //       method: "DELETE",
-  //   //     });
-
-  //   //     if (response.ok) {
-  //   //       const data = await response.json();
-  //   //       return data;
-  //   //     } else {
-  //   //       console.error("Erro ao excluir arquivo:", response.statusText);
-  //   //     }
-  //   //   } catch (error) {
-  //   //     console.error("Erro ao excluir arquivo:", error);
-  //   //   }
-  //   // },
-  // },
 });
