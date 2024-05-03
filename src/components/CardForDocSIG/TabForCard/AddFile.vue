@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
+import { sourceFolders } from "./lib";
 const emits = defineEmits(["close"]);
 const props = defineProps({
   folder: {
@@ -45,9 +46,8 @@ const { t } = useI18n();
 const typeFile = ref("");
 const input = ref();
 const fileStorage = useFiles();
-
 const isSourceFolder = computed(() => {
-  return props.folder === "Pastas de origem";
+  return props.folder === sourceFolders;
 });
 
 const selectOptions = computed(() => {
@@ -58,14 +58,10 @@ const selectOptions = computed(() => {
 });
 
 async function addFile(folder: string, file: string) {
-  try {
-    const result = await fileStorage.insertFile(folder, file);
-    if (result) {
-      return window.location.reload();
-    }
-    return negativeNotify(t("action.folderAlreadyExists"));
-  } catch (error) {
-    console.error("Error add file:", error);
+  const result = await fileStorage.insertFile(folder, file);
+  if (result) {
+    return window.location.reload();
   }
+  return negativeNotify(t("action.folderAlreadyExists"));
 }
 </script>

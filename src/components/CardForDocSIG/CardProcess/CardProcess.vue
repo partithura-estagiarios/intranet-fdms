@@ -12,19 +12,15 @@
             v-ripple
             @click="changeFolder(index, item.name)"
             v-model="link"
-            :class="{
-              'bg-green':
-                activeButtonIndex === null || activeButtonIndex === index,
-            }"
+            :class="folderClass(index)"
           >
             <q-item-section avatar>
               <q-icon name="folder" />
             </q-item-section>
 
-            <q-item-section
-              :class="{ 'text-white': activeButtonIndex === index }"
-              >{{ item.name }}</q-item-section
-            >
+            <q-item-section :class="textClass(index)">{{
+              item.name
+            }}</q-item-section>
           </q-item>
         </q-virtual-scroll>
       </q-card-section>
@@ -38,7 +34,7 @@
               virtual-scroll-horizontal
             >
               <q-item
-                v-if="item.folderNow !== ''"
+                v-if="showFolder(item)"
                 clickable
                 @click="changeFolder(activeButtonIndex, item.folderNow)"
               >
@@ -79,7 +75,7 @@
 import InsertFolders from "../../../graphql/folders/InsertFolders.gql";
 import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
-import { Files } from "../../../entities/files";
+import { Files, Folder } from "../../../entities/files";
 import { useFiles } from "../../../stores/files";
 
 const folderTree = ref();
@@ -106,12 +102,22 @@ async function loadFolderSource() {
     await runQuery(LoadRootFolders);
   folderTree.value = loadRootFolders;
 }
+const folderClass = computed(() => {
+  return (index: number) => ({
+    "bg-green":
+      activeButtonIndex.value === null || activeButtonIndex.value === index,
+  });
+});
+const textClass = computed(() => {
+  return (index: number) => ({
+    "text-white": activeButtonIndex.value === index,
+  });
+});
+const showFolder = (item: Folder) => {
+  return item.folderNow !== "";
+};
 </script>
 <style scoped>
-.my-menu-link {
-  color: white;
-  background: #f2c037;
-}
 .maximum-scroll {
   max-height: 75vh;
   width: 10vw;

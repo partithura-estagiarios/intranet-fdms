@@ -25,6 +25,8 @@ import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 import { useFiles } from "../../../stores/files";
 import { Files } from "../../../entities/files";
+import { sourceFolders } from "./lib";
+
 const emits = defineEmits(["close"]);
 const props = defineProps({
   folder: {
@@ -50,35 +52,27 @@ async function loadFiles(folder: string) {
   }
 }
 async function deleteFiles(path: string, name: string) {
-  try {
-    file.value = name;
-    filePath.value = path;
-    const result = await fileStorage.deleteFile(path, name, false);
-    if (result) {
-      return window.location.reload();
-    }
-    return (confirmDialog.value = true);
-  } catch (error) {
-    console.error("Error delete file:", error);
+  file.value = name;
+  filePath.value = path;
+  const result = await fileStorage.deleteFile(path, name, false);
+  if (result) {
+    return window.location.reload();
   }
+  return (confirmDialog.value = true);
 }
 
 async function loadFolderSource() {
-  try {
-    const { loadRootFolders }: { loadRootFolders: Array<object> } =
-      await runQuery(LoadRootFolders);
-    const newFolders = loadRootFolders.map((item: any) => ({
-      ...item,
-      folderNow: item.name,
-    }));
-    folders.value = [...newFolders];
-  } catch (error) {
-    console.error("Error loading root folders:", error);
-  }
+  const { loadRootFolders }: { loadRootFolders: Array<object> } =
+    await runQuery(LoadRootFolders);
+  const newFolders = loadRootFolders.map((item: any) => ({
+    ...item,
+    folderNow: item.name,
+  }));
+  folders.value = [...newFolders];
 }
 
 watchEffect(() => {
-  if (props.folder === "Pastas de origem") {
+  if (props.folder === sourceFolders) {
     return loadFolderSource();
   }
   return loadFiles(props.folder);

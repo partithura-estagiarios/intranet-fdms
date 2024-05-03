@@ -1,6 +1,2 @@
-export const tabItems = [
-  //   { name: "fispq" },
-  //   { name: "institutional" },
-  { name: "processes" },
-  //   { name: "listofPPEs" },
-];
+export const tabItems = [{ name: "processes" }];
+export const sourceFolders = "Pastas de origem";
