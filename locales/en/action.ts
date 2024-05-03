@@ -44,5 +44,6 @@ export default {
   confirm: "Confirm",
   selectTheFolder: "Select the folder",
   folderAlreadyExists: "This folder already exists, choose another name",
-  stillFiles: "There are still files in the folder, delete them first",
+  stillFiles:
+    "There are still files in the folder, do you want to delete the folder anyway ?",
 };

@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AddFile: typeof import('./components/CardForDocSIG/TabForCard/AddFile.vue')['default']
     AddScheduleRoom: typeof import('./components/ScheduleRoom/addScheduleRoom/AddScheduleRoom.vue')['default']
     BackgroundIntranet: typeof import('./components/Image/BackgroundIntranet.vue')['default']
     BarUp: typeof import('./components/TabHeader/BarUp.vue')['default']
@@ -16,7 +17,7 @@ declare module 'vue' {
     Card: typeof import('./components/CardForDocSIG/Card.vue')['default']
     CardCertification: typeof import('./components/CarouselForCertifications/CardForCertications/CardCertification.vue')['default']
     CardDateTime: typeof import('./components/ScheduleRoom/SectionOfInput/InputDateTime/CardDateTime.vue')['default']
-    CardProcess: typeof import('./components/CardForDocSIG/CardProcess.vue')['default']
+    CardProcess: typeof import('./components/CardForDocSIG/CardProcess/CardProcess.vue')['default']
     CardRegistration: typeof import('./components/CardRegistration/CardRegistration.vue')['default']
     CardRhDIvulga: typeof import('./components/CardForRhDivulga/CardRhDIvulga.vue')['default']
     CardSeeMore: typeof import('./components/PageSeeMore/CardSeeMore.vue')['default']
@@ -24,11 +25,15 @@ declare module 'vue' {
     CarouselAtendimentoRh: typeof import('./components/Carousel/CarouselAtendimentoRh.vue')['default']
     CarouselCertifications: typeof import('./components/CarouselForCertifications/CarouselCertifications.vue')['default']
     CheckBoxRoom: typeof import('./components/ScheduleRoom/SectionOfInput/CheckBoxRoom.vue')['default']
+    ConfirExclusion: typeof import('./components/CardForDocSIG/TabForCard/ConfirExclusion.vue')['default']
+    ConfirmExclusion: typeof import('./components/CardForDocSIG/TabForCard/ConfirmExclusion.vue')['default']
+    DeleteFile: typeof import('./components/CardForDocSIG/TabForCard/DeleteFile.vue')['default']
     DialogAddRamal: typeof import('./components/TableRamais/AddRamal/DialogAddRamal.vue')['default']
     DialogHeader: typeof import('./components/HeaderDialog/DialogHeader.vue')['default']
     DialogScheduleRoom: typeof import('./components/ShowScheduleRoom/DialogScheduleRoom.vue')['default']
     DropdownSettings: typeof import('./components/TableRamais/SettingsRamal/DropdownSettings.vue')['default']
     ExpansionEvent: typeof import('./components/Pages/ScheduleRoom/ExpansionEvent.vue')['default']
+    Folders: typeof import('./components/CardForDocSIG/TabForCard/Folders.vue')['default']
     HeaderRamais: typeof import('./components/TableRamais/HeaderRamais.vue')['default']
     ImageRh: typeof import('./components/Image/ImageRh.vue')['default']
     Input: typeof import('./components/Input/Input.vue')['default']
@@ -43,7 +48,6 @@ declare module 'vue' {
     Month: typeof import('./components/Pages/ScheduleRoom/Month.vue')['default']
     NavigationScheduleRoom: typeof import('./components/Pages/ScheduleRoom/NavigationScheduleRoom.vue')['default']
     OptionsForProces: typeof import('./components/CardForDocSIG/OptionsForProces.vue')['default']
-
     Pagination: typeof import('./components/Pagination/Pagination.vue')['default']
     PCertification: typeof import('./components/Pages/PageCertifications/PCertification.vue')['default']
     PDocSig: typeof import('./components/Pages/PageDocSig/PDocSig.vue')['default']
@@ -55,6 +59,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScheduleRoom: typeof import('./components/ScheduleRoom/ScheduleRoom.vue')['default']
+    SelectFolder: typeof import('./components/CardForDocSIG/TabForCard/SelectFolder.vue')['default']
     SelectRoom: typeof import('./components/ScheduleRoom/SectionOfInput/SelectRoom.vue')['default']
     Separator: typeof import('./components/Separator/Separator.vue')['default']
     SeparatorForEmergence: typeof import('./components/TableRamais/SeparatorForEmergence.vue')['default']

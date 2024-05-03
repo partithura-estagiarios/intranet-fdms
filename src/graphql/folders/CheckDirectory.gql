@@ -1,0 +1,3 @@
+query CheckDirectory($folder: String!) {
+  checkDirectory(folder: $folder)
+}

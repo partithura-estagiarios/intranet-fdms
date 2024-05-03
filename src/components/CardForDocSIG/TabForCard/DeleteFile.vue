@@ -9,15 +9,14 @@
     <div v-for="archive in archives" :key="archive.id">
       <q-icon name="picture_as_pdf" />
       {{ archive.name }}
-      <q-btn
-        icon="delete"
-        @click="
-          () => {
-            deleteFiles(archive.path, archive.name);
-          }
-        "
-      />
+      <q-btn icon="delete" @click="deleteFiles(archive.path, archive.name)" />
     </div>
+    <ConfirmExclusion
+      :confirm="confirmDialog"
+      @close="confirmDialog = false"
+      :file="file"
+      :filePath="filePath"
+    />
   </q-card-section>
 </template>
 
@@ -33,10 +32,12 @@ const props = defineProps({
     default: "",
   },
 });
-const { t } = useI18n();
 const fileStorage = useFiles();
 const folders = ref();
 const archives = ref();
+const confirmDialog = ref();
+const file = ref();
+const filePath = ref();
 async function loadFiles(folder: string) {
   try {
     const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
@@ -50,11 +51,13 @@ async function loadFiles(folder: string) {
 }
 async function deleteFiles(path: string, name: string) {
   try {
-    const result = await fileStorage.deleteFile(path, name);
+    file.value = name;
+    filePath.value = path;
+    const result = await fileStorage.deleteFile(path, name, false);
     if (result) {
       return window.location.reload();
     }
-    return negativeNotify(t("action.stillFiles"));
+    return (confirmDialog.value = true);
   } catch (error) {
     console.error("Error delete file:", error);
   }

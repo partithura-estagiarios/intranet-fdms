@@ -43,11 +43,8 @@
 
 <script setup lang="ts">
 import LoadFolders from "../../../graphql/folders/LoadFolders.gql";
-import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 
 import Folders from "./Folders.vue";
-import { useFiles } from "../../../stores/files";
-const fileStorage = useFiles();
 const { t } = useI18n();
 const props = defineProps({
   version: {

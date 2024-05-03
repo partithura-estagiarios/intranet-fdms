@@ -44,5 +44,6 @@ export default {
   confirm: "Confirmar",
   selectTheFolder: "Selecione a Pasta",
   folderAlreadyExists: "Essa pasta já existe, escolha outro nome",
-  stillFiles: "Ainda há arquivos na pasta, delete os primeiro",
+  stillFiles:
+    "Ainda há arquivos na pasta, deseja deletar a pasta mesmo assim ?",
 };

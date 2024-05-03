@@ -2,6 +2,9 @@ import { defineStore } from "pinia";
 import { getEnvironmentVariable } from "../helpers";
 import InsertFolders from "../graphql/folders/InsertFolders.gql";
 import SearchPath from "../graphql/folders/SearchPath.gql";
+import CheckDirectory from "../graphql/folders/CheckDirectory.gql";
+import ConfirmExclusion from "../components/CardForDocSIG/TabForCard/ConfirmExclusion.vue";
+
 const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
 );
@@ -9,7 +12,9 @@ const server_express_url = getEnvironmentVariable(
 const id = "files";
 
 export const useFiles = defineStore(id, {
-  state: () => ({}),
+  state: () => ({
+    confirmExclusion: false,
+  }),
   actions: {
     displayPdf: async (filePath: string) => {
       try {
@@ -53,36 +58,45 @@ export const useFiles = defineStore(id, {
         console.error("Erro ao inserir arquivo:", error);
       }
     },
-    deleteFile: async (path: string, file: any) => {
+    deleteFile: async (
+      path: string,
+      file: string,
+      confirmExclusion: boolean,
+    ) => {
       if (!file.includes(".")) {
         const { searchPath }: { searchPath: string } = await runQuery(
           SearchPath,
           { folder: file },
         );
-        try {
-          const { insertFolders }: { insertFolders: Boolean } =
-            await runMutation(InsertFolders, {
-              folder: file,
-              path: searchPath.toString(),
-              exclude: true,
-            });
-          return insertFolders;
-        } catch (error) {
+        const { checkDirectory }: { checkDirectory: boolean } = await runQuery(
+          CheckDirectory,
+          { folder: searchPath.toString() },
+        );
+        if (checkDirectory && !confirmExclusion) {
           return false;
         }
+        const { insertFolders }: { insertFolders: Boolean } = await runMutation(
+          InsertFolders,
+          {
+            folder: file,
+            path: searchPath.toString(),
+            exclude: true,
+          },
+        );
+        return insertFolders;
       }
       try {
-        const response = await fetch(`${server_express_url}/excluir-arquivo`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
+        const { insertFolders }: { insertFolders: Boolean } = await runMutation(
+          InsertFolders,
+          {
+            folder: file,
+            path: path + "/" + file,
+            exclude: true,
           },
-          body: JSON.stringify({ filePath: path, fileName: file }),
-        });
-        return response.ok;
+        );
+        return insertFolders;
       } catch (error) {
-        console.error("Erro ao excluir o arquivo:", error);
-        throw error;
+        return false;
       }
     },
   },
