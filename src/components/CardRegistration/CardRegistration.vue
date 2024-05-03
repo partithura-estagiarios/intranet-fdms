@@ -36,6 +36,8 @@
             flat
             :label="$t('register.register')"
             @click="registerUser()"
+            :disable="!validateNewUser()"
+          />
           /> -->
         </div>
       </q-card-actions>
@@ -45,6 +47,7 @@
 
 <script setup lang="ts">
 import Register from "../../graphql/user/mutations.gql";
+import { registerUserSchema } from "../../validation";
 const { t } = useI18n();
 
 const registerForm = reactive({
@@ -52,12 +55,31 @@ const registerForm = reactive({
   email: "",
   password: "",
   confirmPassword: "",
+  ramal_number: null,
+  user_registration: null,
 });
+
 const isPwdvisible = ref(true);
 
 const pwdIconName = computed(() => {
   return isPwdvisible.value ? "visibility_off" : "visibility";
 });
+<<<<<<< HEAD
+function validateNewUser() {
+  return registerUserSchema.safeParse(registerForm).success;
+}
+async function registerUser() {
+  const { confirmPassword, ...userForm } = registerForm;
+  const { register } = await runMutation(Register, { newUser: userForm });
+  if (register.success) {
+    return positiveNotify(t("register.registerSucess"));
+  }
+  negativeNotify(t(`${register.message}`));
+}
+function verifyText(item: string) {
+  return item.includes("ss");
+}
+=======
 // async function registerUser() {
 //   const { confirmPassword, ...userForm } = registerForm;
 //   // const { register } = await runMutation(Register, { newUser: userForm });
@@ -69,6 +91,7 @@ const pwdIconName = computed(() => {
 // function verifyText(item: string) {
 //   return item.includes("ss");
 // }
+>>>>>>> develop
 </script>
 
 <style scoped>

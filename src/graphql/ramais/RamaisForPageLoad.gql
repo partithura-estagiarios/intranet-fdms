@@ -1,4 +1,4 @@
-query RamaisForPageLoad($page: ID!) {
+query RamaisForPageLoad($page: Int!) {
   ramaisForPageLoad(page: $page) {
     id
     name

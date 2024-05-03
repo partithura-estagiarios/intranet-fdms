@@ -8,13 +8,15 @@ import cardDocSig from "./cardDocSig";
 import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
+import errors from "../br/errors";
 import auth from "./auth";
 import userScheduleRoom from "./userScheduleRoom";
 import tab from "./tab";
 import erroRamal from "./erroRamal";
 import sucessRamal from "./sucessRamal";
-
+import emailDirector from "./emailDirector";
 export default {
+  emailDirector,
   userScheduleRoom,
   sucessRamal,
   erroRamal,
@@ -32,5 +34,6 @@ export default {
   formRamal,
   register,
   tab,
+  errors,
   auth,
 };

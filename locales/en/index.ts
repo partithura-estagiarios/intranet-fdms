@@ -5,12 +5,15 @@ import columns from "./columns";
 import formRamal from "./formRamal";
 import register from "./register";
 import tab from "./tab";
+import errors from "./errors";
 import auth from "./auth";
 import userScheduleRoom from "./userScheduleRoom";
 import erroRamal from "./erroRamal";
 import sucessRamal from "./sucessRamal";
+import emailDirector from "./emailDirector";
 
 export default {
+  emailDirector,
   userScheduleRoom,
   erroRamal,
   sucessRamal,
@@ -45,5 +48,6 @@ export default {
   formRamal,
   register,
   tab,
+  errors,
   auth,
 };

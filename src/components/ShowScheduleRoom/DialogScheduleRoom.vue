@@ -32,7 +32,11 @@
       <q-icon :name="item?.toString()" size="sm" />
       <p>{{ $t("text." + index) }}</p>
     </div>
-    <q-icon name="new_releases" size="sm" />
+    <q-icon
+      name="new_releases"
+      size="sm"
+      v-show="helpersValueFromMaterialSup"
+    />
     <p>{{ helpersValueFromMaterialSup }}</p>
   </q-card-section>
 </template>
