@@ -5,7 +5,7 @@
         {{ folder.folderNow }} <q-icon name="folder" />
         <q-btn
           icon="delete"
-          @click="deleteFiles('', folder.folderNow, false)"
+          @click="enableDeletionModal('', folder.folderNow)"
         />
       </div>
     </div>
@@ -14,7 +14,7 @@
       {{ archive.name }}
       <q-btn
         icon="delete"
-        @click="deleteFiles(archive.path, archive.name, false)"
+        @click="enableDeletionModal(archive.path, archive.name)"
       />
     </div>
     <ConfirmExclusion
@@ -22,12 +22,7 @@
       @close="confirmDialog = false"
       :file="file"
       :filePath="filePath"
-      @confirmExclusion="
-        () => {
-          deleteFiles(filePath, file, true);
-          confirmDialog = false;
-        }
-      "
+      @confirmExclusion="(confirmDialog = false), updateFiles()"
     />
   </q-card-section>
 </template>
@@ -35,7 +30,6 @@
 <script setup lang="ts">
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
-import { useFiles } from "../../../stores/files";
 import { Files } from "../../../entities/files";
 import { sourceFolders } from "./lib";
 
@@ -46,36 +40,17 @@ const props = defineProps({
     default: "",
   },
 });
-const fileStorage = useFiles();
 const folders = ref();
 const archives = ref();
 const confirmDialog = ref();
 const file = ref();
 const filePath = ref();
 async function loadFiles(folder: string) {
-  try {
-    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: folder,
-    });
-    archives.value = loadFiles.archives;
-    folders.value = loadFiles.folders;
-  } catch (error) {
-    console.error("Error loading files:", error);
-  }
-}
-async function deleteFiles(path: string, name: string, option: boolean) {
-  file.value = name;
-  filePath.value = path;
-  const result = await fileStorage.deleteFile(path, name, option);
-  if (result) {
-    if (props.folder === sourceFolders) {
-      fileStorage.updateValues(props.folder);
-      return await loadFolderSource();
-    }
-    fileStorage.updateValues(props.folder);
-    return await loadFiles(props.folder);
-  }
-  return (confirmDialog.value = true);
+  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+    folder: folder,
+  });
+  archives.value = loadFiles.archives;
+  folders.value = loadFiles.folders;
 }
 
 async function loadFolderSource() {
@@ -86,14 +61,25 @@ async function loadFolderSource() {
     folderNow: item.name,
   }));
   folders.value = [...newFolders];
+  archives.value = [];
+}
+
+function enableDeletionModal(path: string, fileSelect: string) {
+  file.value = fileSelect;
+  filePath.value = path;
+  confirmDialog.value = true;
+}
+
+async function updateFiles() {
+  if (props.folder === sourceFolders) {
+    return await loadFolderSource();
+  }
+  if (props.folder !== sourceFolders) {
+    return await loadFiles(props.folder);
+  }
 }
 
 watchEffect(async () => {
-  if (props.folder === sourceFolders) {
-    return loadFolderSource();
-  }
-  if (props.folder !== sourceFolders) {
-    return loadFiles(props.folder);
-  }
+  await updateFiles();
 });
 </script>

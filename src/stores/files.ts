@@ -65,23 +65,12 @@ export const useFiles = defineStore(id, {
         console.error("Erro ao inserir arquivo:", error);
       }
     },
-    deleteFile: async (
-      path: string,
-      file: string,
-      confirmExclusion: boolean,
-    ) => {
+    deleteFile: async (path: string, file: string) => {
       if (!file.includes(".")) {
         const { searchPath }: { searchPath: string } = await runQuery(
           SearchPath,
           { folder: file },
         );
-        const { checkDirectory }: { checkDirectory: boolean } = await runQuery(
-          CheckDirectory,
-          { folder: searchPath.toString() },
-        );
-        if (checkDirectory && !confirmExclusion) {
-          return false;
-        }
         const { insertFolders }: { insertFolders: Boolean } = await runMutation(
           InsertFolders,
           {
@@ -105,6 +94,20 @@ export const useFiles = defineStore(id, {
       } catch (error) {
         return false;
       }
+    },
+    checkDirectory: async (file: string) => {
+      const { searchPath }: { searchPath: string } = await runQuery(
+        SearchPath,
+        { folder: file },
+      );
+      if (!searchPath) {
+        return false;
+      }
+      const { checkDirectory }: { checkDirectory: boolean } = await runQuery(
+        CheckDirectory,
+        { folder: searchPath.toString() },
+      );
+      return checkDirectory;
     },
   },
 });

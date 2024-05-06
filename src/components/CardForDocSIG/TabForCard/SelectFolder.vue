@@ -24,7 +24,6 @@
                   fixed = false;
                 }
               "
-              @click="loadFolders()"
             />
           </q-card-section>
 
@@ -51,7 +50,6 @@
 
 <script setup lang="ts">
 import LoadFolders from "../../../graphql/folders/LoadFolders.gql";
-import { useFiles } from "../../../stores/files";
 import Folders from "./Folders.vue";
 
 const { t } = useI18n();
