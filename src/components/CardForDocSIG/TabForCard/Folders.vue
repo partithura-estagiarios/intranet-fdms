@@ -5,11 +5,7 @@
     v-slot="{ item, index }"
   >
     <q-item clickable v-ripple @click="selectFolder(item)">
-      <q-item-section avatar>
-        <q-icon name="folder" />
-      </q-item-section>
-
-      <q-item-section>{{ item }}</q-item-section>
+      {{ item }}
     </q-item>
   </q-virtual-scroll>
 </template>

@@ -14,10 +14,6 @@
             v-model="link"
             :class="folderClass(index)"
           >
-            <q-item-section avatar>
-              <q-icon name="folder" />
-            </q-item-section>
-
             <q-item-section :class="textClass(index)">{{
               item.name
             }}</q-item-section>
@@ -38,7 +34,7 @@
                 clickable
                 @click="changeFolder(activeButtonIndex, item.folderNow)"
               >
-                <q-icon name="folder" size="sm" /> {{ item.folderNow }}</q-item
+                {{ item.folderNow }}</q-item
               >
             </q-virtual-scroll>
             <q-btn
@@ -77,7 +73,6 @@ import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { Files, Folder } from "../../../entities/files";
 import { useFiles } from "../../../stores/files";
-
 const folderTree = ref();
 const link = ref();
 const activeButtonIndex = ref();
@@ -93,8 +88,12 @@ const changeFolder = async (index: number, folderName: string) => {
   const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
     folder: folderName,
   });
+  if (loadFiles == null) {
+    archives.value = [];
+    return (folders.value = []);
+  }
   archives.value = loadFiles.archives;
-  folders.value = loadFiles.folders;
+  return (folders.value = loadFiles.folders);
 };
 async function loadFolderSource() {
   await runMutation(InsertFolders, {});
@@ -116,6 +115,13 @@ const textClass = computed(() => {
 const showFolder = (item: Folder) => {
   return item.folderNow !== "";
 };
+watchEffect(async () => {
+  if (fileStorage.update) {
+    fileStorage.update = false;
+    await loadFolderSource();
+    await changeFolder(activeButtonIndex.value, fileStorage.updateFolder);
+  }
+});
 </script>
 <style scoped>
 .maximum-scroll {

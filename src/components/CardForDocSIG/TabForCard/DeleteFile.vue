@@ -3,19 +3,31 @@
     <div v-for="folder in folders" :key="folder.id">
       <div class="row" v-if="folder.folderNow !== ''">
         {{ folder.folderNow }} <q-icon name="folder" />
-        <q-btn icon="delete" @click="deleteFiles('', folder.folderNow)" />
+        <q-btn
+          icon="delete"
+          @click="deleteFiles('', folder.folderNow, false)"
+        />
       </div>
     </div>
     <div v-for="archive in archives" :key="archive.id">
       <q-icon name="picture_as_pdf" />
       {{ archive.name }}
-      <q-btn icon="delete" @click="deleteFiles(archive.path, archive.name)" />
+      <q-btn
+        icon="delete"
+        @click="deleteFiles(archive.path, archive.name, false)"
+      />
     </div>
     <ConfirmExclusion
       :confirm="confirmDialog"
       @close="confirmDialog = false"
       :file="file"
       :filePath="filePath"
+      @confirmExclusion="
+        () => {
+          deleteFiles(filePath, file, true);
+          confirmDialog = false;
+        }
+      "
     />
   </q-card-section>
 </template>
@@ -51,12 +63,17 @@ async function loadFiles(folder: string) {
     console.error("Error loading files:", error);
   }
 }
-async function deleteFiles(path: string, name: string) {
+async function deleteFiles(path: string, name: string, option: boolean) {
   file.value = name;
   filePath.value = path;
-  const result = await fileStorage.deleteFile(path, name, false);
+  const result = await fileStorage.deleteFile(path, name, option);
   if (result) {
-    return window.location.reload();
+    if (props.folder === sourceFolders) {
+      fileStorage.updateValues(props.folder);
+      return await loadFolderSource();
+    }
+    fileStorage.updateValues(props.folder);
+    return await loadFiles(props.folder);
   }
   return (confirmDialog.value = true);
 }
@@ -71,10 +88,12 @@ async function loadFolderSource() {
   folders.value = [...newFolders];
 }
 
-watchEffect(() => {
+watchEffect(async () => {
   if (props.folder === sourceFolders) {
     return loadFolderSource();
   }
-  return loadFiles(props.folder);
+  if (props.folder !== sourceFolders) {
+    return loadFiles(props.folder);
+  }
 });
 </script>

@@ -3,8 +3,6 @@ import { getEnvironmentVariable } from "../helpers";
 import InsertFolders from "../graphql/folders/InsertFolders.gql";
 import SearchPath from "../graphql/folders/SearchPath.gql";
 import CheckDirectory from "../graphql/folders/CheckDirectory.gql";
-import ConfirmExclusion from "../components/CardForDocSIG/TabForCard/ConfirmExclusion.vue";
-
 const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
 );
@@ -13,8 +11,17 @@ const id = "files";
 
 export const useFiles = defineStore(id, {
   state: () => ({
-    confirmExclusion: false,
+    updateFolder: "",
+    update: false,
   }),
+  getters: {
+    updateValues() {
+      return (folder: string) => {
+        this.updateFolder = folder;
+        this.update = true;
+      };
+    },
+  },
   actions: {
     displayPdf: async (filePath: string) => {
       try {

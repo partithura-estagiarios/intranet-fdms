@@ -1,8 +1,15 @@
 <template>
   <q-card>
     <q-card-section>
-      <q-btn :label="$t('action.selectTheFolder')" @click="fixed = true" />
-      <q-icon name="folder" />
+      <q-btn
+        :label="$t('action.selectTheFolder')"
+        @click="
+          () => {
+            fixed = true;
+            loadFolders();
+          }
+        " />
+
       {{ modelFolder }}
       <q-dialog v-model="fixed">
         <q-card>
@@ -17,6 +24,7 @@
                   fixed = false;
                 }
               "
+              @click="loadFolders()"
             />
           </q-card-section>
 
@@ -43,8 +51,9 @@
 
 <script setup lang="ts">
 import LoadFolders from "../../../graphql/folders/LoadFolders.gql";
-
+import { useFiles } from "../../../stores/files";
 import Folders from "./Folders.vue";
+
 const { t } = useI18n();
 const props = defineProps({
   version: {
@@ -55,19 +64,11 @@ const props = defineProps({
 const options = ref();
 const modelFolder = ref();
 const fixed = ref();
-onMounted(async () => {
-  loadFolders();
-});
+
 async function loadFolders() {
   const { loadFolders }: { loadFolders: Array<string> } =
     await runQuery(LoadFolders);
   options.value = loadFolders;
   options.value.push(t("text.sourceFolders"));
 }
-
-watchEffect(async () => {
-  if (modelFolder.value) {
-    return loadFolders;
-  }
-});
 </script>

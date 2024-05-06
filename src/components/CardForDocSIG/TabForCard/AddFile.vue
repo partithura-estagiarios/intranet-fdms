@@ -60,7 +60,7 @@ const selectOptions = computed(() => {
 async function addFile(folder: string, file: string) {
   const result = await fileStorage.insertFile(folder, file);
   if (result) {
-    return window.location.reload();
+    return fileStorage.updateValues(props.folder);
   }
   return negativeNotify(t("action.folderAlreadyExists"));
 }

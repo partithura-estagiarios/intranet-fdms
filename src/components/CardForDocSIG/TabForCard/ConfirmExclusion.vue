@@ -25,8 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { useFiles } from "../../../stores/files";
-const fileStorage = useFiles();
 const props = defineProps({
   confirm: {
     type: Boolean,
@@ -41,9 +39,8 @@ const props = defineProps({
     default: "",
   },
 });
-const emits = defineEmits(["close"]);
-async function confirmDelete() {
-  await fileStorage.deleteFile(props.filePath, props.file, true);
-  window.location.reload();
+const emits = defineEmits(["close", "confirmExclusion"]);
+function confirmDelete() {
+  emits("confirmExclusion");
 }
 </script>
