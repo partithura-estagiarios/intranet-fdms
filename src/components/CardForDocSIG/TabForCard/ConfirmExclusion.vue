@@ -47,7 +47,7 @@ const title = ref("");
 
 async function confirmDelete() {
   await fileStorage.deleteFile(props.filePath, props.file);
-  fileStorage.updateValues(props.filePath);
+  fileStorage.update = true;
   emits("confirmExclusion");
 }
 async function setTitle() {

@@ -73,6 +73,7 @@ import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { Files, Folder } from "../../../entities/files";
 import { useFiles } from "../../../stores/files";
+import { sourceFolders } from "../TabForCard/lib";
 const folderTree = ref();
 const link = ref();
 const activeButtonIndex = ref();
@@ -116,10 +117,26 @@ const showFolder = (item: Folder) => {
   return item.folderNow !== "";
 };
 watchEffect(async () => {
+  if (fileStorage.update && fileStorage.updateFolder === sourceFolders) {
+    await Promise.all([loadFolderSource()])
+      .then(() => {
+        fileStorage.update = false;
+      })
+      .catch((error) => {
+        console.error("Erro ao executar promessas:", error);
+      });
+    return;
+  }
   if (fileStorage.update) {
-    fileStorage.update = false;
-    await loadFolderSource();
-    await changeFolder(activeButtonIndex.value, fileStorage.updateFolder);
+    await Promise.all([
+      changeFolder(activeButtonIndex.value, fileStorage.updateFolder),
+    ])
+      .then(() => {
+        fileStorage.update = false;
+      })
+      .catch((error) => {
+        console.error("Erro ao executar promessas:", error);
+      });
   }
 });
 </script>

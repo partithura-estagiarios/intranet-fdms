@@ -32,7 +32,8 @@ import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 import { Files } from "../../../entities/files";
 import { sourceFolders } from "./lib";
-
+import { useFiles } from "../../../stores/files";
+const fileStorage = useFiles();
 const emits = defineEmits(["close"]);
 const props = defineProps({
   folder: {
@@ -61,10 +62,10 @@ async function loadFolderSource() {
     folderNow: item.name,
   }));
   folders.value = [...newFolders];
-  archives.value = [];
 }
 
 function enableDeletionModal(path: string, fileSelect: string) {
+  fileStorage.updateFolder = props.folder;
   file.value = fileSelect;
   filePath.value = path;
   confirmDialog.value = true;

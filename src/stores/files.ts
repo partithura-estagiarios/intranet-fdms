@@ -96,18 +96,21 @@ export const useFiles = defineStore(id, {
       }
     },
     checkDirectory: async (file: string) => {
-      const { searchPath }: { searchPath: string } = await runQuery(
-        SearchPath,
-        { folder: file },
-      );
-      if (!searchPath) {
-        return false;
+      if (!file.includes(".")) {
+        const { searchPath }: { searchPath: string } = await runQuery(
+          SearchPath,
+          { folder: file },
+        );
+        if (!searchPath) {
+          return false;
+        }
+        const { checkDirectory }: { checkDirectory: boolean } = await runQuery(
+          CheckDirectory,
+          { folder: searchPath.toString() },
+        );
+        return checkDirectory;
       }
-      const { checkDirectory }: { checkDirectory: boolean } = await runQuery(
-        CheckDirectory,
-        { folder: searchPath.toString() },
-      );
-      return checkDirectory;
+      return false;
     },
   },
 });
