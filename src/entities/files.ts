@@ -6,3 +6,8 @@ export interface Folder {
   folderNow: String;
   folderParent: String;
 }
+
+export interface Archive {
+  path: String;
+  name: String;
+}
