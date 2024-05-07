@@ -12,8 +12,7 @@
           :folders="folders"
           :button-index="activeButtonIndex"
           @select-file="
-            (indexSelect, folderSelect) =>
-              changeFolder(indexSelect, folderSelect)
+            (indexSelect, folderSelect) => changeFile(indexSelect, folderSelect)
           "
         />
         <q-separator />
@@ -52,6 +51,18 @@ const changeFolder = async (index: number, folderName: string) => {
   archives.value = loadFiles.archives;
   return (folders.value = loadFiles.folders);
 };
+const changeFile = async (index: number, folderName: string) => {
+  activeButtonIndex.value = index;
+  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+    folder: folderName,
+  });
+  if (loadFiles == null) {
+    archives.value = [];
+    return (folders.value = []);
+  }
+  return (archives.value = loadFiles.archives);
+};
+
 async function loadFolderSource() {
   await runMutation(InsertFolders, {});
   const { loadRootFolders }: { loadRootFolders: Array<object> } =

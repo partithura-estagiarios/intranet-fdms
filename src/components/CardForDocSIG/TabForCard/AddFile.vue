@@ -1,26 +1,21 @@
 <template>
   <q-card-section>
-    <q-select v-model="typeFile" :options="selectOptions" />
-  </q-card-section>
-  <q-card-section>
-    <q-file
-      v-if="typeFile === 'PDF' && !isSourceFolder"
-      v-model="input"
-      :label="$t('action.addFile')"
-      rounded
-      outlined
-      accept=".pdf"
-    >
-      <template v-slot:append>
-        <q-icon name="archive" color="white" />
-      </template>
-    </q-file>
-
-    <q-input
-      :label="$t('action.writeFolder')"
-      v-model="input"
-      v-if="typeFile === $t('text.folder')"
-    />
+    <div v-if="isChild">
+      <q-file
+        v-model="input"
+        :label="$t('action.addFile')"
+        rounded
+        outlined
+        accept=".pdf"
+      >
+        <template v-slot:append>
+          <q-icon name="archive" color="white" />
+        </template>
+      </q-file>
+    </div>
+    <div v-else>
+      <q-input :label="$t('action.writeFolder')" v-model="input" />
+    </div>
   </q-card-section>
 
   <q-card-actions align="right">
@@ -33,7 +28,7 @@
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
-import { sourceFolders } from "./lib";
+import IsFolderChild from "../../../graphql/folders/IsFolderChild.gql";
 const emits = defineEmits(["close"]);
 const props = defineProps({
   folder: {
@@ -42,20 +37,19 @@ const props = defineProps({
   },
 });
 const { t } = useI18n();
-
+const isChild = ref();
 const typeFile = ref("");
 const input = ref();
 const fileStorage = useFiles();
-const isSourceFolder = computed(() => {
-  return props.folder === sourceFolders;
-});
 
-const selectOptions = computed(() => {
-  if (isSourceFolder.value) {
-    return [t("text.folder")];
-  }
-  return [t("text.folder"), "PDF"];
-});
+async function verifyFolder() {
+  const { isFolderChild }: { isFolderChild: boolean } = await runQuery(
+    IsFolderChild,
+    { folder: props.folder },
+  );
+  console.log(isFolderChild);
+  return (isChild.value = isFolderChild);
+}
 
 async function addFile(folder: string, file: string) {
   const result = await fileStorage.insertFile(folder, file);
@@ -64,4 +58,7 @@ async function addFile(folder: string, file: string) {
   }
   return negativeNotify(t("action.folderAlreadyExists"));
 }
+watchEffect(async () => {
+  await verifyFolder();
+});
 </script>

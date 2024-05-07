@@ -1,0 +1,3 @@
+query IsFolderChild($folder: String!) {
+  isFolderChild(folder: $folder)
+}

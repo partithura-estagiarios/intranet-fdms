@@ -1,17 +1,31 @@
 <template>
-  <q-tabs v-model="tab" class="text-white bg-indigo-8">
+  <q-tabs v-model="tab" indicator-color="transparent">
     <q-tab
       no-caps
       v-for="(item, index) in tabItems"
       :key="index"
       :name="item.name"
       :label="$t(`cardDocSig.${item.name}`)"
-      class="text-bold"
-      :class="{ 'text-indigo-8 bg-white rounded-borders': tab === item.name }"
+      :class="tabClass(item.name)"
     />
-    <q-btn icon="add_circle" @click="openDialog('add')" />
-    <q-btn icon="delete" @click="openDialog('delete')" />
-
+    <div class="relative-position absolute-right">
+      <q-btn icon="edit" flat>
+        <q-menu anchor="bottom left">
+          <q-list style="min-width: 100px">
+            <q-item clickable v-close-popup>
+              <q-item-section icon="add_circle" @click="openDialog('add')">
+                {{ $t("action.addFile") }}
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section icon="delete" @click="openDialog('delete')">
+                {{ $t("action.deleteFile") }}
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
+    </div>
     <q-dialog v-model="dialog">
       <q-card class="my-card">
         <DialogHeader @close="(val) => (dialog = val)" :option="title" />
@@ -42,4 +56,9 @@ function openDialog(version: string) {
   option.value = "delete";
   return (title.value = t("action.deleteFile"));
 }
+const tabClass = computed(() => {
+  return (itemName: string) => ({
+    "text-indigo-8 bg-white rounded-borders": tab.value === itemName,
+  });
+});
 </script>

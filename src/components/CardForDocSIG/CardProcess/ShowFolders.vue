@@ -3,28 +3,28 @@
     <div class="row">
       <q-virtual-scroll
         v-slot="{ item, index }"
-        :items="folders"
+        :items="validFolders"
         virtual-scroll-horizontal
       >
         <q-item
-          v-if="showFolder(item)"
           clickable
-          @click="emits('selectFile', props.buttonIndex, item.folderNow)"
+          @click="handleItemClick(index)"
+          :class="folderClass(index)"
         >
-          {{ item.folderNow }}</q-item
-        >
+          <q-item-section :class="textClass(index)">{{
+            item.folderNow
+          }}</q-item-section>
+        </q-item>
       </q-virtual-scroll>
-      <q-btn
-        icon="arrow_circle_left"
-        flat
-        @click="emits('selectFile', props.buttonIndex, folders[0].folderParent)"
-      ></q-btn>
     </div>
   </q-card-section>
 </template>
 
 <script setup lang="ts">
 import { Folder } from "../../../entities/files";
+import { computed } from "vue";
+
+const activeButtonIndex = ref<null | number>(null);
 
 const props = defineProps({
   folders: {
@@ -37,9 +37,25 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(["selectFile"]);
-const showFolder = (item: Folder) => {
-  return item.folderNow !== "";
-};
-</script>
 
-<style scoped></style>
+const validFolders = computed(() =>
+  props.folders.filter((folder) => folder.folderNow !== ""),
+);
+
+const textClass = computed(() => {
+  return (index: number) => ({
+    "text-white": activeButtonIndex.value === index,
+  });
+});
+
+const handleItemClick = (index: number) => {
+  activeButtonIndex.value = index;
+  emits("selectFile", index, validFolders.value[index].folderNow);
+};
+
+const folderClass = computed(() => {
+  return (index: number) => ({
+    "bg-green": activeButtonIndex.value === index,
+  });
+});
+</script>

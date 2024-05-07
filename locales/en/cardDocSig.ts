@@ -13,4 +13,6 @@ export default {
   socialPolicyforDiversity: "Social Policy for Diversity",
   environmentalObjectsandGoals: "Environmental Objects and Goals",
   environmentalCommitments: "Environmental Commitments",
+  manufacturing: "Manufacture",
+  evaluateConformitiesImprovements: "Evaluate Conformities and Improvements",
 };

@@ -37,7 +37,6 @@ export default {
   login: "Realizar Login",
   registerUser: "Registrar Usuário",
   logout: "Sair da conta",
-  addFolder: "Adicionar uma pasta",
   addFile: "Adicionar um Arquivo",
   deleteFile: "Deletar um Arquivo",
   writeFolder: "Escreva o nome da pasta",
