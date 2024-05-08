@@ -18,7 +18,7 @@ import { Archive } from "../../../entities/files";
 
 import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
-
+const emits = defineEmits(["update"]);
 const props = defineProps({
   archives: {
     type: Array<Archive>,
@@ -26,5 +26,3 @@ const props = defineProps({
   },
 });
 </script>
-
-<style scoped></style>

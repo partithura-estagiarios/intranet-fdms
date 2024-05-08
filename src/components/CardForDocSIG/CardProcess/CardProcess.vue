@@ -1,99 +1,66 @@
 <template>
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
-      <RootFolders
-        :folderTree="folderTree"
-        @select-folder-tree="
-          (indexSelect, folderSelect) => changeFolder(indexSelect, folderSelect)
-        "
-      />
+      <div class="q-pt-xl">
+        <RootFolders
+          :folderTree="folderTree"
+          @selectFolderTree="loadFoldersAndFiles"
+        />
+      </div>
       <div>
         <ShowFolders
           :folders="folders"
-          :button-index="activeButtonIndex"
-          @select-file="
-            (indexSelect, folderSelect) => changeFile(indexSelect, folderSelect)
-          "
+          @selectFile="loadFilesAll"
+          @update="loadFilesAll"
         />
         <q-separator />
 
-        <ShowArchives :archives="archives" />
+        <ShowArchives :archives="archives" @update="loadFoldersAndFiles" />
       </div>
     </q-card-section>
   </q-card>
 </template>
 
 <script setup lang="ts">
-import InsertFolders from "../../../graphql/folders/InsertFolders.gql";
-import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { Files } from "../../../entities/files";
 import { useFiles } from "../../../stores/files";
-import { sourceFolders } from "../TabForCard/lib";
+const fileStorage = useFiles();
+const props = defineProps({
+  folderParent: {
+    type: String,
+    required: false,
+  },
+});
 const folderTree = ref();
-const activeButtonIndex = ref();
+
 const archives = ref();
 const folders = ref();
-const fileStorage = useFiles();
 
-onMounted(() => {
-  loadFolderSource();
-});
-const changeFolder = async (index: number, folderName: string) => {
-  activeButtonIndex.value = index;
+const folderSourcesSide = async (folderName: string) => {
   const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
     folder: folderName,
   });
-  if (loadFiles == null) {
-    archives.value = [];
-    return (folders.value = []);
-  }
+  folders.value = [];
+  archives.value = [];
+  return (folderTree.value = loadFiles.folders);
+};
+const loadFoldersAndFiles = async (folderName: string) => {
+  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+    folder: folderName,
+  });
+  folders.value = loadFiles.folders;
   archives.value = loadFiles.archives;
-  return (folders.value = loadFiles.folders);
 };
-const changeFile = async (index: number, folderName: string) => {
-  activeButtonIndex.value = index;
+const loadFilesAll = async (folderName: string) => {
   const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
     folder: folderName,
   });
-  if (loadFiles == null) {
-    archives.value = [];
-    return (folders.value = []);
-  }
-  return (archives.value = loadFiles.archives);
+  archives.value = loadFiles.archives;
 };
-
-async function loadFolderSource() {
-  await runMutation(InsertFolders, {});
-  const { loadRootFolders }: { loadRootFolders: Array<object> } =
-    await runQuery(LoadRootFolders);
-  folderTree.value = loadRootFolders;
-}
-
 watchEffect(async () => {
-  if (fileStorage.update && fileStorage.updateFolder === sourceFolders) {
-    await Promise.all([
-      loadFolderSource(),
-      changeFolder(activeButtonIndex.value, fileStorage.updateFolder),
-    ])
-      .then(() => {
-        fileStorage.update = false;
-      })
-      .catch((error) => {
-        console.error("Erro ao executar promessas:", error);
-      });
-    return;
-  }
-  if (fileStorage.update) {
-    await Promise.all([
-      changeFolder(activeButtonIndex.value, fileStorage.updateFolder),
-    ])
-      .then(() => {
-        fileStorage.update = false;
-      })
-      .catch((error) => {
-        console.error("Erro ao executar promessas:", error);
-      });
+  if (props.folderParent) {
+    return await folderSourcesSide(props.folderParent);
   }
 });
 </script>

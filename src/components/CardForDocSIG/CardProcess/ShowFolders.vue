@@ -3,13 +3,13 @@
     <div class="row">
       <q-virtual-scroll
         v-slot="{ item, index }"
-        :items="validFolders"
+        :items="folders"
         virtual-scroll-horizontal
       >
         <q-item
+          v-if="showFolder(item)"
           clickable
-          @click="handleItemClick(index)"
-          :class="folderClass(index)"
+          @click="handleItemClick(index, item.folderNow)"
         >
           <q-item-section :class="textClass(index)">{{
             item.folderNow
@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { Folder } from "../../../entities/files";
-import { computed } from "vue";
-
+import { useFiles } from "../../../stores/files";
+const fileStorage = useFiles();
 const activeButtonIndex = ref<null | number>(null);
 
 const props = defineProps({
@@ -32,30 +32,26 @@ const props = defineProps({
     required: true,
   },
   buttonIndex: {
-    type: Number,
+    type: Number || null,
     required: false,
   },
 });
-const emits = defineEmits(["selectFile"]);
-
-const validFolders = computed(() =>
-  props.folders.filter((folder) => folder.folderNow !== ""),
-);
+const emits = defineEmits(["selectFile", "update"]);
+const showFolder = (item: Folder) => {
+  return item.folderNow !== "";
+};
 
 const textClass = computed(() => {
   return (index: number) => ({
-    "text-white": activeButtonIndex.value === index,
+    "text-green": activeButtonIndex.value === index,
   });
 });
 
-const handleItemClick = (index: number) => {
+const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
-  emits("selectFile", index, validFolders.value[index].folderNow);
+  emits("selectFile", name);
 };
-
-const folderClass = computed(() => {
-  return (index: number) => ({
-    "bg-green": activeButtonIndex.value === index,
-  });
+onBeforeUpdate(() => {
+  activeButtonIndex.value = null;
 });
 </script>

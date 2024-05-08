@@ -1,3 +1,7 @@
 query LoadFolders {
-  loadFolders
+  loadFolders {
+    id
+    id_parent
+    name
+  }
 }

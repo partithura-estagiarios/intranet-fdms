@@ -5,16 +5,18 @@
       :items="props.folderTree"
       v-slot="{ item, index }"
     >
-      <q-item
-        clickable
-        v-ripple
-        @click="handleItemClick(index, item.name)"
-        :class="folderClass(index)"
-      >
-        <q-item-section :class="textClass(index)">{{
-          item.name
-        }}</q-item-section>
-      </q-item>
+      <div class="q-pt-md">
+        <q-item
+          clickable
+          v-ripple
+          @click="handleItemClick(index, item.folderNow)"
+          :class="folderClass(index)"
+        >
+          <q-item-section :class="textClass(index)">{{
+            item.folderNow
+          }}</q-item-section>
+        </q-item>
+      </div>
     </q-virtual-scroll>
   </q-card-section>
 </template>
@@ -34,7 +36,7 @@ const textClass = computed(() => {
     "text-white": activeButtonIndex.value === index,
   });
 });
-
+const firstPosition = 0;
 const folderClass = computed(() => {
   return (index: number) => ({
     "bg-green": activeButtonIndex.value === index,
@@ -43,8 +45,11 @@ const folderClass = computed(() => {
 
 const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
-  emits("selectFolderTree", index, name);
+  emits("selectFolderTree", name);
 };
+onBeforeUpdate(() => {
+  activeButtonIndex.value = null;
+});
 </script>
 
 <style scoped>

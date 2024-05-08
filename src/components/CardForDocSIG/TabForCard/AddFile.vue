@@ -21,7 +21,7 @@
   <q-card-actions align="right">
     <q-btn
       :label="$t('action.confirm')"
-      @click="addFile(props.folder, input)"
+      @click="addFile(props.folder.name, input)"
     />
   </q-card-actions>
 </template>
@@ -29,32 +29,31 @@
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
 import IsFolderChild from "../../../graphql/folders/IsFolderChild.gql";
+import { FolderTree } from "../../../entities/files";
 const emits = defineEmits(["close"]);
 const props = defineProps({
   folder: {
-    type: String,
+    type: Object as () => FolderTree,
     default: "",
   },
 });
 const { t } = useI18n();
 const isChild = ref();
-const typeFile = ref("");
 const input = ref();
 const fileStorage = useFiles();
 
 async function verifyFolder() {
   const { isFolderChild }: { isFolderChild: boolean } = await runQuery(
     IsFolderChild,
-    { folder: props.folder },
+    { folder: props.folder.name },
   );
-  console.log(isFolderChild);
   return (isChild.value = isFolderChild);
 }
 
 async function addFile(folder: string, file: string) {
   const result = await fileStorage.insertFile(folder, file);
   if (result) {
-    return fileStorage.updateValues(props.folder);
+    return fileStorage.updateValues(props.folder.name);
   }
   return negativeNotify(t("action.folderAlreadyExists"));
 }

@@ -5,7 +5,7 @@
     v-slot="{ item, index }"
   >
     <q-item clickable v-ripple @click="selectFolder(item)">
-      {{ item }}
+      {{ item.name }}
     </q-item>
   </q-virtual-scroll>
 </template>

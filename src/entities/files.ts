@@ -11,3 +11,7 @@ export interface Archive {
   path: String;
   name: String;
 }
+export interface FolderTree {
+  id: number;
+  name: string;
+}

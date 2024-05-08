@@ -8,9 +8,7 @@
             fixed = true;
             loadFolders();
           }
-        " />
-
-      {{ modelFolder }}
+        " />{{ modelFolder.name }}
       <q-dialog v-model="fixed">
         <q-card>
           <q-separator />
@@ -49,10 +47,9 @@
 </template>
 
 <script setup lang="ts">
-import LoadFolders from "../../../graphql/folders/LoadFolders.gql";
 import Folders from "./Folders.vue";
-
-const { t } = useI18n();
+import LoadFolders from "../../../graphql/folders/LoadFolders.gql";
+import { Folder } from "../../../modules/graphql/graphql";
 const props = defineProps({
   version: {
     type: String,
@@ -64,9 +61,8 @@ const modelFolder = ref();
 const fixed = ref();
 
 async function loadFolders() {
-  const { loadFolders }: { loadFolders: Array<string> } =
+  const { loadFolders }: { loadFolders: Folder[] } =
     await runQuery(LoadFolders);
   options.value = loadFolders;
-  options.value.push(t("text.sourceFolders"));
 }
 </script>

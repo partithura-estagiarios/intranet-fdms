@@ -2,11 +2,11 @@
   <q-tabs v-model="tab" indicator-color="transparent">
     <q-tab
       no-caps
-      v-for="(item, index) in tabItems"
-      :key="index"
+      v-for="item in tabItems"
       :name="item.name"
-      :label="$t(`cardDocSig.${item.name}`)"
+      :label="item.name"
       :class="tabClass(item.name)"
+      @click="openCard(item.name)"
     />
     <div class="relative-position absolute-right">
       <q-btn icon="edit" flat>
@@ -36,17 +36,19 @@
 </template>
 
 <script setup lang="ts">
-import { tabItems } from "./lib";
+import { FolderTree } from "../../../entities/files";
 const emits = defineEmits(["showCard"]);
 const { t } = useI18n();
 const tab = ref("processes");
 const dialog = ref();
 const title = ref();
 const option = ref();
-onMounted(() => {
-  emits("showCard");
+const props = defineProps({
+  tabItems: {
+    type: Array<FolderTree>,
+    required: true,
+  },
 });
-
 function openDialog(version: string) {
   dialog.value = true;
   if (version == "add") {
@@ -61,4 +63,7 @@ const tabClass = computed(() => {
     "text-indigo-8 bg-white rounded-borders": tab.value === itemName,
   });
 });
+function openCard(item: string) {
+  emits("showCard", item);
+}
 </script>

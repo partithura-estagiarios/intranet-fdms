@@ -22,22 +22,24 @@
       @close="confirmDialog = false"
       :file="file"
       :filePath="filePath"
-      @confirmExclusion="(confirmDialog = false), updateFiles()"
+      @confirmExclusion="
+        (confirmDialog = false), loadFiles(fileStorage.updateFolder)
+      "
     />
   </q-card-section>
 </template>
 
 <script setup lang="ts">
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
-import LoadRootFolders from "../../../graphql/folders/LoadRootFolders.gql";
 import { Files } from "../../../entities/files";
-import { sourceFolders } from "./lib";
 import { useFiles } from "../../../stores/files";
+import { FolderTree } from "../../../entities/files";
+
 const fileStorage = useFiles();
 const emits = defineEmits(["close"]);
 const props = defineProps({
   folder: {
-    type: String,
+    type: Object as () => FolderTree,
     default: "",
   },
 });
@@ -54,33 +56,14 @@ async function loadFiles(folder: string) {
   folders.value = loadFiles.folders;
 }
 
-async function loadFolderSource() {
-  const { loadRootFolders }: { loadRootFolders: Array<object> } =
-    await runQuery(LoadRootFolders);
-  const newFolders = loadRootFolders.map((item: any) => ({
-    ...item,
-    folderNow: item.name,
-  }));
-  folders.value = [...newFolders];
-}
-
 function enableDeletionModal(path: string, fileSelect: string) {
-  fileStorage.updateFolder = props.folder;
+  fileStorage.updateFolder = props.folder.name;
   file.value = fileSelect;
   filePath.value = path;
   confirmDialog.value = true;
 }
 
-async function updateFiles() {
-  if (props.folder === sourceFolders) {
-    return await loadFolderSource();
-  }
-  if (props.folder !== sourceFolders) {
-    return await loadFiles(props.folder);
-  }
-}
-
 watchEffect(async () => {
-  await updateFiles();
+  await loadFiles(props.folder.name);
 });
 </script>
