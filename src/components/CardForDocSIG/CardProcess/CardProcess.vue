@@ -3,27 +3,23 @@
     <q-card-section horizontal>
       <div class="q-pt-xl">
         <RootFolders
-          :folderTree="folderTree"
-          @selectFolderTree="loadFoldersAndFiles"
+          :folderTree="folderTreeSelect"
+          @selectFolderTree="(val) => (folderOfRootSelect = val)"
         />
       </div>
       <div>
         <ShowFolders
-          :folders="folders"
-          @selectFile="loadFilesAll"
-          @update="loadFilesAll"
+          :selectTreeFolder="folderOfRootSelect"
+          @selectFolderChild="(val) => (folderChildSelect = val)"
         />
         <q-separator />
-
-        <ShowArchives :archives="archives" @update="loadFoldersAndFiles" />
+        <ShowArchives :childFolder="folderChildSelect" />
       </div>
     </q-card-section>
   </q-card>
 </template>
 
 <script setup lang="ts">
-import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
-import { Files } from "../../../entities/files";
 import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
 const props = defineProps({
@@ -32,35 +28,15 @@ const props = defineProps({
     required: false,
   },
 });
-const folderTree = ref();
-
-const archives = ref();
-const folders = ref();
-
-const folderSourcesSide = async (folderName: string) => {
-  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-    folder: folderName,
-  });
-  folders.value = [];
-  archives.value = [];
-  return (folderTree.value = loadFiles.folders);
-};
-const loadFoldersAndFiles = async (folderName: string) => {
-  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-    folder: folderName,
-  });
-  folders.value = loadFiles.folders;
-  archives.value = loadFiles.archives;
-};
-const loadFilesAll = async (folderName: string) => {
-  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-    folder: folderName,
-  });
-  archives.value = loadFiles.archives;
-};
-watchEffect(async () => {
+const folderTreeSelect = ref();
+const folderOfRootSelect = ref();
+const folderChildSelect = ref();
+watchEffect(() => {
   if (props.folderParent) {
-    return await folderSourcesSide(props.folderParent);
+    fileStorage.toggleFolderTreeState(props.folderParent);
+    folderTreeSelect.value = props.folderParent;
+    folderOfRootSelect.value = "";
+    folderChildSelect.value = "";
   }
 });
 </script>

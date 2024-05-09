@@ -3,7 +3,7 @@
     <div class="row">
       <q-virtual-scroll
         v-slot="{ item, index }"
-        :items="folders"
+        :items="foldersList"
         virtual-scroll-horizontal
       >
         <q-item
@@ -21,22 +21,19 @@
 </template>
 
 <script setup lang="ts">
-import { Folder } from "../../../entities/files";
+import { Files, Folder } from "../../../entities/files";
+import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
 const activeButtonIndex = ref<null | number>(null);
-
 const props = defineProps({
-  folders: {
-    type: Array<Folder>,
-    required: true,
-  },
-  buttonIndex: {
-    type: Number || null,
+  selectTreeFolder: {
+    type: String,
     required: false,
   },
 });
-const emits = defineEmits(["selectFile", "update"]);
+const foldersList = ref();
+const emits = defineEmits(["selectFolderChild"]);
 const showFolder = (item: Folder) => {
   return item.folderNow !== "";
 };
@@ -49,9 +46,23 @@ const textClass = computed(() => {
 
 const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
-  emits("selectFile", name);
+  fileStorage.toggleFolderChildState(name);
+  emits("selectFolderChild", name);
 };
-onBeforeUpdate(() => {
-  activeButtonIndex.value = null;
+watchEffect(async () => {
+  if (fileStorage.getReloadState && fileStorage.getFolder) {
+    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+      folder: fileStorage.getFolderTree,
+    });
+    foldersList.value = loadFiles.folders;
+    fileStorage.toggleReloadState();
+  }
+  if (props.selectTreeFolder) {
+    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+      folder: props.selectTreeFolder,
+    });
+    return (foldersList.value = loadFiles.folders);
+  }
+  foldersList.value = [];
 });
 </script>

@@ -22,9 +22,7 @@
       @close="confirmDialog = false"
       :file="file"
       :filePath="filePath"
-      @confirmExclusion="
-        (confirmDialog = false), loadFiles(fileStorage.updateFolder)
-      "
+      @confirmExclusion="(confirmDialog = false), loadFiles(props.folder.name)"
     />
   </q-card-section>
 </template>
@@ -57,13 +55,14 @@ async function loadFiles(folder: string) {
 }
 
 function enableDeletionModal(path: string, fileSelect: string) {
-  fileStorage.updateFolder = props.folder.name;
   file.value = fileSelect;
   filePath.value = path;
   confirmDialog.value = true;
 }
 
 watchEffect(async () => {
-  await loadFiles(props.folder.name);
+  if (props.folder.name) {
+    await loadFiles(props.folder.name);
+  }
 });
 </script>

@@ -2,7 +2,7 @@
   <q-card-section>
     <q-virtual-scroll
       class="maximum-scroll"
-      :items="props.folderTree"
+      :items="folderTreeList"
       v-slot="{ item, index }"
     >
       <div class="q-pt-md">
@@ -22,13 +22,18 @@
 </template>
 
 <script setup lang="ts">
+import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
+import { Files } from "../../../modules/graphql/graphql";
+import { useFiles } from "../../../stores/files";
+const fileStorage = useFiles();
+
 const props = defineProps({
   folderTree: {
-    type: Array,
+    type: String,
     required: true,
   },
 });
-
+const folderTreeList = ref();
 const emits = defineEmits(["selectFolderTree"]);
 const activeButtonIndex = ref<null | number>(null);
 const textClass = computed(() => {
@@ -36,7 +41,7 @@ const textClass = computed(() => {
     "text-white": activeButtonIndex.value === index,
   });
 });
-const firstPosition = 0;
+
 const folderClass = computed(() => {
   return (index: number) => ({
     "bg-green": activeButtonIndex.value === index,
@@ -45,8 +50,25 @@ const folderClass = computed(() => {
 
 const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
+  fileStorage.toggleFolderState(name);
   emits("selectFolderTree", name);
 };
+
+watchEffect(async () => {
+  if (fileStorage.getReloadState && fileStorage.getFolderTree) {
+    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+      folder: fileStorage.getFolderTree,
+    });
+    folderTreeList.value = loadFiles.folders;
+    fileStorage.toggleReloadState();
+  }
+  if (props.folderTree) {
+    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+      folder: props.folderTree,
+    });
+    folderTreeList.value = loadFiles.folders;
+  }
+});
 onBeforeUpdate(() => {
   activeButtonIndex.value = null;
 });

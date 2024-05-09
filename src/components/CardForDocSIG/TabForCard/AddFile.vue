@@ -1,6 +1,6 @@
 <template>
   <q-card-section>
-    <div v-if="isChild">
+    <div v-if="isChild === 'folderChild'">
       <q-file
         v-model="input"
         :label="$t('action.addFile')"
@@ -30,7 +30,7 @@
 import { useFiles } from "../../../stores/files";
 import IsFolderChild from "../../../graphql/folders/IsFolderChild.gql";
 import { FolderTree } from "../../../entities/files";
-const emits = defineEmits(["close"]);
+const emits = defineEmits(["close", "update"]);
 const props = defineProps({
   folder: {
     type: Object as () => FolderTree,
@@ -53,11 +53,13 @@ async function verifyFolder() {
 async function addFile(folder: string, file: string) {
   const result = await fileStorage.insertFile(folder, file);
   if (result) {
-    return fileStorage.updateValues(props.folder.name);
+    return fileStorage.toggleReloadState();
   }
   return negativeNotify(t("action.folderAlreadyExists"));
 }
 watchEffect(async () => {
-  await verifyFolder();
+  if (props.folder.name) {
+    await verifyFolder();
+  }
 });
 </script>
