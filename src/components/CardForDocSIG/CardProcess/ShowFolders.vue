@@ -64,6 +64,9 @@ watchEffect(async () => {
   }
   foldersList.value = [];
 });
+onBeforeUpdate(() => {
+  activeButtonIndex.value = null;
+});
 </script>
 <style scoped>
 .maximum-scroll {
