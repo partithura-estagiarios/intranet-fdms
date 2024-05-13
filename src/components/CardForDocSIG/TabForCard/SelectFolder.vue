@@ -1,53 +1,29 @@
 <template>
   <q-card>
     <q-card-section>
-      <q-btn
+      <q-select
+        class="size-area"
+        v-model="modelFolder"
+        :options="options"
         :label="$t('action.selectTheFolder')"
-        @click="
-          () => {
-            fixed = true;
-            loadFolders();
-          }
-        " />
-      <q-dialog v-model="fixed">
-        <q-card>
-          <q-separator />
+        :loading="reloadFolders"
+      />
+    </q-card-section>
 
-          <q-card-section>
-            <Folders
-              :folders="options"
-              @close="
-                (folder) => {
-                  modelFolder = folder;
-                  fixed = false;
-                }
-              "
-            />
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-actions align="right">
-            <q-btn
-              flat
-              :label="$t('action.confirm')"
-              color="primary"
-              v-close-popup
-            />
-          </q-card-actions>
-        </q-card> </q-dialog
-    ></q-card-section>
     <AddFile
       :folder="modelFolder"
       v-if="props.version == 'add'"
-      @close="fixed = false"
+      @update="loadFolders"
     />
-    <DeleteFile :folder="modelFolder" v-if="props.version == 'delete'" />
+    <DeleteFile
+      :folder="modelFolder"
+      v-if="props.version == 'delete'"
+      @update="loadFolders"
+    />
   </q-card>
 </template>
 
 <script setup lang="ts">
-import Folders from "./Folders.vue";
 import LoadFolders from "../../../graphql/folders/LoadFolders.gql";
 import { Folder } from "../../../modules/graphql/graphql";
 import { useFiles } from "../../../stores/files";
@@ -60,10 +36,18 @@ const props = defineProps({
 });
 const options = ref();
 const modelFolder = ref();
-const fixed = ref();
+const reloadFolders = ref(false);
 async function loadFolders() {
+  reloadFolders.value = true;
   const { loadFolders }: { loadFolders: Folder[] } =
     await runQuery(LoadFolders);
-  options.value = loadFolders;
+  options.value = loadFolders.map((folder) => folder.name);
+  reloadFolders.value = false;
 }
+watchEffect(async () => {
+  if (fileStorage.reload) {
+    loadFolders();
+  }
+});
+loadFolders();
 </script>

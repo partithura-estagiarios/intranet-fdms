@@ -2,6 +2,7 @@
   <q-card-section>
     <div class="row">
       <q-virtual-scroll
+        class="maximum-scroll"
         v-slot="{ item, index }"
         :items="foldersList"
         virtual-scroll-horizontal
@@ -66,3 +67,9 @@ watchEffect(async () => {
   foldersList.value = [];
 });
 </script>
+<style scoped>
+.maximum-scroll {
+  height: 10vh;
+  width: 35vw;
+}
+</style>

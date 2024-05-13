@@ -10,7 +10,7 @@
     />
     <div class="relative-position absolute-right">
       <q-btn icon="edit" flat>
-        <q-menu anchor="bottom left">
+        <q-menu anchor="bottom left" self="top start">
           <q-list>
             <q-item clickable v-close-popup>
               <q-item-section icon="add_circle" @click="openDialog('add')">

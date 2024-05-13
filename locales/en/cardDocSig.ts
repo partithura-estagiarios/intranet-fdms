@@ -15,4 +15,7 @@ export default {
   environmentalCommitments: "Environmental Commitments",
   manufacturing: "Manufacture",
   evaluateConformitiesImprovements: "Evaluate Conformities and Improvements",
+  emptyFolder: "Empty Folder",
+  attachments: "Attachments",
+  writeFileName: "Write the file name",
 };

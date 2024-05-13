@@ -53,7 +53,7 @@ export const useFiles = defineStore(id, {
         console.error("Erro ao exibir PDF:", error);
       }
     },
-    insertFile: async (folder: string, file: any) => {
+    insertFile: async (folder: string, file: any, novoNomeArquivo: string) => {
       const { searchPath }: { searchPath: string } = await runQuery(
         SearchPath,
         { folder: folder.toString() },
@@ -69,7 +69,7 @@ export const useFiles = defineStore(id, {
         return insertFolders;
       }
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", file, novoNomeArquivo + ".pdf");
       const response = await fetch(`${server_express_url}/inserir-arquivo`, {
         method: "POST",
         body: formData,

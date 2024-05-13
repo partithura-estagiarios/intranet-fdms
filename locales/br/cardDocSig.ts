@@ -15,4 +15,7 @@ export default {
   environmentalCommitments: "Compromissos Ambientais",
   manufacture: "Fabricar",
   evaluateConformitiesImprovements: "Avaliar Conformidadese e Melhorias",
+  emptyFolder: "Pasta vazia",
+  attachments: "Anexos",
+  writeFileName: "Escreva o nome do arquivo",
 };

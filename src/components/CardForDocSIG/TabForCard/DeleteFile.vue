@@ -1,68 +1,91 @@
 <template>
   <q-card-section>
-    <div v-for="folder in folders" :key="folder.id">
-      <div class="row" v-if="folder.folderNow !== ''">
-        {{ folder.folderNow }} <q-icon name="folder" />
-        <q-btn
-          icon="delete"
-          @click="enableDeletionModal('', folder.folderNow)"
-        />
-      </div>
-    </div>
-    <div v-for="archive in archives" :key="archive.id">
-      <q-icon name="picture_as_pdf" />
-      {{ archive.name }}
-      <q-btn
-        icon="delete"
-        @click="enableDeletionModal(archive.path, archive.name)"
-      />
-    </div>
-    <ConfirmExclusion
-      :confirm="confirmDialog"
-      @close="confirmDialog = false"
-      :file="file"
-      :filePath="filePath"
-      @confirmExclusion="(confirmDialog = false), loadFiles(props.folder.name)"
+    <q-select
+      :options="options"
+      v-model="file"
+      :disable="enableSelect"
+      :label="selectLabel"
     />
   </q-card-section>
+  <ConfirmExclusion
+    :file="file"
+    :confirm="enableConfirm"
+    @confirmExclusion="handleConfirmExclusion"
+  />
+  <q-card-actions align="right">
+    <q-btn
+      :label="$t('action.confirm')"
+      text-color="green"
+      flat
+      :disable="!file"
+      @click="enableConfirm = true"
+    />
+  </q-card-actions>
 </template>
 
 <script setup lang="ts">
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
-import { Files } from "../../../entities/files";
-import { useFiles } from "../../../stores/files";
-import { FolderTree } from "../../../entities/files";
+import { Files, Folder, Opts } from "../../../entities/files";
+const { t } = useI18n();
 
-const fileStorage = useFiles();
-const emits = defineEmits(["close"]);
+const emits = defineEmits(["close", "update"]);
 const props = defineProps({
   folder: {
-    type: Object as () => FolderTree,
-    default: "",
+    type: String,
+    required: false,
   },
 });
-const folders = ref();
-const archives = ref();
-const confirmDialog = ref();
+
+const options: Opts[] = reactive([]);
+const enableConfirm = ref();
 const file = ref();
-const filePath = ref();
+const folderReload = ref();
 async function loadFiles(folder: string) {
+  options.length = 0;
   const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
     folder: folder,
   });
-  archives.value = loadFiles.archives;
-  folders.value = loadFiles.folders;
-}
-
-function enableDeletionModal(path: string, fileSelect: string) {
-  file.value = fileSelect;
-  filePath.value = path;
-  confirmDialog.value = true;
-}
-
-watchEffect(async () => {
-  if (props.folder.name) {
-    await loadFiles(props.folder.name);
+  if (loadFiles.archives.length !== 0) {
+    options.splice(
+      0,
+      options.length,
+      ...loadFiles.archives.map((archive: any) => ({
+        label: archive.name,
+        value: archive.path,
+        path: archive.path,
+        name: archive.name,
+      })),
+    );
+    return;
   }
+  loadFiles.folders.forEach(({ folderParent, folderNow }: Folder) => {
+    const folderObject: Opts = {
+      label: folderNow,
+      value: folderNow,
+      path: folderParent,
+      name: folderNow,
+    };
+    options.push(folderObject);
+  });
+}
+async function handleConfirmExclusion() {
+  await loadFiles(folderReload.value);
+  enableConfirm.value = false;
+  file.value = null;
+  emits("update");
+}
+watchEffect(async () => {
+  if (props.folder) {
+    folderReload.value = props.folder;
+    file.value = null;
+    await loadFiles(props.folder);
+  }
+});
+const enableSelect = computed(() => {
+  return options.length > 0 && options[0].name === "";
+});
+
+const selectLabel = computed(() => {
+  return enableSelect.value ? t("cardDocSig.emptyFolder") : "";
 });
 </script>
