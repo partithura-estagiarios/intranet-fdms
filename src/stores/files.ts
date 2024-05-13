@@ -8,6 +8,11 @@ const server_express_url = getEnvironmentVariable(
 );
 
 const id = "files";
+function isNewFileName(newName: string) {
+  if (newName) {
+    return newName + ".pdf";
+  }
+}
 
 export const useFiles = defineStore(id, {
   state: () => ({
@@ -69,9 +74,9 @@ export const useFiles = defineStore(id, {
         );
         return insertFolders;
       }
+
       const formData = new FormData();
-      formData.append("file", file, novoNomeArquivo);
-      console.log(formData);
+      formData.append("file", file, isNewFileName(novoNomeArquivo));
       const response = await fetch(`${server_express_url}/inserir-arquivo`, {
         method: "POST",
         body: formData,
@@ -82,7 +87,6 @@ export const useFiles = defineStore(id, {
       return response.ok;
     },
     deleteFile: async (path: string, file: string) => {
-      console.log(file);
       if (!file.includes(".")) {
         const { searchPath }: { searchPath: string } = await runQuery(
           SearchPath,

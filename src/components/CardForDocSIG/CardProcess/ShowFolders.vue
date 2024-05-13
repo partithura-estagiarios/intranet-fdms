@@ -25,6 +25,7 @@
 import { Files, Folder } from "../../../entities/files";
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { useFiles } from "../../../stores/files";
+import { showFolder } from "./lib";
 const fileStorage = useFiles();
 const activeButtonIndex = ref<null | number>(null);
 const props = defineProps({
@@ -35,9 +36,6 @@ const props = defineProps({
 });
 const foldersList = ref();
 const emits = defineEmits(["selectFolderChild"]);
-const showFolder = (item: Folder) => {
-  return item.folderNow !== "";
-};
 
 const textClass = computed(() => {
   return (index: number) => ({
@@ -53,10 +51,10 @@ const handleItemClick = (index: number, name: string) => {
 watchEffect(async () => {
   if (fileStorage.getReloadState && fileStorage.getFolder) {
     const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: fileStorage.getFolderTree,
+      folder: fileStorage.getFolder,
     });
     foldersList.value = loadFiles.folders;
-    fileStorage.toggleReloadState();
+    return fileStorage.toggleReloadState();
   }
   if (props.selectTreeFolder) {
     const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {

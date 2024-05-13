@@ -42,7 +42,7 @@ export default {
   writeFolder: "Escreva o nome da pasta",
   confirm: "Confirmar",
   selectTheFolder: "Selecione a Pasta",
-  folderAlreadyExists: "Essa pasta já existe, escolha outro nome",
+  folderAlreadyExists: "Esse arquivo já existe, escolha outro nome",
   deleteSureFile: "Tem certeza que deseja deletar o arquivo ?",
   stillFiles:
     "Ainda há arquivos na pasta, deseja deletar a pasta mesmo assim ?",

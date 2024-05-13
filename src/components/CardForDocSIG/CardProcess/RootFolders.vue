@@ -5,18 +5,17 @@
       :items="folderTreeList"
       v-slot="{ item, index }"
     >
-      <div class="q-pt-md">
-        <q-item
-          clickable
-          v-ripple
-          @click="handleItemClick(index, item.folderNow)"
-          :class="folderClass(index)"
-        >
-          <q-item-section :class="textClass(index)">{{
-            item.folderNow
-          }}</q-item-section>
-        </q-item>
-      </div>
+      <q-item
+        v-if="showFolder(item.folderNow)"
+        clickable
+        v-ripple
+        @click="handleItemClick(index, item.folderNow)"
+        :class="folderClass(index)"
+      >
+        <q-item-section :class="textClass(index)">{{
+          item.folderNow
+        }}</q-item-section>
+      </q-item>
     </q-virtual-scroll>
   </q-card-section>
 </template>
@@ -25,6 +24,7 @@
 import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { Files } from "../../../modules/graphql/graphql";
 import { useFiles } from "../../../stores/files";
+import { showFolder } from "./lib";
 const fileStorage = useFiles();
 
 const props = defineProps({
@@ -51,6 +51,7 @@ const folderClass = computed(() => {
 const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
   fileStorage.toggleFolderState(name);
+  fileStorage.toggleFolderChildState("");
   emits("selectFolderTree", name);
 };
 
@@ -60,13 +61,13 @@ watchEffect(async () => {
       folder: fileStorage.getFolderTree,
     });
     folderTreeList.value = loadFiles.folders;
-    fileStorage.toggleReloadState();
+    return fileStorage.toggleReloadState();
   }
   if (props.folderTree) {
     const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
       folder: props.folderTree,
     });
-    folderTreeList.value = loadFiles.folders;
+    return (folderTreeList.value = loadFiles.folders);
   }
 });
 onBeforeUpdate(() => {

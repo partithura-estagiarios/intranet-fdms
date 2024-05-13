@@ -12,7 +12,6 @@
           :selectTreeFolder="folderOfRootSelect"
           @selectFolderChild="(val) => (folderChildSelect = val)"
         />
-        <q-separator />
         <ShowArchives :childFolder="folderChildSelect" />
       </div>
     </q-card-section>

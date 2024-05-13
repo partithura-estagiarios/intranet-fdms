@@ -34,12 +34,16 @@ const props = defineProps({
 });
 const archivesList = ref();
 watchEffect(async () => {
+  if (!fileStorage.getFolderChild) {
+    return (archivesList.value = []);
+  }
   if (fileStorage.getReloadState && fileStorage.getFolderChild) {
     const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
       folder: fileStorage.getFolderChild,
     });
     archivesList.value = loadFiles.archives;
-    fileStorage.toggleReloadState();
+
+    return fileStorage.toggleReloadState();
   }
   if (props.childFolder) {
     const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
