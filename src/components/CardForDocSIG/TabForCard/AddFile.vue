@@ -51,11 +51,7 @@ async function verifyFolder() {
 }
 
 async function addFile(folder: string, file: Anexo) {
-  const result = await fileStorage.insertFile(
-    folder,
-    file,
-    nomeAnexo.value + ".pdf",
-  );
+  const result = await fileStorage.insertFile(folder, file, nomeAnexo.value);
   if (result) {
     emits("update");
     return fileStorage.toggleReloadState();

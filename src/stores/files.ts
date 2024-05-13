@@ -64,12 +64,14 @@ export const useFiles = defineStore(id, {
           {
             folder: file,
             path: folder,
+            exclude: false,
           },
         );
         return insertFolders;
       }
       const formData = new FormData();
-      formData.append("file", file, novoNomeArquivo + ".pdf");
+      formData.append("file", file, novoNomeArquivo);
+      console.log(formData);
       const response = await fetch(`${server_express_url}/inserir-arquivo`, {
         method: "POST",
         body: formData,
@@ -80,6 +82,7 @@ export const useFiles = defineStore(id, {
       return response.ok;
     },
     deleteFile: async (path: string, file: string) => {
+      console.log(file);
       if (!file.includes(".")) {
         const { searchPath }: { searchPath: string } = await runQuery(
           SearchPath,
