@@ -36,6 +36,7 @@ watchEffect(() => {
     folderTreeSelect.value = props.folderParent;
     folderOfRootSelect.value = "";
     folderChildSelect.value = "";
+    return;
   }
 });
 </script>

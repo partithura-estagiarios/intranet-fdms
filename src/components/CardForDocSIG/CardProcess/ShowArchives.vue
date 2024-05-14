@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { Files } from "../../../entities/files";
-import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { useFiles } from "../../../stores/files";
 import { getFileNameWithoutExtension } from "./lib";
 const fileStorage = useFiles();
@@ -34,24 +32,24 @@ const props = defineProps({
 });
 const archivesList = ref();
 watchEffect(async () => {
-  if (!fileStorage.getFolderChild) {
-    return (archivesList.value = []);
+  if (fileStorage.getReloadArchives && !fileStorage.getFolderChild) {
+    archivesList.value = [];
+    await fileStorage.toggleReloadArchives();
+    return;
   }
   if (fileStorage.getReloadState && fileStorage.getFolderChild) {
-    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: fileStorage.getFolderChild,
-    });
-    archivesList.value = loadFiles.archives;
-
-    return fileStorage.toggleReloadState();
+    fileStorage.toggleReloadState();
+    archivesList.value = await fileStorage.loadArchives(
+      fileStorage.getFolderChild,
+    );
+    return;
   }
   if (props.childFolder) {
-    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: props.childFolder,
-    });
-    return (archivesList.value = loadFiles.archives);
+    archivesList.value = await fileStorage.loadArchives(
+      fileStorage.getFolderChild,
+    );
+    return;
   }
-  archivesList.value = [];
 });
 </script>
 <style scoped>

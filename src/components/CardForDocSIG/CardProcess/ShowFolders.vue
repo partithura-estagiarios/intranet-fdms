@@ -22,8 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { Files, Folder } from "../../../entities/files";
-import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
 import { useFiles } from "../../../stores/files";
 import { showFolder } from "./lib";
 const fileStorage = useFiles();
@@ -50,19 +48,17 @@ const handleItemClick = (index: number, name: string) => {
 };
 watchEffect(async () => {
   if (fileStorage.getReloadState && fileStorage.getFolder) {
-    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: fileStorage.getFolder,
-    });
-    foldersList.value = loadFiles.folders;
-    return fileStorage.toggleReloadState();
+    fileStorage.toggleReloadState();
+    return (foldersList.value = await fileStorage.loadFolders(
+      fileStorage.getFolder,
+    ));
   }
   if (props.selectTreeFolder) {
-    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: props.selectTreeFolder,
-    });
-    return (foldersList.value = loadFiles.folders);
+    return (foldersList.value = await fileStorage.loadFolders(
+      fileStorage.getFolder,
+    ));
   }
-  foldersList.value = [];
+  return (foldersList.value = []);
 });
 onBeforeUpdate(() => {
   activeButtonIndex.value = null;

@@ -21,8 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
-import { Files } from "../../../modules/graphql/graphql";
 import { useFiles } from "../../../stores/files";
 import { showFolder } from "./lib";
 const fileStorage = useFiles();
@@ -48,26 +46,25 @@ const folderClass = computed(() => {
   });
 });
 
-const handleItemClick = (index: number, name: string) => {
+const handleItemClick = async (index: number, name: string) => {
   activeButtonIndex.value = index;
   fileStorage.toggleFolderState(name);
   fileStorage.toggleFolderChildState("");
+  await fileStorage.toggleReloadArchives();
   emits("selectFolderTree", name);
 };
 
 watchEffect(async () => {
   if (fileStorage.getReloadState && fileStorage.getFolderTree) {
-    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: fileStorage.getFolderTree,
-    });
-    folderTreeList.value = loadFiles.folders;
-    return fileStorage.toggleReloadState();
+    fileStorage.toggleReloadState();
+    return (folderTreeList.value = await fileStorage.loadFolders(
+      fileStorage.getFolderTree,
+    ));
   }
   if (props.folderTree) {
-    const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-      folder: props.folderTree,
-    });
-    return (folderTreeList.value = loadFiles.folders);
+    return (folderTreeList.value = await fileStorage.loadFolders(
+      fileStorage.getFolderTree,
+    ));
   }
 });
 onBeforeUpdate(() => {

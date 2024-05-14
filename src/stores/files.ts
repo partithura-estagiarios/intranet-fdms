@@ -2,7 +2,10 @@ import { defineStore } from "pinia";
 import { getEnvironmentVariable } from "../helpers";
 import InsertFolders from "../graphql/folders/InsertFolders.gql";
 import SearchPath from "../graphql/folders/SearchPath.gql";
+import LoadFiles from "../graphql/folders/LoadFiles.gql";
+
 import IsFolderChild from "../graphql/folders/IsFolderChild.gql";
+import { Files } from "../entities/files";
 const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
 );
@@ -20,14 +23,19 @@ export const useFiles = defineStore(id, {
     folderTree: "",
     folder: "",
     folderChild: "",
+    reloadArchives: false,
   }),
   getters: {
     getReloadState: (state) => state.reload,
     getFolderTree: (state) => state.folderTree,
     getFolder: (state) => state.folder,
     getFolderChild: (state) => state.folderChild,
+    getReloadArchives: (state) => state.reloadArchives,
   },
   actions: {
+    toggleReloadArchives() {
+      this.reloadArchives = !this.reloadArchives;
+    },
     toggleReloadState: () => {
       const store = useFiles();
       store.reload = !store.reload;
@@ -125,6 +133,24 @@ export const useFiles = defineStore(id, {
         return isFolderChild;
       }
       return false;
+    },
+    loadFolders: async (folder: string) => {
+      const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+        folder: folder,
+      });
+      if (!loadFiles) {
+        return [];
+      }
+      return loadFiles.folders;
+    },
+    loadArchives: async (folder: string) => {
+      const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
+        folder: folder,
+      });
+      if (!loadFiles) {
+        return [];
+      }
+      return loadFiles.archives;
     },
   },
 });
