@@ -6,7 +6,7 @@
       v-slot="{ item, index }"
     >
       <q-item
-        v-if="showFolder(item.folderNow)"
+        v-if="showFolder(item)"
         clickable
         v-ripple
         @click="handleItemClick(index, item.folderNow)"

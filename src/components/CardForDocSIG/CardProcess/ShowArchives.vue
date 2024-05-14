@@ -5,16 +5,15 @@
       :items="archivesList"
       v-slot="{ item, index }"
     >
-      <q-icon
-        name="picture_as_pdf"
-        size="xl"
+      <q-btn
+        icon="picture_as_pdf"
+        size="lg"
         clickable
         @click="fileStorage.displayPdf(item.path + '/' + item.name)"
-        class="cursor-pointer mb-2"
+        :label="getFileNameWithoutExtension(item.name)"
+        flat
+        stack
       />
-      <div class="text-subtitle1">
-        {{ getFileNameWithoutExtension(item.name) }}
-      </div>
     </q-virtual-scroll>
   </q-card-actions>
 </template>
@@ -50,6 +49,7 @@ watchEffect(async () => {
     );
     return;
   }
+  archivesList.value = [];
 });
 </script>
 <style scoped>

@@ -1,26 +1,26 @@
 <template>
-  <q-card>
-    <q-card-section>
-      <q-select
-        class="size-area"
-        v-model="modelFolder"
-        :options="options"
-        :label="$t('action.selectTheFolder')"
-        :loading="reloadFolders"
-      />
-    </q-card-section>
-
-    <AddFile
-      :folder="modelFolder"
-      v-if="props.version == 'add'"
-      @update="loadFolders"
-    />
-    <DeleteFile
-      :folder="modelFolder"
-      v-if="props.version == 'delete'"
-      @update="loadFolders"
-    />
-  </q-card>
+  <q-card-section>
+    <q-input
+      v-model="modelFolder"
+      :label="$t('action.selectTheFolder')"
+      @click="dialog = true"
+      readonly
+    >
+      <q-dialog v-model="dialog">
+        <DialogFolders :foldersList="options" @selectFolder="getFolder" />
+      </q-dialog>
+    </q-input>
+  </q-card-section>
+  <AddFile
+    :folder="modelFolder"
+    v-if="props.version == 'add'"
+    @update="loadFolders"
+  />
+  <DeleteFile
+    :folder="modelFolder"
+    v-if="props.version == 'delete'"
+    @update="loadFolders"
+  />
 </template>
 
 <script setup lang="ts">
@@ -34,7 +34,12 @@ const props = defineProps({
     default: "",
   },
 });
+const dialog = ref();
 const options = ref();
+function getFolder(val: string) {
+  dialog.value = false;
+  modelFolder.value = val;
+}
 const modelFolder = ref();
 const reloadFolders = ref(false);
 async function loadFolders() {

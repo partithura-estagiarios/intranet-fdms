@@ -6,6 +6,9 @@ export function getFileNameWithoutExtension(fileName: string): string {
   }
   return fileName;
 }
-export function showFolder(item: Folder) {
-  return item.folderNow !== "";
+export function showFolder(folder: Folder): Boolean {
+  if (folder.folderNow) {
+    return true;
+  }
+  return false;
 }

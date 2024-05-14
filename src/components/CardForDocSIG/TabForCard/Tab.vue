@@ -27,7 +27,7 @@
       </q-btn>
     </div>
     <q-dialog v-model="dialog">
-      <q-card class="my-card">
+      <q-card>
         <DialogHeader @close="(val) => (dialog = val)" :option="title" />
         <SelectFolder :version="option" />
       </q-card>

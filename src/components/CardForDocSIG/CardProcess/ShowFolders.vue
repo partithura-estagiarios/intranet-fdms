@@ -1,29 +1,20 @@
 <template>
   <q-card-section>
     <div class="row">
-      <q-virtual-scroll
-        class="maximum-scroll"
-        v-slot="{ item, index }"
-        :items="foldersList"
-        virtual-scroll-horizontal
-      >
-        <q-item
-          v-if="showFolder(item)"
-          clickable
-          @click="handleItemClick(index, item.folderNow)"
-        >
-          <q-item-section :class="textClass(index)">{{
-            item.folderNow
-          }}</q-item-section>
-        </q-item>
-      </q-virtual-scroll>
+      <q-btn
+        clickable
+        v-for="(item, index) in foldersList"
+        @click="handleItemClick(index, item.folderNow)"
+        flat
+        :label="item.folderNow"
+        :class="textClass(index)"
+      />
     </div>
   </q-card-section>
 </template>
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
-import { showFolder } from "./lib";
 const fileStorage = useFiles();
 const activeButtonIndex = ref<null | number>(null);
 const props = defineProps({
