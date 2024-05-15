@@ -24,6 +24,7 @@ declare module 'vue' {
     CarouselCertifications: typeof import('./components/CarouselForCertifications/CarouselCertifications.vue')['default']
     CheckBoxRoom: typeof import('./components/ScheduleRoom/SectionOfInput/CheckBoxRoom.vue')['default']
     DialogAddRamal: typeof import('./components/TableRamais/AddRamal/DialogAddRamal.vue')['default']
+    DialogContatDirector: typeof import('./components/ContateCeo/DialogContatDirector.vue')['default']
     DialogHeader: typeof import('./components/HeaderDialog/DialogHeader.vue')['default']
     DialogScheduleRoom: typeof import('./components/ShowScheduleRoom/DialogScheduleRoom.vue')['default']
     DropdownSettings: typeof import('./components/TableRamais/SettingsRamal/DropdownSettings.vue')['default']

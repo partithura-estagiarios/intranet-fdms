@@ -1,13 +1,13 @@
 <template>
-  <div class="row justify-center q-px-xl q-pa-md">
+  <div class="row justify-center q-mt-md q-ml-xl">
     <div v-for="item in sistemas">
       <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
-          <q-avatar class="border row" size="6em">
+          <q-avatar class="border row" size="10em">
             <q-icon
               :name="item.icon"
               color="indigo-7"
-              size="50px"
+              size="1.3em"
               class="q-gutter-x-ls q-gutter-y-sm"
             />
           </q-avatar>
@@ -23,7 +23,7 @@
                 :open="openModalCeo"
               />
 
-              <q-item-label class="text-indigo text-h6">
+              <q-item-label class="text-green text-bold text-h6">
                 {{ item.sublabel }}
               </q-item-label>
             </q-item-section>

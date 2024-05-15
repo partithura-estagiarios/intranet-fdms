@@ -1,5 +1,5 @@
 <template>
-  <ImageRh img="Welcome_Intranet.png" />
+  <ImageRh />
   <Separator :texto="$t('text.systems')" class="top" />
   <Item sistema="gestao" class="no-padding" />
 </template>
