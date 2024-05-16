@@ -6,15 +6,12 @@
       v-slot="{ item, index }"
     >
       <q-item
-        v-if="showFolder(item)"
         clickable
         v-ripple
-        @click="handleItemClick(index, item.folderNow)"
+        @click="handleItemClick(index, item)"
         :class="folderClass(index)"
       >
-        <q-item-section :class="textClass(index)">{{
-          item.folderNow
-        }}</q-item-section>
+        <q-item-section :class="textClass(index)">{{ item }}</q-item-section>
       </q-item>
     </q-virtual-scroll>
   </q-card-section>
@@ -22,7 +19,6 @@
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
-import { showFolder } from "./lib";
 const fileStorage = useFiles();
 
 const props = defineProps({
@@ -49,8 +45,6 @@ const folderClass = computed(() => {
 const handleItemClick = async (index: number, name: string) => {
   activeButtonIndex.value = index;
   fileStorage.toggleFolderState(name);
-  fileStorage.toggleFolderChildState("");
-  await fileStorage.toggleReloadArchives();
   emits("selectFolderTree", name);
 };
 
@@ -63,7 +57,7 @@ watchEffect(async () => {
   }
   if (props.folderTree) {
     return (folderTreeList.value = await fileStorage.loadFolders(
-      fileStorage.getFolderTree,
+      props.folderTree,
     ));
   }
 });

@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
 import { getEnvironmentVariable } from "../helpers";
-import InsertFolders from "../graphql/folders/InsertFolders.gql";
-import SearchPath from "../graphql/folders/SearchPath.gql";
 import LoadFiles from "../graphql/folders/LoadFiles.gql";
+import LoadFolders from "../graphql/folders/LoadFolders.gql";
+import CreateFolder from "../graphql/folders/CreateFolder.gql";
+import BuildPath from "../graphql/folders/BuildPath.gql";
+import DeleteFolder from "../graphql/folders/DeleteFolder.gql";
+import DeleteFile from "../graphql/folders/DeleteFile.gql";
 
-import IsFolderChild from "../graphql/folders/IsFolderChild.gql";
 import { Files } from "../entities/files";
 const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
@@ -53,104 +55,73 @@ export const useFiles = defineStore(id, {
       store.folderChild = folder;
     },
     displayPdf: async (filePath: string) => {
-      try {
-        const response = await fetch(
-          `${server_express_url}/serve-pdf/${filePath}`,
-        );
-        if (response.ok) {
-          const pdfUrl = URL.createObjectURL(await response.blob());
-          return window.open(pdfUrl, "_blank");
-        }
-        console.error("Erro ao exibir PDF:", response.statusText);
-      } catch (error) {
-        console.error("Erro ao exibir PDF:", error);
+      const response = await fetch(
+        `${server_express_url}/serve-pdf/${filePath}`,
+      );
+      if (response.ok) {
+        const pdfUrl = URL.createObjectURL(await response.blob());
+        return window.open(pdfUrl, "_blank");
       }
     },
-    insertFile: async (folder: string, file: any, novoNomeArquivo: string) => {
-      const { searchPath }: { searchPath: string } = await runQuery(
-        SearchPath,
-        { folder: folder.toString() },
-      );
-      if (typeof file === "string") {
-        const { insertFolders }: { insertFolders: Boolean } = await runMutation(
-          InsertFolders,
-          {
-            folder: file,
-            path: folder,
-            exclude: false,
-          },
-        );
-        return insertFolders;
-      }
-
+    insertFile: async (
+      folderParent: string,
+      file: any,
+      novoNomeArquivo: string,
+    ) => {
+      const { buildPath }: { buildPath: string } = await runQuery(BuildPath, {
+        folder: folderParent,
+      });
       const formData = new FormData();
+
       formData.append("file", file, isNewFileName(novoNomeArquivo));
-      const response = await fetch(`${server_express_url}/inserir-arquivo`, {
+      const response = await fetch(`${server_express_url}/upload`, {
         method: "POST",
         body: formData,
         headers: {
-          "search-path": searchPath,
+          "search-path": buildPath,
         },
       });
       return response.ok;
     },
-    deleteFile: async (path: string, file: string) => {
-      if (!file.includes(".")) {
-        const { searchPath }: { searchPath: string } = await runQuery(
-          SearchPath,
-          { folder: file.toString() },
-        );
-        const { insertFolders }: { insertFolders: Boolean } = await runMutation(
-          InsertFolders,
-          {
-            folder: file,
-            path: searchPath.toString(),
-            exclude: true,
-          },
-        );
-        return insertFolders;
-      }
-      try {
-        const { insertFolders }: { insertFolders: Boolean } = await runMutation(
-          InsertFolders,
-          {
-            folder: file,
-            path: path + "/" + file,
-            exclude: true,
-          },
-        );
-        return insertFolders;
-      } catch (error) {
-        return false;
-      }
-    },
-    checkDirectory: async (file: string) => {
-      if (!file.includes(".")) {
-        const { isFolderChild }: { isFolderChild: string } = await runQuery(
-          IsFolderChild,
-          { folder: file },
-        );
-        return isFolderChild;
-      }
-      return false;
+    insertFolder: async (folderParent: string, folder: string) => {
+      const result = await runMutation(CreateFolder, {
+        folder: folder,
+        folderParent: folderParent,
+      });
+      return result;
     },
     loadFolders: async (folder: string) => {
-      const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-        folder: folder,
-      });
-      if (!loadFiles) {
-        return [];
-      }
-      return loadFiles.folders;
+      const { loadFolders }: { loadFolders: String[] } = await runQuery(
+        LoadFolders,
+        {
+          folder: folder,
+        },
+      );
+      return loadFolders;
     },
     loadArchives: async (folder: string) => {
       const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
         folder: folder,
       });
-      if (!loadFiles) {
-        return [];
-      }
-      return loadFiles.archives;
+      return loadFiles;
+    },
+    excludeFolder: async (folder: string) => {
+      const { deleteFolder }: { deleteFolder: String[] } = await runQuery(
+        DeleteFolder,
+        {
+          folder: folder,
+        },
+      );
+      return deleteFolder;
+    },
+    excludeFile: async (file: string) => {
+      const { deleteFile }: { deleteFile: String[] } = await runQuery(
+        DeleteFile,
+        {
+          path: file,
+        },
+      );
+      return deleteFile;
     },
   },
 });

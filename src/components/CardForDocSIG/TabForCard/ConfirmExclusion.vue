@@ -17,7 +17,7 @@
           flat
           :label="$t('action.confirm')"
           color="indigo-8"
-          @click="confirmDelete"
+          @click="emits('confirmExclusion'), (enableConfirm = false)"
         />
       </q-card-actions>
     </q-card>
@@ -25,50 +25,36 @@
 </template>
 
 <script setup lang="ts">
-import { Opts } from "../../../entities/files";
-import { useFiles } from "../../../stores/files";
-import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
-import { isEmpty } from "./lib";
-import { Files } from "../../../modules/graphql/graphql";
-const { t } = useI18n();
-const fileStorage = useFiles();
+import ItsFileFolder from "../../../graphql/folders/ItsFileFolder.gql";
 const props = defineProps({
   confirm: {
     type: Boolean,
-    required: true,
+    required: false,
   },
-  file: {
-    type: Object as () => Opts,
+  item: {
+    type: String,
     default: "",
   },
 });
-const enableConfirm = ref();
-const emits = defineEmits(["close", "confirmExclusion"]);
-const title = ref("");
-
-async function confirmDelete() {
-  await fileStorage.deleteFile(props.file.path, props.file.name);
-  fileStorage.toggleReloadState();
-  enableConfirm.value = false;
-  emits("confirmExclusion");
-}
+const { t } = useI18n();
+const title = ref();
 async function setTitle(folderName: string) {
-  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-    folder: folderName,
-  });
-  if (isEmpty(loadFiles)) {
+  const { itsFileFolder }: { itsFileFolder: boolean } = await runQuery(
+    ItsFileFolder,
+    {
+      folder: folderName,
+    },
+  );
+  if (itsFileFolder || props.item.includes(".")) {
     return (title.value = t("action.deleteSureFile"));
   }
   return (title.value = t("action.stillFiles"));
 }
 
-watchEffect(async () => {
-  if (props.confirm) {
-    enableConfirm.value = props.confirm;
-    if (props.file.name.includes(".")) {
-      return (title.value = t("action.deleteSureFile"));
-    }
-    await setTitle(props.file.name);
-  }
+const enableConfirm = ref();
+const emits = defineEmits(["close", "confirmExclusion"]);
+watchEffect(() => {
+  enableConfirm.value = props.confirm;
+  setTitle(props.item);
 });
 </script>

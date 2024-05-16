@@ -14,17 +14,16 @@
 </template>
 
 <script setup lang="ts">
-import LoadRootFolders from "../../graphql/folders/LoadRootFolders.gql";
-import { FolderTree } from "../../entities/files";
+import LoadFolders from "../../graphql/folders/LoadFolders.gql";
 const selectCard = ref("");
 const updateSelectCard = (item: string) => {
   selectCard.value = item;
 };
 const tabItems = ref();
 onMounted(async () => {
-  const { loadRootFolders }: { loadRootFolders: Array<FolderTree> } =
-    await runQuery(LoadRootFolders);
-  tabItems.value = loadRootFolders;
+  const { loadFolders }: { loadFolders: String[] } =
+    await runQuery(LoadFolders);
+  tabItems.value = loadFolders;
 });
 </script>
 

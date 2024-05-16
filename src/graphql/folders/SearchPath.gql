@@ -1,3 +1,0 @@
-query SearchPath($folder: String!) {
-  searchPath(folder: $folder)
-}

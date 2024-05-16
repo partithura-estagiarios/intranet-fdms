@@ -3,7 +3,7 @@
     <q-input
       v-model="modelFolder"
       :label="$t('action.selectTheFolder')"
-      @click="dialog = true"
+      @click="(dialog = true), loadFolders()"
       readonly
     >
       <q-dialog v-model="dialog">
@@ -24,8 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import LoadFolders from "../../../graphql/folders/LoadFolders.gql";
-import { Folder } from "../../../modules/graphql/graphql";
+import LoadAllFolders from "../../../graphql/folders/LoadAllFolders.gql";
 import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
 const props = defineProps({
@@ -44,9 +43,9 @@ const modelFolder = ref();
 const reloadFolders = ref(false);
 async function loadFolders() {
   reloadFolders.value = true;
-  const { loadFolders }: { loadFolders: Folder[] } =
-    await runQuery(LoadFolders);
-  options.value = loadFolders.map((folder) => folder.name);
+  const { loadAllFolders }: { loadAllFolders: string[] } =
+    await runQuery(LoadAllFolders);
+  options.value = loadAllFolders;
   reloadFolders.value = false;
 }
 watchEffect(async () => {

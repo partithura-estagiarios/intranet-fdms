@@ -1,6 +1,6 @@
 <template>
   <q-card-section>
-    <div v-if="isChild === 'folderChild'">
+    <div v-if="fileFolder">
       <q-input v-model="nomeAnexo" :label="$t('cardDocSig.writeFileName')" />
       <q-file
         v-model="input"
@@ -13,54 +13,58 @@
         </template>
       </q-file>
     </div>
-    <div v-if="isChild && isChild !== 'folderChild'">
+    <div v-else>
       <q-input :label="$t('action.writeFolder')" v-model="input" />
     </div>
   </q-card-section>
-
   <q-card-actions align="right">
-    <q-btn :label="$t('action.confirm')" @click="addFile(fileParent, input)" />
+    <div v-if="fileFolder">
+      <q-btn :label="$t('action.confirm')" @click="addFile(input)" />
+    </div>
+    <div v-else>
+      <q-btn :label="$t('action.confirm')" @click="addFolder(input)" />
+    </div>
   </q-card-actions>
 </template>
 
 <script setup lang="ts">
+import { Folder } from "../../../entities/files";
+import ItsFileFolder from "../../../graphql/folders/ItsFileFolder.gql";
 import { useFiles } from "../../../stores/files";
-import IsFolderChild from "../../../graphql/folders/IsFolderChild.gql";
-import { FolderTree } from "../../../entities/files";
-import { Anexo } from "../../../entities/files";
-
+const fileStorage = useFiles();
 const emits = defineEmits(["close", "update"]);
 const props = defineProps({
   folder: {
-    type: Object as () => FolderTree,
+    type: Object as () => Folder,
     default: "",
   },
 });
 const nomeAnexo = ref();
-const { t } = useI18n();
-const isChild = ref();
 const input = ref();
-const fileStorage = useFiles();
-const fileParent = ref();
+const folderParent = ref();
+const fileFolder = ref();
 async function verifyFolder() {
-  const { isFolderChild }: { isFolderChild: boolean } = await runQuery(
-    IsFolderChild,
+  const { itsFileFolder }: { itsFileFolder: boolean } = await runQuery(
+    ItsFileFolder,
     { folder: props.folder },
   );
-  return (isChild.value = isFolderChild);
+  return (fileFolder.value = itsFileFolder);
 }
-
-async function addFile(folder: string, file: Anexo) {
-  const result = await fileStorage.insertFile(folder, file, nomeAnexo.value);
-  if (result) {
-    emits("update");
-    return fileStorage.toggleReloadState();
-  }
-  return negativeNotify(t("action.folderAlreadyExists"));
+async function addFolder(fileOrFolder: any) {
+  await fileStorage.insertFolder(folderParent.value, fileOrFolder);
+  return fileStorage.toggleReloadState();
+}
+async function addFile(fileOrFolder: any) {
+  await fileStorage.insertFile(
+    folderParent.value,
+    fileOrFolder,
+    nomeAnexo.value,
+  );
+  return fileStorage.toggleReloadState();
 }
 watchEffect(async () => {
   if (props.folder) {
-    fileParent.value = props.folder;
+    folderParent.value = props.folder;
     await verifyFolder();
   }
 });

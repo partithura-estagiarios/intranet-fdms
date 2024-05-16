@@ -4,9 +4,9 @@
       <q-btn
         clickable
         v-for="(item, index) in foldersList"
-        @click="handleItemClick(index, item.folderNow)"
+        @click="handleItemClick(index, item)"
         flat
-        :label="item.folderNow"
+        :label="item"
         :class="textClass(index)"
       />
     </div>

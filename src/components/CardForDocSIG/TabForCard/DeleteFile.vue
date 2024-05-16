@@ -1,33 +1,27 @@
 <template>
   <q-card-section>
-    <q-select
-      :options="options"
-      v-model="file"
-      :disable="enableSelect"
-      :label="selectLabel"
-    />
+    <q-select :options="options" v-model="item" />
   </q-card-section>
   <ConfirmExclusion
-    :file="file"
+    :fileOrFolder="item"
     :confirm="enableConfirm"
-    @confirmExclusion="handleConfirmExclusion"
+    @confirm-exclusion="exclude"
   />
   <q-card-actions align="right">
     <q-btn
       :label="$t('action.confirm')"
       text-color="green"
       flat
-      :disable="!file"
+      :disable="!item"
       @click="enableConfirm = true"
     />
   </q-card-actions>
 </template>
 
 <script setup lang="ts">
-import LoadFiles from "../../../graphql/folders/LoadFiles.gql";
-import { Files, Folder, Opts } from "../../../entities/files";
-const { t } = useI18n();
-
+import ItsFileFolder from "../../../graphql/folders/ItsFileFolder.gql";
+import { useFiles } from "../../../stores/files";
+const fileStorage = useFiles();
 const emits = defineEmits(["close", "update"]);
 const props = defineProps({
   folder: {
@@ -36,56 +30,35 @@ const props = defineProps({
   },
 });
 
-const options: Opts[] = reactive([]);
+const options = ref();
 const enableConfirm = ref();
-const file = ref();
+const item = ref();
+const resultPdfs = ref();
 const folderReload = ref();
-async function loadFiles(folder: string) {
-  options.length = 0;
-  const { loadFiles }: { loadFiles: Files } = await runQuery(LoadFiles, {
-    folder: folder,
-  });
-  if (loadFiles.archives.length !== 0) {
-    options.splice(
-      0,
-      options.length,
-      ...loadFiles.archives.map((archive: any) => ({
-        label: archive.name,
-        value: archive.path,
-        path: archive.path,
-        name: archive.name,
-      })),
-    );
-    return;
+async function loadPdsOrFolders(folder: string) {
+  const { itsFileFolder }: { itsFileFolder: boolean } = await runQuery(
+    ItsFileFolder,
+    { folder: folder },
+  );
+  if (itsFileFolder) {
+    resultPdfs.value = options.value = await fileStorage.loadArchives(folder);
+    return (options.value = resultPdfs.value.pdfs);
   }
-  loadFiles.folders.forEach(({ folderParent, folderNow }: Folder) => {
-    const folderObject: Opts = {
-      label: folderNow,
-      value: folderNow,
-      path: folderParent,
-      name: folderNow,
-    };
-    options.push(folderObject);
-  });
+  return (options.value = await fileStorage.loadFolders(folder));
 }
-async function handleConfirmExclusion() {
-  await loadFiles(folderReload.value);
-  enableConfirm.value = false;
-  file.value = null;
-  emits("update");
+async function exclude() {
+  if (item.value.includes(".")) {
+    return await fileStorage.excludeFile(
+      resultPdfs.value.path + "/" + item.value,
+    );
+  }
+  return fileStorage.excludeFolder(item.value);
 }
 watchEffect(async () => {
   if (props.folder) {
     folderReload.value = props.folder;
-    file.value = null;
-    await loadFiles(props.folder);
+    item.value = null;
+    loadPdsOrFolders(props.folder);
   }
-});
-const enableSelect = computed(() => {
-  return options.length > 0 && options[0].name === "";
-});
-
-const selectLabel = computed(() => {
-  return enableSelect.value ? t("cardDocSig.emptyFolder") : "";
 });
 </script>

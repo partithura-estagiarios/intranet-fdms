@@ -1,7 +1,3 @@
-query LoadFolders {
-  loadFolders {
-    id
-    id_parent
-    name
-  }
+query LoadFolders($folder: String) {
+  loadFolders(folder: $folder)
 }

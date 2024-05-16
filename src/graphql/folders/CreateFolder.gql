@@ -1,0 +1,3 @@
+mutation CreateFolder($folder: String!, $folderParent: String!) {
+  createFolder(folder: $folder, folderParent: $folderParent)
+}

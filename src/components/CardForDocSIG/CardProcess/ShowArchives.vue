@@ -2,15 +2,15 @@
   <q-card-actions>
     <q-virtual-scroll
       class="q-pa-md q-gutter-sm justify-center maximum-scroll"
-      :items="archivesList"
+      :items="archivesList.pdfs"
       v-slot="{ item, index }"
     >
       <q-btn
         icon="picture_as_pdf"
         size="lg"
         clickable
-        @click="fileStorage.displayPdf(item.path + '/' + item.name)"
-        :label="getFileNameWithoutExtension(item.name)"
+        @click="fileStorage.displayPdf(archivesList.path + '/' + item)"
+        :label="getFileNameWithoutExtension(item)"
         flat
         stack
       />

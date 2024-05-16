@@ -3,10 +3,10 @@
     <q-tab
       no-caps
       v-for="item in tabItems"
-      :name="item.name"
-      :label="item.name"
-      :class="tabClass(item.name)"
-      @click="openCard(item.name)"
+      :name="item"
+      :label="item"
+      :class="tabClass(item)"
+      @click="openCard(item)"
     />
     <div class="relative-position absolute-right">
       <q-btn icon="edit" flat>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { FolderTree } from "../../../entities/files";
+import { Folder } from "../../../entities/files";
 const emits = defineEmits(["showCard"]);
 const { t } = useI18n();
 const tab = ref("processes");
@@ -45,7 +45,7 @@ const title = ref();
 const option = ref();
 const props = defineProps({
   tabItems: {
-    type: Array<FolderTree>,
+    type: Array as () => string[],
     required: true,
   },
 });
