@@ -19,20 +19,10 @@
   </q-card-section>
   <q-card-actions align="right" class="text-green">
     <div v-if="fileFolder">
-      <q-btn
-        :label="$t('action.confirm')"
-        flat
-        @click="addFile(input)"
-        :disable="!input"
-      />
+      <q-btn :label="$t('action.confirm')" flat @click="addFile(input)" />
     </div>
     <div v-else>
-      <q-btn
-        :label="$t('action.confirm')"
-        flat
-        @click="addFolder(input)"
-        :disable="!input"
-      />
+      <q-btn :label="$t('action.confirm')" flat @click="addFolder(input)" />
     </div>
   </q-card-actions>
 </template>
@@ -69,8 +59,12 @@ async function addFolder(fileOrFolder: any) {
     return negativeNotify(t("action.folderAlreadyExists"));
   }
 }
-function addFile(fileOrFolder: any) {
-  fileStorage.insertFile(folderParent.value, fileOrFolder, nomeAnexo.value);
+async function addFile(fileOrFolder: any) {
+  await fileStorage.insertFile(
+    folderParent.value,
+    fileOrFolder,
+    nomeAnexo.value,
+  );
 }
 watchEffect(async () => {
   if (props.folder) {

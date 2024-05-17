@@ -72,7 +72,7 @@ export const useFiles = defineStore(id, {
       const formData = new FormData();
 
       formData.append("file", file, isNewFileName(novoNomeArquivo));
-      await fetch(`${server_express_url}/upload`, {
+      fetch(`${server_express_url}/upload`, {
         method: "POST",
         body: formData,
         headers: {
