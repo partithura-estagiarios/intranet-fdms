@@ -11,8 +11,16 @@
       </q-dialog>
     </q-input>
   </q-card-section>
-  <AddFile :folder="modelFolder" @update="loadFolders" />
-  <DeleteFile :folder="modelFolder" @update="loadFolders" />
+  <AddFile
+    :folder="modelFolder"
+    v-if="props.version === addModal"
+    @update="loadFolders"
+  />
+  <DeleteFile
+    :folder="modelFolder"
+    v-if="props.version === deleteModal"
+    @update="loadFolders"
+  />
 </template>
 
 <script setup lang="ts">
@@ -25,6 +33,8 @@ const props = defineProps({
     default: "",
   },
 });
+const addModal = "add";
+const deleteModal = "delete";
 const dialog = ref();
 const options = ref();
 function getFolder(val: string) {
