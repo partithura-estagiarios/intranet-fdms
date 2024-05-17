@@ -7,7 +7,7 @@
         flat
         size="xl"
         :label="item"
-        :class="textClass(index)"
+        :class="getTextClass(index)"
       />
     </div>
   </div>
@@ -21,10 +21,8 @@ const activeButtonIndex = ref<null | number>(null);
 const foldersList = ref();
 const emits = defineEmits(["selectFolderChild"]);
 
-const textClass = computed(() => {
-  return (index: number) => ({
-    "text-green": activeButtonIndex.value === index,
-  });
+const getTextClass = (index: number) => ({
+  "text-green": activeButtonIndex.value === index,
 });
 
 const handleItemClick = (index: number, name: string) => {

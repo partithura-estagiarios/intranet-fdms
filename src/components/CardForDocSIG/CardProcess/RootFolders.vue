@@ -9,10 +9,10 @@
         clickable
         v-ripple
         @click="handleItemClick(index, item)"
-        :class="folderClass(index)"
+        :class="getFolderClass(index)"
         class="text-h6 text-uppercase"
       >
-        <q-item-section :class="textClass(index)">{{ item }}</q-item-section>
+        <q-item-section :class="getTextClass(index)">{{ item }}</q-item-section>
       </q-item>
     </q-virtual-scroll>
   </q-card-section>
@@ -23,16 +23,12 @@ import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
 const folderTreeList = ref();
 const activeButtonIndex = ref<null | number>(null);
-const textClass = computed(() => {
-  return (index: number) => ({
-    "text-white": activeButtonIndex.value === index,
-  });
+const getTextClass = (index: number) => ({
+  "text-white": activeButtonIndex.value === index,
 });
 
-const folderClass = computed(() => {
-  return (index: number) => ({
-    "bg-green": activeButtonIndex.value === index,
-  });
+const getFolderClass = (index: number) => ({
+  "bg-green": activeButtonIndex.value === index,
 });
 
 const handleItemClick = async (index: number, name: string) => {
