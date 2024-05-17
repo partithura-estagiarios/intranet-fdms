@@ -38,8 +38,8 @@ watch(
     }
     if (newReloadState && newFolderChild) {
       fileStorage.toggleReloadState();
-      return (archivesList.value =
-        await fileStorage.loadArchives(newFolderChild));
+      archivesList.value = await fileStorage.loadArchives(newFolderChild);
+      return;
     }
     return (archivesList.value.pdfs = []);
   },

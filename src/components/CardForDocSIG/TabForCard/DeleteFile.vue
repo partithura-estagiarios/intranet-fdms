@@ -48,6 +48,7 @@ async function loadPdsOrFolders(folder: string) {
   return (options.value = await fileStorage.loadFolders(folder));
 }
 async function exclude() {
+  await loadPdsOrFolders(folderReload.value);
   if (item.value.includes(".")) {
     enableConfirm.value = false;
     await fileStorage.excludeFile(resultPdfs.value.path + "/" + item.value);
