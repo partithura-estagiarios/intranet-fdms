@@ -1,16 +1,16 @@
 <template>
-  <q-card-section>
-    <div class="row">
+  <div class="row">
+    <div v-for="(item, index) in foldersList" class="col-6 col-md-2">
       <q-btn
         clickable
-        v-for="(item, index) in foldersList"
         @click="handleItemClick(index, item)"
         flat
+        size="xl"
         :label="item"
         :class="textClass(index)"
       />
     </div>
-  </q-card-section>
+  </div>
 </template>
 
 <script setup lang="ts">

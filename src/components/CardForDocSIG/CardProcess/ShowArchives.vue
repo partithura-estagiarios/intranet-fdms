@@ -1,21 +1,17 @@
 <template>
-  <q-card-actions>
-    <q-virtual-scroll
-      class="q-pa-md q-gutter-sm justify-center maximum-scroll"
-      :items="archivesList?.pdfs || []"
-      v-slot="{ item, index }"
-    >
+  <div class="row">
+    <div v-for="item in archivesList.pdfs" class="col-6 col-md-3">
       <q-btn
         icon="picture_as_pdf"
-        size="lg"
+        size="xl"
         clickable
-        @click="fileStorage.displayPdf(archivesList.path + '/' + item)"
+        @click="fileStorage.displayPdf(`${archivesList.path}/${item}`)"
         :label="getFileNameWithoutExtension(item)"
         flat
         stack
       />
-    </q-virtual-scroll>
-  </q-card-actions>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -50,10 +46,3 @@ watch(
   { immediate: true },
 );
 </script>
-
-<style scoped>
-.maximum-scroll {
-  max-height: 70vh;
-  width: 36.6vw;
-}
-</style>

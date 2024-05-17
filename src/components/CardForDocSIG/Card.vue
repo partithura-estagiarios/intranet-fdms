@@ -1,9 +1,7 @@
 <template>
-  <div class="fixed-center relative-position card">
-    <q-card>
-      <q-card-section
-        class="bg-indigo-8 text-h6 row text-white max-height-card-sectio"
-      >
+  <div class="fixed-center q-mt-xl q-pa-xl">
+    <q-card class="card">
+      <q-card-section class="bg-indigo-8 text-h6 row text-white">
         <div class="col-12">
           <Tab :tabItems="tabItems" />
         </div>
@@ -22,21 +20,11 @@ onMounted(async () => {
   tabItems.value = loadFolders;
 });
 </script>
-
 <style scoped>
-.box-shadow {
-  box-shadow: 0.5px 4px 9px rgba(0, 0, 0, 0.1);
-}
 .card {
-  padding-top: 4%;
-  height: 100vh;
   width: 50vw;
-}
-.position-options {
-  left: 32vw;
-  bottom: 5vh;
-}
-.max-height-card-sectio {
-  max-height: 8vh;
+  padding: 0;
+  margin: 0;
+  height: 90vh;
 }
 </style>
