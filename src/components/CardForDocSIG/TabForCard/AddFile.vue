@@ -17,12 +17,22 @@
       <q-input :label="$t('action.writeFolder')" v-model="input" />
     </div>
   </q-card-section>
-  <q-card-actions align="right">
+  <q-card-actions align="right" class="text-green">
     <div v-if="fileFolder">
-      <q-btn :label="$t('action.confirm')" @click="addFile(input)" />
+      <q-btn
+        :label="$t('action.confirm')"
+        flat
+        @click="addFile(input)"
+        :disable="!input"
+      />
     </div>
     <div v-else>
-      <q-btn :label="$t('action.confirm')" @click="addFolder(input)" />
+      <q-btn
+        :label="$t('action.confirm')"
+        flat
+        @click="addFolder(input)"
+        :disable="!input"
+      />
     </div>
   </q-card-actions>
 </template>
