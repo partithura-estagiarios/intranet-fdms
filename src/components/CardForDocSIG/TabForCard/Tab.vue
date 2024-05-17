@@ -36,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { Folder } from "../../../entities/files";
-const emits = defineEmits(["showCard"]);
+import { useFiles } from "../../../stores/files";
+const fileStorage = useFiles();
 const { t } = useI18n();
 const tab = ref("processes");
 const dialog = ref();
@@ -64,6 +64,6 @@ const tabClass = computed(() => {
   });
 });
 function openCard(item: string) {
-  emits("showCard", item);
+  fileStorage.toggleFolderTreeState(item);
 }
 </script>

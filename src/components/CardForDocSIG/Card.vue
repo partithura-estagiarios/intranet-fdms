@@ -5,20 +5,16 @@
         class="bg-indigo-8 text-h6 row text-white max-height-card-sectio"
       >
         <div class="col-12">
-          <Tab @showCard="updateSelectCard" :tabItems="tabItems" />
+          <Tab :tabItems="tabItems" />
         </div>
       </q-card-section>
-      <CardProcess :folderParent="selectCard" />
+      <CardProcess />
     </q-card>
   </div>
 </template>
 
 <script setup lang="ts">
 import LoadFolders from "../../graphql/folders/LoadFolders.gql";
-const selectCard = ref("");
-const updateSelectCard = (item: string) => {
-  selectCard.value = item;
-};
 const tabItems = ref();
 onMounted(async () => {
   const { loadFolders }: { loadFolders: String[] } =

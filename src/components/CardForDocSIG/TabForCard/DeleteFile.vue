@@ -6,6 +6,7 @@
     :fileOrFolder="item"
     :confirm="enableConfirm"
     @confirm-exclusion="exclude"
+    @close="enableConfirm = false"
   />
   <q-card-actions align="right">
     <q-btn
@@ -48,11 +49,13 @@ async function loadPdsOrFolders(folder: string) {
 }
 async function exclude() {
   if (item.value.includes(".")) {
-    return await fileStorage.excludeFile(
-      resultPdfs.value.path + "/" + item.value,
-    );
+    enableConfirm.value = false;
+    await fileStorage.excludeFile(resultPdfs.value.path + "/" + item.value);
+    return fileStorage.toggleReloadState();
   }
-  return fileStorage.excludeFolder(item.value);
+  enableConfirm.value = false;
+  fileStorage.excludeFolder(item.value);
+  return fileStorage.toggleReloadState();
 }
 watchEffect(async () => {
   if (props.folder) {

@@ -1,6 +1,6 @@
 export interface Files {
-  path: String;
-  pdfs: [String];
+  path: string | undefined;
+  pdfs: string[] | undefined;
 }
 
 export interface Anexo {

@@ -17,12 +17,7 @@
 import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
 const activeButtonIndex = ref<null | number>(null);
-const props = defineProps({
-  selectTreeFolder: {
-    type: String,
-    required: false,
-  },
-});
+
 const foldersList = ref();
 const emits = defineEmits(["selectFolderChild"]);
 
@@ -35,25 +30,31 @@ const textClass = computed(() => {
 const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
   fileStorage.toggleFolderChildState(name);
-  emits("selectFolderChild", name);
 };
-watchEffect(async () => {
-  if (fileStorage.getReloadState && fileStorage.getFolder) {
-    fileStorage.toggleReloadState();
-    return (foldersList.value = await fileStorage.loadFolders(
-      fileStorage.getFolder,
-    ));
-  }
-  if (props.selectTreeFolder) {
-    return (foldersList.value = await fileStorage.loadFolders(
-      fileStorage.getFolder,
-    ));
-  }
-  return (foldersList.value = []);
-});
-onBeforeUpdate(() => {
-  activeButtonIndex.value = null;
-});
+watch(
+  [
+    () => fileStorage.getReloadState,
+    () => fileStorage.getFolder,
+    () => fileStorage.getFolderTree,
+  ],
+  async ([newReloadState, newFolder, newFolderTree]) => {
+    if (newFolder) {
+      foldersList.value = await fileStorage.loadFolders(newFolder);
+      fileStorage.toggleFolderChildState(foldersList.value[0]);
+      activeButtonIndex.value = foldersList.value.length ? 0 : null;
+      return;
+    }
+    if (newFolderTree) {
+      return (foldersList.value = []);
+    }
+
+    if (newReloadState && newFolder) {
+      fileStorage.toggleReloadState();
+      return (foldersList.value = await fileStorage.loadFolders(newFolder));
+    }
+  },
+  { immediate: true },
+);
 </script>
 <style scoped>
 .maximum-scroll {

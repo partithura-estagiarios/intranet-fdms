@@ -20,15 +20,7 @@
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
-
-const props = defineProps({
-  folderTree: {
-    type: String,
-    required: true,
-  },
-});
 const folderTreeList = ref();
-const emits = defineEmits(["selectFolderTree"]);
 const activeButtonIndex = ref<null | number>(null);
 const textClass = computed(() => {
   return (index: number) => ({
@@ -45,25 +37,25 @@ const folderClass = computed(() => {
 const handleItemClick = async (index: number, name: string) => {
   activeButtonIndex.value = index;
   fileStorage.toggleFolderState(name);
-  emits("selectFolderTree", name);
 };
 
-watchEffect(async () => {
-  if (fileStorage.getReloadState && fileStorage.getFolderTree) {
-    fileStorage.toggleReloadState();
-    return (folderTreeList.value = await fileStorage.loadFolders(
-      fileStorage.getFolderTree,
-    ));
-  }
-  if (props.folderTree) {
-    return (folderTreeList.value = await fileStorage.loadFolders(
-      props.folderTree,
-    ));
-  }
-});
-onBeforeUpdate(() => {
-  activeButtonIndex.value = null;
-});
+watch(
+  [() => fileStorage.getReloadState, () => fileStorage.getFolderTree],
+  async ([newReloadState, newFolderTree]) => {
+    if (newFolderTree) {
+      folderTreeList.value = await fileStorage.loadFolders(newFolderTree);
+      activeButtonIndex.value = folderTreeList.value.length ? 0 : null;
+      fileStorage.toggleFolderState(folderTreeList.value[0]);
+      return;
+    }
+    if (newFolderTree && newReloadState) {
+      fileStorage.toggleReloadState();
+      return (folderTreeList.value =
+        await fileStorage.loadFolders(newFolderTree));
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>

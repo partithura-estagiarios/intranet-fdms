@@ -6,7 +6,6 @@ import CreateFolder from "../graphql/folders/CreateFolder.gql";
 import BuildPath from "../graphql/folders/BuildPath.gql";
 import DeleteFolder from "../graphql/folders/DeleteFolder.gql";
 import DeleteFile from "../graphql/folders/DeleteFile.gql";
-
 import { Files } from "../entities/files";
 const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
@@ -25,19 +24,14 @@ export const useFiles = defineStore(id, {
     folderTree: "",
     folder: "",
     folderChild: "",
-    reloadArchives: false,
   }),
   getters: {
     getReloadState: (state) => state.reload,
     getFolderTree: (state) => state.folderTree,
     getFolder: (state) => state.folder,
     getFolderChild: (state) => state.folderChild,
-    getReloadArchives: (state) => state.reloadArchives,
   },
   actions: {
-    toggleReloadArchives() {
-      this.reloadArchives = !this.reloadArchives;
-    },
     toggleReloadState: () => {
       const store = useFiles();
       store.reload = !store.reload;
@@ -45,10 +39,13 @@ export const useFiles = defineStore(id, {
     toggleFolderTreeState: (folder: string) => {
       const store = useFiles();
       store.folderTree = folder;
+      store.folder = "";
+      store.folderChild = "";
     },
     toggleFolderState: (folder: string) => {
       const store = useFiles();
       store.folder = folder;
+      store.folderChild = "";
     },
     toggleFolderChildState: (folder: string) => {
       const store = useFiles();
@@ -68,27 +65,37 @@ export const useFiles = defineStore(id, {
       file: any,
       novoNomeArquivo: string,
     ) => {
+      const store = useFiles();
       const { buildPath }: { buildPath: string } = await runQuery(BuildPath, {
         folder: folderParent,
       });
       const formData = new FormData();
 
       formData.append("file", file, isNewFileName(novoNomeArquivo));
-      const response = await fetch(`${server_express_url}/upload`, {
+      await fetch(`${server_express_url}/upload`, {
         method: "POST",
         body: formData,
         headers: {
           "search-path": buildPath,
         },
       });
-      return response.ok;
+      store.toggleReloadState();
     },
     insertFolder: async (folderParent: string, folder: string) => {
-      const result = await runMutation(CreateFolder, {
-        folder: folder,
-        folderParent: folderParent,
-      });
-      return result;
+      const store = useFiles();
+
+      const { createFolder }: { createFolder: boolean } = await runMutation(
+        CreateFolder,
+        {
+          folder: folder,
+          folderParent: folderParent,
+        },
+      );
+      if (!createFolder) {
+        return createFolder;
+      }
+      store.toggleReloadState();
+      return true;
     },
     loadFolders: async (folder: string) => {
       const { loadFolders }: { loadFolders: String[] } = await runQuery(
@@ -106,22 +113,18 @@ export const useFiles = defineStore(id, {
       return loadFiles;
     },
     excludeFolder: async (folder: string) => {
-      const { deleteFolder }: { deleteFolder: String[] } = await runQuery(
-        DeleteFolder,
-        {
-          folder: folder,
-        },
-      );
-      return deleteFolder;
+      const store = useFiles();
+      await runMutation(DeleteFolder, {
+        folder: folder,
+      });
+      store.toggleReloadState();
     },
     excludeFile: async (file: string) => {
-      const { deleteFile }: { deleteFile: String[] } = await runQuery(
-        DeleteFile,
-        {
-          path: file,
-        },
-      );
-      return deleteFile;
+      const store = useFiles();
+      await runMutation(DeleteFile, {
+        path: file,
+      });
+      store.toggleReloadState();
     },
   },
 });

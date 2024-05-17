@@ -28,14 +28,14 @@
 </template>
 
 <script setup lang="ts">
-import { Folder } from "../../../entities/files";
 import ItsFileFolder from "../../../graphql/folders/ItsFileFolder.gql";
 import { useFiles } from "../../../stores/files";
+const { t } = useI18n();
 const fileStorage = useFiles();
 const emits = defineEmits(["close", "update"]);
 const props = defineProps({
   folder: {
-    type: Object as () => Folder,
+    type: String,
     default: "",
   },
 });
@@ -51,16 +51,16 @@ async function verifyFolder() {
   return (fileFolder.value = itsFileFolder);
 }
 async function addFolder(fileOrFolder: any) {
-  await fileStorage.insertFolder(folderParent.value, fileOrFolder);
-  return fileStorage.toggleReloadState();
-}
-async function addFile(fileOrFolder: any) {
-  await fileStorage.insertFile(
+  const result = await fileStorage.insertFolder(
     folderParent.value,
     fileOrFolder,
-    nomeAnexo.value,
   );
-  return fileStorage.toggleReloadState();
+  if (!result) {
+    return negativeNotify(t("action.folderAlreadyExists"));
+  }
+}
+function addFile(fileOrFolder: any) {
+  fileStorage.insertFile(folderParent.value, fileOrFolder, nomeAnexo.value);
 }
 watchEffect(async () => {
   if (props.folder) {
