@@ -1,6 +1,10 @@
 <template>
   <q-card-section>
-    <q-select :options="options" v-model="item" />
+    <q-select
+      :options="options"
+      v-model="item"
+      @click="loadPdfsOrFolders(folderReload)"
+    />
   </q-card-section>
   <ConfirmExclusion
     :fileOrFolder="item"
@@ -36,19 +40,18 @@ const enableConfirm = ref();
 const item = ref();
 const resultPdfs = ref();
 const folderReload = ref();
-async function loadPdsOrFolders(folder: string) {
+async function loadPdfsOrFolders(folder: string) {
   const { itsFileFolder }: { itsFileFolder: boolean } = await runQuery(
     ItsFileFolder,
     { folder: folder },
   );
   if (itsFileFolder) {
-    resultPdfs.value = options.value = await fileStorage.loadArchives(folder);
-    return (options.value = resultPdfs.value.pdfs);
+    return (options.value = await fileStorage.loadArchives(folder));
   }
   return (options.value = await fileStorage.loadFolders(folder));
 }
 async function exclude() {
-  await loadPdsOrFolders(folderReload.value);
+  item.value = "";
   if (item.value.includes(".")) {
     enableConfirm.value = false;
     await fileStorage.excludeFile(resultPdfs.value.path + "/" + item.value);
@@ -59,10 +62,9 @@ async function exclude() {
   return fileStorage.toggleReloadState();
 }
 watchEffect(async () => {
-  if (props.folder) {
+  if (props.folder || enableConfirm) {
     folderReload.value = props.folder;
-    item.value = null;
-    loadPdsOrFolders(props.folder);
+    item.value = "";
   }
 });
 </script>
