@@ -11,16 +11,8 @@
       </q-dialog>
     </q-input>
   </q-card-section>
-  <AddFile
-    :folder="modelFolder"
-    v-if="props.version == 'add'"
-    @update="loadFolders"
-  />
-  <DeleteFile
-    :folder="modelFolder"
-    v-if="props.version == 'delete'"
-    @update="loadFolders"
-  />
+  <AddFile :folder="modelFolder" @update="loadFolders" />
+  <DeleteFile :folder="modelFolder" @update="loadFolders" />
 </template>
 
 <script setup lang="ts">

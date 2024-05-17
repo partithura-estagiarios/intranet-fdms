@@ -14,7 +14,7 @@ export default {
   environmentalObjectsandGoals: "Environmental Objects and Goals",
   environmentalCommitments: "Environmental Commitments",
   manufacturing: "Manufacture",
-  evaluateConformitiesImprovements: "Evaluate Conformities and Improvements",
+  evaluateConformitiesImprovements: "Evaluate conformities and improvements",
   emptyFolder: "Empty Folder",
   attachments: "Attachments",
   writeFileName: "Write the file name",

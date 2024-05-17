@@ -27,7 +27,6 @@ export default {
   selectRoom: "Select the Room",
   startDateandTime: "Start Date and Time",
   endDateandTime: "End Date and Time",
-  searchArchive: "Search Archive",
   addRoom: "Add Sala",
   organizerEvent: "Organizer Event",
   now: "Now",
