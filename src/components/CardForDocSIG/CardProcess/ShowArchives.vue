@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
 import { useFiles } from "../../../stores/files";
 import { getFileNameWithoutExtension } from "./lib";
 import { Files } from "../../../modules/graphql/graphql";
@@ -24,25 +23,18 @@ const fileStorage = useFiles();
 const emits = defineEmits(["update"]);
 
 const archivesList = ref<Files>({ pdfs: [], path: "" });
-
-watch(
-  [
-    () => fileStorage.getFolderChild,
-    () => fileStorage.getReloadState,
-    () => fileStorage.getFolder,
-  ],
-  async ([newFolderChild, newReloadState]) => {
-    if (newFolderChild) {
-      return (archivesList.value =
-        await fileStorage.loadArchives(newFolderChild));
-    }
-    if (newReloadState && newFolderChild) {
+watchEffect(async () => {
+  if (
+    (fileStorage.getFolderChild || fileStorage.getReloadState) &&
+    fileStorage.getFolderChild != ""
+  ) {
+    if (fileStorage.getReloadState) {
       fileStorage.toggleReloadState();
-      archivesList.value = await fileStorage.loadArchives(newFolderChild);
-      return;
     }
-    return (archivesList.value.pdfs = []);
-  },
-  { immediate: true },
-);
+    return (archivesList.value = await fileStorage.loadArchives(
+      fileStorage.getFolderChild,
+    ));
+  }
+  return (archivesList.value.pdfs = []);
+});
 </script>

@@ -36,23 +36,23 @@ const handleItemClick = async (index: number, name: string) => {
   fileStorage.toggleFolderState(name);
 };
 
-watch(
-  [() => fileStorage.getReloadState, () => fileStorage.getFolderTree],
-  async ([newReloadState, newFolderTree]) => {
-    if (newFolderTree) {
-      folderTreeList.value = await fileStorage.loadFolders(newFolderTree);
-      activeButtonIndex.value = folderTreeList.value.length ? 0 : null;
-      fileStorage.toggleFolderState(folderTreeList.value[0]);
-      return;
-    }
-    if (newFolderTree && newReloadState) {
+watchEffect(async () => {
+  if (fileStorage.getReloadState || fileStorage.getFolderTree) {
+    if (fileStorage.getReloadState) {
       fileStorage.toggleReloadState();
-      return (folderTreeList.value =
-        await fileStorage.loadFolders(newFolderTree));
     }
-  },
-  { immediate: true },
-);
+
+    if (fileStorage.getFolderTree && !fileStorage.getFolder) {
+      activeButtonIndex.value = null;
+    }
+    folderTreeList.value = await fileStorage.loadFolders(
+      fileStorage.getFolderTree,
+    );
+    if (!folderTreeList.value.includes(fileStorage.getFolder)) {
+      return (activeButtonIndex.value = null);
+    }
+  }
+});
 </script>
 
 <style scoped>

@@ -46,19 +46,21 @@ async function loadPdfsOrFolders(folder: string) {
     { folder: folder },
   );
   if (itsFileFolder) {
-    return (options.value = await fileStorage.loadArchives(folder));
+    resultPdfs.value = await fileStorage.loadArchives(folder);
+    return (options.value = resultPdfs.value.pdfs);
   }
   return (options.value = await fileStorage.loadFolders(folder));
 }
 async function exclude() {
-  item.value = "";
   if (item.value.includes(".")) {
     enableConfirm.value = false;
     await fileStorage.excludeFile(resultPdfs.value.path + "/" + item.value);
+    item.value = "";
     return fileStorage.toggleReloadState();
   }
   enableConfirm.value = false;
   fileStorage.excludeFolder(item.value);
+  item.value = "";
   return fileStorage.toggleReloadState();
 }
 watchEffect(async () => {

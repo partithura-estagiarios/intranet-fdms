@@ -49,6 +49,7 @@ const props = defineProps({
     required: true,
   },
 });
+const emits = defineEmits(["selectedFolderTree"]);
 function openDialog(version: string) {
   dialog.value = true;
   if (version == "add") {
@@ -65,5 +66,6 @@ const tabClass = computed(() => {
 });
 function openCard(item: string) {
   fileStorage.toggleFolderTreeState(item);
+  emits("selectedFolderTree", item);
 }
 </script>

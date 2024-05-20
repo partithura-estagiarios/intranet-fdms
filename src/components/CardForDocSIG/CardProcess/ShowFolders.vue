@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div v-for="(item, index) in foldersList" class="col-6 col-md-2">
+    <div v-for="(item, index) in foldersList" class="col-6 col-md-3 q-pa-sm">
       <q-btn
         clickable
         @click="handleItemClick(index, item)"
@@ -19,7 +19,7 @@ const fileStorage = useFiles();
 const activeButtonIndex = ref<null | number>(null);
 
 const foldersList = ref();
-const emits = defineEmits(["selectFolderChild"]);
+const emits = defineEmits(["zerateArchives"]);
 
 const getTextClass = (index: number) => ({
   "text-green": activeButtonIndex.value === index,
@@ -29,34 +29,19 @@ const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
   fileStorage.toggleFolderChildState(name);
 };
-watch(
-  [
-    () => fileStorage.getReloadState,
-    () => fileStorage.getFolder,
-    () => fileStorage.getFolderTree,
-  ],
-  async ([newReloadState, newFolder, newFolderTree]) => {
-    if (newFolder) {
-      foldersList.value = await fileStorage.loadFolders(newFolder);
-      fileStorage.toggleFolderChildState(foldersList.value[0]);
-      activeButtonIndex.value = foldersList.value.length ? 0 : null;
-      return;
-    }
-    if (newFolderTree) {
-      return (foldersList.value = []);
-    }
-
-    if (newReloadState && newFolder) {
+watchEffect(async () => {
+  if (fileStorage.getFolder || fileStorage.getReloadState) {
+    if (fileStorage.getReloadState) {
       fileStorage.toggleReloadState();
-      return (foldersList.value = await fileStorage.loadFolders(newFolder));
     }
-  },
-  { immediate: true },
-);
+    foldersList.value = await fileStorage.loadFolders(fileStorage.getFolder);
+    if (!foldersList.value.includes(fileStorage.getFolderChild)) {
+      fileStorage.toggleFolderChildState("");
+      return (activeButtonIndex.value = null);
+    }
+    return;
+  }
+  activeButtonIndex.value = null;
+  return (foldersList.value = []);
+});
 </script>
-<style scoped>
-.maximum-scroll {
-  height: 10vh;
-  width: 35vw;
-}
-</style>
