@@ -31,9 +31,13 @@ watchEffect(async () => {
     if (fileStorage.getReloadState) {
       fileStorage.toggleReloadState();
     }
-    return (archivesList.value = await fileStorage.loadArchives(
+    archivesList.value = await fileStorage.loadArchives(
       fileStorage.getFolderChild,
-    ));
+    );
+    if (!archivesList.value.pdfs) {
+      return (archivesList.value.pdfs = []);
+    }
+    return;
   }
   return (archivesList.value.pdfs = []);
 });
