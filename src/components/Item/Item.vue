@@ -3,11 +3,11 @@
     <div v-for="item in sistemas">
       <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
-          <q-avatar class="border row" size="10em">
+          <q-avatar class="border row" size="14vh">
             <q-icon
               :name="item.icon"
-              color="indigo-7"
-              size="1.3em"
+              color="indigo-6"
+              size="8vh"
               class="q-gutter-x-ls q-gutter-y-sm"
             />
           </q-avatar>
@@ -52,10 +52,11 @@ onMounted(async () => {
   sistemas.value = loadSystems;
 });
 function goToRoute(rout: String) {
+  console.log(rout);
   if (rout.includes("https")) {
     return window.open(`${rout}`);
   }
-  if (rout.includes("local")) {
+  if (rout.includes("contateCeo")) {
     return (openModalCeo.value = true);
   }
   return router.push(`${rout}`);
@@ -64,7 +65,7 @@ function goToRoute(rout: String) {
 
 <style scoped>
 .border {
-  border: 5px solid rgb(34, 34, 199);
+  border: 8px solid rgb(74, 74, 215);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 </style>

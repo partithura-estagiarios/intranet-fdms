@@ -1,14 +1,12 @@
 <template>
-  <div class="fit">
-    <q-img src="/Background Intranet.png">
-      <q-img src="/Great Place to Work.png" class="size-fig" />
-      <div class="bg-transparent text q-gutter-sm">
-        <h1 class="text-white text-left text-bold">{{ textStart }}</h1>
-        <h1 class="text-white text-left text-bold">{{ textMid }}</h1>
-        <h1 class="text-green text-left text-bold">{{ textEnd }}</h1>
-      </div>
-    </q-img>
-  </div>
+  <q-img src="/Background Intranet.png">
+    <q-img src="/Great Place to Work.png" class="size-fig" />
+    <div class="bg-transparent text q-gutter-sm">
+      <h1 class="text-white text-left text-bold">{{ textStart }}</h1>
+      <h1 class="text-white text-left text-bold">{{ textMid }}</h1>
+      <h1 class="text-green text-left text-bold">{{ textEnd }}</h1>
+    </div>
+  </q-img>
 </template>
 <script setup lang="ts">
 import { extratText } from "./lib";

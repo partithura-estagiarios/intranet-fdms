@@ -79,7 +79,7 @@ async function sendEmail() {
   }
   const result = await runMutation(SendEmailForDirector, {
     to: label.name,
-    registration: label.registration ? label.registration : null,
+    registration: label.registration ? label.registration : 0,
     body: label.email,
   });
   if (result) {
