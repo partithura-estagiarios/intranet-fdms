@@ -10,7 +10,7 @@
         v-ripple
         @click="handleItemClick(index, item)"
         :class="getFolderClass(index)"
-        class="text-h6 text-uppercase"
+        class="text-h7 text-uppercase"
       >
         <q-item-section :class="getTextClass(index)">{{ item }}</q-item-section>
       </q-item>

@@ -5,8 +5,8 @@
         clickable
         @click="handleItemClick(index, item)"
         flat
-        size="xl"
-        :label="item"
+        size="md"
+        :label="removeTitleOfFolder(item)"
         :class="getTextClass(index)"
       />
     </div>
@@ -24,7 +24,9 @@ const emits = defineEmits(["zerateArchives"]);
 const getTextClass = (index: number) => ({
   "text-green": activeButtonIndex.value === index,
 });
-
+const removeTitleOfFolder = (word: string) => {
+  return word.replace(fileStorage.getFolder, "");
+};
 const handleItemClick = (index: number, name: string) => {
   activeButtonIndex.value = index;
   fileStorage.toggleFolderChildState(name);
