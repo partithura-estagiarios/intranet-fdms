@@ -1,10 +1,11 @@
 <template>
   <div class="row">
-    <div v-for="(item, index) in foldersList" class="col-6 col-md-3 q-pa-sm">
+    <div v-for="(item, index) in foldersList">
       <q-btn
         clickable
         @click="handleItemClick(item)"
         flat
+        class="col"
         size="md"
         :label="removeTitleOfFolder(item)"
         :class="getTextClass(item)"

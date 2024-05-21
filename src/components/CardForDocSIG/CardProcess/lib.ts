@@ -1,3 +1,8 @@
+interface LabelArchive {
+  firstPart: string;
+  restOfString: string;
+}
+
 export function getFileNameWithoutExtension(
   fileName: string | null | undefined,
 ): string {
@@ -10,6 +15,10 @@ export function getFileNameWithoutExtension(
   return fileName;
 }
 
-export function separateMarOfPdf(fileName: string) {
-  console.log(fileName.endsWith("MAR"));
+export function separateMarOfPdf(fileName: string): LabelArchive {
+  const firstSpaceIndex = fileName.indexOf(" ");
+  const firstPart =
+    firstSpaceIndex === -1 ? fileName : fileName.substring(0, firstSpaceIndex);
+  const restOfString = fileName.slice(fileName.indexOf(" ") + 1);
+  return { firstPart, restOfString };
 }
