@@ -9,3 +9,7 @@ export function getFileNameWithoutExtension(
   }
   return fileName;
 }
+
+export function separateMarOfPdf(fileName: string) {
+  console.log(fileName.endsWith("MAR"));
+}

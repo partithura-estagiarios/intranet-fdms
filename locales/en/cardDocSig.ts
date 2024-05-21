@@ -18,4 +18,5 @@ export default {
   emptyFolder: "Empty Folder",
   attachments: "Attachments",
   writeFileName: "Write the file name",
+  writeMarName: "Enter MAR number",
 };

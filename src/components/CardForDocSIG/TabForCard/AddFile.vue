@@ -1,6 +1,11 @@
 <template>
   <q-card-section>
     <div v-if="fileFolder">
+      <q-input
+        v-model="mar"
+        :label="$t('cardDocSig.writeMarName')"
+        type="number"
+      />
       <q-input v-model="nomeAnexo" :label="$t('cardDocSig.writeFileName')" />
       <q-file
         v-model="input"
@@ -43,6 +48,7 @@ const nomeAnexo = ref();
 const input = ref();
 const folderParent = ref();
 const fileFolder = ref();
+const mar = ref();
 async function verifyFolder() {
   const { itsFileFolder }: { itsFileFolder: boolean } = await runQuery(
     ItsFileFolder,
@@ -63,7 +69,7 @@ async function addFile(fileOrFolder: any) {
   await fileStorage.insertFile(
     folderParent.value,
     fileOrFolder,
-    nomeAnexo.value,
+    "MAR" + mar.value + " " + nomeAnexo.value,
   );
 }
 watchEffect(async () => {
