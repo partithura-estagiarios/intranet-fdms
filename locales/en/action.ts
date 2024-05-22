@@ -44,6 +44,5 @@ export default {
   selectTheFolder: "Select the folder",
   folderAlreadyExists: "This folder already exists, choose another name",
   deleteSureFile: "Are you sure you want to delete file?",
-  stillFiles:
-    "There are still files in the folder, do you want to delete the folder anyway?",
+  stillFiles: "There are still files in the folder, delete them anyway?",
 };
