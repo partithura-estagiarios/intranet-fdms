@@ -1,12 +1,5 @@
 <template>
-  <q-img src="/Background Intranet.png">
-    <q-img src="/Great Place to Work.png" class="size-fig" />
-    <div class="bg-transparent text q-gutter-sm">
-      <h1 class="text-white text-left text-bold">{{ textStart }}</h1>
-      <h1 class="text-white text-left text-bold">{{ textMid }}</h1>
-      <h1 class="text-green text-left text-bold">{{ textEnd }}</h1>
-    </div>
-  </q-img>
+  <q-img src="/WelcomeIntranet.png" class="size-img" />
 </template>
 <script setup lang="ts">
 import { extratText } from "./lib";
@@ -28,10 +21,14 @@ onMounted(() => {
   font-size: 1.9vh;
   left: 80vh;
 }
+.size-img {
+  height: 50vh;
+}
 .size-fig {
-  width: 50vh;
+  width: 70vh;
   background-color: transparent;
   top: 3vh;
   right: 65vh;
+  height: 45vh;
 }
 </style>

@@ -1,16 +1,18 @@
 <template>
   <q-toolbar class="bg-indigo-8 q-pa-md">
-    <q-btn flat to="/home" class="absolute-top-left">
+    <q-btn flat to="/home" class="q-px-xl absolute-top-left">
       <img src="/ico/logo_fundimisa.png" class="q-pt-md" />
     </q-btn>
     <q-space />
     <q-tabs
+      no-caps
       v-model="tab"
       indicator-color="transparent"
-      class="text-white no-padding no-padding custom-tab-label"
+      class="text-white rounded-borders"
       active-bg-color="white"
       shrink
-      active-color="indigo-8"
+      active-color="green"
+      align="justify"
     >
       <q-route-tab
         v-for="item in tabItems"
@@ -31,8 +33,3 @@
 import { tabItems } from "./lib";
 const tab = ref("");
 </script>
-<style scoped>
-.custom-tab-label {
-  line-height: 1vh;
-}
-</style>

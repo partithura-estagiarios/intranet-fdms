@@ -1,10 +1,5 @@
 <template>
   <ImageRh />
-  <Separator :texto="$t('text.systems')" class="top" />
+  <Separator :texto="$t('text.systems')" />
   <Item sistema="gestao" class="no-padding" />
 </template>
-<style scoped>
-.top {
-  bottom: 5vh;
-}
-</style>

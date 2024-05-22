@@ -1,9 +1,7 @@
 <template>
-  <div class="line relative-position flex justify-center">
-    <div class="text bg-green relative-position q-px-xl">
-      <h4 class="text-white text-bold gt-sm inline">{{ texto }}</h4>
-    </div>
-  </div>
+  <q-separator class="color-separator" size="1vh" />
+  <img src="/separator.png" />
+  <h4 class="text-bold text-white position-text">{{ texto }}</h4>
 </template>
 
 <script setup lang="ts">
@@ -14,13 +12,12 @@ const props = defineProps({
   },
 });
 </script>
-
 <style scoped>
-.line {
-  border-bottom: 10px solid var(--separator-color, #367c1e);
+.color-separator {
+  background-color: rgba(0, 152, 1, 255);
 }
-.text {
-  top: 20px;
-  border-radius: 5px;
+.position-text {
+  top: -10vh;
+  position: relative;
 }
 </style>
