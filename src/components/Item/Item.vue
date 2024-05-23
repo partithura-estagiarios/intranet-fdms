@@ -1,21 +1,22 @@
 <template>
-  <div class="row justify-center q-mt-md q-ml-xl">
+  <div class="row justify-center">
     <div v-for="item in sistemas">
       <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
-          <q-avatar class="border row" size="14vh">
+          <q-avatar class="border row bg-white shadow-14" size="11vh">
             <q-icon
               :name="item.icon"
-              color="indigo-6"
-              size="8vh"
-              class="q-gutter-x-ls q-gutter-y-sm"
+              size="5vh"
+              class="q-mb-sm q-ml-xm custom-color height-icon"
             />
           </q-avatar>
         </q-item-section>
         <div class="label text-start row">
           <q-item>
             <q-item-section>
-              <q-item-label class="text-indigo-8 text-h6 text-weight-bolder">
+              <q-item-label
+                class="custom-color text-h5 text-weight-bolder font-custom"
+              >
                 {{ item.label }}
               </q-item-label>
               <DialogContatDirector
@@ -23,7 +24,7 @@
                 :open="openModalCeo"
               />
 
-              <q-item-label class="text-green text-bold text-h6">
+              <q-item-label class="text-green text-bold text-h5 font-custom">
                 {{ item.sublabel }}
               </q-item-label>
             </q-item-section>
@@ -52,11 +53,10 @@ onMounted(async () => {
   sistemas.value = loadSystems;
 });
 function goToRoute(rout: String) {
-  console.log(rout);
   if (rout.includes("https")) {
     return window.open(`${rout}`);
   }
-  if (rout.includes("contateCeo")) {
+  if (rout.includes("contatoCeo")) {
     return (openModalCeo.value = true);
   }
   return router.push(`${rout}`);
@@ -65,7 +65,15 @@ function goToRoute(rout: String) {
 
 <style scoped>
 .border {
-  border: 8px solid rgb(74, 74, 215);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 8px solid rgb(31, 73, 125);
+}
+.custom-color {
+  color: rgb(31, 73, 125);
+}
+.font-custom {
+  font-family: Fira Sans;
+}
+.height-icon {
+  height: 7vh;
 }
 </style>

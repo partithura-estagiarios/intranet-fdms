@@ -36,5 +36,5 @@ export default {
   },
   login: "Login",
   registerUser: "Register User",
-  logout: "Log out of account",
+  logout: "log out",
 };

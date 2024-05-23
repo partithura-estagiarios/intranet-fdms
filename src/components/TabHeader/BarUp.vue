@@ -1,29 +1,29 @@
 <template>
-  <q-toolbar class="bg-indigo-8 q-pa-md">
-    <q-btn flat to="/home" class="q-px-xl absolute-top-left">
+  <q-toolbar class="color-custom height-custom">
+    <q-btn flat to="/home" class="q-py-sm q-px-xl absolute-top-left">
       <img src="/ico/logo_fundimisa.png" class="q-pt-md" />
     </q-btn>
     <q-space />
     <q-tabs
-      no-caps
       v-model="tab"
       indicator-color="transparent"
-      class="text-white rounded-borders"
-      active-bg-color="white"
-      shrink
-      active-color="green"
-      align="justify"
+      class="font-route-tab text-white"
+      v-for="item in tabItems"
     >
-      <q-route-tab
-        v-for="item in tabItems"
-        :key="item.name"
-        :name="item.name"
-        :label="$t('tab.' + item.label)"
-        :to="'/' + item.name"
+      <q-btn
+        :class="tabClass(item.name)"
+        no-caps
+        @click="goToRoute(item.name)"
+        flat
+        size="1.2rem"
+        class="q-py-xs q-mx-sm q-px-sm"
+        dense
+        :label="$t(`tab.${item.label}`)"
       />
     </q-tabs>
+
     <q-space />
-    <div class="row absolute-top-right q-mt-md">
+    <div class="row absolute-top-right position-btn-drop-set">
       <BtDropSet />
     </div>
   </q-toolbar>
@@ -31,5 +31,33 @@
 
 <script setup lang="ts">
 import { tabItems } from "./lib";
-const tab = ref("");
+import { router } from "../../modules/router";
+
+const tab = ref("home");
+function tabClass(itemName: string) {
+  if (`/${itemName}` === router.currentRoute.value.path)
+    return "text-green bg-white rounded-borders	";
+}
+function goToRoute(rout: String) {
+  return router.push(`/${rout}`);
+}
+onMounted(() => {
+  goToRoute("home");
+});
 </script>
+<style scoped>
+.font-route-tab {
+  font-family: Fira Sans;
+}
+.color-custom {
+  background-color: rgb(31, 73, 125);
+}
+
+.height-custom {
+  height: 9vh;
+}
+
+.position-btn-drop-set {
+  top: 1.2vh;
+}
+</style>

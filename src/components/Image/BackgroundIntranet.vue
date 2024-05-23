@@ -7,6 +7,6 @@
 <style scoped>
 .background {
   z-index: -1;
-  opacity: 65%;
+  opacity: 15%;
 }
 </style>

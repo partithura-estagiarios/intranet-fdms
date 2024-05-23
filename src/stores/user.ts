@@ -19,8 +19,11 @@ export const useUsers = defineStore(id, {
       stateUser: { ...userStorage },
     };
   },
-  getters: {},
-
+  getters: {
+    getToken: (state) => {
+      return state.stateUser.token;
+    },
+  },
   actions: {
     getUser: async (form: User): Promise<Auth> => {
       const userData = await runQuery<Auth>(GetUser, {

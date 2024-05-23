@@ -17,6 +17,7 @@ const props = defineProps({
   background-color: rgba(0, 152, 1, 255);
 }
 .position-text {
+  font-family: Fira Sans;
   top: -10vh;
   position: relative;
 }
