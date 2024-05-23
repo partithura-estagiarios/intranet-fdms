@@ -9,18 +9,18 @@
   <q-card class="my-card bordered-card" v-show="card">
     <q-card-actions vertical>
       <q-item
-        class="relative-position q-py-xs position-custom"
+        class="relative-position q-py-xs q-px-sm position-custom"
         clickable
         @click="userStorage.logout()"
         v-close-popup
       >
         <q-icon
           name="power_settings_new"
-          size="sm"
+          size="1.8rem"
           class="q-px-sm q-py-xs"
           :color="iconColor"
         />
-        <div class="text-container custom-font q-py-xs" :class="textColor">
+        <div class="custom-font q-py-xs" :class="textColor">
           <q-item-section>{{ $t(`${text}`) }}</q-item-section>
         </div>
       </q-item>
@@ -76,10 +76,10 @@ watchEffect(() => {
   height: 6.87vh;
 }
 .my-card2 {
-  top: 5.6vh;
-  left: -9.5vh;
-  width: calc(100% + 9.3vh);
-  height: calc(100% + 1vh);
+  top: 5.45vh;
+  left: -9.6vh;
+  width: calc(100% + 9.5vh);
+  height: calc(100% + 1.3vh);
   position: absolute;
   z-index: 999;
   clip-path: polygon(
@@ -126,8 +126,7 @@ watchEffect(() => {
 }
 .custom-font {
   font-family: Fira Sans;
-}
-.text-container {
   white-space: nowrap;
+  font-size: 1.7vh;
 }
 </style>
