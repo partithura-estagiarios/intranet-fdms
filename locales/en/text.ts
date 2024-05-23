@@ -27,7 +27,7 @@ export default {
   selectRoom: "Select the Room",
   startDateandTime: "Start Date and Time",
   endDateandTime: "End Date and Time",
-  addRoom: "Add Sala",
+  schedulEvent: "Schedule Event",
   organizerEvent: "Organizer Event",
   now: "Now",
   roomA: "Room A",

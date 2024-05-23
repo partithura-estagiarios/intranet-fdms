@@ -25,13 +25,15 @@ export function formatDate(date: Date): string {
 export function insertColor(room: string): string {
   switch (room) {
     case "SALA A":
-      return "red";
+      return "black";
     case "SALA B":
       return "green";
     case "SALA C":
-      return "yellow";
+      return "pink";
     case "SALA DE REUNIÃO":
-      return "orange";
+      return "yellow";
+    case "SALA D":
+      return "blue";
     default:
       return "";
   }

@@ -1,20 +1,20 @@
 <template>
-  <div
-    class="fit column wrap justify-center items-center content-center padding-top"
-  >
+  <div class="fit row padding-top justify-evenly">
     <Month :select-date="selectedDate" />
-    <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
-  </div>
-  <div class="row q-px-md q-pa-sm justify-center">
+    <!-- <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" /> -->
+
     <q-btn
       color="green"
-      :label="$t('text.addRoom')"
-      class="row"
+      :label="$t('text.schedulEvent')"
+      class="row font-custom rounded-borders"
+      no-caps
+      size="1.2rem"
       @click="(card = true), (selectDate = '')"
     />
-    <div class="q-px-md q-pa-md text-green-8">
+
+    <!-- <div class="q-px-md q-pa-md text-green-8">
       {{ $t("text.selectDayForRoom") }}
-    </div>
+    </div> -->
   </div>
   <q-dialog v-model="card">
     <div class="my-card relative-position no-scroll">
@@ -45,19 +45,21 @@
         @click-date="onClickHeadDay"
       >
         <template #day="{ scope: { timestamp } }">
+          {{ console.log(timestamp) }}
+
           <ExpansionEvent :data="timestamp.date" :events="events" />
         </template>
       </q-calendar-month>
     </div>
   </div>
-  <div class="row justify-center">
+  <!-- <div class="row justify-center">
     <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="mr-2" />
         <span>{{ $t(`text.${item.name}`) }}</span>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
@@ -73,6 +75,7 @@ const events = ref();
 const instance = getCurrentInstance();
 const card = ref(false);
 const selectDate = ref();
+const options = ref();
 function onClickHeadDay(item: CalendarItem) {
   const { date, time } = item.scope.timestamp;
   selectDate.value = date + " " + time;
@@ -123,5 +126,8 @@ onMounted(() => {
 }
 .calendar-size {
   width: 100vh;
+}
+.font-custom {
+  font-family: Fira Sans;
 }
 </style>

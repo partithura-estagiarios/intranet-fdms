@@ -1,10 +1,17 @@
 <template>
-  <div class="row rounded-borders">
-    <div class="rounded-borders text-capitalize text-h3 text-indigo outline">
+  <div class="row rounded-borders outline text-indigo bg-white">
+    <div
+      class="font-custom text-capitalize text-h4 text-indigo q-px-lg q-py-sm"
+    >
       {{ formattedMonth }}
     </div>
-    <div class="bg-indigo outline text-indigo">
-      <q-icon name="mdi-calendar-cursor" size="xl" color="white" />
+    <div class="bg-indigo text-indigo">
+      <q-icon
+        name="mdi-calendar-cursor"
+        class="q-py-sm q-px-sm position-icon"
+        size="2rem"
+        color="white"
+      />
     </div>
   </div>
 </template>
@@ -31,7 +38,6 @@ function monthFormatter(): Intl.DateTimeFormat {
     });
   } catch (e) {
     console.error("Failed to create DateTimeFormat:", e);
-    // Retornar um formato de data padrão em caso de erro
     return new Intl.DateTimeFormat("en-US", { month: "long" });
   }
 }
@@ -44,6 +50,9 @@ const locale = computed(() => {
 </script>
 <style scoped>
 .font-custom {
-  font-family: Fire sans;
+  font-family: Fira sans;
+}
+.position-icon {
+  top: 0.35rem;
 }
 </style>

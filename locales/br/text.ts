@@ -27,7 +27,7 @@ export default {
   selectRoom: "Escolha a Sala",
   startDateAndTime: "Data e Hora Inicial",
   endDateAndTime: "Data e Hora Final",
-  addRoom: "Adicionar Sala",
+  schedulEvent: "Agendar Evento",
   organizerEvent: "Agendar Evento",
   now: "Atual",
   roomA: "Sala A",
