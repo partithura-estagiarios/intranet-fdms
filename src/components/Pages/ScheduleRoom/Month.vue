@@ -1,7 +1,12 @@
 <template>
-  <q-card class="text-h3 text-uppercase text-indigo-8">
-    {{ formattedMonth }}
-  </q-card>
+  <div class="row rounded-borders">
+    <div class="rounded-borders text-capitalize text-h3 text-indigo outline">
+      {{ formattedMonth }}
+    </div>
+    <div class="bg-indigo outline text-indigo">
+      <q-icon name="mdi-calendar-cursor" size="xl" color="white" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,8 +19,9 @@ const props = defineProps({
 });
 const formattedMonth = computed(() => {
   const date = new Date(props.selectDate);
-  return monthFormatter().format(date) + " " + date.getFullYear();
+  return monthFormatter().format(date);
 });
+
 const country = ref("BR");
 function monthFormatter(): Intl.DateTimeFormat {
   try {
@@ -36,3 +42,8 @@ const locale = computed(() => {
   return "pt-BR";
 });
 </script>
+<style scoped>
+.font-custom {
+  font-family: Fire sans;
+}
+</style>
