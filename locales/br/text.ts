@@ -38,5 +38,4 @@ export default {
   helpers: `Outros: {materiais}`,
   equipamentSong: "Som",
   until: "Até",
-  welcomeIntranet: "Bem-vindo a nossa Intranet",
 };
