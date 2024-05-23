@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar class="color-custom height-custom">
+  <q-toolbar class="color-custom q-py-lg">
     <q-btn flat to="/home" class="q-py-sm q-px-xl absolute-top-left">
       <img src="/ico/LOGO_FUNDIMISA.png" class="q-py-md" />
     </q-btn>
@@ -51,9 +51,5 @@ onMounted(() => {
 }
 .color-custom {
   background-color: rgb(31, 73, 125);
-}
-
-.height-custom {
-  height: 6rem;
 }
 </style>
