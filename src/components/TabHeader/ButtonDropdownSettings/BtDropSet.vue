@@ -1,5 +1,11 @@
 <template>
-  <q-btn color="white" icon="settings" flat size="1.5rem" />
+  <q-btn
+    color="white"
+    icon="settings"
+    flat
+    size="1.5rem"
+    @click="card = !card"
+  />
   <q-card class="my-card bordered-card" v-show="card">
     <q-card-actions vertical>
       <q-item
@@ -28,7 +34,7 @@
 import { useUsers } from "../../../stores";
 const userStorage = useUsers();
 const text = ref("");
-const card = ref(true);
+const card = ref(false);
 const textColor = ref("");
 const borderColor = ref("");
 const iconColor = ref("");
