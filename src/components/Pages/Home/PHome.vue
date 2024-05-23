@@ -1,11 +1,10 @@
 <template>
-  <ImageRh />
+  <q-img src="/WELCOME_INTRANET.png" />
   <Separator :texto="$t('text.systems')" />
-  <Item sistema="gestao" class="position-item" />
+  <Item sistema="gestao" class="position-systems relative-position" />
 </template>
 <style scoped>
-.position-item {
-  top: -5vh;
-  position: relative;
+.position-systems {
+  bottom: 6rem;
 }
 </style>

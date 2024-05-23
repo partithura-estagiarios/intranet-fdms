@@ -1,40 +1,34 @@
 <template>
-  <q-btn
-    color="white"
-    icon="settings"
-    flat
-    size="1.5rem"
-    @click="card = !card"
-  />
+  <q-btn color="white" icon="settings" flat size="1.5rem" />
   <q-card class="my-card bordered-card" v-show="card">
     <q-card-actions vertical>
       <q-item
-        class="relative-position q-py-xs q-px-sm position-custom"
+        class="q-px-sm"
         clickable
         @click="userStorage.logout()"
         v-close-popup
       >
         <q-icon
           name="power_settings_new"
-          size="1.8rem"
-          class="q-px-sm q-py-xs"
+          size="1.6rem"
+          class="q-py-xs q-px-sm"
           :color="iconColor"
         />
-        <div class="custom-font q-py-xs" :class="textColor">
+        <div class="custom-font q-py-xs text-no-wrap" :class="textColor">
           <q-item-section>{{ $t(`${text}`) }}</q-item-section>
         </div>
       </q-item>
     </q-card-actions>
   </q-card>
-  <div class="my-card2" :class="borderColor" v-show="card"></div>
-  <div class="my-card3" v-show="card"></div>
+  <div class="border-custom-card" :class="borderColor" v-show="card"></div>
+  <div class="second-border-custom-card" v-show="card"></div>
 </template>
 
 <script setup lang="ts">
 import { useUsers } from "../../../stores";
 const userStorage = useUsers();
 const text = ref("");
-const card = ref(false);
+const card = ref(true);
 const textColor = ref("");
 const borderColor = ref("");
 const iconColor = ref("");
@@ -58,10 +52,10 @@ watchEffect(() => {
 </script>
 <style scoped>
 .my-card {
-  top: 5.8vh;
+  top: 4.7rem;
   position: absolute;
-  left: -9.3vh;
-  width: 16.2vh;
+  right: 0.8rem;
+  width: 10.4rem;
   z-index: 1000 !important;
   clip-path: polygon(
     80.5% 0,
@@ -73,13 +67,13 @@ watchEffect(() => {
     76% 14%
   );
 
-  height: 6.87vh;
+  height: 4rem;
 }
-.my-card2 {
-  top: 5.45vh;
-  left: -9.6vh;
-  width: calc(100% + 9.5vh);
-  height: calc(100% + 1.3vh);
+.border-custom-card {
+  top: 4.4rem;
+  right: 0.6rem;
+  width: calc(100% + 5.2rem);
+  height: calc(100% - 1.35rem);
   position: absolute;
   z-index: 999;
   clip-path: polygon(
@@ -92,11 +86,11 @@ watchEffect(() => {
     75% 14%
   );
 }
-.my-card3 {
-  top: 5.2vh;
-  left: -10.1vh;
-  width: calc(100% + 10vh);
-  height: calc(100% + 1.71vh);
+.second-border-custom-card {
+  top: 4.2rem;
+  right: 0.5rem;
+  width: calc(100% + 5.7rem);
+  height: calc(100% + -1rem);
   position: absolute;
   z-index: 998;
   clip-path: polygon(
@@ -111,22 +105,9 @@ watchEffect(() => {
 
   background-color: white;
 }
-.position-custom {
-  top: 1vh;
-  left: -0.5vh;
-}
-.border-red {
-  border-style: solid;
-  height: 0.5vh;
-}
-.border-blue {
-  border-style: solid;
-  height: 0.5vh;
-  flex-wrap: nowrap !important;
-}
+
 .custom-font {
   font-family: Fira Sans;
-  white-space: nowrap;
-  font-size: 1.7vh;
+  font-size: 1.05rem;
 }
 </style>

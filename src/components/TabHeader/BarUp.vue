@@ -1,7 +1,7 @@
 <template>
   <q-toolbar class="color-custom height-custom">
     <q-btn flat to="/home" class="q-py-sm q-px-xl absolute-top-left">
-      <img src="/ico/logo_fundimisa.png" class="q-pt-md" />
+      <img src="/ico/LOGO_FUNDIMISA.png" class="q-py-md" />
     </q-btn>
     <q-space />
     <q-tabs
@@ -23,7 +23,7 @@
     </q-tabs>
 
     <q-space />
-    <div class="row absolute-top-right position-btn-drop-set">
+    <div class="row absolute-top-right q-py-md q-px-sm">
       <BtDropSet />
     </div>
   </q-toolbar>
@@ -54,10 +54,6 @@ onMounted(() => {
 }
 
 .height-custom {
-  height: 9vh;
-}
-
-.position-btn-drop-set {
-  top: 1.2vh;
+  height: 6rem;
 }
 </style>

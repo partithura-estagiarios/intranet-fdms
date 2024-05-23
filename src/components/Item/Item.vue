@@ -3,11 +3,10 @@
     <div v-for="item in sistemas">
       <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
-          <q-avatar class="border row bg-white shadow-14" size="11vh">
+          <q-avatar class="border-color row bg-white shadow-14" size="7.99rem">
             <q-icon
               :name="item.icon"
-              size="5vh"
-              class="q-mb-sm q-ml-xm custom-color height-icon"
+              class="custom-color icon-partithura q-py-md"
             />
           </q-avatar>
         </q-item-section>
@@ -64,7 +63,7 @@ function goToRoute(rout: String) {
 </script>
 
 <style scoped>
-.border {
+.border-color {
   border: 8px solid rgb(31, 73, 125);
 }
 .custom-color {
@@ -73,7 +72,8 @@ function goToRoute(rout: String) {
 .font-custom {
   font-family: Fira Sans;
 }
-.height-icon {
-  height: 7vh;
+.icon-partithura {
+  height: 5.7rem;
+  bottom: 0.35rem;
 }
 </style>

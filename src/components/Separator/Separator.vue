@@ -1,6 +1,6 @@
 <template>
   <q-separator class="color-separator" size="1vh" />
-  <img src="/separator.png" />
+  <img src="/SEPARATOR.png" />
   <h4 class="text-bold text-white position-text">{{ texto }}</h4>
 </template>
 
@@ -18,7 +18,7 @@ const props = defineProps({
 }
 .position-text {
   font-family: Fira Sans;
-  top: -10vh;
+  bottom: 6rem;
   position: relative;
 }
 </style>
