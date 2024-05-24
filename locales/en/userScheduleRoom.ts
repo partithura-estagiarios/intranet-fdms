@@ -6,4 +6,5 @@ export default {
   totalPeople: "Total of peoples",
   timeError: "Already have a meeting scheduled at that time",
   reunionAccept: "Meeting scheduled successfully",
+  thereAreNoEvents: "There are no events that day",
 };

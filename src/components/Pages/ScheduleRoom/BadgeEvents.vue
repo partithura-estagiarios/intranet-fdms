@@ -12,14 +12,14 @@
 
 <script setup lang="ts">
 import { formatDate } from "./lib";
-import { Event } from "../../../entities/scheduleRoom";
+import { EventRoom } from "../../../entities/scheduleRoom";
 const props = defineProps({
   data: {
     type: String,
     default: "",
   },
   events: {
-    type: Array as () => Event[],
+    type: Array as () => EventRoom[],
     default: () => [],
   },
 });

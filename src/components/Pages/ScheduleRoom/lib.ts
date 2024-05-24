@@ -1,3 +1,6 @@
+import { EventRoom } from "../../../entities/scheduleRoom";
+import { DateTime } from "luxon";
+
 export const countryCodes: { [key: string]: string } = {
   BR: "pt-BR",
   US: "en-US",
@@ -43,6 +46,22 @@ export function getHours(date: Date): string {
     ":" +
     date.getMinutes().toString().padStart(2, "0")
   );
+}
+
+export function getFullDate(data: EventRoom) {
+  const date = DateTime.fromISO(data.finalDate, { locale: "pt-BR" });
+
+  const dayOfWeekShort = date.toFormat("cccc");
+  const dayOfMonth = date.toFormat("d");
+  const month = date.toFormat("LLLL");
+  const formattedDayOfWeek = dayOfWeekShort.replace("-feira", "");
+  const formattedDate = {
+    weekDay: formattedDayOfWeek,
+    day: dayOfMonth,
+    month: month,
+  };
+
+  return formattedDate;
 }
 
 export const rooms = [

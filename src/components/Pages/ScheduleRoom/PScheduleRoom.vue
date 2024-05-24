@@ -83,9 +83,10 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import { formatDate, insertColor, rooms } from "./lib";
-import { CalendarItem, Event } from "../../../entities/scheduleRoom";
+import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
 import ScheduleRoomLoad from "../../../graphql/scheduleRoom/queries.gql";
 const selectedDate = ref(today());
+const { t } = useI18n();
 const events = ref();
 const instance = getCurrentInstance();
 const card = ref(false);
@@ -117,7 +118,7 @@ function onNext() {
 }
 async function loadSchedule() {
   const { scheduleRoomLoad } = (await runQuery(ScheduleRoomLoad)) as {
-    scheduleRoomLoad: Event[];
+    scheduleRoomLoad: EventRoom[];
   };
   if (scheduleRoomLoad.length > 0) {
     scheduleRoomLoad.forEach((event) => {
@@ -133,11 +134,14 @@ const onClickDay = (data: CalendarItem) => {
   const { date, time } = data.scope.timestamp;
   events.value.forEach((event: Event) => {
     eventsDay.value = events.value.filter(
-      (event: Event) => event.finalDate === date,
+      (event: EventRoom) => event.finalDate === date,
     );
   });
-  cardEvents.value = true;
-  return eventsDay;
+  if (eventsDay.value.length) {
+    cardEvents.value = true;
+    return eventsDay;
+  }
+  return negativeNotify(t("userScheduleRoom.thereAreNoEvents"));
 };
 
 onMounted(() => {
