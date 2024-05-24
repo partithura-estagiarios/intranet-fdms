@@ -84,7 +84,9 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import { formatDate, insertColor, rooms } from "./lib";
 import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
-import ScheduleRoomLoad from "../../../graphql/scheduleRoom/queries.gql";
+import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
+import { useEvents } from "../../../stores/events";
+const eventStorage = useEvents();
 const selectedDate = ref(today());
 const { t } = useI18n();
 const events = ref();
@@ -138,6 +140,7 @@ const onClickDay = (data: CalendarItem) => {
     );
   });
   if (eventsDay.value.length) {
+    eventStorage.dataFull = date.toString();
     cardEvents.value = true;
     return eventsDay;
   }

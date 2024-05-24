@@ -1,6 +1,12 @@
 <template>
   <div class="row">
-    <q-btn flat icon="arrow_back" class="custom-color q-py-lg" size="xl" />
+    <q-btn
+      flat
+      icon="arrow_back"
+      class="custom-color q-py-lg"
+      size="xl"
+      @click="eventStorage.oldData"
+    />
     <div class="q-py-md">
       <q-separator color="green" size="0.1rem" />
       <q-chip
@@ -24,6 +30,7 @@
     </div>
     <q-btn
       flat
+      @click="eventStorage.nextData"
       icon="arrow_forward"
       clickable
       class="custom-color q-py-lg"
@@ -33,27 +40,21 @@
 </template>
 
 <script setup lang="ts">
-import { getFullDate } from "./lib";
-import { EventRoom } from "../../../entities/scheduleRoom";
-const props = defineProps({
-  headerEvents: {
-    type: Object as PropType<EventRoom>,
-  },
-});
+import { useEvents } from "../../../stores/events";
+const eventStorage = useEvents();
 const dateFull = reactive({
   day: "",
   weekDay: "",
   month: "",
 });
-function getDate() {
-  if (props.headerEvents) {
-    const fullDate = getFullDate(props.headerEvents);
+watchEffect(() => {
+  if (eventStorage.dataFull) {
+    const fullDate = eventStorage.getFullData;
     dateFull.day = fullDate.day;
     dateFull.weekDay = fullDate.weekDay;
     dateFull.month = fullDate.month;
   }
-}
-getDate();
+});
 </script>
 
 <style scoped>

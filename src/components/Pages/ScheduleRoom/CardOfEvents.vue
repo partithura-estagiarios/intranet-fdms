@@ -1,11 +1,8 @@
 <template>
   <div class="row">
-    <TitleOfCardEvents
-      class="q-py-md q-px-xl no-wrap"
-      :headerEvents="props.daysEvents[0]"
-    />
+    <TitleOfCardEvents class="q-py-md q-px-xl no-wrap" />
     <q-list padding class="size-list scroll">
-      <q-item clickable v-ripple v-for="event in daysEvents">
+      <q-item clickable v-ripple v-for="event in events">
         <q-item-section>
           <div class="row items-center text-h6 font-custom">
             <q-badge color="red" />
@@ -25,13 +22,22 @@
 <script setup lang="ts">
 import { getHours } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
-import { defineProps, PropType } from "vue";
-
+import { useEvents } from "../../../stores/events";
+const eventStorage = useEvents();
 const props = defineProps({
   daysEvents: {
     type: Array as PropType<EventRoom[]>,
     required: true,
   },
+});
+const events = ref();
+watchEffect(async () => {
+  if (eventStorage.dataFull) {
+    events.value = await eventStorage.loadEvents();
+  }
+});
+onMounted(() => {
+  events.value = props.daysEvents;
 });
 </script>
 <style scoped>

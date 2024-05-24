@@ -50,7 +50,6 @@ export function getHours(date: Date): string {
 
 export function getFullDate(data: EventRoom) {
   const date = DateTime.fromISO(data.finalDate, { locale: "pt-BR" });
-
   const dayOfWeekShort = date.toFormat("cccc");
   const dayOfMonth = date.toFormat("d");
   const month = date.toFormat("LLLL");
