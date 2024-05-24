@@ -38,4 +38,5 @@ export default {
   helpers: `Outros: {materiais}`,
   equipamentSong: "Som",
   until: "Até",
+  EventsDay: "Eventos do dia",
 };

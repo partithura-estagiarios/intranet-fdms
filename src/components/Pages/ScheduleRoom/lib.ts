@@ -25,18 +25,24 @@ export function formatDate(date: Date): string {
 export function insertColor(room: string): string {
   switch (room) {
     case "SALA A":
-      return "black";
+      return "red";
     case "SALA B":
       return "green";
     case "SALA C":
-      return "pink";
-    case "SALA DE REUNIÃO":
       return "yellow";
-    case "SALA D":
-      return "blue";
+    case "SALA DE REUNIÃO":
+      return "orange";
     default:
       return "";
   }
+}
+
+export function getHours(date: Date): string {
+  return (
+    date.getHours().toString().padStart(2, "0") +
+    ":" +
+    date.getMinutes().toString().padStart(2, "0")
+  );
 }
 
 export const rooms = [

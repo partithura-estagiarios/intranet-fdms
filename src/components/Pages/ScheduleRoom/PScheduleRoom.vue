@@ -1,20 +1,25 @@
 <template>
-  <div class="fit row padding-top justify-evenly">
+  <div
+    class="fit column wrap justify-center items-center content-center padding-top"
+  >
     <Month :select-date="selectedDate" />
-    <!-- <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" /> -->
-
+    <NavigationScheduleRoom
+      @today="onToday"
+      @prev="onPrev"
+      @next="onNext"
+      class="bg-white"
+    />
+  </div>
+  <div class="row q-px-md q-pa-sm justify-center">
     <q-btn
       color="green"
       :label="$t('text.schedulEvent')"
-      class="row font-custom rounded-borders"
-      no-caps
-      size="1.2rem"
+      class="row"
       @click="(card = true), (selectDate = '')"
     />
-
-    <!-- <div class="q-px-md q-pa-md text-green-8">
+    <div class="q-px-md q-pa-md text-green-8">
       {{ $t("text.selectDayForRoom") }}
-    </div> -->
+    </div>
   </div>
   <q-dialog v-model="card">
     <div class="my-card relative-position no-scroll">
@@ -30,36 +35,46 @@
       </q-card>
     </div>
   </q-dialog>
+  <q-dialog v-model="cardEvents">
+    <div class="my-card relative-position no-scroll">
+      <q-card class="no-scroll" flat>
+        <DialogHeader
+          @close="(item) => (cardEvents = item)"
+          :option="$t('text.EventsDay')"
+        />
+        <CardOfEvents :daysEvents="eventsDay" />
+      </q-card>
+    </div>
+  </q-dialog>
   <div class="q-pa-md row justify-center">
     <div class="text-h5 calendar-size text-uppercase">
       <q-calendar-month
         ref="calendar"
         v-model="selectedDate"
-        animated
-        bordered
         focusable
         locale="pt-br"
         hoverable
         short-weekday-label
         :day-min-height="100"
+        :focus-type="['day']"
         @click-date="onClickHeadDay"
+        @click-day="onClickDay"
+        class="cursor-pointer"
       >
         <template #day="{ scope: { timestamp } }">
-          {{ console.log(timestamp) }}
-
-          <ExpansionEvent :data="timestamp.date" :events="events" />
+          <BadgeEvents :data="timestamp.date" :events="events" />
         </template>
       </q-calendar-month>
     </div>
   </div>
-  <!-- <div class="row justify-center">
+  <div class="row justify-center">
     <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="mr-2" />
         <span>{{ $t(`text.${item.name}`) }}</span>
       </div>
     </div>
-  </div> -->
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -74,13 +89,15 @@ const selectedDate = ref(today());
 const events = ref();
 const instance = getCurrentInstance();
 const card = ref(false);
+const cardEvents = ref(false);
 const selectDate = ref();
-const options = ref();
+const eventsDay = ref();
 function onClickHeadDay(item: CalendarItem) {
   const { date, time } = item.scope.timestamp;
   selectDate.value = date + " " + time;
   card.value = true;
 }
+
 function onToday() {
   if (instance && instance.refs && instance.refs.calendar) {
     (instance.refs.calendar as QCalendarMonth).moveToToday();
@@ -112,6 +129,17 @@ async function loadSchedule() {
     events.value = scheduleRoomLoad;
   }
 }
+const onClickDay = (data: CalendarItem) => {
+  const { date, time } = data.scope.timestamp;
+  events.value.forEach((event: Event) => {
+    eventsDay.value = events.value.filter(
+      (event: Event) => event.finalDate === date,
+    );
+  });
+  cardEvents.value = true;
+  return eventsDay;
+};
+
 onMounted(() => {
   loadSchedule();
 });
@@ -126,8 +154,5 @@ onMounted(() => {
 }
 .calendar-size {
   width: 100vh;
-}
-.font-custom {
-  font-family: Fira Sans;
 }
 </style>

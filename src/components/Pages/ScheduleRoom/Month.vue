@@ -1,19 +1,7 @@
 <template>
-  <div class="row rounded-borders outline text-indigo bg-white">
-    <div
-      class="font-custom text-capitalize text-h4 text-indigo q-px-lg q-py-sm"
-    >
-      {{ formattedMonth }}
-    </div>
-    <div class="bg-indigo text-indigo">
-      <q-icon
-        name="mdi-calendar-cursor"
-        class="q-py-sm q-px-sm position-icon"
-        size="2rem"
-        color="white"
-      />
-    </div>
-  </div>
+  <q-card class="text-h3 text-uppercase text-indigo-8 bg-whtie">
+    {{ formattedMonth }}
+  </q-card>
 </template>
 
 <script setup lang="ts">
@@ -26,9 +14,8 @@ const props = defineProps({
 });
 const formattedMonth = computed(() => {
   const date = new Date(props.selectDate);
-  return monthFormatter().format(date);
+  return monthFormatter().format(date) + " " + date.getFullYear();
 });
-
 const country = ref("BR");
 function monthFormatter(): Intl.DateTimeFormat {
   try {
@@ -38,6 +25,7 @@ function monthFormatter(): Intl.DateTimeFormat {
     });
   } catch (e) {
     console.error("Failed to create DateTimeFormat:", e);
+    // Retornar um formato de data padrão em caso de erro
     return new Intl.DateTimeFormat("en-US", { month: "long" });
   }
 }
@@ -48,11 +36,3 @@ const locale = computed(() => {
   return "pt-BR";
 });
 </script>
-<style scoped>
-.font-custom {
-  font-family: Fira sans;
-}
-.position-icon {
-  top: 0.35rem;
-}
-</style>
