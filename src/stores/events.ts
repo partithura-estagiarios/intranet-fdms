@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
 import LoadEventsInData from "../graphql/scheduleRoom/LoadEventsInData.gql";
+import NextEvents from "../graphql/scheduleRoom/NextEvents.gql";
+
 import { DateTime } from "luxon";
+import { set } from "zod";
+import { stat } from "fs";
 const id = "events";
 
 export const useEvents = defineStore(id, {
   state: () => ({
     dataFull: "",
+    closeModal: false,
   }),
   getters: {
     getFullData(state) {
@@ -21,21 +26,28 @@ export const useEvents = defineStore(id, {
       };
       return formattedDate;
     },
+    getCloseModal(state) {
+      return state.closeModal;
+    },
+    toggleCloseModal(state) {
+      return (state.closeModal = !state.closeModal);
+    },
   },
   actions: {
-    nextData() {
+    nextData: async (number: Number) => {
       const eventStorage = useEvents();
-      const currentDate = new Date(eventStorage.dataFull);
-      currentDate.setDate(currentDate.getDate() + 1);
-      const nextDate = currentDate.toISOString().split("T")[0];
-      return (eventStorage.dataFull = nextDate);
-    },
-    oldData() {
-      const eventStorage = useEvents();
-      const currentDate = new Date(eventStorage.dataFull);
-      currentDate.setDate(currentDate.getDate() - 1);
-      const oldData = currentDate.toISOString().split("T")[0];
-      return (eventStorage.dataFull = oldData);
+      const { nextEvents }: { nextEvents: string } = await runQuery(
+        NextEvents,
+        {
+          data: eventStorage.dataFull,
+          nextOrOld: number,
+        },
+      );
+
+      if (eventStorage.dataFull == nextEvents) {
+        return eventStorage.toggleCloseModal;
+      }
+      return (eventStorage.dataFull = nextEvents);
     },
     loadEvents: async () => {
       const eventStorage = useEvents();

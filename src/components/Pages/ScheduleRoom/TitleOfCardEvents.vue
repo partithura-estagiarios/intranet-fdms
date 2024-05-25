@@ -5,7 +5,7 @@
       icon="arrow_back"
       class="custom-color q-py-lg"
       size="xl"
-      @click="eventStorage.oldData"
+      @click="eventStorage.nextData(0)"
     />
     <div class="q-py-md">
       <q-separator color="green" size="0.1rem" />
@@ -30,7 +30,7 @@
     </div>
     <q-btn
       flat
-      @click="eventStorage.nextData"
+      @click="eventStorage.nextData(1)"
       icon="arrow_forward"
       clickable
       class="custom-color q-py-lg"

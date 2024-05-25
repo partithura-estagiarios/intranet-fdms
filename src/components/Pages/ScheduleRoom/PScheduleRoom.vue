@@ -3,12 +3,7 @@
     class="fit column wrap justify-center items-center content-center padding-top"
   >
     <Month :select-date="selectedDate" />
-    <NavigationScheduleRoom
-      @today="onToday"
-      @prev="onPrev"
-      @next="onNext"
-      class="bg-white"
-    />
+    <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
   </div>
   <div class="row q-px-md q-pa-sm justify-center">
     <q-btn
@@ -40,7 +35,7 @@
       <q-card class="no-scroll" flat>
         <DialogHeader
           @close="(item) => (cardEvents = item)"
-          :option="$t('text.EventsDay')"
+          :option="$t('text.eventsDay')"
         />
         <CardOfEvents :daysEvents="eventsDay" />
       </q-card>
@@ -146,7 +141,13 @@ const onClickDay = (data: CalendarItem) => {
   }
   return negativeNotify(t("userScheduleRoom.thereAreNoEvents"));
 };
-
+watchEffect(() => {
+  if (eventStorage.closeModal) {
+    negativeNotify(t(`text.noMoreEvents`));
+    cardEvents.value = false;
+    return eventStorage.toggleCloseModal;
+  }
+});
 onMounted(() => {
   loadSchedule();
 });
