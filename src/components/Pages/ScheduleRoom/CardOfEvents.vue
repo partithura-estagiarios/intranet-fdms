@@ -19,19 +19,19 @@
             {{ getHours(new Date(event.finalTime)) }}</span
           >
         </q-item-section>
-        <q-dialog v-model="card">
-          <q-card class="my-card">
-            <DialogHeader
-              @close="(val) => (card = val)"
-              :option="event.rules"
-            />
-            <q-separator />
-            <DialogScheduleRoom :event-show="eventSelected" />
-          </q-card>
-        </q-dialog>
       </q-item>
     </q-list>
   </div>
+  <q-dialog v-model="card">
+    <q-card class="my-card">
+      <DialogHeader
+        @close="(val) => (card = val)"
+        :option="eventSelected.rules"
+      />
+      <q-separator />
+      <DialogScheduleRoom :event-show="eventSelected" />
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">
@@ -60,7 +60,7 @@ watchEffect(async () => {
     events.value = auxEvents;
   }
 });
-function selectEvent(event: object) {
+function selectEvent(event: EventRoom) {
   card.value = true;
   eventSelected.value = event;
 }

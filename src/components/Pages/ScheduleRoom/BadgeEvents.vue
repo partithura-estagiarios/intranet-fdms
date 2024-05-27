@@ -14,22 +14,22 @@
             {{ event.userCreated.name }}
           </q-tooltip>
         </q-badge>
-        <q-dialog v-model="card">
-          <q-card class="my-card">
-            <DialogHeader
-              @close="(val) => (card = val)"
-              :option="event.rules"
-            />
-            <q-separator />
-            <DialogScheduleRoom :event-show="eventSelected" />
-          </q-card>
-        </q-dialog>
       </div>
     </div>
     <div v-if="getEventsByDate(props.data).length > 8">
       ... <q-tooltip> +{{ getEventsByDate(props.data).length - 8 }}</q-tooltip>
     </div>
   </q-item>
+  <q-dialog v-model="card">
+    <q-card>
+      <DialogHeader
+        @close="(val) => (card = val)"
+        :option="eventSelected.rules"
+      />
+      <q-separator />
+      <DialogScheduleRoom :event-show="eventSelected" />
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">
