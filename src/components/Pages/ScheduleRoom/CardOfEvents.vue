@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <TitleOfCardEvents class="q-py-md q-px-xl no-wrap" />
+  <div class="row justify-center">
+    <TitleOfCardEvents class="q-py-md no-wrap" />
     <q-list padding class="size-list scroll">
       <q-item clickable v-ripple v-for="event in events">
         <q-item-section>
