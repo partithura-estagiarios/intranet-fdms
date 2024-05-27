@@ -1,7 +1,7 @@
 <template>
   <div class="fixed-center q-mt-xl q-pa-xl">
     <q-card class="card">
-      <q-card-section class="bg-indigo-8 text-h6 row text-white">
+      <q-card-section class="custom-color text-h6 row text-white">
         <div class="col-12">
           <Tab :tabItems="tabItems" />
         </div>
@@ -26,5 +26,8 @@ onMounted(async () => {
   padding: 0;
   margin: 0;
   height: 90vh;
+}
+.custom-color {
+  background-color: rgb(31, 73, 125);
 }
 </style>
