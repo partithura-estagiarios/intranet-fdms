@@ -2,7 +2,12 @@
   <div class="row justify-center">
     <TitleOfCardEvents class="q-py-md no-wrap" />
     <q-list padding class="size-list scroll">
-      <q-item clickable v-ripple v-for="event in events">
+      <q-item
+        clickable
+        v-ripple
+        v-for="event in events"
+        @click="selectEvent(event)"
+      >
         <q-item-section>
           <div class="row items-center text-h6 font-custom">
             <q-badge color="red" />
@@ -14,6 +19,16 @@
             {{ getHours(new Date(event.finalTime)) }}</span
           >
         </q-item-section>
+        <q-dialog v-model="card">
+          <q-card class="my-card">
+            <DialogHeader
+              @close="(val) => (card = val)"
+              :option="event.rules"
+            />
+            <q-separator />
+            <DialogScheduleRoom :event-show="eventSelected" />
+          </q-card>
+        </q-dialog>
       </q-item>
     </q-list>
   </div>
@@ -30,12 +45,18 @@ const props = defineProps({
     required: true,
   },
 });
+const eventSelected = ref();
+const card = ref(false);
 const events = ref();
 watchEffect(async () => {
   if (eventStorage.dataFull) {
     events.value = await eventStorage.loadEvents();
   }
 });
+function selectEvent(event: object) {
+  card.value = true;
+  eventSelected.value = event;
+}
 onMounted(() => {
   events.value = props.daysEvents;
 });
