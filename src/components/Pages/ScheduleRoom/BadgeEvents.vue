@@ -5,11 +5,25 @@
       class="row items-center"
     >
       <div v-if="index < 9">
-        <q-badge rounded :color="event.colorRoom">
+        <q-badge
+          rounded
+          :color="event.colorRoom"
+          @click.stop="selectEvent(event)"
+        >
           <q-tooltip>
             {{ event.userCreated.name }}
           </q-tooltip>
         </q-badge>
+        <q-dialog v-model="card">
+          <q-card class="my-card">
+            <DialogHeader
+              @close="(val) => (card = val)"
+              :option="event.rules"
+            />
+            <q-separator />
+            <DialogScheduleRoom :event-show="eventSelected" />
+          </q-card>
+        </q-dialog>
       </div>
     </div>
     <div v-if="getEventsByDate(props.data).length > 8">
@@ -31,7 +45,12 @@ const props = defineProps({
     default: () => [],
   },
 });
-
+const eventSelected = ref();
+function selectEvent(event: object) {
+  card.value = true;
+  eventSelected.value = event;
+}
+const card = ref(false);
 function hasEventsForDate(date: string) {
   return props.events.some((event) => {
     const eventDate = new Date(event.finalTime);

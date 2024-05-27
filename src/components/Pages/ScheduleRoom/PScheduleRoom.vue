@@ -57,7 +57,9 @@
         class="cursor-pointer"
       >
         <template #day="{ scope: { timestamp } }">
-          <BadgeEvents :data="timestamp.date" :events="events" />
+          <div @click="onClickDayWrapper">
+            <BadgeEvents :data="timestamp.date" :events="events" />
+          </div>
         </template>
       </q-calendar-month>
     </div>
@@ -148,6 +150,7 @@ watchEffect(() => {
     return eventStorage.toggleCloseModal;
   }
 });
+function onClickDayWrapper() {}
 onMounted(() => {
   loadSchedule();
 });
