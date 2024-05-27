@@ -5,6 +5,7 @@ import NextEvents from "../graphql/scheduleRoom/NextEvents.gql";
 import { DateTime } from "luxon";
 import { set } from "zod";
 import { stat } from "fs";
+import { EventRoom } from "../entities/scheduleRoom";
 const id = "events";
 
 export const useEvents = defineStore(id, {
@@ -51,10 +52,8 @@ export const useEvents = defineStore(id, {
     },
     loadEvents: async () => {
       const eventStorage = useEvents();
-      const { loadEventsInData }: { loadEventsInData: object } = await runQuery(
-        LoadEventsInData,
-        { data: eventStorage.dataFull },
-      );
+      const { loadEventsInData }: { loadEventsInData: EventRoom[] } =
+        await runQuery(LoadEventsInData, { data: eventStorage.dataFull });
       return loadEventsInData;
     },
   },

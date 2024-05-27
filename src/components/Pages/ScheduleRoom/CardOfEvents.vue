@@ -10,7 +10,7 @@
       >
         <q-item-section>
           <div class="row items-center text-h6 font-custom">
-            <q-badge color="red" />
+            <q-badge :color="event.colorRoom" />
             <span>{{ event.userCreated.name }} - </span>
             <span>{{ event.rules }}</span>
           </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { getHours } from "./lib";
+import { getHours, formatDate, insertColor } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
 const eventStorage = useEvents();
@@ -47,19 +47,23 @@ const props = defineProps({
 });
 const eventSelected = ref();
 const card = ref(false);
-const events = ref();
+const events: Ref<EventRoom[]> = ref([]);
 watchEffect(async () => {
   if (eventStorage.dataFull) {
-    events.value = await eventStorage.loadEvents();
+    const auxEvents: EventRoom[] = await eventStorage.loadEvents();
+    auxEvents.forEach((event) => {
+      event.initialTime = new Date(event.initialTime);
+      event.finalTime = new Date(event.finalTime);
+      event.finalDate = formatDate(event.finalTime);
+      event.colorRoom = insertColor(event.location);
+    });
+    events.value = auxEvents;
   }
 });
 function selectEvent(event: object) {
   card.value = true;
   eventSelected.value = event;
 }
-onMounted(() => {
-  events.value = props.daysEvents;
-});
 </script>
 <style scoped>
 .font-custom {
