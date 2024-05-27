@@ -1,20 +1,27 @@
 <template>
-  <div
-    class="fit column wrap justify-center items-center content-center padding-top"
-  >
-    <Month :select-date="selectedDate" />
-    <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
-  </div>
-  <div class="row q-px-md q-pa-sm justify-center">
-    <q-btn
-      color="green"
-      :label="$t('text.schedulEvent')"
-      class="row"
-      @click="(card = true), (selectDate = '')"
-    />
-    <div class="q-px-md q-pa-md text-green-8">
-      {{ $t("text.selectDayForRoom") }}
-    </div>
+  <div class="spacing-header">
+    <q-item class="font-custom padding-top">
+      <q-item-section class="items-center">
+        <q-btn
+          no-caps
+          color="green"
+          :label="$t('text.schedulEvent')"
+          class="text-body1 text-white"
+          @click="(card = true), (selectDate = '')"
+        />
+        <p class="text-green-8">
+          {{ $t("text.selectDayForRoom") }}
+        </p>
+      </q-item-section>
+      <q-item-section class="items-center">
+        <Month :select-date="selectedDate" />
+        <NavigationScheduleRoom
+          @today="onToday"
+          @prev="onPrev"
+          @next="onNext"
+        />
+      </q-item-section>
+    </q-item>
   </div>
   <q-dialog v-model="card">
     <div class="my-card relative-position no-scroll">
@@ -41,7 +48,7 @@
       </q-card>
     </div>
   </q-dialog>
-  <div class="q-pa-md row justify-center">
+  <div class="q-pa-md row justify-center font-custom">
     <div class="text-h5 calendar-size text-uppercase">
       <q-calendar-month
         ref="calendar"
@@ -49,22 +56,25 @@
         focusable
         locale="pt-br"
         hoverable
-        short-weekday-label
         :day-min-height="100"
         :focus-type="['day']"
         @click-date="onClickHeadDay"
         @click-day="onClickDay"
         class="cursor-pointer"
       >
-        <template #day="{ scope: { timestamp } }">
-          <div @click="onClickDayWrapper">
-            <BadgeEvents :data="timestamp.date" :events="events" />
+        <template #head-day="{ scope: { timestamp } }">
+          <div class="fit row justify-center custom-color">
+            {{ getHeadDay(timestamp) }}
           </div>
+        </template>
+
+        <template #day="{ scope: { timestamp } }">
+          <BadgeEvents :data="timestamp.date" :events="events" />
         </template>
       </q-calendar-month>
     </div>
   </div>
-  <div class="row justify-center">
+  <div class="row justify-center font-custom">
     <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="mr-2" />
@@ -80,7 +90,11 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import { formatDate, insertColor, rooms } from "./lib";
-import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
+import {
+  CalendarItem,
+  CalendarTimeStamp,
+  EventRoom,
+} from "../../../entities/scheduleRoom";
 import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
 import { useEvents } from "../../../stores/events";
 const eventStorage = useEvents();
@@ -150,7 +164,21 @@ watchEffect(() => {
     return eventStorage.toggleCloseModal;
   }
 });
-function onClickDayWrapper() {}
+
+function getHeadDay(item: CalendarTimeStamp) {
+  const daysOfWeek = [
+    "Domingo",
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sábado",
+  ];
+  const { date } = item;
+  const data = new Date(date);
+  return daysOfWeek[data.getDay()];
+}
 onMounted(() => {
   loadSchedule();
 });
@@ -160,10 +188,20 @@ onMounted(() => {
   position: relative;
   padding-top: 10vh;
 }
+.custom-color {
+  background-color: rgb(31, 73, 125);
+  color: white;
+}
 .my-card {
   top: 4vh;
 }
 .calendar-size {
   width: 100vh;
+}
+.font-custom {
+  font-family: Fira Sans;
+}
+.spacing-header {
+  margin-inline: 35rem;
 }
 </style>

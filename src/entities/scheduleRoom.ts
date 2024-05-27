@@ -31,6 +31,9 @@ export interface CalendarItem {
     };
   };
 }
+export interface CalendarTimeStamp {
+  date: string;
+}
 interface Inputs {
   name: {
     value: string;
