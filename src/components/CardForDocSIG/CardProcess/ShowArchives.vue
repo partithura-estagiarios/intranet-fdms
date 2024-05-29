@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div v-for="item in archivesList.pdfs" class="col-6 col-md-3">
+    <div v-for="item in archivesList.pdfs" class="col-6 col-md-3 q-px-xl">
       <q-btn
         v-if="item"
         icon="picture_as_pdf"
@@ -44,6 +44,7 @@ watchEffect(async () => {
     if (fileStorage.getReloadState) {
       fileStorage.toggleReloadState();
     }
+    console.log("arquivos");
     archivesList.value = await fileStorage.loadArchives(
       fileStorage.getFolderChild,
     );
