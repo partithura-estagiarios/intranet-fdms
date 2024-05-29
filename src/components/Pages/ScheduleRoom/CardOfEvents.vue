@@ -8,13 +8,13 @@
         v-for="event in events"
         @click="selectEvent(event)"
       >
-        <q-item-section>
-          <div class="row items-center text-h6 font-custom">
-            <q-badge :color="event.colorRoom" />
+        <q-item-section class="text-no-wrap">
+          <div class="items-center text-h6 font-custom">
+            <q-badge class="q-mx-sm no-wrap" :color="event.colorRoom" />
             <span>{{ event.userCreated.name }} - </span>
             <span>{{ event.rules }}</span>
           </div>
-          <span class="text-bold font-custom"
+          <span class="text-bold font-custom q-px-lg"
             >{{ getHours(new Date(event.initialTime)) }} -
             {{ getHours(new Date(event.finalTime)) }}</span
           >

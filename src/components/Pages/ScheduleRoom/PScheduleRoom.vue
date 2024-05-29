@@ -167,13 +167,13 @@ watchEffect(() => {
 
 function getHeadDay(item: CalendarTimeStamp) {
   const daysOfWeek = [
-    "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
+    t("userScheduleRoom.monday"),
+    t("userScheduleRoom.tuesday"),
+    t("userScheduleRoom.wednesday"),
+    t("userScheduleRoom.thursday"),
+    t("userScheduleRoom.friday"),
+    t("userScheduleRoom.saturday"),
+    t("userScheduleRoom.sunday"),
   ];
   const { date } = item;
   const data = new Date(date);
