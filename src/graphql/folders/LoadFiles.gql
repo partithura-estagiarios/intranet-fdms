@@ -1,0 +1,6 @@
+query LoadFiles($folder: String!) {
+  loadFiles(folder: $folder) {
+    path
+    pdfs
+  }
+}

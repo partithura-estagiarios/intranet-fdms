@@ -37,4 +37,12 @@ export default {
   login: "Realizar Login",
   registerUser: "Registrar Usuário",
   logout: "Sair da conta",
+  addFile: "Adicionar um arquivo ou pasta",
+  deleteFile: "Deletar um arquivo ou pasta",
+  writeFolder: "Escreva o nome da pasta",
+  confirm: "Confirmar",
+  selectTheFolder: "Selecione a Pasta",
+  folderAlreadyExists: "Esse pasta já existe, escolha outro nome",
+  deleteSureFile: "Tem certeza que deseja deletar o arquivo?",
+  stillFiles: "Ainda há arquivos na pasta, deletar mesmo assim?",
 };

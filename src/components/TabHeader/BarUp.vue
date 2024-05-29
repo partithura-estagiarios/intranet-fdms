@@ -1,7 +1,7 @@
 <template>
   <q-tabs
     v-model="tab"
-    class="tab-header z-top text-white fixed-top ellipsis"
+    class="tab-header text-white ellipsis"
     :style="{ backgroundColor: tabBackgroundColor }"
   >
     <q-item clickable to="/home" class="q-mx-md q-mt-sm">

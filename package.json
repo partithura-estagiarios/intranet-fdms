@@ -19,6 +19,7 @@
     "@rollup/plugin-graphql": "^2.0.4",
     "@vee-validate/zod": "^4.12.5",
     "@vueuse/core": "^10.9.0",
+    "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
     "lodash.chunk": "^4.2.0",
     "luxon": "^3.4.4",

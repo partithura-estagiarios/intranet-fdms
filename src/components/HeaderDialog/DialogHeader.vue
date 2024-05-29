@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="bg-indigo-8 row justify-between text-white">
+  <q-card-section class="custom-color row justify-between text-white">
     <div class="q-pa-md text-h5">{{ props.option }}</div>
     <q-icon
       name="close"
@@ -19,3 +19,8 @@ const props = defineProps({
   },
 });
 </script>
+<style scoped>
+.custom-color {
+  background-color: rgb(31, 73, 125);
+}
+</style>
