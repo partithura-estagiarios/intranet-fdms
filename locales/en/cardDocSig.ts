@@ -13,4 +13,10 @@ export default {
   socialPolicyforDiversity: "Social Policy for Diversity",
   environmentalObjectsandGoals: "Environmental Objects and Goals",
   environmentalCommitments: "Environmental Commitments",
+  manufacturing: "Manufacture",
+  evaluateConformitiesImprovements: "Evaluate conformities and improvements",
+  emptyFolder: "Empty Folder",
+  attachments: "Attachments",
+  writeFileName: "Write the file name",
+  writeMarName: "Enter MAR number",
 };

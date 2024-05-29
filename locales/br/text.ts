@@ -40,4 +40,9 @@ export default {
   until: "Até",
   eventsDay: "Eventos do dia",
   noMoreEvents: "Não existem mais eventos",
+  folder: "Pasta",
+  file: "Arquivo",
+  folders: "Pastas",
+  files: "Arquivos",
+  sourceFolders: "Pastas de origem",
 };

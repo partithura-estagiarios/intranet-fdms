@@ -40,4 +40,8 @@ export default {
   until: "Until",
   eventsDay: "Events of the day",
   noMoreEvents: "There is no more events",
+  folder: "Folder",
+  file: "File",
+  files: "Files",
+  sourceFolders: "Source Folders",
 };
