@@ -4,7 +4,7 @@
       v-for="(event, index) in getEventsByDate(props.data)"
       class="row items-center"
     >
-      <div v-if="index < 9">
+      <div v-if="shouldDisplayEvent(index)">
         <q-badge
           rounded
           :color="event.colorRoom"
@@ -16,8 +16,11 @@
         </q-badge>
       </div>
     </div>
-    <div v-if="getEventsByDate(props.data).length > 8">
-      ... <q-tooltip> +{{ getEventsByDate(props.data).length - 8 }}</q-tooltip>
+    <div v-if="getEventsByDate(props.data).length > MAX_EVENTS">
+      ...
+      <q-tooltip>
+        +{{ getEventsByDate(props.data).length - MAX_EVENTS }}</q-tooltip
+      >
     </div>
   </q-item>
   <q-dialog v-model="card">
@@ -35,6 +38,7 @@
 <script setup lang="ts">
 import { formatDate } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
+const MAX_EVENTS = 8;
 const props = defineProps({
   data: {
     type: String,
@@ -64,4 +68,7 @@ function getEventsByDate(date: string) {
     return formatDate(eventDate) === date;
   });
 }
+const shouldDisplayEvent = computed(
+  () => (index: number) => index < MAX_EVENTS,
+);
 </script>
