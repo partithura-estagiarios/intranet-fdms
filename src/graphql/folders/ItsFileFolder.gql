@@ -1,0 +1,3 @@
+query ItsFileFolder($folder: String!) {
+  itsFileFolder(folder: $folder)
+}

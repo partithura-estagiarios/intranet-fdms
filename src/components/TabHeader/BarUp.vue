@@ -3,6 +3,7 @@
     <q-btn flat to="/home" class="q-py-sm q-px-xl absolute-top-left">
       <img src="/ico/LOGO_FUNDIMISA.png" class="q-py-md" />
     </q-btn>
+
     <q-space />
     <q-tabs
       v-model="tab"
