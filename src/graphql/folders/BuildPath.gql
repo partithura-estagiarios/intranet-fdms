@@ -1,3 +1,0 @@
-query BuildPath($folder: String) {
-  buildPath(folder: $folder)
-}

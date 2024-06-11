@@ -1,64 +1,38 @@
 <template>
   <div class="row">
-    <div v-for="item in archivesList.pdfs" class="col-6 col-md-3 q-px-xl">
-      <q-btn
-        v-if="item"
-        icon="picture_as_pdf"
-        size="xl"
-        clickable
-        @click="fileStorage.displayPdf(`${archivesList.path}/${item}`)"
-        :class="itemLabel(item).firstPart"
-        flat
-        stack
-      >
-        <div class="text-subtitle1 text-bold">
-          {{ itemLabel(item).firstPart }}
-        </div>
-        <div class="font-title-pdf">
-          {{ getFileNameWithoutExtension(itemLabel(item).restOfString) }}
-        </div>
-      </q-btn>
+    <div v-for="item in foldersList">
+      <q-item clickable v-ripple>
+        <q-item-section @click="fileStorage.displayPdf(item)">
+          <q-item-label
+            ><q-icon name="mdi-file-pdf-box" size="3rem"
+          /></q-item-label>
+          <q-item-label
+            class="font-title-pdf"
+            v-text="getLastPartOfPath(item)"
+          />
+        </q-item-section>
+      </q-item>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
-import { getFileNameWithoutExtension, separateMarOfPdf } from "./lib";
-import { Files } from "../../../modules/graphql/graphql";
-const label = reactive({
-  firstPart: "",
-  restOfString: "",
-});
+import { getLastPartOfPath } from "../lib";
+
 const fileStorage = useFiles();
-const emits = defineEmits(["update"]);
-function itemLabel(fileName: string) {
-  return separateMarOfPdf(fileName);
-}
-const archivesList = ref<Files>({ pdfs: [], path: "" });
-watchEffect(async () => {
-  if (
-    (fileStorage.getFolderChild || fileStorage.getReloadState) &&
-    fileStorage.getFolderChild != ""
-  ) {
-    if (fileStorage.getReloadState) {
-      fileStorage.toggleReloadState();
-    }
-    console.log("arquivos");
-    archivesList.value = await fileStorage.loadArchives(
-      fileStorage.getFolderChild,
-    );
-    if (!archivesList.value.pdfs) {
-      return (archivesList.value.pdfs = []);
-    }
-    return;
+const foldersList = ref();
+
+watchEffect(() => {
+  if (fileStorage.nameOfChild) {
+    return (foldersList.value = fileStorage.getFoldersFiles);
   }
-  return (archivesList.value.pdfs = []);
+  return (foldersList.value = []);
 });
 </script>
 <style scoped>
 .font-title-pdf {
-  font-size: 1.2vh;
-  line-height: 1.4;
+  font-family: Fira Sans;
+  font-size: 0.9rem;
 }
 </style>

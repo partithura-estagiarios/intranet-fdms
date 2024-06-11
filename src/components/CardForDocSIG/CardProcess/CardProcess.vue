@@ -11,6 +11,3 @@
     </q-card-section>
   </q-card>
 </template>
-<script setup lang="ts">
-const reloadArchives = ref();
-</script>

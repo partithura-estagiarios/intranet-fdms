@@ -1,50 +1,43 @@
 <template>
-  <div class="row">
-    <div v-for="(item, index) in foldersList">
-      <q-btn
+  <q-card-section>
+    <div class="row">
+      <q-item
         clickable
-        @click="handleItemClick(item)"
-        flat
-        class="col"
-        size="md"
-        :label="removeTitleOfFolder(item)"
-        :class="getTextClass(item)"
-      />
+        v-ripple
+        v-for="(folder, index) in foldersList"
+        class="text-h7"
+      >
+        <q-item-section
+          @click="fileStorage.setNameFolderC(folder), (tab = folder)"
+          :class="tabClass(folder)"
+          >{{ folder }}</q-item-section
+        >
+      </q-item>
     </div>
-  </div>
+  </q-card-section>
 </template>
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
+
 const fileStorage = useFiles();
-const activeButtonIndex = ref();
+const foldersList: Ref<String[]> = ref([]);
+const tab: Ref<String> = ref("");
 
-const foldersList = ref();
-const emits = defineEmits(["zerateArchives"]);
+function tabClass(itemName: String) {
+  return {
+    "text-green bg-white rounded-borders": itemName === tab.value,
+  };
+}
 
-const getTextClass = (name: number) => ({
-  "text-green": activeButtonIndex.value === name,
-});
-const removeTitleOfFolder = (word: string) => {
-  return word.replace(fileStorage.getFolder, "");
-};
-const handleItemClick = (name: string) => {
-  activeButtonIndex.value = name;
-  fileStorage.toggleFolderChildState(name);
-};
-watchEffect(async () => {
-  if (fileStorage.getFolder || fileStorage.getReloadState) {
-    if (fileStorage.getReloadState) {
-      fileStorage.toggleReloadState();
+watchEffect(() => {
+  if (fileStorage.nameOfParent && Array.isArray(fileStorage.getFoldersChild)) {
+    const isIndexInFoldersList = foldersList.value.includes(tab.value);
+    if (!isIndexInFoldersList) {
+      tab.value = "";
     }
-    foldersList.value = await fileStorage.loadFolders(fileStorage.getFolder);
-    if (!foldersList.value.includes(fileStorage.getFolderChild)) {
-      fileStorage.toggleFolderChildState("");
-      return (activeButtonIndex.value = "");
-    }
-    return;
+    return (foldersList.value = fileStorage.getFoldersChild);
   }
-  activeButtonIndex.value = "";
   return (foldersList.value = []);
 });
 </script>

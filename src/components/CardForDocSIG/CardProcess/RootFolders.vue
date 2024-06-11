@@ -1,63 +1,53 @@
 <template>
   <q-card-section>
-    <q-virtual-scroll
-      class="maximum-scroll"
-      :items="folderTreeList"
-      v-slot="{ item, index }"
-    >
+    <div class="height-limited scroll">
       <q-item
+        class="q-my-md"
         clickable
         v-ripple
-        @click="handleItemClick(index, item)"
-        :class="getFolderClass(index)"
-        class="text-h7 text-uppercase"
+        v-for="(folder, index) in foldersList"
+        :key="index"
+        :class="tabClass(folder)"
       >
-        <q-item-section :class="getTextClass(index)">{{ item }}</q-item-section>
+        <q-item-section
+          @click="
+            fileStorage.setNameFolderP(folder), (activeButtonIndex = folder)
+          "
+          >{{ folder }}</q-item-section
+        >
       </q-item>
-    </q-virtual-scroll>
+    </div>
   </q-card-section>
 </template>
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
-const folderTreeList = ref();
-const activeButtonIndex = ref<null | number>(null);
-const getTextClass = (index: number) => ({
-  "text-white": activeButtonIndex.value === index,
-});
-
-const getFolderClass = (index: number) => ({
-  "bg-green": activeButtonIndex.value === index,
-});
-
-const handleItemClick = async (index: number, name: string) => {
-  activeButtonIndex.value = index;
-  fileStorage.toggleFolderState(name);
-};
-
-watchEffect(async () => {
-  if (fileStorage.getReloadState || fileStorage.getFolderTree) {
-    if (fileStorage.getReloadState) {
-      fileStorage.toggleReloadState();
-    }
-
-    if (fileStorage.getFolderTree && !fileStorage.getFolder) {
-      activeButtonIndex.value = null;
-    }
-    folderTreeList.value = await fileStorage.loadFolders(
-      fileStorage.getFolderTree,
-    );
-    if (!folderTreeList.value.includes(fileStorage.getFolder)) {
-      return (activeButtonIndex.value = null);
+const foldersList = ref();
+const activeButtonIndex = ref("");
+function tabClass(item: string) {
+  return {
+    "text-white bg-green rounded-borders": activeButtonIndex.value === item,
+  };
+}
+watchEffect(() => {
+  if (fileStorage.nameOfGrandParent) {
+    foldersList.value = fileStorage.getFoldersParent;
+    if (foldersList.value) {
+      const isIndexInFoldersList = foldersList.value.includes(
+        activeButtonIndex.value,
+      );
+      if (!isIndexInFoldersList) {
+        activeButtonIndex.value = "";
+      }
     }
   }
 });
 </script>
 
 <style scoped>
-.maximum-scroll {
-  max-height: 75vh;
-  width: 10vw;
+.height-limited {
+  max-height: 40rem;
+  width: 15rem;
 }
 </style>
