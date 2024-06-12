@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row scroll height-limit">
     <div v-for="item in foldersList">
       <q-item clickable v-ripple>
         <q-item-section @click="fileStorage.displayPdf(item)">
@@ -34,5 +34,8 @@ watchEffect(() => {
 .font-title-pdf {
   font-family: Fira Sans;
   font-size: 0.9rem;
+}
+.height-limit {
+  max-height: 35rem;
 }
 </style>
