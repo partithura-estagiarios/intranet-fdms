@@ -186,7 +186,7 @@ onMounted(() => {
 <style scoped>
 .padding-top {
   position: relative;
-  padding-top: 10vh;
+  padding-top: 5vh;
 }
 .custom-color {
   background-color: rgb(31, 73, 125);
