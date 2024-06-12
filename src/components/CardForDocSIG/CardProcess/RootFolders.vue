@@ -9,12 +9,7 @@
         :key="index"
         :class="tabClass(folder)"
       >
-        <q-item-section
-          @click="
-            fileStorage.setNameFolderP(folder), (activeButtonIndex = folder)
-          "
-          >{{ folder }}</q-item-section
-        >
+        <q-item-section @click="setFolder(folder)">{{ folder }}</q-item-section>
       </q-item>
     </div>
   </q-card-section>
@@ -43,6 +38,10 @@ watchEffect(() => {
     }
   }
 });
+function setFolder(folder: string) {
+  fileStorage.setNameFolderP(folder);
+  activeButtonIndex.value = folder;
+}
 </script>
 
 <style scoped>

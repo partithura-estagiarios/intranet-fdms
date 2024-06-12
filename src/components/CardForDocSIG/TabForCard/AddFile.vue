@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
+import { StatusResponse } from "../../../support/contracts";
 const { t } = useI18n();
 const fileStorage = useFiles();
 const props = defineProps({
@@ -37,7 +38,6 @@ const props = defineProps({
     required: true,
   },
 });
-const success = "Success";
 async function addFile() {
   const fileName = `MAR${mar.value} ${nameFile.value}`;
   const result = await fileStorage.insertFile(
@@ -45,11 +45,13 @@ async function addFile() {
     props.path,
     input.value,
   );
-  const messageKey = `action.${result}`;
-  if (result.includes(success)) {
-    return positiveNotify(t(messageKey));
+  if (result.includes(StatusResponse.SUCCESS)) {
+    return positiveNotify(t("action.fileSuccess"));
   }
-  negativeNotify(t(messageKey));
+  if (result.includes(StatusResponse.REPEAT)) {
+    return negativeNotify(t("action.repeatFile"));
+  }
+  negativeNotify(t("action.errorCreatingFile"));
 }
 
 const isButtonDisabled = computed(() => {

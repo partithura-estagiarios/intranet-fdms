@@ -1,72 +1,47 @@
 <template>
   <q-card-section class="q-pt-none">
-    <q-select
-      stack-label
-      :label="$t('folders.folderGrandParent')"
-      v-model="folderGrandParentSelect"
-      :options="fileStorage.optionsGrandParent"
-      @update:model-value="handleGrandParentSelectChange"
-    >
-      <template v-if="folderGrandParentSelect" v-slot:append>
-        <q-icon
-          name="cancel"
-          @click.stop.prevent="zerateGrandParent"
-          class="cursor-pointer"
-        />
-      </template>
-    </q-select>
-
-    <q-select
+    <SelectPath
+      :folders="fileStorage.optionsGrandParent"
+      @handleSelect="
+        (folderList: string) => handleGrandParentSelectChange(folderList)
+      "
+      @cleanFolders="cleanAllFolders()"
+      :folderSelect="folderGrandParentSelect"
+      title="folders.folderGrandParent"
+    />
+    <SelectPath
       v-if="folderGrandParentSelect"
-      stack-label
-      :label="$t('folders.folderParent')"
-      v-model="folderParentSelect"
-      :options="foldersParents"
-      @update:model-value="handleParentSelectChange"
-    >
-      <template v-if="folderParentSelect" v-slot:append>
-        <q-icon
-          name="cancel"
-          @click.stop.prevent="zerateParent"
-          class="cursor-pointer"
-        />
-      </template>
-    </q-select>
-
+      :folderSelect="folderParentSelect"
+      :folders="foldersParents"
+      @handleSelect="
+        (folderList: string) => handleParentSelectChange(folderList)
+      "
+      @cleanFolders="cleanFoldersAndSubFolders()"
+      title="folders.folderParent"
+    />
     <AddFolder v-if="showAddFolder" :path="path.join('/')" />
-    <q-select
+    <SelectPath
       v-if="showSelectChild"
-      stack-label
-      :label="$t('folders.folderChild')"
-      :options="foldersChild"
-      v-model="folderChildtSelect"
-      @update:model-value="handleChildSelectChange"
-    >
-      <template v-if="folderChildtSelect" v-slot:append>
-        <q-icon
-          name="cancel"
-          @click.stop.prevent="zerateChild"
-          class="cursor-pointer"
-        />
-      </template>
-    </q-select>
+      :folderSelect="folderChildSelect"
+      :folders="foldersChild"
+      @handleSelect="
+        (folderList: string) => handleChildSelectChange(folderList)
+      "
+      @cleanFolders="cleanSubFolders()"
+      title="folders.folderChild"
+    />
     <AddFile v-if="showAddFile" :path="path.join('/')" />
     <div v-if="showDelete">
-      <q-select
-        stack-label
-        :label="$t('folders.selectFile')"
-        :options="files"
-        v-model="fileSelect"
-        @update:model-value="handleFileSelectChange"
-      >
-        <template v-if="fileSelect" v-slot:append>
-          <q-icon
-            name="cancel"
-            @click.stop.prevent="zerateFile"
-            class="cursor-pointer"
-          />
-        </template>
-      </q-select>
+      <SelectPath
+        v-if="showExcludeFile"
+        :folderSelect="fileSelect"
+        :folders="files"
+        @handleSelect="
+          (folderList: string) => handleFileSelectChange(folderList)
+        "
+        @cleanFolders="cleanFiles()"
+        title="folders.selectFile"
+      />
       <DeleteItem :path="path.join('/')" />
     </div>
   </q-card-section>
@@ -76,10 +51,10 @@
 import { useFiles } from "../../../stores/files";
 import {
   eliminateRepeats,
-  positionOfChild,
-  positionOfFile,
-  positionOfGrandParent,
-  positionOfParent,
+  indexOfChild,
+  indexOfFile,
+  indexOfGrandParent,
+  indexOfParent,
   changeOptions,
   changeFiles,
   isFolder,
@@ -105,21 +80,25 @@ const folderGrandParentSelect = ref();
 const foldersParents = ref();
 const folderParentSelect = ref();
 const foldersChild = ref();
-const folderChildtSelect = ref();
+const folderChildSelect = ref();
 const fileSelect = ref();
 const files = ref();
 
 const showAddFolder = computed(() => {
   return props.option === isFolder;
 });
+const showExcludeFile = computed(() => {
+  return folderChildSelect.value;
+});
 const showSelectChild = computed(() => {
   return (
-    props.option === isFile ||
-    (props.option === isDeletion && folderGrandParentSelect.value)
+    folderGrandParentSelect.value &&
+    folderParentSelect.value &&
+    props.option !== isFolder
   );
 });
 const showAddFile = computed(() => {
-  return props.option === isFile && folderChildtSelect.value;
+  return props.option === isFile && folderChildSelect.value;
 });
 const showDelete = computed(() => {
   return props.option === isDeletion;
@@ -128,77 +107,76 @@ const showDelete = computed(() => {
 function handleGrandParentSelectChange(newValue: string) {
   folderGrandParentSelect.value = newValue;
   folderParentSelect.value = null;
-  folderChildtSelect.value = null;
+  folderChildSelect.value = null;
   fileSelect.value = null;
   foldersParents.value = changeOptions(
     fileStorage.optionsParent,
     folderGrandParentSelect.value,
   );
-  buildingPath(newValue, positionOfGrandParent);
+  buildingPath(newValue, indexOfGrandParent);
 }
 
 function handleParentSelectChange(newValue: string) {
   folderParentSelect.value = newValue;
-  folderChildtSelect.value = null;
+  folderChildSelect.value = null;
   fileSelect.value = null;
   foldersChild.value = changeOptions(
     fileStorage.optionsChild,
     folderParentSelect.value,
   );
-  buildingPath(newValue, positionOfParent);
+  buildingPath(newValue, indexOfParent);
 }
 
 function handleChildSelectChange(newValue: string) {
-  folderChildtSelect.value = newValue;
+  folderChildSelect.value = newValue;
   fileSelect.value = null;
-  files.value = changeFiles(fileStorage.files, folderChildtSelect.value);
-  buildingPath(newValue, positionOfChild);
+  files.value = changeFiles(fileStorage.files, folderChildSelect.value);
+  buildingPath(newValue, indexOfChild);
 }
 
 function handleFileSelectChange(newValue: string) {
   fileSelect.value = newValue;
-  buildingPath(newValue, positionOfFile);
+  buildingPath(newValue, indexOfFile);
 }
 
 function buildingPath(folderName: string, index: number) {
   path.value.splice(index, eliminateRepeats, folderName);
 }
 
-function zerateGrandParent() {
-  folderGrandParentSelect.value = null;
+function cleanAllFolders() {
   folderParentSelect.value = null;
-  folderChildtSelect.value = null;
+  folderChildSelect.value = null;
   fileSelect.value = null;
-  buildingPath("", positionOfGrandParent);
-  buildingPath("", positionOfParent);
-  buildingPath("", positionOfChild);
-  buildingPath("", positionOfFile);
+  buildingPath("", indexOfGrandParent);
+  buildingPath("", indexOfParent);
+  buildingPath("", indexOfChild);
+  buildingPath("", indexOfFile);
   foldersParents.value = [];
   foldersChild.value = [];
   files.value = [];
 }
 
-function zerateParent() {
+function cleanFoldersAndSubFolders() {
   folderParentSelect.value = null;
-  folderChildtSelect.value = null;
+  folderChildSelect.value = null;
   fileSelect.value = null;
-  buildingPath("", positionOfParent);
-  buildingPath("", positionOfChild);
-  buildingPath("", positionOfFile);
+  buildingPath("", indexOfParent);
+  buildingPath("", indexOfChild);
+  buildingPath("", indexOfFile);
   foldersChild.value = [];
   files.value = [];
 }
 
-function zerateChild() {
-  folderChildtSelect.value = null;
+function cleanSubFolders() {
+  folderChildSelect.value = null;
   fileSelect.value = null;
-  buildingPath("", positionOfChild);
-  buildingPath("", positionOfFile);
+  buildingPath("", indexOfChild);
+  buildingPath("", indexOfFile);
   files.value = [];
 }
 
-function zerateFile() {
+function cleanFiles() {
   fileSelect.value = null;
-  buildingPath("", positionOfFile);
+  buildingPath("", indexOfFile);
 }
 </script>

@@ -1,17 +1,10 @@
 <template>
   <q-card-section>
     <div class="row">
-      <q-item
-        clickable
-        v-ripple
-        v-for="(folder, index) in foldersList"
-        class="text-h7"
-      >
-        <q-item-section
-          @click="fileStorage.setNameFolderC(folder), (tab = folder)"
-          :class="tabClass(folder)"
-          >{{ folder }}</q-item-section
-        >
+      <q-item clickable v-ripple v-for="folder in foldersList" class="text-h7">
+        <q-item-section @click="setFolder(folder)" :class="tabClass(folder)">{{
+          folder
+        }}</q-item-section>
       </q-item>
     </div>
   </q-card-section>
@@ -40,4 +33,8 @@ watchEffect(() => {
   }
   return (foldersList.value = []);
 });
+function setFolder(folder: String) {
+  fileStorage.setNameFolderC(folder);
+  tab.value = folder;
+}
 </script>

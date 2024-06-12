@@ -1,6 +1,6 @@
 mutation CreateFolder($folder: String!, $path: String!) {
   createFolder(folder: $folder, path: $path) {
-    success
+    enum
     message
   }
 }

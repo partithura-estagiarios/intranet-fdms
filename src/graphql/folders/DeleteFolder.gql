@@ -1,6 +1,6 @@
 mutation DeleteFolder($path: String!) {
   deleteFolder(path: $path) {
-    success
+    enum
     message
   }
 }

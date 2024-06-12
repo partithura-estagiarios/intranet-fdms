@@ -2,22 +2,23 @@ import { defineStore } from "pinia";
 import { GrandParentFolder, ChildFolder } from "../entities/files";
 import CreateFolder from "../graphql/folders/CreateFolder.gql";
 import DeleteFolder from "../graphql/folders/DeleteFolder.gql";
-export function trimFilePath(filePath: string): string {
-  return filePath.replace(
-    /^\/home\/partithura\/Projetos\/intranet-fdms\/archives-intranet-fdms\//,
-    "",
-  );
-}
+const server_express_url = getEnvironmentVariable(
+  "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
+);
+const local_directory = getEnvironmentVariable("VITE_LOCATION_FOR_ARCHIVES");
 function isNewFileName(newName: string) {
   if (newName) {
     return newName + ".pdf";
   }
 }
-const server_express_url = getEnvironmentVariable(
-  "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
-);
+function trimFilePath(filePath: string): string {
+  const basePath = local_directory;
+  const regex = new RegExp(`^${basePath}`);
+  return filePath.replace(regex, "");
+}
+
 interface Message {
-  success: boolean;
+  enum: boolean;
   message: string;
 }
 interface State {
@@ -52,27 +53,27 @@ export const useFiles = defineStore(id, {
       return state.folders;
     },
     getFoldersParent: (state) => {
-      const pastaAvo = state.optionsParent.find(
-        (pasta) => pasta.name === state.nameOfGrandParent,
+      const auxFolder = state.optionsParent.find(
+        (folder) => folder.name === state.nameOfGrandParent,
       );
-      if (pastaAvo) {
-        return pastaAvo.subFolders;
+      if (auxFolder) {
+        return auxFolder.subFolders;
       }
     },
     getFoldersChild: (state) => {
-      const pastaAvo = state.optionsChild.find(
-        (pasta) => pasta.name === state.nameOfParent,
+      const auxFolder = state.optionsChild.find(
+        (folder) => folder.name === state.nameOfParent,
       );
-      if (pastaAvo) {
-        return pastaAvo.subFolders;
+      if (auxFolder) {
+        return auxFolder.subFolders;
       }
     },
     getFoldersFiles: (state) => {
-      const pastaAvo = state.files.find(
-        (pasta) => pasta.name === state.nameOfChild,
+      const auxFolder = state.files.find(
+        (folder) => folder.name === state.nameOfChild,
       );
-      if (pastaAvo) {
-        return pastaAvo.subFolders;
+      if (auxFolder) {
+        return auxFolder.subFolders;
       }
     },
   },
@@ -115,8 +116,8 @@ export const useFiles = defineStore(id, {
         CreateFolder,
         { folder: folderName, path: path },
       );
-      if (createFolder.success) {
-        store.getFoldersAgain = createFolder.success;
+      if (createFolder.enum) {
+        store.getFoldersAgain = createFolder.enum;
         return createFolder.message;
       }
       return createFolder.message;
@@ -127,7 +128,7 @@ export const useFiles = defineStore(id, {
         DeleteFolder,
         { path: path },
       );
-      if (deleteFolder.success) {
+      if (deleteFolder.enum) {
         store.getFoldersAgain = true;
         return deleteFolder.message;
       }

@@ -15,7 +15,8 @@
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
 import { useI18n } from "vue-i18n";
-import { success, firsPosition } from "./lib";
+import { firstIndex } from "./lib";
+import { StatusResponse } from "../../../support/contracts";
 const fileStorage = useFiles();
 const { t } = useI18n();
 const props = defineProps({
@@ -27,17 +28,14 @@ const props = defineProps({
 
 async function deleteItem() {
   const result = await fileStorage.excludeFolder(props.path);
-  if (result.includes(success)) {
-    return positiveNotify(t(`action.${result}`));
+  if (result.includes(StatusResponse.SUCCESS)) {
+    return positiveNotify(t("action.deleteSuccess"));
   }
-  return negativeNotify(t(`action.${result}`));
+  negativeNotify(t("action.deleteFail"));
 }
 
 const isPathValid = computed(() => {
   const arr = props.path.split("/");
-  if (arr[firsPosition]) {
-    return true;
-  }
-  return false;
+  return !!arr[firstIndex];
 });
 </script>

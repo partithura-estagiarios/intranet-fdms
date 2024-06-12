@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
+import { StatusResponse } from "../../../support/contracts";
 const fileStorage = useFiles();
 const { t } = useI18n();
 
@@ -22,12 +23,14 @@ const props = defineProps({
   },
 });
 const input = ref();
-const success = "Success";
 async function addFolder() {
   const result = await fileStorage.insertFolder(props.path, input.value);
-  if (result.includes(success)) {
-    return positiveNotify(t(`action.${result}`));
+  if (result.includes(StatusResponse.SUCCESS)) {
+    return positiveNotify(t("action.createFolderSuccess"));
   }
-  return negativeNotify(t(`action.${result}`));
+  if (result.includes(StatusResponse.REPEAT)) {
+    return negativeNotify(t("action.folderAlreadyExists"));
+  }
+  negativeNotify(t("action.errorCreatingFolder"));
 }
 </script>
