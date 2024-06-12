@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-30">
+  <div>
     <Table />
   </div>
 </template>
