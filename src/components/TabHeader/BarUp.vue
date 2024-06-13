@@ -1,10 +1,10 @@
 <template>
   <q-toolbar class="color-custom q-py-lg">
-    <q-btn flat to="/home" class="q-py-sm q-px-xl absolute-top-left">
+    <q-btn flat to="/home" class="q-py-sm q-px-md absolute-top-left">
       <img src="/ico/LOGO_FUNDIMISA.png" class="q-py-md" />
     </q-btn>
 
-    <q-space />
+    <q-space class="q-px-xl q-mx-xl" />
     <q-tabs
       v-model="tab"
       indicator-color="transparent"

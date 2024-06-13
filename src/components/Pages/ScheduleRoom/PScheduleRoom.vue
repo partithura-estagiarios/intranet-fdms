@@ -1,6 +1,6 @@
 <template>
-  <div class="spacing-header">
-    <q-item class="font-custom padding-top">
+  <q-toolbar class="row justify-center q-py-sm">
+    <q-item class="font-custom">
       <q-item-section class="items-center">
         <q-btn
           no-caps
@@ -13,6 +13,8 @@
           {{ $t("text.selectDayForRoom") }}
         </p>
       </q-item-section>
+    </q-item>
+    <q-item>
       <q-item-section class="items-center">
         <Month :select-date="selectedDate" />
         <NavigationScheduleRoom
@@ -22,7 +24,7 @@
         />
       </q-item-section>
     </q-item>
-  </div>
+  </q-toolbar>
   <q-dialog v-model="card">
     <div class="my-card relative-position no-scroll">
       <q-card class="no-scroll" flat>
@@ -184,23 +186,14 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.padding-top {
-  position: relative;
-  padding-top: 5vh;
-}
 .custom-color {
   background-color: rgb(31, 73, 125);
 }
-.my-card {
-  top: 4vh;
-}
+
 .calendar-size {
   width: 100vh;
 }
 .font-custom {
   font-family: Fira Sans;
-}
-.spacing-header {
-  margin-inline: 35rem;
 }
 </style>
