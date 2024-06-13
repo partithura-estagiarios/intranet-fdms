@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar class="row justify-center q-py-sm">
+  <q-toolbar class="row justify-around q-py-sm">
     <q-item class="font-custom">
       <q-item-section class="items-center">
         <q-btn
