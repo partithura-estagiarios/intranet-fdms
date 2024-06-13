@@ -1,6 +1,6 @@
 <template>
-  <div class="spacing-header">
-    <q-item class="font-custom padding-top">
+  <q-toolbar class="row justify-center">
+    <q-item class="font-custom custom-margin">
       <q-item-section class="items-center">
         <q-btn
           no-caps
@@ -13,6 +13,8 @@
           {{ $t("text.selectDayForRoom") }}
         </p>
       </q-item-section>
+    </q-item>
+    <q-item>
       <q-item-section class="items-center">
         <Month :select-date="selectedDate" />
         <NavigationScheduleRoom
@@ -22,7 +24,7 @@
         />
       </q-item-section>
     </q-item>
-  </div>
+  </q-toolbar>
   <q-dialog v-model="card">
     <div class="my-card relative-position no-scroll">
       <q-card class="no-scroll" flat>
@@ -63,7 +65,7 @@
         class="cursor-pointer"
       >
         <template #head-day="{ scope: { timestamp } }">
-          <div class="fit row justify-center custom-color">
+          <div class="fit row justify-center text-white custom-color">
             {{ getHeadDay(timestamp) }}
           </div>
         </template>
@@ -78,7 +80,7 @@
     <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="mr-2" />
-        <span>{{ $t(`text.${item.name}`) }}</span>
+        <span class="text-body1">{{ $t(`text.${item.name}`) }}</span>
       </div>
     </div>
   </div>
@@ -184,24 +186,17 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.padding-top {
-  position: relative;
-  padding-top: 5vh;
-}
 .custom-color {
   background-color: rgb(31, 73, 125);
-  color: white;
 }
-.my-card {
-  top: 4vh;
-}
+
 .calendar-size {
   width: 100vh;
 }
 .font-custom {
   font-family: Fira Sans;
 }
-.spacing-header {
-  margin-inline: 35rem;
+.custom-margin {
+  margin-right: 15rem;
 }
 </style>

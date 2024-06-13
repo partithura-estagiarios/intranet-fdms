@@ -6,7 +6,7 @@
     />
   </q-card-section>
   <q-card-section align="right">
-    <div class="q-pa-sl">
+    <div class="q-pa-sl font-custom">
       <q-btn
         color="green"
         :label="$t('formRamal.confirm')"
@@ -45,3 +45,8 @@ async function saveRoom() {
   return emits("reload", true);
 }
 </script>
+<style scoped>
+.font-custom {
+  font-family: Fira Sans;
+}
+</style>

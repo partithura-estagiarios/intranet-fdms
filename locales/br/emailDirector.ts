@@ -1,6 +1,6 @@
 export default {
   registration: "Matrícula",
-  name: "Name",
+  name: "Nome",
   contactTheDirector: "Contate o Diretor",
   describeYourContact: "Descreva seu contato",
   save: "Salvar",

@@ -18,9 +18,6 @@
             <Input :objectInput="loginForm" @dataLogin="handleDataLogin" />
           </div>
           <br />
-          <a class="underline text-bold" color="blue">{{
-            $t("login.iForgotMyPassword")
-          }}</a>
         </q-card-section>
         <q-card-actions class="q-px-md">
           <q-btn

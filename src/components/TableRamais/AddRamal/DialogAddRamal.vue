@@ -2,7 +2,9 @@
   <q-dialog v-model="props.open" persistent>
     <q-responsive :ratio="16 / 9" style="width: 790px; max-width: 90%">
       <q-card>
-        <q-card-section class="bg-indigo-8 row justify-between text-white">
+        <q-card-section
+          class="custom-color font-custom row justify-between text-white"
+        >
           <div class="q-pa-md text-h5">{{ $t("text." + props.option) }}</div>
           <q-icon
             name="close"
@@ -54,7 +56,10 @@
             </span>
           </q-card-section>
         </div>
-        <q-card-actions align="right" class="pt-12 pa-5 text-green-8">
+        <q-card-actions
+          align="right"
+          class="pt-12 pa-5 text-green-8 font-custom"
+        >
           <q-btn flat :label="$t('formRamal.confirm')" @click="optionRamal()" />
         </q-card-actions>
       </q-card>
@@ -124,3 +129,11 @@ async function optionRamal() {
   return negativeNotify(t("erroRamal." + props.option));
 }
 </script>
+<style scoped>
+.custom-color {
+  background-color: rgb(31, 73, 125);
+}
+.font-custom {
+  font-family: Fira Sans;
+}
+</style>

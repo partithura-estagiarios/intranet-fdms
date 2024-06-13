@@ -1,6 +1,6 @@
 <template>
   <q-card-section class="custom-color row justify-between text-white">
-    <div class="q-pa-md text-h5">{{ $t(props.option) }}</div>
+    <div class="q-pa-md text-h5 font-custom">{{ $t(props.option) }}</div>
     <q-icon
       name="close"
       class="pt-2 cursor-pointer"

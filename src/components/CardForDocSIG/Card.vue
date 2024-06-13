@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed-center q-mt-xl q-pa-xl">
+  <div class="fixed-center q-mt-xl">
     <q-card class="card no-padding no-margin">
       <q-card-section class="custom-color text-h6 row text-white">
         <div class="col-12">
@@ -33,7 +33,7 @@ watchEffect(async () => {
 
 <style scoped>
 .card {
-  width: 70rem;
+  width: 60rem;
   height: 50rem;
 }
 .custom-color {
