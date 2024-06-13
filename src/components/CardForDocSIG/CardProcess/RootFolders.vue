@@ -7,7 +7,7 @@
         v-ripple
         v-for="(folder, index) in foldersList"
         :key="index"
-        :class="tabClass(folder)"
+        :class="coloringItem(folder)"
       >
         <q-item-section @click="setFolder(folder)">{{ folder }}</q-item-section>
       </q-item>
@@ -20,7 +20,7 @@ import { useFiles } from "../../../stores/files";
 const fileStorage = useFiles();
 const foldersList = ref();
 const activeButtonIndex = ref("");
-function tabClass(item: string) {
+function coloringItem(item: string) {
   return {
     "text-white bg-green rounded-borders": activeButtonIndex.value === item,
   };
@@ -42,6 +42,14 @@ function setFolder(folder: string) {
   fileStorage.setNameFolderP(folder);
   activeButtonIndex.value = folder;
 }
+watch(
+  () => fileStorage.nameOfGrandParent,
+  (newValue, oldValue) => {
+    if (newValue != oldValue) {
+      activeButtonIndex.value = "";
+    }
+  },
+);
 </script>
 
 <style scoped>

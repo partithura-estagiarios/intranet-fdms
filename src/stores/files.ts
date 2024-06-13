@@ -62,7 +62,9 @@ export const useFiles = defineStore(id, {
     },
     getFoldersChild: (state) => {
       const auxFolder = state.optionsChild.find(
-        (folder) => folder.name === state.nameOfParent,
+        (folder) =>
+          folder.name === state.nameOfParent &&
+          folder.folderGPName === state.nameOfGrandParent,
       );
       if (auxFolder) {
         return auxFolder.subFolders;
@@ -70,7 +72,9 @@ export const useFiles = defineStore(id, {
     },
     getFoldersFiles: (state) => {
       const auxFolder = state.files.find(
-        (folder) => folder.name === state.nameOfChild,
+        (folder) =>
+          folder.name === state.nameOfChild &&
+          folder.folderGPName === state.nameOfGrandParent,
       );
       if (auxFolder) {
         return auxFolder.subFolders;
@@ -168,6 +172,7 @@ function loadAllFoldersParent(folders: GrandParentFolder[]) {
 
   for (const folder of folders) {
     const parentFolder = {
+      folderGPName: folder.name,
       name: folder.name,
       subFolders: folder.subFolders.map((subFolder) => subFolder.name),
     };
@@ -182,6 +187,7 @@ function loadAllFoldersChild(folders: GrandParentFolder[]) {
   for (const folder of folders) {
     for (const subFolder of folder.subFolders) {
       const childFolder = {
+        folderGPName: folder.name,
         name: subFolder.name,
         subFolders: subFolder.subFolders.map(
           (subSubFolder) => subSubFolder.name,
@@ -200,6 +206,7 @@ function loadAllFiles(folders: GrandParentFolder[]) {
     for (const subFolder of folder.subFolders) {
       for (const folderChild of subFolder.subFolders) {
         const childFolder = {
+          folderGPName: folder.name,
           name: folderChild.name,
           subFolders: folderChild.subFolders.map(
             (subSubFolder) => subSubFolder,

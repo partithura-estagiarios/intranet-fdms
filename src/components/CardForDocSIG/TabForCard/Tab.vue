@@ -8,7 +8,7 @@
         flat
         size="lg"
         :label="item.name"
-        :class="tabClass(item.name)"
+        :class="coloringItem(item.name)"
         @click="handleTabClick(item.name)"
       />
       <q-btn icon="edit" flat class="absolute-right">
@@ -45,6 +45,7 @@
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
 import { isDeletion, isFile, isFolder } from "./lib";
+import { AuxFolder } from "../../../entities/files";
 import BuildPath from "./BuildPath.vue";
 const fileStorage = useFiles();
 const tab = ref("");
@@ -55,7 +56,7 @@ function handleTabClick(folderName: string) {
   tab.value = folderName;
   fileStorage.setNameFolderGP(folderName);
 }
-function tabClass(itemName: string) {
+function coloringItem(itemName: string) {
   return {
     "text-green bg-white rounded-borders": itemName === tab.value,
   };
@@ -66,6 +67,7 @@ function openModal(text: string) {
 }
 watchEffect(() => {
   folderList.value = fileStorage.getFoldersGrandParent;
+  console.log(folderList);
   if (folderList.value) {
     const isIndexInFoldersList = folderList.value.includes(tab.value);
     if (isIndexInFoldersList) {
@@ -73,6 +75,14 @@ watchEffect(() => {
     }
   }
 });
+watch(
+  () => folderList.value,
+  (newList: AuxFolder[]) => {
+    if (tab.value && !newList.map((item) => item.name).includes(tab.value)) {
+      tab.value = "";
+    }
+  },
+);
 </script>
 
 <style scoped>
