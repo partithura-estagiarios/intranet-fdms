@@ -1,0 +1,25 @@
+query LoadEventsInData($data: String!) {
+  loadEventsInData(data: $data) {
+    id
+    userCreated {
+      name
+      ramalNumber
+      userRegistration
+      email
+    }
+    location
+    rules
+    totalPeoples
+    initialTime
+    finalTime
+    support {
+      computer
+      projector
+      water
+      coffee
+      flipSharp
+      equipamentSong
+      helpers
+    }
+  }
+}

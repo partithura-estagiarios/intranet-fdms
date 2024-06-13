@@ -20,6 +20,9 @@ const props = defineProps({
 });
 </script>
 <style scoped>
+.font-custom {
+  font-family: Fira Sans;
+}
 .custom-color {
   background-color: rgb(31, 73, 125);
 }

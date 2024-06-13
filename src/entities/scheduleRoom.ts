@@ -1,4 +1,4 @@
-export interface Event {
+export interface EventRoom {
   id: string;
   userCreated: {
     name: string;
@@ -30,6 +30,9 @@ export interface CalendarItem {
       time: String;
     };
   };
+}
+export interface CalendarTimeStamp {
+  date: string;
 }
 interface Inputs {
   name: {
