@@ -15,6 +15,8 @@ import tab from "./tab";
 import erroRamal from "./erroRamal";
 import sucessRamal from "./sucessRamal";
 import emailDirector from "./emailDirector";
+import folders from "./folders";
+
 export default {
   emailDirector,
   userScheduleRoom,
@@ -36,4 +38,5 @@ export default {
   tab,
   errors,
   auth,
+  folders,
 };

@@ -1,93 +1,92 @@
 <template>
-  <q-tabs class="font-custom" v-model="tab">
-    <q-btn
-      v-for="(item, index) in tabItems"
-      :key="index"
-      no-caps
-      flat
-      size="lg"
-      :name="item"
-      :label="item"
-      :class="tabClass(item)"
-      @click="openCard(item)"
-    />
-    <div class="relative-position absolute-right">
-      <q-btn icon="edit" flat>
-        <q-menu anchor="bottom left" self="top start">
+  <div>
+    <q-tabs class="font-custom" v-model="tab">
+      <q-btn
+        v-for="(item, index) in folderList"
+        :key="index"
+        no-caps
+        flat
+        size="lg"
+        :label="item.name"
+        :class="coloringItem(item.name)"
+        @click="handleTabClick(item.name)"
+      />
+      <q-btn icon="edit" flat class="absolute-right">
+        <q-menu anchor="top right" self="top left">
           <q-list>
             <q-item clickable v-close-popup>
-              <q-item-section icon="add_circle" @click="openDialog('add')">
-                {{ $t("action.addFile") }}
-              </q-item-section>
+              <q-item-section @click="openModal(isFolder)">{{
+                $t("action.addFolder")
+              }}</q-item-section>
             </q-item>
             <q-item clickable v-close-popup>
-              <q-item-section icon="delete" @click="openDialog('delete')">
-                {{ $t("action.deleteFile") }}
+              <q-item-section @click="openModal(isFile)">{{
+                $t("action.addFile")
+              }}</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section @click="openModal(isDeletion)"
+                >{{ $t("action.deleteItem") }}
               </q-item-section>
             </q-item>
           </q-list>
         </q-menu>
       </q-btn>
-    </div>
-    <q-dialog v-model="dialog">
-      <q-card>
-        <DialogHeader @close="(val) => (dialog = val)" :option="title" />
-        <SelectFolder :version="option" />
-      </q-card>
-    </q-dialog>
-  </q-tabs>
+      <q-dialog v-model="openDialog">
+        <q-card>
+          <DialogHeader @close="(val) => (openDialog = val)" :option="title" />
+          <BuildPath :active-dialog="openDialog" :option="title" />
+        </q-card>
+      </q-dialog>
+    </q-tabs>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useI18n } from "vue-i18n";
 import { useFiles } from "../../../stores/files";
-
+import { isDeletion, isFile, isFolder } from "./lib";
+import { AuxFolder } from "../../../entities/files";
+import BuildPath from "./BuildPath.vue";
 const fileStorage = useFiles();
-const { t } = useI18n();
-const dialog = ref(false);
+const tab = ref("");
+const openDialog = ref(false);
 const title = ref("");
-const option = ref("");
-const tab = ref(""); // Define o valor inicial de tab como string vazia
-
-const props = defineProps({
-  tabItems: {
-    type: Array as () => string[],
-    required: true,
-  },
-});
-
-const emits = defineEmits(["selectedFolderTree"]);
-
-function openDialog(version: string) {
-  dialog.value = true;
-  if (version === "add") {
-    option.value = "add";
-    title.value = t("action.addFile");
-  } else {
-    option.value = "delete";
-    title.value = t("action.deleteFile");
-  }
+const folderList = ref();
+function handleTabClick(folderName: string) {
+  tab.value = folderName;
+  fileStorage.setNameFolderGP(folderName);
 }
-
-function tabClass(itemName: string) {
+function coloringItem(itemName: string) {
   return {
     "text-green bg-white rounded-borders": itemName === tab.value,
   };
 }
-
-function openCard(item: string) {
-  tab.value = item;
-  fileStorage.toggleFolderTreeState(item);
+function openModal(text: string) {
+  openDialog.value = true;
+  title.value = text;
 }
+watchEffect(() => {
+  folderList.value = fileStorage.getFoldersGrandParent;
+  if (folderList.value) {
+    const isIndexInFoldersList = folderList.value.includes(tab.value);
+    if (isIndexInFoldersList) {
+      tab.value = "";
+    }
+  }
+});
+watch(
+  () => folderList.value,
+  (newList: AuxFolder[]) => {
+    if (tab.value && !newList.map((item) => item.name).includes(tab.value)) {
+      tab.value = "";
+    }
+  },
+);
 </script>
 
 <style scoped>
 .font-custom {
   font-family: Fira Sans;
-}
-
-.rounded-borders {
-  border-radius: 4px;
+  height: 3rem;
 }
 </style>

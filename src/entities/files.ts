@@ -1,14 +1,19 @@
-export interface Files {
-  path: string | undefined;
-  pdfs: string[] | undefined;
+export interface ChildFolder {
+  folderGPName: String;
+  name: String;
+  subFolders: String[];
+}
+interface ParentFolder {
+  name: String;
+  subFolders: ChildFolder[];
 }
 
-export interface Anexo {
-  __key: string;
-  name: string;
-  lastModified: number;
-  lastModifiedDate: Date;
-  size: number;
-  type: string;
-  webkitRelativePath: string;
+export interface GrandParentFolder {
+  name: String;
+  subFolders: ParentFolder[];
+}
+
+export interface AuxFolder {
+  name: String;
+  subFolders: String[];
 }
