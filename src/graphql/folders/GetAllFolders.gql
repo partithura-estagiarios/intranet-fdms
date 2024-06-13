@@ -1,0 +1,12 @@
+query GetAllFolders {
+  getAllFolders {
+    name
+    subFolders {
+      name
+      subFolders {
+        name
+        subFolders
+      }
+    }
+  }
+}

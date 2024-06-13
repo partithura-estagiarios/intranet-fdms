@@ -14,7 +14,11 @@
     </template>
     <template v-for="event in getEventsByDate(props.data)">
       <div class="hours-size">
-        <q-badge rounded :color="event.colorRoom" @click="selectEvent(event)" />
+        <q-badge
+          rounded
+          :color="event.colorRoom"
+          @click.stop="selectEvent(event)"
+        />
         {{ formatarData(new Date(event.initialTime)) }} {{ $t("text.until") }}
         {{ formatarData(new Date(event.finalTime)) }}
         <q-dialog v-model="card">
@@ -35,7 +39,7 @@
 <script setup lang="ts">
 import { formatDate } from "./lib";
 import DialogScheduleRoom from "../../ShowScheduleRoom/DialogScheduleRoom.vue";
-import { Event } from "../../../entities/scheduleRoom";
+import { EventRoom } from "../../../entities/scheduleRoom";
 import { DateTime } from "luxon";
 const props = defineProps({
   data: {
@@ -43,7 +47,7 @@ const props = defineProps({
     default: "",
   },
   events: {
-    type: Array as () => Event[],
+    type: Array as () => EventRoom[],
     default: () => [],
   },
 });

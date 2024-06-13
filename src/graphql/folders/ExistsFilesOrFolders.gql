@@ -1,3 +1,0 @@
-query ExistsFilesOrFolders($folder: String!) {
-  existsFilesOrFolders(folder: $folder)
-}

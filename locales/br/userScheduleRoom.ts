@@ -6,4 +6,12 @@ export default {
   totalPeople: "Total de pessoas",
   timeError: "Já há uma reunião agendada nesse horário",
   reunionAccept: "Reunião marcada com sucesso",
+  thereAreNoEvents: "Não há eventos nesse dia",
+  sunday: "Domingo",
+  monday: "Segunda",
+  tuesday: "Terça",
+  wednesday: "Quarta",
+  thursday: "Quinta",
+  friday: "Sexta",
+  saturday: "Sábado",
 };

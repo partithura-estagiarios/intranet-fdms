@@ -1,11 +1,11 @@
 <template>
-  <div class="q-pa-xl box-shadow mx-8 pt-3 relative-position bg-white">
+  <div class="q-pa-xl box-shadow q-mx-xl q-my-xl bg-white">
     <HeaderRamais
       @envityRamal-table="(wordRamal) => searchRamal(wordRamal)"
       @reload="reloadRamais"
     />
     <q-table
-      :rows="ramais"
+      :rows="ramais || []"
       :columns="columns as Column[]"
       flat
       hide-bottom

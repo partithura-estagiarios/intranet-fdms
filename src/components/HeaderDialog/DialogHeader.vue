@@ -1,6 +1,6 @@
 <template>
   <q-card-section class="custom-color row justify-between text-white">
-    <div class="q-pa-md text-h5">{{ props.option }}</div>
+    <div class="q-pa-md text-h5">{{ $t(props.option) }}</div>
     <q-icon
       name="close"
       class="pt-2 cursor-pointer"
@@ -20,6 +20,9 @@ const props = defineProps({
 });
 </script>
 <style scoped>
+.font-custom {
+  font-family: Fira Sans;
+}
 .custom-color {
   background-color: rgb(31, 73, 125);
 }

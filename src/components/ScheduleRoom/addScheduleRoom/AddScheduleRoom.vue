@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import CreateScheduleRoom from "../../../graphql/scheduleRoom/mutations.gql";
+import CreateScheduleRoom from "../../../graphql/scheduleRoom/CreateScheduleRoom.gql";
 import { adaptScheduleToRoom } from "../addScheduleRoom/lib";
 import { DateTime } from "luxon";
 const { t } = useI18n();

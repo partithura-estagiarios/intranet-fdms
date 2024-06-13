@@ -1,6 +1,8 @@
 <template>
-  <q-card class="text-h3 text-uppercase text-indigo-8">
-    {{ formattedMonth }}
+  <q-card class="text-h3 text-uppercase">
+    <div class="custom-color">
+      {{ formattedMonth }}
+    </div>
   </q-card>
 </template>
 
@@ -36,3 +38,8 @@ const locale = computed(() => {
   return "pt-BR";
 });
 </script>
+<style scoped>
+.custom-color {
+  color: rgb(31, 73, 125);
+}
+</style>

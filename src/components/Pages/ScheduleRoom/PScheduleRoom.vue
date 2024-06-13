@@ -1,20 +1,27 @@
 <template>
-  <div
-    class="fit column wrap justify-center items-center content-center padding-top"
-  >
-    <Month :select-date="selectedDate" />
-    <NavigationScheduleRoom @today="onToday" @prev="onPrev" @next="onNext" />
-  </div>
-  <div class="row q-px-md q-pa-sm justify-center">
-    <q-btn
-      color="green"
-      :label="$t('text.addRoom')"
-      class="row"
-      @click="(card = true), (selectDate = '')"
-    />
-    <div class="q-px-md q-pa-md text-green-8">
-      {{ $t("text.selectDayForRoom") }}
-    </div>
+  <div class="spacing-header">
+    <q-item class="font-custom padding-top">
+      <q-item-section class="items-center">
+        <q-btn
+          no-caps
+          color="green"
+          :label="$t('text.schedulEvent')"
+          class="text-body1 text-white"
+          @click="(card = true), (selectDate = '')"
+        />
+        <p class="text-green-8">
+          {{ $t("text.selectDayForRoom") }}
+        </p>
+      </q-item-section>
+      <q-item-section class="items-center">
+        <Month :select-date="selectedDate" />
+        <NavigationScheduleRoom
+          @today="onToday"
+          @prev="onPrev"
+          @next="onNext"
+        />
+      </q-item-section>
+    </q-item>
   </div>
   <q-dialog v-model="card">
     <div class="my-card relative-position no-scroll">
@@ -30,27 +37,44 @@
       </q-card>
     </div>
   </q-dialog>
-  <div class="q-pa-md row justify-center">
+  <q-dialog v-model="cardEvents">
+    <div class="my-card relative-position no-scroll">
+      <q-card class="no-scroll" flat>
+        <DialogHeader
+          @close="(item) => (cardEvents = item)"
+          :option="$t('text.eventsDay')"
+        />
+        <CardOfEvents :daysEvents="eventsDay" />
+      </q-card>
+    </div>
+  </q-dialog>
+  <div class="q-pa-md row justify-center font-custom">
     <div class="text-h5 calendar-size text-uppercase">
       <q-calendar-month
         ref="calendar"
         v-model="selectedDate"
-        animated
-        bordered
         focusable
         locale="pt-br"
         hoverable
-        short-weekday-label
         :day-min-height="100"
+        :focus-type="['day']"
         @click-date="onClickHeadDay"
+        @click-day="onClickDay"
+        class="cursor-pointer"
       >
+        <template #head-day="{ scope: { timestamp } }">
+          <div class="fit row justify-center custom-color">
+            {{ getHeadDay(timestamp) }}
+          </div>
+        </template>
+
         <template #day="{ scope: { timestamp } }">
-          <ExpansionEvent :data="timestamp.date" :events="events" />
+          <BadgeEvents :data="timestamp.date" :events="events" />
         </template>
       </q-calendar-month>
     </div>
   </div>
-  <div class="row justify-center">
+  <div class="row justify-center font-custom">
     <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="mr-2" />
@@ -66,18 +90,28 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import { formatDate, insertColor, rooms } from "./lib";
-import { CalendarItem, Event } from "../../../entities/scheduleRoom";
-import ScheduleRoomLoad from "../../../graphql/scheduleRoom/queries.gql";
+import {
+  CalendarItem,
+  CalendarTimeStamp,
+  EventRoom,
+} from "../../../entities/scheduleRoom";
+import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
+import { useEvents } from "../../../stores/events";
+const eventStorage = useEvents();
 const selectedDate = ref(today());
+const { t } = useI18n();
 const events = ref();
 const instance = getCurrentInstance();
 const card = ref(false);
+const cardEvents = ref(false);
 const selectDate = ref();
+const eventsDay = ref();
 function onClickHeadDay(item: CalendarItem) {
   const { date, time } = item.scope.timestamp;
   selectDate.value = date + " " + time;
   card.value = true;
 }
+
 function onToday() {
   if (instance && instance.refs && instance.refs.calendar) {
     (instance.refs.calendar as QCalendarMonth).moveToToday();
@@ -97,7 +131,7 @@ function onNext() {
 }
 async function loadSchedule() {
   const { scheduleRoomLoad } = (await runQuery(ScheduleRoomLoad)) as {
-    scheduleRoomLoad: Event[];
+    scheduleRoomLoad: EventRoom[];
   };
   if (scheduleRoomLoad.length > 0) {
     scheduleRoomLoad.forEach((event) => {
@@ -109,6 +143,42 @@ async function loadSchedule() {
     events.value = scheduleRoomLoad;
   }
 }
+const onClickDay = (data: CalendarItem) => {
+  const { date, time } = data.scope.timestamp;
+  events.value.forEach((event: Event) => {
+    eventsDay.value = events.value.filter(
+      (event: EventRoom) => event.finalDate === date,
+    );
+  });
+  if (eventsDay.value.length) {
+    eventStorage.dataFull = date.toString();
+    cardEvents.value = true;
+    return eventsDay;
+  }
+  return negativeNotify(t("userScheduleRoom.thereAreNoEvents"));
+};
+watchEffect(() => {
+  if (eventStorage.closeModal) {
+    negativeNotify(t(`text.noMoreEvents`));
+    cardEvents.value = false;
+    return eventStorage.toggleCloseModal;
+  }
+});
+
+function getHeadDay(item: CalendarTimeStamp) {
+  const daysOfWeek = [
+    t("userScheduleRoom.monday"),
+    t("userScheduleRoom.tuesday"),
+    t("userScheduleRoom.wednesday"),
+    t("userScheduleRoom.thursday"),
+    t("userScheduleRoom.friday"),
+    t("userScheduleRoom.saturday"),
+    t("userScheduleRoom.sunday"),
+  ];
+  const { date } = item;
+  const data = new Date(date);
+  return daysOfWeek[data.getDay()];
+}
 onMounted(() => {
   loadSchedule();
 });
@@ -116,12 +186,22 @@ onMounted(() => {
 <style scoped>
 .padding-top {
   position: relative;
-  padding-top: 10vh;
+  padding-top: 5vh;
+}
+.custom-color {
+  background-color: rgb(31, 73, 125);
+  color: white;
 }
 .my-card {
   top: 4vh;
 }
 .calendar-size {
   width: 100vh;
+}
+.font-custom {
+  font-family: Fira Sans;
+}
+.spacing-header {
+  margin-inline: 35rem;
 }
 </style>

@@ -1,0 +1,3 @@
+query NextEvents($nextOrOld: Int!, $data: String!) {
+  nextEvents(nextOrOld: $nextOrOld, data: $data)
+}
