@@ -63,7 +63,7 @@
         class="cursor-pointer"
       >
         <template #head-day="{ scope: { timestamp } }">
-          <div class="fit row justify-center custom-color">
+          <div class="fit row justify-center text-white custom-color">
             {{ getHeadDay(timestamp) }}
           </div>
         </template>
@@ -190,7 +190,6 @@ onMounted(() => {
 }
 .custom-color {
   background-color: rgb(31, 73, 125);
-  color: white;
 }
 .my-card {
   top: 4vh;

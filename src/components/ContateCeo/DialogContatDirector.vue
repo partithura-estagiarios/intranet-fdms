@@ -3,7 +3,9 @@
     <q-dialog v-model="props.open" persistent>
       <q-card>
         <q-form @submit.prevent.stop>
-          <q-card-section class="bg-indigo-8 row justify-between text-white">
+          <q-card-section
+            class="custom-color font-custom row text-white justify-between"
+          >
             <div class="q-pa-md text-h5">
               {{ $t("emailDirector.contactTheDirector") }}
             </div>
@@ -44,7 +46,7 @@
             <q-btn
               flat
               :label="$t('emailDirector.save')"
-              class="text-indigo-8"
+              class="text-green font-custom"
               @click="sendEmail"
               type="submit"
             ></q-btn>
@@ -101,3 +103,11 @@ watchEffect(() => {
   }
 });
 </script>
+<style scoped>
+.custom-color {
+  background-color: rgb(31, 73, 125);
+}
+.font-custom {
+  font-family: Fira Sans;
+}
+</style>

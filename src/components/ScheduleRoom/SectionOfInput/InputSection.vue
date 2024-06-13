@@ -31,7 +31,7 @@
       />
     </div>
     <div
-      class="bg-indigo-8 text-white q-pa-md text-h6 q-px-xl relative-position"
+      class="custom-color font-custom text-white q-pa-md text-h6 q-px-xl relative-position"
     >
       {{ $t("text.supportMaterial") }}
     </div>
@@ -82,5 +82,11 @@ onMounted(() => {
 .pad-date-time {
   top: -1vh;
   position: relative;
+}
+.custom-color {
+  background-color: rgb(31, 73, 125);
+}
+.font-custom {
+  font-family: Fira Sans;
 }
 </style>

@@ -11,7 +11,7 @@
       <template #prepend>
         <q-icon
           name="event"
-          class="bg-indigo-8 full-height q-px-md"
+          class="custom-color full-height q-px-md"
           color="white"
           @click="card = true"
         >
@@ -58,5 +58,8 @@ watchEffect(() => {
 .border {
   border: 1px rgb(29, 29, 167) solid;
   border-radius: 2px;
+}
+.custom-color {
+  background-color: rgb(31, 73, 125);
 }
 </style>

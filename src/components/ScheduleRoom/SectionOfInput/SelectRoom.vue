@@ -9,7 +9,7 @@
       <template #prepend>
         <q-icon
           :name="props.options.icon"
-          class="bg-indigo-8 full-height q-px-md"
+          class="full-height q-px-md custom-color"
           color="white"
         /> </template
     ></q-select>
@@ -37,5 +37,8 @@ watchEffect(() => {
 .border {
   border: 1px rgb(29, 29, 167) solid;
   border-radius: 2px;
+}
+.custom-color {
+  background-color: rgb(31, 73, 125);
 }
 </style>
