@@ -1,6 +1,6 @@
 <template>
-  <q-toolbar class="row justify-around q-py-sm">
-    <q-item class="font-custom">
+  <q-toolbar class="row justify-center">
+    <q-item class="font-custom custom-margin">
       <q-item-section class="items-center">
         <q-btn
           no-caps
@@ -80,7 +80,7 @@
     <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="mr-2" />
-        <span>{{ $t(`text.${item.name}`) }}</span>
+        <span class="text-body1">{{ $t(`text.${item.name}`) }}</span>
       </div>
     </div>
   </div>
@@ -195,5 +195,8 @@ onMounted(() => {
 }
 .font-custom {
   font-family: Fira Sans;
+}
+.custom-margin {
+  margin-right: 30rem;
 }
 </style>
