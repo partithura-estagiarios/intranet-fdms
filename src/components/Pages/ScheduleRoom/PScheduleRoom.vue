@@ -197,6 +197,6 @@ onMounted(() => {
   font-family: Fira Sans;
 }
 .custom-margin {
-  margin-right: 30rem;
+  margin-right: 15rem;
 }
 </style>
