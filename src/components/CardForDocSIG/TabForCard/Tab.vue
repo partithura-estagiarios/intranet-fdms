@@ -67,7 +67,6 @@ function openModal(text: string) {
 }
 watchEffect(() => {
   folderList.value = fileStorage.getFoldersGrandParent;
-  console.log(folderList);
   if (folderList.value) {
     const isIndexInFoldersList = folderList.value.includes(tab.value);
     if (isIndexInFoldersList) {
