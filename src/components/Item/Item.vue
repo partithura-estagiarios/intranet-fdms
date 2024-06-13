@@ -1,21 +1,21 @@
 <template>
-  <div class="row justify-center q-px-xl q-pa-md">
+  <div class="row justify-center">
     <div v-for="item in sistemas">
       <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
-          <q-avatar class="border row" size="6em">
+          <q-avatar class="border-color row bg-white shadow-14" size="7.99rem">
             <q-icon
               :name="item.icon"
-              color="indigo-7"
-              size="50px"
-              class="q-gutter-x-ls q-gutter-y-sm"
+              class="custom-color icon-partithura q-py-md"
             />
           </q-avatar>
         </q-item-section>
         <div class="label text-start row">
           <q-item>
             <q-item-section>
-              <q-item-label class="text-indigo-8 text-h6 text-weight-bolder">
+              <q-item-label
+                class="custom-color text-h5 text-weight-bolder font-custom"
+              >
                 {{ item.label }}
               </q-item-label>
               <DialogContatDirector
@@ -23,7 +23,7 @@
                 :open="openModalCeo"
               />
 
-              <q-item-label class="text-indigo text-h6">
+              <q-item-label class="text-green text-bold text-h5 font-custom">
                 {{ item.sublabel }}
               </q-item-label>
             </q-item-section>
@@ -55,7 +55,7 @@ function goToRoute(rout: String) {
   if (rout.includes("https")) {
     return window.open(`${rout}`);
   }
-  if (rout.includes("local")) {
+  if (rout.includes("contatoCeo")) {
     return (openModalCeo.value = true);
   }
   return router.push(`${rout}`);
@@ -63,8 +63,17 @@ function goToRoute(rout: String) {
 </script>
 
 <style scoped>
-.border {
-  border: 5px solid rgb(34, 34, 199);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+.border-color {
+  border: 8px solid rgb(31, 73, 125);
+}
+.custom-color {
+  color: rgb(31, 73, 125);
+}
+.font-custom {
+  font-family: Fira Sans;
+}
+.icon-partithura {
+  height: 5.7rem;
+  bottom: 0.35rem;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
-  <ImageRh img="Welcome_Intranet.png" />
-  <Separator :texto="$t('text.systems')" class="top" />
-  <Item sistema="gestao" class="no-padding" />
+  <q-img src="/WELCOME_INTRANET.png" />
+  <Separator :texto="$t('text.systems')" />
+  <Item sistema="gestao" class="position-systems relative-position" />
 </template>
 <style scoped>
-.top {
-  bottom: 5vh;
+.position-systems {
+  bottom: 6rem;
 }
 </style>

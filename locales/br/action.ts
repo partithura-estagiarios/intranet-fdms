@@ -29,7 +29,7 @@ export default {
     ing: "Comprando",
     ed: "Comprado",
   },
-  login: "Realizar Login",
+  login: "Fazer login",
   registerUser: "Registrar Usuário",
   logout: "Sair da conta",
   addFile: "Adicionar um arquivo",

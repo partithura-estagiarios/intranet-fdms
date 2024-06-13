@@ -32,7 +32,7 @@ export default {
   },
   login: "Login",
   registerUser: "Register User",
-  logout: "Log out of account",
+  logout: "Logout",
   addFile: "Add a file",
   addFolder: "Add a folder",
   delete: "Delete a file or folder",
