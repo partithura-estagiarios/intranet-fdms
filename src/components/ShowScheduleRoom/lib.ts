@@ -1,15 +1,8 @@
 import { DateTime } from "luxon";
 import { SuPMaterials } from "../../entities/supportMaterials";
+import { ValidKeys } from "../../support/contracts";
 export function formatDateTime(dateTime: Date) {
   return DateTime.fromJSDate(dateTime).toFormat("HH:mm");
-}
-enum ValidKeys {
-  projector = "projector",
-  water = "water",
-  flipSharp = "flipSharp",
-  equipamentSong = "equipamentSong",
-  coffee = "coffee",
-  computer = "computer",
 }
 
 export function renameKeys(materialsSup: SuPMaterials) {

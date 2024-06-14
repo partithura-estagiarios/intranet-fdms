@@ -7,7 +7,7 @@ export default {
   timeError: "Already have a meeting scheduled at that time",
   reunionAccept: "Meeting scheduled successfully",
   thereAreNoEvents: "There are no events that day",
-
+  dateError: "Invalid date",
   sunday: "Sunday",
   monday: "Monday",
   tuesday: "Tuesday",
