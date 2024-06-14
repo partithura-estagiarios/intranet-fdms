@@ -20,6 +20,7 @@
 import CreateScheduleRoom from "../../../graphql/scheduleRoom/CreateScheduleRoom.gql";
 import { adaptScheduleToRoom } from "../addScheduleRoom/lib";
 import { DateTime } from "luxon";
+import { StatusCreateMeeting } from "../../../support/contracts";
 const { t } = useI18n();
 const props = defineProps({
   selectDate: {
@@ -29,6 +30,16 @@ const props = defineProps({
 });
 const roomSchedule = ref();
 const emits = defineEmits(["reload"]);
+const notifyUser = (message: string, type: string) => {
+  if (type === StatusCreateMeeting.SUCCESS) {
+    return positiveNotify(message);
+  }
+  if (type === StatusCreateMeeting.DATE_CONFLICT) {
+    return negativeNotify(message);
+  }
+  negativeNotify(message);
+};
+
 async function saveRoom() {
   roomSchedule.value = adaptScheduleToRoom(roomSchedule.value);
   const dateTest1 = new Date(roomSchedule.value.initialTime);
@@ -37,11 +48,11 @@ async function saveRoom() {
   const dataFinal = DateTime.fromJSDate(dateTest2);
   roomSchedule.value.initialTime = dataInicial.toISO();
   roomSchedule.value.finalTime = dataFinal.toISO();
-  if (await runMutation(CreateScheduleRoom, { room: roomSchedule.value })) {
-    positiveNotify(t("userScheduleRoom.reunionAccept"));
-    return emits("reload", true);
-  }
-  negativeNotify(t("userScheduleRoom.timeError"));
+  const { createScheduleRoom }: { createScheduleRoom: string } =
+    await runMutation(CreateScheduleRoom, {
+      room: roomSchedule.value,
+    });
+  notifyUser(t(`userScheduleRoom.${createScheduleRoom}`), createScheduleRoom);
   return emits("reload", true);
 }
 </script>

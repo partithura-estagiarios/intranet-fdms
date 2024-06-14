@@ -5,6 +5,7 @@ export default {
   email: "Seu email",
   totalPeople: "Total de pessoas",
   timeError: "Já há uma reunião agendada nesse horário",
+  dateError: "Data inválida",
   reunionAccept: "Reunião marcada com sucesso",
   thereAreNoEvents: "Não há eventos nesse dia",
   sunday: "Domingo",
