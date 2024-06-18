@@ -2,9 +2,12 @@
   <q-card-section>
     <div class="row">
       <q-item clickable v-ripple v-for="folder in foldersList" class="text-h7">
-        <q-item-section @click="setFolder(folder)" :class="tabClass(folder)">{{
-          folder
-        }}</q-item-section>
+        <q-item-section
+          @click="setFolder(folder)"
+          :class="tabClass(folder)"
+          class="text-black"
+          >{{ folder }}</q-item-section
+        >
       </q-item>
     </div>
   </q-card-section>

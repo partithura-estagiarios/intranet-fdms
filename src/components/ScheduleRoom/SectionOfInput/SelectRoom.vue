@@ -6,6 +6,13 @@
       :label="$t('text.selectRoom')"
       class="col-4 border"
     >
+      <template #option="{ opt }">
+        <q-item class="text-black" clickable>
+          <q-item-section @click="model = opt" v-close-popup>
+            <q-item-label>{{ opt }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
       <template #prepend>
         <q-icon
           :name="props.options.icon"
@@ -35,8 +42,7 @@ watchEffect(() => {
 
 <style scoped>
 .border {
-  border: 1px rgb(29, 29, 167) solid;
-  border-radius: 2px;
+  border: 0.1rem rgb(31, 73, 125) solid;
 }
 .custom-color {
   background-color: rgb(31, 73, 125);

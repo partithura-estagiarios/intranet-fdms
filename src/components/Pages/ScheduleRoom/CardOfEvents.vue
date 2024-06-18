@@ -23,7 +23,7 @@
     </q-list>
   </div>
   <q-dialog v-model="card">
-    <q-card class="my-card">
+    <q-card>
       <DialogHeader
         @close="(val) => (card = val)"
         :option="eventSelected.rules"
@@ -74,5 +74,6 @@ function selectEvent(event: EventRoom) {
   scrollbar-gutter: stable both-edges;
   position: relative;
   padding-right: 20.2rem;
+  color: rgb(31, 73, 125);
 }
 </style>

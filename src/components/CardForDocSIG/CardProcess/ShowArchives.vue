@@ -4,10 +4,11 @@
       <q-item clickable v-ripple>
         <q-item-section @click="fileStorage.displayPdf(item)">
           <q-item-label
-            ><q-icon name="mdi-file-pdf-box" size="3rem"
-          /></q-item-label>
+            ><q-icon name="mdi-file-pdf-box" size="3rem" color="black" />
+            /></q-item-label
+          >
           <q-item-label
-            class="font-title-pdf"
+            class="font-title-pdf text-black"
             v-text="getLastPartOfPath(item)"
           />
         </q-item-section>

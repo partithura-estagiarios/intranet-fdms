@@ -2,7 +2,7 @@
   <q-card-section>
     <div class="height-limited scroll">
       <q-item
-        class="q-my-md"
+        class="bg-white rounded-borders q-my-md coloring-text"
         clickable
         v-ripple
         v-for="(folder, index) in foldersList"
@@ -22,7 +22,8 @@ const foldersList = ref();
 const activeButtonIndex = ref("");
 function coloringItem(item: string) {
   return {
-    "text-white bg-green rounded-borders": activeButtonIndex.value === item,
+    "text-white bg-green rounded-borders q-my-md":
+      activeButtonIndex.value === item,
   };
 }
 watchEffect(() => {
@@ -56,5 +57,8 @@ watch(
 .height-limited {
   max-height: 40rem;
   width: 15rem;
+}
+.coloring-text {
+  color: black;
 }
 </style>

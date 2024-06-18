@@ -1,11 +1,10 @@
 <template>
-  <div class="mt-2">
+  <div>
     <q-btn
-      class="btn-direction"
+      class="text-black"
       unelevated
       no-caps
-      size="19px"
-      @click="changeColor(activeButtonIndex - 1)"
+      @click="changeColor(activeButtonIndex - firstPosition)"
       :disable="activeButtonIndex == firstPage"
     >
       <label>{{ $t("text.previous") }}</label>
@@ -13,7 +12,7 @@
     <q-badge
       v-for="(num, index) in buttonColors"
       @click="changeColor(index)"
-      :color="buttonColors[index - 1]"
+      :color="buttonColors[index - firstPosition]"
       class="btns-pag text-indigo-8 cursor-pointer"
       :class="{
         'text-white': activeButtonIndex === null || activeButtonIndex === index,
@@ -21,17 +20,16 @@
       unelevated
     >
       <span :class="{ 'text-white': activeButtonIndex === index }">{{
-        index + 1
+        index + firstPosition
       }}</span>
     </q-badge>
 
     <q-btn
-      class="btn-direction"
+      class="text-black"
       unelevated
       no-caps
-      size="19px"
-      @click="changeColor(activeButtonIndex + 1)"
-      :disable="activeButtonIndex == props.pages - 1"
+      @click="changeColor(activeButtonIndex + firstPosition)"
+      :disable="activeButtonIndex == props.pages - firstPosition"
     >
       <label>{{ $t("text.next") }}</label>
     </q-btn>
@@ -44,14 +42,15 @@ const emits = defineEmits(["changePage"]);
 const props = defineProps({
   pages: { type: Number, required: true },
 });
-
+const firstPosition = ref(1);
 const buttonColors = ref<string[]>(Array(props.pages).fill("transparent"));
 const activeButtonIndex = ref();
 const changeColor = (index: number) => {
   if (activeButtonIndex.value !== null) {
-    buttonColors.value[activeButtonIndex.value - 1] = "transparent";
+    buttonColors.value[activeButtonIndex.value - firstPosition.value] =
+      "transparent";
   }
-  buttonColors.value[index - 1] = "green-8";
+  buttonColors.value[index - firstPosition.value] = "green-8";
   activeButtonIndex.value = index;
   emits("changePage", index);
 };

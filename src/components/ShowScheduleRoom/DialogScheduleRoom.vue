@@ -9,7 +9,7 @@
     </div>
   </q-card-section>
   <q-separator />
-  <q-card-section class="row">
+  <q-card-section class="row color-custom">
     <div class="row text-weight-bold">
       {{ $t("text.organizer") }}: {{ room.userCreated.name }}
       <q-space class="q-px-md" />
@@ -21,7 +21,7 @@
     </div>
   </q-card-section>
   <q-separator />
-  <q-card-section class="row text-weight-bold trd">
+  <q-card-section class="row text-weight-bold color-custom">
     {{ $t("text.supportMaterial") }}:
     <div
       class="row text-weight-bold q-px-md"
@@ -66,3 +66,8 @@ function renameKeysOfSupport(materialsSup: SuPMaterials) {
   return renameKeys(materialsSup);
 }
 </script>
+<style scoped>
+.color-custom {
+  color: rgb(31, 73, 125);
+}
+</style>
