@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-sl" @click="openPopup">
+  <div @click="openPopup">
     <q-input
       class="border"
       readonly

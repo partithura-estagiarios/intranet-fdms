@@ -6,3 +6,8 @@ export interface Item {
   sistema: string;
   link: string;
 }
+
+export interface CheckBox {
+  icon: string;
+  value: boolean;
+}
