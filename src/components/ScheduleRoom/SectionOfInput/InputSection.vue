@@ -41,7 +41,7 @@
         @envity-dates="(items) => (formScheduleRoom.booleanInfos = items)"
       />
     </div>
-    <div class="col-12 q-py-md">
+    <div class="col-12">
       <q-input
         outlined
         v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
