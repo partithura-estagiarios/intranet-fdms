@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-sl" @click="openPopup">
+  <div class="q-pa-sl" @click="openModal = true">
     <q-input
       class="border"
       readonly
@@ -14,9 +14,8 @@
           color="white"
         />
       </template>
+      <PopUpDateTime @dateSelected="handleDateSelected" :showTime="openModal" />
     </q-input>
-
-    <PopUpDateTime :showPopUp="popUp" @dateSelected="handleDateSelected" />
   </div>
 </template>
 
@@ -24,31 +23,16 @@
 const emits = defineEmits(["envityDates", "envityHour"]);
 const props = defineProps({
   label: { type: String, required: true },
-  dateInput: { type: String, default: "" },
+  dateInput: { type: String, required: true },
 });
-
+const openModal = ref(false);
 const input = ref("");
-const popUp = ref(false);
 const dateReceived = ref(props.label);
-const inputDate = ref();
-const inputTime = ref();
-
-const openPopup = () => {
-  popUp.value = true;
-};
-
 const handleDateSelected = (date: string, time: string) => {
   input.value = date + " " + time;
-  popUp.value = false;
+  openModal.value = false;
+  emits("envityDates", input);
 };
-
-watchEffect(() => {
-  emits("envityDates", inputDate.value);
-});
-
-watchEffect(() => {
-  emits("envityHour", inputTime.value);
-});
 </script>
 
 <style scoped>
