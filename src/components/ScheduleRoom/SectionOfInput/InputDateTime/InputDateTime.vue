@@ -4,13 +4,13 @@
       :label="$t('text.startDateAndTime')"
       class="col q-mr-sm"
       :dateInput="dateInitial"
-      @envity-dates="(item) => (dateInitialFormated = item)"
+      @envity-dates="receivedDateInitial"
     />
 
     <InputTime
       :label="$t('text.endDateAndTime')"
       class="col"
-      @envity-dates="(item) => (dateFinalFormated = item)"
+      @envity-dates="receivedDateFinal"
       :dateInput="dateFinal"
     />
   </div>
@@ -20,8 +20,6 @@
 const emits = defineEmits(["envityDates"]);
 const dateInitial = ref();
 const dateFinal = ref();
-const dateInitialFormated = ref();
-const dateFinalFormated = ref();
 
 const props = defineProps({
   selectDate: {
@@ -29,11 +27,19 @@ const props = defineProps({
     default: "",
   },
 });
+
+function receivedDateInitial(val: string) {
+  dateInitial.value = val;
+}
+
+function receivedDateFinal(val: string) {
+  dateFinal.value = val;
+}
 watchEffect(() => {
   if (props.selectDate) {
     dateInitial.value = props.selectDate;
     dateFinal.value = props.selectDate;
   }
-  emits("envityDates", dateInitialFormated.value, dateFinalFormated.value);
+  emits("envityDates", dateInitial.value, dateFinal.value);
 });
 </script>
