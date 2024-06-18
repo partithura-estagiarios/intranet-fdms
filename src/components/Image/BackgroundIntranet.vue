@@ -4,9 +4,10 @@
     class="absolute fixed-full background"
   />
 </template>
+
 <style scoped>
 .background {
   z-index: -1;
-  opacity: 15%;
+  opacity: 100%;
 }
 </style>

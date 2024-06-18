@@ -1,7 +1,7 @@
 <template>
   <q-btn color="primary" flat icon="settings">
-    <q-menu anchor="top left" self="bottom left">
-      <q-list style="min-width: 100px" v-for="item in props.options">
+    <q-menu anchor="top left" self="bottom left" class="text-black">
+      <q-list v-for="item in props.options">
         <q-item clickable @click="openDialog(item as String)">
           <q-item-section>{{ $t("text." + item) }}</q-item-section>
         </q-item>

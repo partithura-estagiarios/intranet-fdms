@@ -4,8 +4,14 @@
     :label="$t(props.title)"
     v-model="folderSelect"
     :options="folderList"
-    @update:model-value="handle"
   >
+    <template #option="{ opt }">
+      <q-item class="text-black" clickable>
+        <q-item-section @click="handle(opt)" v-close-popup>
+          <q-item-label>{{ opt }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </template>
     <template v-if="folderSelect" v-slot:append>
       <q-icon
         name="cancel"
@@ -46,7 +52,8 @@ watchEffect(() => {
   }
   folderSelect.value = null;
 });
-function handle() {
+function handle(opt: string) {
+  folderSelect.value = opt;
   emits("handleSelect", folderSelect.value);
 }
 function clean() {

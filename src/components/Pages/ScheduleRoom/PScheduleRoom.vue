@@ -40,7 +40,7 @@
     </div>
   </q-dialog>
   <q-dialog v-model="cardEvents">
-    <div class="my-card relative-position no-scroll">
+    <div class="relative-position no-scroll">
       <q-card class="no-scroll" flat>
         <DialogHeader
           @close="(item) => (cardEvents = item)"
@@ -79,8 +79,8 @@
   <div class="row justify-center font-custom">
     <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
       <div class="row items-center">
-        <q-badge rounded :color="item.color" class="mr-2" />
-        <span class="text-body1">{{ $t(`text.${item.name}`) }}</span>
+        <q-badge rounded :color="item.color" class="q-mx-sm" />
+        <span class="text-body1 text-black">{{ $t(`text.${item.name}`) }}</span>
       </div>
     </div>
   </div>
@@ -191,7 +191,7 @@ onMounted(() => {
 }
 
 .calendar-size {
-  width: 100vh;
+  width: 60rem;
 }
 .font-custom {
   font-family: Fira Sans;

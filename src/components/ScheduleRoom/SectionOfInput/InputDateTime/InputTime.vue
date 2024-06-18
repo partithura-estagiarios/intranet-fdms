@@ -1,63 +1,60 @@
 <template>
-  <div class="q-pa-sl">
+  <div class="q-pa-sl" @click="openPopup">
     <q-input
       class="border"
       readonly
       :label="dateReceived"
       v-bind="$attrs"
-      v-model="inputValue"
-      @click="card = true"
+      v-model="input"
     >
       <template #prepend>
         <q-icon
           name="event"
           class="custom-color full-height q-px-md"
           color="white"
-          @click="card = true"
-        >
-        </q-icon>
+        />
       </template>
     </q-input>
-    <CardDateTime
-      :show-card="card"
-      @close="
-        (down, date) => {
-          card = down;
-          dateReceived = date;
-          emits('envityDates', date);
-        }
-      "
-      :final-time="dateReceived"
-    />
+
+    <PopUpDateTime :showPopUp="popUp" @dateSelected="handleDateSelected" />
   </div>
 </template>
 
 <script setup lang="ts">
 const emits = defineEmits(["envityDates", "envityHour"]);
 const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  dateInput: {
-    type: String,
-    default: "",
-  },
+  label: { type: String, required: true },
+  dateInput: { type: String, default: "" },
 });
-const inputValue = ref("");
 
-const card = ref(false);
-const dateReceived = ref();
+const input = ref("");
+const popUp = ref(false);
+const dateReceived = ref(props.label);
+const inputDate = ref();
+const inputTime = ref();
+
+const openPopup = () => {
+  popUp.value = true;
+};
+
+const handleDateSelected = (date: string, time: string) => {
+  input.value = date + " " + time;
+  popUp.value = false;
+};
+
 watchEffect(() => {
-  const value = props.dateInput || props.label;
-  dateReceived.value = value;
+  emits("envityDates", inputDate.value);
+});
+
+watchEffect(() => {
+  emits("envityHour", inputTime.value);
 });
 </script>
 
 <style scoped>
 .border {
-  border: 1px rgb(29, 29, 167) solid;
-  border-radius: 2px;
+  border: 0.1rem solid rgb(31, 73, 125);
+  border-radius: 0.2rem;
 }
 .custom-color {
   background-color: rgb(31, 73, 125);

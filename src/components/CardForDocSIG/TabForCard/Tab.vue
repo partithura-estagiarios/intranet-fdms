@@ -12,7 +12,7 @@
         @click="handleTabClick(item.name)"
       />
       <q-btn icon="edit" flat class="absolute-right">
-        <q-menu anchor="top right" self="top left">
+        <q-menu anchor="top right" self="top left" class="text-black">
           <q-list>
             <q-item clickable v-close-popup>
               <q-item-section @click="openModal(isFolder)">{{
