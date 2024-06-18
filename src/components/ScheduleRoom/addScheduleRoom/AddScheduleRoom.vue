@@ -11,6 +11,7 @@
         color="green"
         :label="$t('formRamal.confirm')"
         @click="saveRoom()"
+        :disable="disableSaveRoom"
       />
     </div>
   </q-card-section>
@@ -18,7 +19,7 @@
 
 <script setup lang="ts">
 import CreateScheduleRoom from "../../../graphql/scheduleRoom/CreateScheduleRoom.gql";
-import { adaptScheduleToRoom } from "../addScheduleRoom/lib";
+import { adaptScheduleToRoom, fieldsValid } from "../addScheduleRoom/lib";
 import { DateTime } from "luxon";
 import { StatusCreateMeeting } from "../../../support/contracts";
 const { t } = useI18n();
@@ -39,6 +40,7 @@ const notifyUser = (message: string, type: string) => {
   }
   negativeNotify(message);
 };
+const disableSaveRoom = computed(() => !fieldsValid(roomSchedule.value));
 
 async function saveRoom() {
   roomSchedule.value = adaptScheduleToRoom(roomSchedule.value);

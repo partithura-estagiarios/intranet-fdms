@@ -74,3 +74,37 @@ export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
     },
   };
 }
+
+export function fieldsValid(schedule: InputsForScheduleRoom) {
+  if (!validInputsNormals(schedule)) {
+    return false;
+  }
+  if (!validDateInput(schedule)) {
+    return false;
+  }
+  return true;
+}
+
+export function validInputsNormals(schedule: InputsForScheduleRoom) {
+  if (
+    !schedule.inputs ||
+    !schedule.options.value ||
+    !schedule.inputsLongs.description
+  ) {
+    return false;
+  }
+  const properties = Object.values(schedule.inputs);
+  return properties.every((property) => {
+    return property.value !== null && property.value !== "";
+  });
+}
+
+export function validDateInput(schedule: InputsForScheduleRoom) {
+  if (!schedule.dateInfos) {
+    return false;
+  }
+  const properties = Object.values(schedule.dateInfos);
+  return properties.every((property) => {
+    return property.value !== undefined;
+  });
+}

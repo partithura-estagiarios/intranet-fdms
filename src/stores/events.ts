@@ -3,8 +3,7 @@ import LoadEventsInData from "../graphql/scheduleRoom/LoadEventsInData.gql";
 import NextEvents from "../graphql/scheduleRoom/NextEvents.gql";
 
 import { DateTime } from "luxon";
-import { set } from "zod";
-import { stat } from "fs";
+
 import { EventRoom } from "../entities/scheduleRoom";
 const id = "events";
 

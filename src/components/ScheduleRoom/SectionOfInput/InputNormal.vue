@@ -95,8 +95,8 @@ watchEffect(() => {
 
 <style scoped>
 .border {
-  border: 1px rgb(29, 29, 167) solid;
-  border-radius: 2px;
+  border: 0.1rem rgb(31, 73, 125) solid;
+  border-radius: 0.2rem;
 }
 .custom-color {
   background-color: rgb(31, 73, 125);
