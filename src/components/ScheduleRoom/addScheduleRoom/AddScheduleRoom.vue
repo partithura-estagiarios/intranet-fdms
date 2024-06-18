@@ -6,7 +6,7 @@
     />
   </q-card-section>
   <q-card-section align="right">
-    <div class="q-pa-sl font-custom">
+    <div class="font-custom">
       <q-btn
         color="green"
         :label="$t('formRamal.confirm')"

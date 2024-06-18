@@ -22,9 +22,9 @@
         />
       </div>
     </div>
-    <div class="col-12 q-pa-sm">
+    <div class="col-12 q-py-md">
       <q-input
-        class="border q-px-md"
+        outlined
         v-model="formScheduleRoom.inputsLongs.description"
         :label="$t('text.descriptionOfEvent')"
         type="text"
@@ -35,7 +35,7 @@
     >
       {{ $t("text.supportMaterial") }}
     </div>
-    <div class="content row relative-position q-px-sl justify-between">
+    <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom
         :checks="formScheduleRoom.booleanInfos"
         @envity-dates="(items) => (formScheduleRoom.booleanInfos = items)"
@@ -43,7 +43,7 @@
     </div>
     <div class="col-12">
       <q-input
-        class="border q-px-md"
+        outlined
         v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
         :label="$t('text.otherMaterials')"
       />
@@ -75,9 +75,8 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.border {
-  border: 1px rgb(29, 29, 167) solid;
-  border-radius: 2px;
+.border-color {
+  color: rgb(31, 73, 125);
 }
 .pad-date-time {
   top: -1vh;

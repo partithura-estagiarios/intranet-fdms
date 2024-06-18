@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-sl" @click="openModal = true">
+  <div @click="openPopup">
     <q-input
       class="border"
       readonly
@@ -14,7 +14,7 @@
           color="white"
         />
       </template>
-      <PopUpDateTime @dateSelected="handleDateSelected" :showTime="openModal" />
+      <PopUpDateTime @dateSelected="handleDateSelected" :showTime="popUp" />
     </q-input>
   </div>
 </template>
@@ -25,13 +25,17 @@ const props = defineProps({
   label: { type: String, required: true },
   dateInput: { type: String, required: true },
 });
-const openModal = ref(false);
+const popUp = ref(false);
+
 const input = ref("");
 const dateReceived = ref(props.label);
 const handleDateSelected = (date: string, time: string) => {
   input.value = date + " " + time;
-  openModal.value = false;
+  popUp.value = false;
   emits("envityDates", input);
+};
+const openPopup = () => {
+  popUp.value = true;
 };
 </script>
 
