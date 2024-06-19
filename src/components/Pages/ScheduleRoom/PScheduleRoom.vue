@@ -32,10 +32,7 @@
           @close="(item) => (card = item)"
           :option="$t('text.organizerEvent')"
         />
-        <AddScheduleRoom
-          @reload="loadSchedule(), (card = false)"
-          :selectDate="selectDate"
-        />
+        <AddScheduleRoom @reload="loadSchedule(), (card = false)" />
       </q-card>
     </div>
   </q-dialog>
@@ -50,16 +47,13 @@
       </q-card>
     </div>
   </q-dialog>
-  <div class="q-pa-md row justify-center font-custom">
+  <div class="row justify-center font-custom">
     <div class="text-h5 calendar-size text-uppercase">
       <q-calendar-month
         ref="calendar"
         v-model="selectedDate"
-        focusable
         locale="pt-br"
-        hoverable
         :day-min-height="100"
-        :focus-type="['day']"
         @click-date="onClickHeadDay"
         @click-day="onClickDay"
         class="cursor-pointer"
@@ -69,7 +63,6 @@
             {{ getHeadDay(timestamp) }}
           </div>
         </template>
-
         <template #day="{ scope: { timestamp } }">
           <BadgeEvents :data="timestamp.date" :events="events" />
         </template>
@@ -77,7 +70,7 @@
     </div>
   </div>
   <div class="row justify-center font-custom">
-    <div v-for="(item, index) in rooms" class="col-auto q-pa-md" :key="index">
+    <div v-for="item in rooms" class="col-auto q-pa-md">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="q-mx-sm" />
         <span class="text-body1 text-black">{{ $t(`text.${item.name}`) }}</span>
@@ -110,7 +103,7 @@ const selectDate = ref();
 const eventsDay = ref();
 function onClickHeadDay(item: CalendarItem) {
   const { date, time } = item.scope.timestamp;
-  selectDate.value = date + " " + time;
+  eventStorage.setDateSelected(date + " " + time);
   card.value = true;
 }
 
@@ -131,6 +124,7 @@ function onNext() {
     (instance.refs.calendar as QCalendarMonth).next();
   }
 }
+
 async function loadSchedule() {
   const { scheduleRoomLoad } = (await runQuery(ScheduleRoomLoad)) as {
     scheduleRoomLoad: EventRoom[];
@@ -145,6 +139,7 @@ async function loadSchedule() {
     events.value = scheduleRoomLoad;
   }
 }
+
 const onClickDay = (data: CalendarItem) => {
   const { date, time } = data.scope.timestamp;
   events.value.forEach((event: Event) => {
@@ -159,6 +154,7 @@ const onClickDay = (data: CalendarItem) => {
   }
   return negativeNotify(t("userScheduleRoom.thereAreNoEvents"));
 };
+
 watchEffect(() => {
   if (eventStorage.closeModal) {
     negativeNotify(t(`text.noMoreEvents`));
@@ -189,7 +185,6 @@ onMounted(() => {
 .custom-color {
   background-color: rgb(31, 73, 125);
 }
-
 .calendar-size {
   width: 60rem;
 }

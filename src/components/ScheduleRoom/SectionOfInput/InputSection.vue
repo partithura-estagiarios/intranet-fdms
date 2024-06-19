@@ -18,7 +18,6 @@
               (formScheduleRoom.dateInfos.initialTime.value = item1)
             )
           "
-          :selectDate="props.selectDate"
         />
       </div>
     </div>
@@ -53,14 +52,9 @@
 
 <script setup lang="ts">
 import { inputsForScheduleRoom, resetObject } from "../addScheduleRoom/lib";
+import { useEvents } from "../../../stores/events";
+const eventStorage = useEvents();
 const formScheduleRoom = reactive(inputsForScheduleRoom);
-const props = defineProps({
-  selectDate: {
-    type: String,
-    default: "",
-  },
-});
-
 const emits = defineEmits(["envityRoom"]);
 
 watchEffect(() => {
@@ -69,9 +63,12 @@ watchEffect(() => {
 
 onUnmounted(() => {
   resetObject(formScheduleRoom);
+  eventStorage.resetDateSelected;
 });
+
 onMounted(() => {
   resetObject(formScheduleRoom);
+  eventStorage.resetDateSelected;
 });
 </script>
 <style scoped>
