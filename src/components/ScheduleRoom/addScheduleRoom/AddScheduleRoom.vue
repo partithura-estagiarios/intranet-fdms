@@ -1,9 +1,6 @@
 <template>
   <q-card-section class="q-pa-md example-row-reverse">
-    <InputSection
-      @envity-room="(room) => (roomSchedule = room)"
-      :select-date="props.selectDate"
-    />
+    <InputSection @envity-room="(room) => (roomSchedule = room)" />
   </q-card-section>
   <q-card-section align="right">
     <div class="font-custom">
@@ -21,13 +18,8 @@ import CreateScheduleRoom from "../../../graphql/scheduleRoom/CreateScheduleRoom
 import { adaptScheduleToRoom } from "../addScheduleRoom/lib";
 import { DateTime } from "luxon";
 import { StatusCreateMeeting } from "../../../support/contracts";
+
 const { t } = useI18n();
-const props = defineProps({
-  selectDate: {
-    type: String,
-    default: "",
-  },
-});
 const roomSchedule = ref();
 const emits = defineEmits(["reload"]);
 const notifyUser = (message: string, type: string) => {

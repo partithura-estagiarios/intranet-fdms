@@ -6,12 +6,14 @@ import { DateTime } from "luxon";
 import { set } from "zod";
 import { stat } from "fs";
 import { EventRoom } from "../entities/scheduleRoom";
+import { getDate } from "@quasar/quasar-ui-qcalendar";
 const id = "events";
 
 export const useEvents = defineStore(id, {
   state: () => ({
     dataFull: "",
     closeModal: false,
+    dateSelected: "",
   }),
   getters: {
     getFullData(state) {
@@ -32,6 +34,12 @@ export const useEvents = defineStore(id, {
     },
     toggleCloseModal(state) {
       return (state.closeModal = !state.closeModal);
+    },
+    getDateSelected(state) {
+      return state.dateSelected;
+    },
+    resetDateSelected(state) {
+      return (state.dateSelected = "");
     },
   },
   actions: {
@@ -55,6 +63,12 @@ export const useEvents = defineStore(id, {
       const { loadEventsInData }: { loadEventsInData: EventRoom[] } =
         await runQuery(LoadEventsInData, { data: eventStorage.dataFull });
       return loadEventsInData;
+    },
+    setDateSelected(date: string) {
+      const selectedDate = new Date(date);
+      const eventStorage = useEvents();
+      eventStorage.dateSelected = selectedDate.toISOString().split("T")[0];
+      eventStorage.dateSelected = eventStorage.dateSelected.replace(/-/g, "/");
     },
   },
 });
