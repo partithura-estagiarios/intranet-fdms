@@ -11,7 +11,7 @@
           @click.stop="selectEvent(event)"
         >
           <q-tooltip>
-            {{ event.userCreated.name }}
+            {{ event.host.name }}
           </q-tooltip>
         </q-badge>
       </div>

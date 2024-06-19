@@ -44,4 +44,5 @@ export default {
   file: "File",
   files: "Files",
   sourceFolders: "Source Folders",
+  registration: "Registration",
 };

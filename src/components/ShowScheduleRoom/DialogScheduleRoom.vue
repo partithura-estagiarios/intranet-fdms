@@ -10,14 +10,17 @@
   </q-card-section>
   <q-separator />
   <q-card-section class="row color-custom">
-    <div class="row text-weight-bold">
-      {{ $t("text.organizer") }}: {{ room.userCreated.name }}
-      <q-space class="q-px-md" />
-      {{ $t("text.participants") }}:
-      {{ room.totalPeoples }}
-      <q-space class="q-px-md" />
-      {{ $t("text.ramal") }}:
-      {{ room.userCreated.ramalNumber }}
+    <div class="text-weight-bold q-col q-px-sm">
+      {{ $t("text.organizer") }}: {{ room.host.name }}
+    </div>
+    <div class="text-weight-bold q-col q-px-sm">
+      {{ $t("text.participants") }}: {{ room.totalPeoples }}
+    </div>
+    <div class="text-weight-bold q-col q-px-sm">
+      {{ $t("text.ramal") }}: {{ room.host.ramalNumber }}
+    </div>
+    <div class="text-weight-bold q-col q-px-sm">
+      {{ $t("text.registration") }}: {{ room.host.userRegistration }}
     </div>
   </q-card-section>
   <q-separator />

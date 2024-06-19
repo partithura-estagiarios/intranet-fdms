@@ -1,7 +1,7 @@
 query ScheduleRoomLoad {
   scheduleRoomLoad {
     id
-    userCreated {
+    host {
       name
       ramalNumber
       userRegistration

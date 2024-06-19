@@ -1,7 +1,7 @@
 query LoadEventsInData($data: String!) {
   loadEventsInData(data: $data) {
     id
-    userCreated {
+    host {
       name
       ramalNumber
       userRegistration
