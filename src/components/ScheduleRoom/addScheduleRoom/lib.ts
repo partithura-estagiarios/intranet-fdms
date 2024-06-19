@@ -52,7 +52,7 @@ export function resetObject(obj: any) {
 
 export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
   return {
-    userCreated: {
+    host: {
       name: schedule.inputs.name.value,
       ramalNumber: schedule.inputs.ramal.value,
       userRegistration: schedule.inputs.userRegistration.value,

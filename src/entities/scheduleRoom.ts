@@ -1,6 +1,6 @@
 export interface EventRoom {
   id: string;
-  userCreated: {
+  host: {
     name: string;
     ramalNumber: string;
     userRegistration: string;

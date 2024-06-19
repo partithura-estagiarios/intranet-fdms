@@ -7,7 +7,7 @@
       >
         <q-badge rounded :color="event.colorRoom">
           <q-tooltip>
-            {{ event.userCreated.name }}
+            {{ event.host.name }}
           </q-tooltip>
         </q-badge>
       </div>

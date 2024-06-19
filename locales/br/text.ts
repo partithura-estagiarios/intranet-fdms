@@ -45,4 +45,5 @@ export default {
   folders: "Pastas",
   files: "Arquivos",
   sourceFolders: "Pastas de origem",
+  registration: "Matrícula",
 };
