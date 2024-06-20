@@ -37,7 +37,9 @@ watchEffect(() => {
         activeButtonIndex.value = "";
       }
     }
+    return;
   }
+  foldersList.value = [];
 });
 function setFolder(folder: string) {
   fileStorage.setNameFolderP(folder);

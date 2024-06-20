@@ -157,6 +157,10 @@ export const useFiles = defineStore(id, {
       const errorData = await response.json();
       return errorData.error;
     },
+    resetSelectedFiedls: () => {
+      const store = useFiles();
+      store.nameOfGrandParent = "";
+    },
   },
 });
 
