@@ -7,7 +7,7 @@
           color="green"
           :label="$t('text.schedulEvent')"
           class="text-body1 text-white"
-          @click="(card = true), (selectDate = '')"
+          @click="openModalAddScheduleRoom"
         />
         <p class="text-green-8">
           {{ $t("text.selectDayForRoom") }}
@@ -50,7 +50,7 @@
           @close="(item) => (card = item)"
           :option="$t('text.organizerEvent')"
         />
-        <AddScheduleRoom @reload="loadSchedule(), (card = false)" />
+        <AddScheduleRoom @reload="reloadModalAddScheduleRoom" />
       </q-card>
     </div>
   </q-dialog>
@@ -161,6 +161,16 @@ async function loadSchedule() {
 
 const openVideo = () => {
   modalVideo.value = true;
+};
+
+const openModalAddScheduleRoom = () => {
+  card.value = true;
+  eventStorage.resetDateSelected();
+};
+
+const reloadModalAddScheduleRoom = () => {
+  card.value = false;
+  loadSchedule();
 };
 
 const onClickDay = (data: CalendarItem) => {
