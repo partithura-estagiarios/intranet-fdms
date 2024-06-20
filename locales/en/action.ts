@@ -50,4 +50,6 @@ export default {
   errorCreatingFolder: "Error when trying Folder",
   errorCreatingFile: "Error trying to create File",
   deleteFail: "An error occurred during deletion",
+  addSystem: "Add System",
+  newSystem: "New System",
 };

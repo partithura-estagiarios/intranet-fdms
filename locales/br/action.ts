@@ -49,4 +49,6 @@ export default {
   errorCreatingFolder: "Error ao tentar da Pasta",
   errorCreatingFile: "Error ao tentar da Arquivo",
   deleteFail: "Ocorreu um erro durante exclusão",
+  addSystem: "Adicionar Sistema",
+  newSystem: "Novo Sistema",
 };

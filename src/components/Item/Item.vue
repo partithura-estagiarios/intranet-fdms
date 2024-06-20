@@ -31,6 +31,7 @@
         </div>
       </q-item>
     </div>
+    <ItemAddSystem />
   </div>
 </template>
 
