@@ -46,4 +46,5 @@ export default {
   files: "Arquivos",
   sourceFolders: "Pastas de origem",
   registration: "Matrícula",
+  helpScheduleRoom: "Agendando evento clicando no dia",
 };
