@@ -11,3 +11,9 @@
     </q-card-section>
   </q-card>
 </template>
+<script setup lang="ts">
+const fileStorage = useFiles();
+onMounted(() => {
+  fileStorage.resetSelectedFiedls();
+});
+</script>
