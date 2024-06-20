@@ -37,9 +37,6 @@ export const useEvents = defineStore(id, {
     getDateSelected(state) {
       return state.dateSelected;
     },
-    resetDateSelected(state) {
-      return (state.dateSelected = "");
-    },
   },
   actions: {
     nextData: async (number: Number) => {
@@ -68,6 +65,10 @@ export const useEvents = defineStore(id, {
       const eventStorage = useEvents();
       eventStorage.dateSelected = selectedDate.toISOString().split("T")[0];
       eventStorage.dateSelected = eventStorage.dateSelected.replace(/-/g, "/");
+    },
+    resetDateSelected() {
+      const eventStorage = useEvents();
+      return (eventStorage.dateSelected = "");
     },
   },
 });
