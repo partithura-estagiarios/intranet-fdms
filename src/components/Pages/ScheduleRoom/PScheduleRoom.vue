@@ -11,6 +11,24 @@
         />
         <p class="text-green-8">
           {{ $t("text.selectDayForRoom") }}
+          <q-icon
+            name="help"
+            color="indigo-8"
+            size="2rem"
+            class="cursor-pointer"
+            @click="openVideo"
+          />
+          <q-dialog v-model="modalVideo">
+            <div class="my-card relative-position no-scroll">
+              <q-card class="no-scroll" flat>
+                <DialogHeader
+                  @close="(item) => (modalVideo = item)"
+                  :option="$t('text.helpScheduleRoom')"
+                />
+                <VideoHelpForScheduleRoom />
+              </q-card>
+            </div>
+          </q-dialog>
         </p>
       </q-item-section>
     </q-item>
@@ -101,6 +119,7 @@ const card = ref(false);
 const cardEvents = ref(false);
 const selectDate = ref();
 const eventsDay = ref();
+const modalVideo = ref(false);
 function onClickHeadDay(item: CalendarItem) {
   const { date, time } = item.scope.timestamp;
   eventStorage.setDateSelected(date + " " + time);
@@ -139,6 +158,10 @@ async function loadSchedule() {
     events.value = scheduleRoomLoad;
   }
 }
+
+const openVideo = () => {
+  modalVideo.value = true;
+};
 
 const onClickDay = (data: CalendarItem) => {
   const { date, time } = data.scope.timestamp;

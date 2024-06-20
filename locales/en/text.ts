@@ -45,4 +45,5 @@ export default {
   files: "Files",
   sourceFolders: "Source Folders",
   registration: "Registration",
+  helpScheduleRoom: "Scheduling an event by clicking on the day",
 };
