@@ -13,6 +13,7 @@
 </template>
 <script setup lang="ts">
 const fileStorage = useFiles();
+
 onMounted(() => {
   fileStorage.resetSelectedFiedls();
 });
