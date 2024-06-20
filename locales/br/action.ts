@@ -50,5 +50,8 @@ export default {
   errorCreatingFile: "Error ao tentar da Arquivo",
   deleteFail: "Ocorreu um erro durante exclusão",
   addSystem: "Adicionar Sistema",
-  newSystem: "Novo Sistema",
+  editSystem: "Editar Sistema",
+  deleteSystem: "Deletar Sistema",
+  systemManager: "Gerenciador de Sistemas",
+  systemModuleOptions: "Opções Módulo de Sistema",
 };

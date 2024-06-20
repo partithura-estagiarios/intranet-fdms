@@ -3,7 +3,10 @@
     <q-item clickable @click="modalCreateSystem">
       <q-item-section class="border-radius-inherit">
         <q-avatar class="border-color row bg-white shadow-14" size="7.99rem">
-          <q-icon name="add" class="custom-color icon-partithura q-py-md" />
+          <q-icon
+            name="more_vert"
+            class="custom-color icon-partithura q-py-md"
+          />
         </q-avatar>
       </q-item-section>
       <div class="label text-start row">
@@ -12,15 +15,16 @@
             <q-item-label
               class="custom-color text-h5 text-weight-bolder font-custom"
             >
-              {{ $t("action.addSystem") }}
+              {{ $t("action.systemManager") }}
             </q-item-label>
 
             <q-item-label class="text-green text-bold text-h5 font-custom">
-              {{ $t("action.newSystem") }}
+              {{ $t("action.systemModuleOptions") }}
             </q-item-label>
           </q-item-section>
         </q-item>
       </div>
+      <MenuSystemOptions />
     </q-item>
   </div>
 </template>

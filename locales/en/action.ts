@@ -51,5 +51,8 @@ export default {
   errorCreatingFile: "Error trying to create File",
   deleteFail: "An error occurred during deletion",
   addSystem: "Add System",
-  newSystem: "New System",
+  editSystem: "Edit System",
+  deleteSystem: "Delete System",
+  systemManager: "System Manager",
+  systemModuleOptions: "System Module Options",
 };
