@@ -31,7 +31,7 @@
         </div>
       </q-item>
     </div>
-    <!-- <ItemAddSystem /> -->
+    <!-- <ItemSystem @receveid="loadSystems()" /> -->
   </div>
 </template>
 
@@ -47,10 +47,7 @@ const props = defineProps({
 const sistemas = ref();
 const openModalCeo = ref();
 onMounted(async () => {
-  const { loadSystems }: { loadSystems: Object } = await runQuery(LoadSystems, {
-    sistema: props.sistema,
-  });
-  sistemas.value = loadSystems;
+  loadSystems();
 });
 function goToRoute(rout: String) {
   if (rout.includes("https")) {
@@ -60,6 +57,12 @@ function goToRoute(rout: String) {
     return (openModalCeo.value = true);
   }
   return router.push(`${rout}`);
+}
+async function loadSystems() {
+  const { loadSystems }: { loadSystems: Object } = await runQuery(LoadSystems, {
+    sistema: props.sistema,
+  });
+  sistemas.value = loadSystems;
 }
 </script>
 

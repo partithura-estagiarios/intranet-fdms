@@ -46,4 +46,8 @@ export default {
   sourceFolders: "Source Folders",
   registration: "Registration",
   helpScheduleRoom: "Scheduling an event by clicking on the day",
+  label: "Name",
+  subLabel: "Description",
+  icon: "Icon",
+  system: "System",
 };
