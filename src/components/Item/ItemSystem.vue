@@ -1,10 +1,10 @@
 <template>
   <div class="row justify-center">
-    <q-item clickable>
+    <q-item clickable @click="modalCreateSystem">
       <q-item-section class="border-radius-inherit">
         <q-avatar class="border-color row bg-white shadow-14" size="7.99rem">
           <q-icon
-            :name="systemDelete.icon"
+            name="more_vert"
             class="custom-color icon-partithura q-py-md"
           />
         </q-avatar>
@@ -15,29 +15,22 @@
             <q-item-label
               class="custom-color text-h5 text-weight-bolder font-custom"
             >
-              {{ $t(systemDelete.label) }}
+              {{ $t("action.systemManager") }}
             </q-item-label>
+
             <q-item-label class="text-green text-bold text-h5 font-custom">
-              {{ $t(systemDelete.subLabel) }}
+              {{ $t("action.systemModuleOptions") }}
             </q-item-label>
           </q-item-section>
         </q-item>
       </div>
-      <MenuSystemOptions
-        @receveid="emits('receveid')"
-        @optionDelete="desativeOption"
-      />
+      <MenuSystemOptions @receveid="$emit('receveid')" />
     </q-item>
   </div>
 </template>
 
 <script setup lang="ts">
-import { systemDelete } from "./lib";
-const emits = defineEmits(["receveid", "optionDelete"]);
-
-function desativeOption() {
-  emits("optionDelete");
-}
+const modalCreateSystem = ref();
 </script>
 
 <style scoped>

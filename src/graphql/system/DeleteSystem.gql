@@ -1,6 +1,0 @@
-mutation DeleteSystem($systemId: ID!) {
-  deleteSystem(systemId: $systemId) {
-    enum
-    message
-  }
-}
