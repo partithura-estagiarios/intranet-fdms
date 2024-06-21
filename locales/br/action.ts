@@ -54,4 +54,5 @@ export default {
   deleteSystem: "Deletar Sistema",
   systemManager: "Gerenciador de Sistemas",
   systemModuleOptions: "Opções Módulo de Sistema",
+  desactiveOptionDelete: "Desativar a opção de exclusão",
 };
