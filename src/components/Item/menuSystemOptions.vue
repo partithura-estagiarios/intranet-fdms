@@ -4,8 +4,8 @@
       <q-item
         clickable
         v-close-popup
-        @click="openModal(option)"
         v-for="option in options"
+        @click="openModal(option)"
       >
         <q-item-label class="text-black">{{
           $t(`action.${option}`)
@@ -23,13 +23,18 @@
 
 <script setup lang="ts">
 import { options } from "./lib";
-const emits = defineEmits(["receveid", "optionDelete"]);
+const emits = defineEmits(["receveid"]);
 const modalCreateSystem = ref();
+const modalEditSystem = ref();
+const modalDeleteSystem = ref();
 function openModal(modal: string) {
   if (modal === "addSystem") {
     return (modalCreateSystem.value = true);
   }
-  return emits("optionDelete");
+  if (modal === "editSystem") {
+    return (modalEditSystem.value = true);
+  }
+  return (modalDeleteSystem.value = true);
 }
 function handleReceived() {
   emits("receveid");
