@@ -47,4 +47,8 @@ export default {
   sourceFolders: "Pastas de origem",
   registration: "Matrícula",
   helpScheduleRoom: "Agendando evento clicando no dia",
+  label: "Nome",
+  subLabel: "Descrição",
+  icon: "Icone",
+  system: "Sistema",
 };

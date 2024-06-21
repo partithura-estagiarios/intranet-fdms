@@ -24,13 +24,12 @@
           </q-item-section>
         </q-item>
       </div>
-      <MenuSystemOptions />
+      <MenuSystemOptions @receveid="$emit('receveid')" />
     </q-item>
   </div>
 </template>
 
 <script setup lang="ts">
-const sistemas = ref();
 const modalCreateSystem = ref();
 </script>
 

@@ -1,0 +1,6 @@
+mutation createSystem($newSystem: InputSystem!) {
+  createSystem(newSystem: $newSystem) {
+    enum
+    message
+  }
+}
