@@ -1,4 +1,4 @@
-import { SystemList } from "../../../entities/system";
+import { InputSystem } from "../../../entities/system";
 
 export const icons = [
   "home",
@@ -9,10 +9,10 @@ export const icons = [
   "block",
   "remove",
 ];
-export function verifyInputsSystems(system: SystemList) {
+export function verifyInputsSystems(system: InputSystem) {
   for (const key in system) {
     if (Object.prototype.hasOwnProperty.call(system, key)) {
-      const value = system[key as keyof SystemList];
+      const value = system[key as keyof InputSystem];
       if (!value) {
         return false;
       }
