@@ -35,7 +35,7 @@ import { getHours, formatDate, insertColor } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
 import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
-const emits = defineEmits(["reloadEvent"]);
+const emits = defineEmits(["reloadEvent", "close"]);
 const { t } = useI18n();
 const eventStorage = useEvents();
 const props = defineProps({
@@ -54,13 +54,16 @@ watchEffect(async () => {
 });
 async function reloadEvents() {
   const auxEvents: EventRoom[] = await eventStorage.loadEvents();
-  auxEvents.forEach((event) => {
-    event.initialTime = new Date(event.initialTime);
-    event.finalTime = new Date(event.finalTime);
-    event.finalDate = formatDate(event.finalTime);
-    event.colorRoom = insertColor(event.location);
-  });
-  events.value = auxEvents;
+  if (auxEvents.length) {
+    auxEvents.forEach((event) => {
+      event.initialTime = new Date(event.initialTime);
+      event.finalTime = new Date(event.finalTime);
+      event.finalDate = formatDate(event.finalTime);
+      event.colorRoom = insertColor(event.location);
+    });
+    return (events.value = auxEvents);
+  }
+  emits("close");
 }
 function selectEvent(event: EventRoom) {
   card.value = true;

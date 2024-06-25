@@ -61,7 +61,11 @@
           @close="(item) => (cardEvents = item)"
           :option="$t('text.eventsDay')"
         />
-        <CardOfEvents :daysEvents="eventsDay" @reloadEvent="loadSchedule()" />
+        <CardOfEvents
+          :daysEvents="eventsDay"
+          @reloadEvent="loadSchedule()"
+          @close="closeCardEvents()"
+        />
       </q-card>
     </div>
   </q-dialog>
@@ -171,14 +175,13 @@ const reloadModalAddScheduleRoom = () => {
 };
 
 const onClickDay = async (data: CalendarItem) => {
-  await loadSchedule();
   const { date, time } = data.scope.timestamp;
   events.value.forEach((event: Event) => {
     eventsDay.value = events.value.filter(
       (event: EventRoom) => event.finalDate === date,
     );
   });
-  if (eventsDay.value.length) {
+  if (eventsDay.value) {
     eventStorage.dataFull = date.toString();
     cardEvents.value = true;
     return eventsDay;
@@ -188,11 +191,15 @@ const onClickDay = async (data: CalendarItem) => {
 
 watchEffect(() => {
   if (eventStorage.closeModal) {
-    negativeNotify(t(`text.noMoreEvents`));
-    cardEvents.value = false;
+    closeCardEvents();
     return eventStorage.toggleCloseModal;
   }
 });
+
+function closeCardEvents() {
+  cardEvents.value = false;
+  negativeNotify(t(`text.noMoreEvents`));
+}
 
 function getHeadDay(item: CalendarTimeStamp) {
   const daysOfWeek = [
