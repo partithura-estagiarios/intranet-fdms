@@ -2,22 +2,18 @@
   <div class="row justify-center">
     <TitleOfCardEvents class="q-py-md no-wrap" />
     <q-list padding class="size-list scroll">
-      <q-item
-        clickable
-        v-ripple
-        v-for="event in events"
-        @click="selectEvent(event)"
-      >
-        <q-item-section class="text-no-wrap">
+      <q-item v-ripple v-for="event in events" :key="event.id">
+        <ExcludeM @exclude="excludeEvent(event.id)" />
+        <q-item-section class="text-no-wrap" @click="selectEvent(event)">
           <div class="items-center text-h6 font-custom">
             <q-badge class="q-mx-sm no-wrap" :color="event.colorRoom" />
             <span>{{ event.host.name }} - </span>
             <span>{{ event.rules }}</span>
           </div>
-          <span class="text-bold font-custom q-px-lg"
-            >{{ getHours(new Date(event.initialTime)) }} -
-            {{ getHours(new Date(event.finalTime)) }}</span
-          >
+          <span class="text-bold font-custom q-px-lg">
+            {{ getHours(new Date(event.initialTime)) }} -
+            {{ getHours(new Date(event.finalTime)) }}
+          </span>
         </q-item-section>
       </q-item>
     </q-list>
@@ -29,7 +25,7 @@
         :option="eventSelected.rules"
       />
       <q-separator />
-      <DialogScheduleRoom :event-show="eventSelected" />
+      <DialogScheduleRoom :event-show="eventSelected()" />
     </q-card>
   </q-dialog>
 </template>
@@ -38,6 +34,9 @@
 import { getHours, formatDate, insertColor } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
+import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
+const emits = defineEmits(["reloadEvent"]);
+const { t } = useI18n();
 const eventStorage = useEvents();
 const props = defineProps({
   daysEvents: {
@@ -50,19 +49,34 @@ const card = ref(false);
 const events: Ref<EventRoom[]> = ref([]);
 watchEffect(async () => {
   if (eventStorage.dataFull) {
-    const auxEvents: EventRoom[] = await eventStorage.loadEvents();
-    auxEvents.forEach((event) => {
-      event.initialTime = new Date(event.initialTime);
-      event.finalTime = new Date(event.finalTime);
-      event.finalDate = formatDate(event.finalTime);
-      event.colorRoom = insertColor(event.location);
-    });
-    events.value = auxEvents;
+    reloadEvents();
   }
 });
+async function reloadEvents() {
+  const auxEvents: EventRoom[] = await eventStorage.loadEvents();
+  auxEvents.forEach((event) => {
+    event.initialTime = new Date(event.initialTime);
+    event.finalTime = new Date(event.finalTime);
+    event.finalDate = formatDate(event.finalTime);
+    event.colorRoom = insertColor(event.location);
+  });
+  events.value = auxEvents;
+}
 function selectEvent(event: EventRoom) {
   card.value = true;
   eventSelected.value = event;
+}
+async function excludeEvent(eventId: string) {
+  const { excludeMeet }: { excludeMeet: Boolean } = await runMutation(
+    ExcludeMeet,
+    { id: eventId },
+  );
+  if (excludeMeet) {
+    reloadEvents();
+    emits("reloadEvent");
+    return positiveNotify(t("text.meetCanceled"));
+  }
+  return negativeNotify(t("text.meetCanceledError"));
 }
 </script>
 <style scoped>

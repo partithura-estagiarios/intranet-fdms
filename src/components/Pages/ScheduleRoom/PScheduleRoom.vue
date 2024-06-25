@@ -61,7 +61,7 @@
           @close="(item) => (cardEvents = item)"
           :option="$t('text.eventsDay')"
         />
-        <CardOfEvents :daysEvents="eventsDay" />
+        <CardOfEvents :daysEvents="eventsDay" @reloadEvent="loadSchedule()" />
       </q-card>
     </div>
   </q-dialog>
@@ -117,7 +117,6 @@ const events = ref();
 const instance = getCurrentInstance();
 const card = ref(false);
 const cardEvents = ref(false);
-const selectDate = ref();
 const eventsDay = ref();
 const modalVideo = ref(false);
 function onClickHeadDay(item: CalendarItem) {
@@ -148,15 +147,13 @@ async function loadSchedule() {
   const { scheduleRoomLoad } = (await runQuery(ScheduleRoomLoad)) as {
     scheduleRoomLoad: EventRoom[];
   };
-  if (scheduleRoomLoad.length > 0) {
-    scheduleRoomLoad.forEach((event) => {
-      event.initialTime = new Date(event.initialTime);
-      event.finalTime = new Date(event.finalTime);
-      event.finalDate = formatDate(event.finalTime);
-      event.colorRoom = insertColor(event.location);
-    });
-    events.value = scheduleRoomLoad;
-  }
+  scheduleRoomLoad.forEach((event) => {
+    event.initialTime = new Date(event.initialTime);
+    event.finalTime = new Date(event.finalTime);
+    event.finalDate = formatDate(event.finalTime);
+    event.colorRoom = insertColor(event.location);
+  });
+  events.value = scheduleRoomLoad;
 }
 
 const openVideo = () => {
@@ -173,7 +170,8 @@ const reloadModalAddScheduleRoom = () => {
   loadSchedule();
 };
 
-const onClickDay = (data: CalendarItem) => {
+const onClickDay = async (data: CalendarItem) => {
+  await loadSchedule();
   const { date, time } = data.scope.timestamp;
   events.value.forEach((event: Event) => {
     eventsDay.value = events.value.filter(
