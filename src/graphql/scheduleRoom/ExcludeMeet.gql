@@ -1,0 +1,3 @@
+mutation ExcludeMeet($id: ID!) {
+  excludeMeet(id: $id)
+}

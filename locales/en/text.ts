@@ -50,4 +50,7 @@ export default {
   subLabel: "Description",
   icon: "Icon",
   system: "System",
+  messageExcludeEvent: "Are you sure you want to delete the meeting",
+  meetCanceled: "Meeting canceled successfully",
+  meetCanceledError: "An error occurred while deleting the meeting",
 };

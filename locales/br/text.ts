@@ -51,4 +51,7 @@ export default {
   subLabel: "Descrição",
   icon: "Icone",
   system: "Sistema",
+  messageExcludeEvent: "Tem certeza que deseja excluir a reunião",
+  meetCanceled: "Reunião cancelada com sucesso",
+  meetCanceledError: "Ocorreu um erro na exclusão da reunião",
 };
