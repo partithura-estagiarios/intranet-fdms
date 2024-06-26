@@ -152,9 +152,6 @@ async function loadSchedule() {
     scheduleRoomLoad: EventRoom[];
   };
   scheduleRoomLoad.forEach((event) => {
-    event.initialTime = new Date(event.initialTime);
-    event.finalTime = new Date(event.finalTime);
-    event.finalDate = formatDate(event.finalTime);
     event.colorRoom = insertColor(event.location);
   });
   events.value = scheduleRoomLoad;

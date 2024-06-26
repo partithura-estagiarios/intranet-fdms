@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import { InputsForScheduleRoom } from "../../../entities/scheduleRoom";
+import { DateTime } from "luxon";
 export const inputsForScheduleRoom = {
   inputs: {
     name: { value: "", icon: "person" },
@@ -51,7 +52,8 @@ export function resetObject(obj: any) {
 }
 
 export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
-  return {
+  // Formatar as datas para o formato ISO 8601 antes de retornar o objeto adaptado
+  const adaptedSchedule = {
     host: {
       name: schedule.inputs.name.value,
       ramalNumber: schedule.inputs.ramal.value,
@@ -61,8 +63,8 @@ export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
     },
     location: schedule.options.value,
     description: schedule.inputsLongs.description,
-    initialTime: schedule.dateInfos.initialTime.value,
-    finalTime: schedule.dateInfos.finalTime.value,
+    initialTime: convertDateTimeTo0300Z(schedule.dateInfos.initialTime.value),
+    finalTime: convertDateTimeTo0300Z(schedule.dateInfos.finalTime.value),
     support: {
       computer: schedule.booleanInfos.computer.value,
       projector: schedule.booleanInfos.projector.value,
@@ -73,6 +75,22 @@ export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
       helpers: schedule.inputsLongs.supportMaterialExtras,
     },
   };
+  console.log(adaptedSchedule);
+  return adaptedSchedule;
+}
+function convertDateTimeTo0300Z(dateTimeString: DateTime) {
+  const [datePart, timePart] = dateTimeString.split(" ");
+  const [year, month, day] = datePart.split("/");
+  const [hour, minute] = timePart.split(":");
+  const dt = DateTime.fromObject({
+    year: parseInt(year),
+    month: parseInt(month),
+    day: parseInt(day),
+    hour: parseInt(hour),
+    minute: parseInt(minute),
+  }).setZone("utc-3");
+  const formattedDate = dt.toFormat("yyyy-MM-dd'T'HH:mm:ss.0300'Z'");
+  return formattedDate;
 }
 
 export function fieldsValid(schedule: InputsForScheduleRoom) {

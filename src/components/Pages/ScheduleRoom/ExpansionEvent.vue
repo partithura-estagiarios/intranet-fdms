@@ -19,8 +19,8 @@
           :color="event.colorRoom"
           @click.stop="selectEvent(event)"
         />
-        {{ formatarData(new Date(event.initialTime)) }} {{ $t("text.until") }}
-        {{ formatarData(new Date(event.finalTime)) }}
+        {{ event.initialTime }} {{ $t("text.until") }}
+        {{ event.finalTime }}
         <q-dialog v-model="card">
           <q-card class="my-card">
             <DialogHeader
@@ -59,14 +59,14 @@ function selectEvent(event: object) {
 }
 function hasEventsForDate(date: string) {
   return props.events.some((event) => {
-    const eventDate = new Date(event.finalTime);
+    const eventDate = event.finalTime;
     return formatDate(eventDate) === date;
   });
 }
 
 function getEventsByDate(date: string) {
   return props.events.filter((event) => {
-    const eventDate = new Date(event.finalTime);
+    const eventDate = event.finalTime;
     return formatDate(eventDate) === date;
   });
 }
