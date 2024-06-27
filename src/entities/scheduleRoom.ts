@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 export interface EventRoom {
   id: string;
   host: {
@@ -9,8 +11,8 @@ export interface EventRoom {
   location: string;
   rules: string;
   totalPeoples: string;
-  initialTime: string | Date;
-  finalTime: string | Date;
+  initialTime: DateTime;
+  finalTime: DateTime;
   support: {
     computer: boolean;
     projector: boolean;
@@ -66,11 +68,11 @@ interface Options {
 interface DateInfos {
   initialTime: {
     icon: string;
-    value: string;
+    value: DateTime;
   };
   finalTime: {
     icon: string;
-    value: string;
+    value: DateTime;
   };
 }
 

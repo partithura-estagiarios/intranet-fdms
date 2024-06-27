@@ -2,10 +2,10 @@
   <q-card-section>
     <div class="row text-weight-bold text-green">
       <q-icon name="event" size="sm" />
-      {{ $t("text.hourInitial") }}: {{ formatDateTime(room.initialTime) }}
+      {{ $t("text.hourInitial") }}: {{ getHours(room.initialTime) }}
       <q-space class="q-px-md" /> <q-icon name="event" size="sm" />
       {{ $t("text.hourFinal") }}:
-      {{ formatDateTime(room.finalTime) }}
+      {{ getHours(room.finalTime) }}
     </div>
   </q-card-section>
   <q-separator />
@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatDateTime, renameKeys } from "./lib";
+import { getHours, renameKeys } from "./lib";
 import { SuPMaterials } from "../../entities/supportMaterials";
 const props = defineProps({
   eventShow: {

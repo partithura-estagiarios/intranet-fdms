@@ -19,8 +19,8 @@
           :color="event.colorRoom"
           @click.stop="selectEvent(event)"
         />
-        {{ formatarData(new Date(event.initialTime)) }} {{ $t("text.until") }}
-        {{ formatarData(new Date(event.finalTime)) }}
+        {{ event.initialTime }} {{ $t("text.until") }}
+        {{ event.finalTime }}
         <q-dialog v-model="card">
           <q-card class="my-card">
             <DialogHeader
@@ -40,7 +40,6 @@
 import { formatDate } from "./lib";
 import DialogScheduleRoom from "../../ShowScheduleRoom/DialogScheduleRoom.vue";
 import { EventRoom } from "../../../entities/scheduleRoom";
-import { DateTime } from "luxon";
 const props = defineProps({
   data: {
     type: String,
@@ -59,19 +58,16 @@ function selectEvent(event: object) {
 }
 function hasEventsForDate(date: string) {
   return props.events.some((event) => {
-    const eventDate = new Date(event.finalTime);
+    const eventDate = event.finalTime.toJSDate();
     return formatDate(eventDate) === date;
   });
 }
 
 function getEventsByDate(date: string) {
   return props.events.filter((event) => {
-    const eventDate = new Date(event.finalTime);
+    const eventDate = event.finalTime.toJSDate();
     return formatDate(eventDate) === date;
   });
-}
-function formatarData(data: Date): string {
-  return DateTime.fromJSDate(data).toFormat("HH:mm ");
 }
 </script>
 <style scoped>

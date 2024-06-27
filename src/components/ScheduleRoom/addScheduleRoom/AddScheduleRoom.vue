@@ -36,12 +36,6 @@ const disableSaveRoom = computed(() => !fieldsValid(roomSchedule.value));
 
 async function saveRoom() {
   roomSchedule.value = adaptScheduleToRoom(roomSchedule.value);
-  const dateTest1 = new Date(roomSchedule.value.initialTime);
-  const dateTest2 = new Date(roomSchedule.value.finalTime);
-  const dataInicial = DateTime.fromJSDate(dateTest1);
-  const dataFinal = DateTime.fromJSDate(dateTest2);
-  roomSchedule.value.initialTime = dataInicial.toISO();
-  roomSchedule.value.finalTime = dataFinal.toISO();
   const { createScheduleRoom }: { createScheduleRoom: string } =
     await runMutation(CreateScheduleRoom, {
       room: roomSchedule.value,

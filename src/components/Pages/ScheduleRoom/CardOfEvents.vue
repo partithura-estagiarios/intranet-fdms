@@ -11,8 +11,8 @@
             <span>{{ event.rules }}</span>
           </div>
           <span class="text-bold font-custom q-px-lg">
-            {{ getHours(new Date(event.initialTime)) }} -
-            {{ getHours(new Date(event.finalTime)) }}
+            {{ getHours(event.initialTime) }} -
+            {{ getHours(event.finalTime) }}
           </span>
         </q-item-section>
       </q-item>
@@ -25,13 +25,13 @@
         :option="eventSelected.rules"
       />
       <q-separator />
-      <DialogScheduleRoom :event-show="eventSelected()" />
+      <DialogScheduleRoom :event-show="eventSelected" />
     </q-card>
   </q-dialog>
 </template>
 
 <script setup lang="ts">
-import { getHours, formatDate, insertColor } from "./lib";
+import { insertColor, getHours } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
 import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
@@ -56,9 +56,6 @@ async function reloadEvents() {
   const auxEvents: EventRoom[] = await eventStorage.loadEvents();
   if (auxEvents.length) {
     auxEvents.forEach((event) => {
-      event.initialTime = new Date(event.initialTime);
-      event.finalTime = new Date(event.finalTime);
-      event.finalDate = formatDate(event.finalTime);
       event.colorRoom = insertColor(event.location);
     });
     return (events.value = auxEvents);

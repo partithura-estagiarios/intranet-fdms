@@ -57,14 +57,14 @@ function selectEvent(event: object) {
 const card = ref(false);
 function hasEventsForDate(date: string) {
   return props.events.some((event) => {
-    const eventDate = new Date(event.finalTime);
+    const eventDate = new Date(event.finalTime.toString());
     return formatDate(eventDate) === date;
   });
 }
 
 function getEventsByDate(date: string) {
   return props.events.filter((event) => {
-    const eventDate = new Date(event.finalTime);
+    const eventDate = new Date(event.finalTime.toString());
     return formatDate(eventDate) === date;
   });
 }
