@@ -40,12 +40,11 @@ export function insertColor(room: string): string {
   }
 }
 
-export function getHours(date: Date): string {
-  return (
-    date.getHours().toString().padStart(2, "0") +
-    ":" +
-    date.getMinutes().toString().padStart(2, "0")
-  );
+export function getHours(date: DateTime) {
+  const auxDate = date.toString();
+  const dataObj = DateTime.fromISO(auxDate, { zone: "utc" });
+  const hora = dataObj.toFormat("HH:mm");
+  return hora;
 }
 
 export function getFullDate(data: EventRoom) {

@@ -106,7 +106,8 @@ import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
-import { formatDate, insertColor, rooms } from "./lib";
+import { insertColor, rooms } from "./lib";
+import { DateTime } from "luxon";
 import {
   CalendarItem,
   CalendarTimeStamp,
@@ -152,8 +153,19 @@ async function loadSchedule() {
     scheduleRoomLoad: EventRoom[];
   };
   scheduleRoomLoad.forEach((event) => {
+    const initialTime = DateTime.fromISO(event.initialTime.toString()).plus({
+      hours: 3,
+    });
+    const finalTime = DateTime.fromISO(event.finalTime.toString()).plus({
+      hours: 3,
+    });
+
+    event.initialTime = DateTime.fromISO(initialTime.toString());
+    event.finalTime = DateTime.fromISO(finalTime.toString());
+
     event.colorRoom = insertColor(event.location);
   });
+
   events.value = scheduleRoomLoad;
 }
 

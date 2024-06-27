@@ -5,7 +5,6 @@ import NextEvents from "../graphql/scheduleRoom/NextEvents.gql";
 import { DateTime } from "luxon";
 
 import { EventRoom } from "../entities/scheduleRoom";
-import { getDate } from "@quasar/quasar-ui-qcalendar";
 const id = "events";
 
 export const useEvents = defineStore(id, {
@@ -48,11 +47,26 @@ export const useEvents = defineStore(id, {
           nextOrOld: number,
         },
       );
+      const dateTime1 = DateTime.fromISO(nextEvents, { zone: "utc" });
+      const currentDateTime = DateTime.fromISO(eventStorage.dataFull);
 
-      if (eventStorage.dataFull == nextEvents) {
+      if (dateTime1.toISODate() === currentDateTime.toISODate()) {
         return eventStorage.toggleCloseModal;
       }
-      return (eventStorage.dataFull = nextEvents);
+      const dateTime = DateTime.fromISO(nextEvents, { zone: "utc" });
+      if (
+        dateTime.hour === 0 &&
+        dateTime.minute === 0 &&
+        dateTime.second === 0 &&
+        dateTime.millisecond === 0
+      ) {
+        const adjustedDateTime = dateTime.plus({ hours: 3 });
+        const formattedDate = adjustedDateTime.toFormat("yyyy-MM-dd");
+        return (eventStorage.dataFull = formattedDate);
+      }
+      const formattedDate = dateTime.toFormat("yyyy-MM-dd");
+
+      return (eventStorage.dataFull = formattedDate);
     },
     loadEvents: async () => {
       const eventStorage = useEvents();

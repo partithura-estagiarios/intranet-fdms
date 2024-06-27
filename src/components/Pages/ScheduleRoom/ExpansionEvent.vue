@@ -40,7 +40,6 @@
 import { formatDate } from "./lib";
 import DialogScheduleRoom from "../../ShowScheduleRoom/DialogScheduleRoom.vue";
 import { EventRoom } from "../../../entities/scheduleRoom";
-import { DateTime } from "luxon";
 const props = defineProps({
   data: {
     type: String,
@@ -59,19 +58,16 @@ function selectEvent(event: object) {
 }
 function hasEventsForDate(date: string) {
   return props.events.some((event) => {
-    const eventDate = event.finalTime;
+    const eventDate = event.finalTime.toJSDate();
     return formatDate(eventDate) === date;
   });
 }
 
 function getEventsByDate(date: string) {
   return props.events.filter((event) => {
-    const eventDate = event.finalTime;
+    const eventDate = event.finalTime.toJSDate();
     return formatDate(eventDate) === date;
   });
-}
-function formatarData(data: Date): string {
-  return DateTime.fromJSDate(data).toFormat("HH:mm ");
 }
 </script>
 <style scoped>

@@ -1,8 +1,10 @@
 import { DateTime } from "luxon";
 import { SuPMaterials } from "../../entities/supportMaterials";
 import { ValidKeys } from "../../support/contracts";
-export function formatDateTime(dateTime: Date) {
-  return DateTime.fromJSDate(dateTime).toFormat("HH:mm");
+export function getHours(date: string) {
+  const dataObj = DateTime.fromISO(date, { zone: "utc-3" });
+  const hora = dataObj.toFormat("HH:mm");
+  return hora;
 }
 
 export function renameKeys(materialsSup: SuPMaterials) {

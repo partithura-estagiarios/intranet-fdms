@@ -52,7 +52,6 @@ export function resetObject(obj: any) {
 }
 
 export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
-  // Formatar as datas para o formato ISO 8601 antes de retornar o objeto adaptado
   const adaptedSchedule = {
     host: {
       name: schedule.inputs.name.value,
@@ -79,7 +78,8 @@ export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
   return adaptedSchedule;
 }
 function convertDateTimeTo0300Z(dateTimeString: DateTime) {
-  const [datePart, timePart] = dateTimeString.split(" ");
+  const auxDate = dateTimeString.toString();
+  const [datePart, timePart] = auxDate.split(" ");
   const [year, month, day] = datePart.split("/");
   const [hour, minute] = timePart.split(":");
   const dt = DateTime.fromObject({
