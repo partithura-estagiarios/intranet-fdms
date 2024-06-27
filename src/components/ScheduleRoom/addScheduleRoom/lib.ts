@@ -74,7 +74,6 @@ export function adaptScheduleToRoom(schedule: InputsForScheduleRoom) {
       helpers: schedule.inputsLongs.supportMaterialExtras,
     },
   };
-  console.log(adaptedSchedule);
   return adaptedSchedule;
 }
 function convertDateTimeTo0300Z(dateTimeString: DateTime) {
