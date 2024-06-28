@@ -19,5 +19,5 @@ export default {
   daily: "Daily",
   monthly: "Monthly",
   weekly: "Weekly",
-  repeat: "Repeat?",
+  repeat: "Repeat",
 };

@@ -21,23 +21,16 @@
         />
       </div>
     </div>
-    <div class="q-py-md">
+    <div class="row q-py-sm">
       <q-input
         outlined
         v-model="formScheduleRoom.inputsLongs.description"
         :label="$t('text.descriptionOfEvent')"
         type="text"
       />
-      <div class="q-py-md">
-        <span class="text-black font-custom text-indigo">{{
-          $t("userScheduleRoom.repeat")
-        }}</span>
-
-        <AllButtonsRepeat
-          @option-repeat="(val) => $emit('optionRepeat', val)"
-        />
-      </div>
+      <SelectRepeat @option-repeat="(val) => $emit('optionRepeat', val)" />
     </div>
+
     <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom
         :checks="formScheduleRoom.booleanInfos"
