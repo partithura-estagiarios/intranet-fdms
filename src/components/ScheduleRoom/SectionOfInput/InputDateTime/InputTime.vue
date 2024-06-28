@@ -31,7 +31,7 @@ import { ref } from "vue";
 import { useEvents } from "../../../../stores/events";
 
 const eventStorage = useEvents();
-const emits = defineEmits(["envityDates"]);
+const emits = defineEmits(["envityDates", "repeatDate"]);
 const props = defineProps({
   label: { type: String, required: true },
 });
@@ -45,6 +45,7 @@ const handleDateSelected = (date: string) => {
   showDatePopup.value = false;
   input.value = date;
   showTimePopup.value = true;
+  emits("repeatDate", date);
 };
 
 const handleTimeSelected = (time: string) => {

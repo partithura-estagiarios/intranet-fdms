@@ -12,6 +12,7 @@ export const useEvents = defineStore(id, {
     dataFull: "",
     closeModal: false,
     dateSelected: "",
+    dateRepeat: false,
   }),
   getters: {
     getFullData(state) {
@@ -35,6 +36,9 @@ export const useEvents = defineStore(id, {
     },
     getDateSelected(state) {
       return state.dateSelected;
+    },
+    getRepeatDate(state) {
+      return state.dateRepeat;
     },
   },
   actions: {
@@ -83,6 +87,10 @@ export const useEvents = defineStore(id, {
     resetDateSelected() {
       const eventStorage = useEvents();
       return (eventStorage.dateSelected = "");
+    },
+    isRepeat() {
+      const eventStorage = useEvents();
+      eventStorage.dateRepeat = !eventStorage.dateRepeat;
     },
   },
 });

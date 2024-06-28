@@ -19,7 +19,8 @@
 </template>
 <script setup lang="ts">
 import { buttonsRepeat } from "./lib";
-
+import { useEvents } from "../../../../stores/events";
+const eventStorage = useEvents();
 const emits = defineEmits(["optionRepeat"]);
 
 const model = ref();
