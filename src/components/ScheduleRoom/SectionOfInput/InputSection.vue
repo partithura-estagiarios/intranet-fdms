@@ -21,18 +21,20 @@
         />
       </div>
     </div>
-    <div class="col-12 q-py-md">
+    <div class="q-py-md">
       <q-input
         outlined
         v-model="formScheduleRoom.inputsLongs.description"
         :label="$t('text.descriptionOfEvent')"
         type="text"
       />
-    </div>
-    <div
-      class="custom-color font-custom text-white q-pa-md text-h6 q-px-xl relative-position"
-    >
-      {{ $t("text.supportMaterial") }}
+      <div class="q-py-md">
+        <span class="text-black font-custom text-indigo">{{
+          $t("userScheduleRoom.repeat")
+        }}</span>
+
+        <AllButtonsRepeat />
+      </div>
     </div>
     <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom
