@@ -43,7 +43,7 @@ export const useEvents = defineStore(id, {
       const { nextEvents }: { nextEvents: string } = await runQuery(
         NextEvents,
         {
-          data: eventStorage.dataFull,
+          date: eventStorage.dataFull,
           nextOrOld: number,
         },
       );
@@ -71,7 +71,7 @@ export const useEvents = defineStore(id, {
     loadEvents: async () => {
       const eventStorage = useEvents();
       const { loadEventsInData }: { loadEventsInData: EventRoom[] } =
-        await runQuery(LoadEventsInData, { data: eventStorage.dataFull });
+        await runQuery(LoadEventsInData, { date: eventStorage.dataFull });
       return loadEventsInData;
     },
     setDateSelected(date: string) {

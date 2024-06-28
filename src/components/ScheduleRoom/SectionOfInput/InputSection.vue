@@ -33,7 +33,9 @@
           $t("userScheduleRoom.repeat")
         }}</span>
 
-        <AllButtonsRepeat />
+        <AllButtonsRepeat
+          @option-repeat="(val) => $emit('optionRepeat', val)"
+        />
       </div>
     </div>
     <div class="content row relative-position q-py-sm justify-between">
@@ -57,7 +59,7 @@ import { inputsForScheduleRoom, resetObject } from "../addScheduleRoom/lib";
 import { useEvents } from "../../../stores/events";
 const eventStorage = useEvents();
 const formScheduleRoom = reactive(inputsForScheduleRoom);
-const emits = defineEmits(["envityRoom"]);
+const emits = defineEmits(["envityRoom", "optionRepeat"]);
 
 watchEffect(() => {
   emits("envityRoom", formScheduleRoom);

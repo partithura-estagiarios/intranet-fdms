@@ -92,11 +92,11 @@ function convertDateTimeTo0300Z(dateTimeString: DateTime) {
   return formattedDate;
 }
 
-export function fieldsValid(schedule: InputsForScheduleRoom) {
-  if (!validInputsNormals(schedule)) {
+export function fieldsValid(schedule: InputsForScheduleRoom, option: string) {
+  if (!validInputsNormals(schedule) && !option) {
     return false;
   }
-  if (!validDateInput(schedule)) {
+  if (!validDateInput(schedule) && !option) {
     return false;
   }
   return true;

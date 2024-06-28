@@ -1,6 +1,9 @@
 <template>
   <q-card-section class="q-pa-md example-row-reverse">
-    <InputSection @envity-room="(room) => (roomSchedule = room)" />
+    <InputSection
+      @envity-room="(room) => (roomSchedule = room)"
+      @option-repeat="(val) => (option = val)"
+    />
   </q-card-section>
   <q-card-section align="right">
     <div class="font-custom">
@@ -18,7 +21,6 @@
 import CreateScheduleRoom from "../../../graphql/scheduleRoom/CreateScheduleRoom.gql";
 import { adaptScheduleToRoom, fieldsValid } from "../addScheduleRoom/lib";
 import { StatusCreateMeeting } from "../../../support/contracts";
-
 const { t } = useI18n();
 const roomSchedule = ref();
 const emits = defineEmits(["reload"]);
@@ -31,13 +33,16 @@ const notifyUser = (message: string, type: string) => {
   }
   negativeNotify(message);
 };
-const disableSaveRoom = computed(() => !fieldsValid(roomSchedule.value));
-
+const disableSaveRoom = computed(
+  () => !fieldsValid(roomSchedule.value, option.value),
+);
+const option = ref();
 async function saveRoom() {
   roomSchedule.value = adaptScheduleToRoom(roomSchedule.value);
   const { createScheduleRoom }: { createScheduleRoom: string } =
     await runMutation(CreateScheduleRoom, {
       room: roomSchedule.value,
+      optionRepeat: option.value,
     });
   notifyUser(t(`userScheduleRoom.${createScheduleRoom}`), createScheduleRoom);
   return emits("reload", true);
