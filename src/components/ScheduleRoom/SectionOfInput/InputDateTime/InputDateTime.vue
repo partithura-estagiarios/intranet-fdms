@@ -50,7 +50,6 @@ watchEffect(() => {
 
 watchEffect(() => {
   if (dateInitial && dateInitial === dateFinal) {
-    console.log(dateInitial);
     return (eventStorage.dateRepeat = !eventStorage.dateRepeat);
   }
   return (eventStorage.dateRepeat = !eventStorage.dateRepeat);
