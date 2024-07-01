@@ -5,7 +5,6 @@
       class="col q-mr-sm"
       :dateInput="dateInitial"
       @envity-dates="receivedDateInitial"
-      @repeat-date="(val) => (repeatDate1 = val)"
     />
 
     <InputTime
@@ -13,7 +12,6 @@
       class="col"
       @envity-dates="receivedDateFinal"
       :dateInput="dateFinal"
-      @repeat-date="(val) => (repeatDate2 = val)"
     />
   </div>
 </template>
@@ -30,8 +28,6 @@ const props = defineProps({
     default: "",
   },
 });
-const repeatDate1 = ref();
-const repeatDate2 = ref();
 
 function receivedDateInitial(val: string) {
   dateInitial.value = val;

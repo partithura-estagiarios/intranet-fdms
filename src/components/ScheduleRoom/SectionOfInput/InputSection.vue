@@ -28,7 +28,10 @@
         :label="$t('text.descriptionOfEvent')"
         type="text"
       />
-      <SelectRepeat @option-repeat="(val) => $emit('optionRepeat', val)" />
+      <SelectRepeat
+        @option-repeat="(val) => $emit('optionRepeat', val)"
+        v-show="!showRepeat"
+      />
     </div>
 
     <div class="content row relative-position q-py-sm justify-between">
@@ -67,6 +70,11 @@ onMounted(() => {
   resetObject(formScheduleRoom);
   eventStorage.resetDateSelected;
 });
+const showRepeat = computed(
+  () =>
+    !formScheduleRoom.dateInfos.finalTime.value ||
+    !formScheduleRoom.dateInfos.initialTime.value,
+);
 </script>
 <style scoped>
 .border-color {
