@@ -1,5 +1,5 @@
 <template>
-  <q-item v-if="hasEventsForDate(props.data)">
+  <q-item>
     <div
       v-for="(event, index) in getEventsByDate(props.data)"
       class="row items-center"
@@ -55,12 +55,6 @@ function selectEvent(event: object) {
   eventSelected.value = event;
 }
 const card = ref(false);
-function hasEventsForDate(date: string) {
-  return props.events.some((event) => {
-    const eventDate = new Date(event.finalTime.toString());
-    return formatDate(eventDate) === date;
-  });
-}
 
 function getEventsByDate(date: string) {
   return props.events.filter((event) => {

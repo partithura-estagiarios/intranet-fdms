@@ -90,6 +90,7 @@ async function excludeEvent(eventId: string) {
   }
   return negativeNotify(t("text.meetCanceledError"));
 }
+console.log(1);
 </script>
 <style scoped>
 .font-custom {
