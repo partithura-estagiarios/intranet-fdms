@@ -93,20 +93,24 @@ function convertDateTimeTo0300Z(dateTimeString: DateTime) {
 }
 
 export function fieldsValid(schedule: InputsForScheduleRoom, option: string) {
-  if (!validInputsNormals(schedule) && !option) {
+  if (!validInputsNormals(schedule, option)) {
     return false;
   }
-  if (!validDateInput(schedule) && !option) {
+  if (!validDateInput(schedule)) {
     return false;
   }
   return true;
 }
 
-export function validInputsNormals(schedule: InputsForScheduleRoom) {
+export function validInputsNormals(
+  schedule: InputsForScheduleRoom,
+  option: string,
+) {
   if (
     !schedule.inputs ||
     !schedule.options.value ||
-    !schedule.inputsLongs.description
+    !schedule.inputsLongs.description ||
+    !option
   ) {
     return false;
   }
