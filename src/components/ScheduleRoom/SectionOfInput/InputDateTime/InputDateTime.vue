@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
 const emits = defineEmits(["envityDates"]);
+const eventStorage = useEvents();
 const dateInitial = ref();
 const dateFinal = ref();
 
@@ -41,5 +42,12 @@ watchEffect(() => {
     dateFinal.value = props.selectDate;
   }
   emits("envityDates", dateInitial.value, dateFinal.value);
+});
+
+watchEffect(() => {
+  if (dateInitial && dateInitial === dateFinal) {
+    return (eventStorage.dateRepeat = !eventStorage.dateRepeat);
+  }
+  return (eventStorage.dateRepeat = !eventStorage.dateRepeat);
 });
 </script>

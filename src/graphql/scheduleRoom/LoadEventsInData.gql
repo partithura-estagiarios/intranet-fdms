@@ -1,5 +1,5 @@
-query LoadEventsInData($data: String!) {
-  loadEventsInData(data: $data) {
+query LoadEventsInData($date: String!) {
+  loadEventsInData(date: $date) {
     id
     host {
       name

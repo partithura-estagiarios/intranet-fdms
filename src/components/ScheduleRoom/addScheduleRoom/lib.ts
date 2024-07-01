@@ -92,8 +92,8 @@ function convertDateTimeTo0300Z(dateTimeString: DateTime) {
   return formattedDate;
 }
 
-export function fieldsValid(schedule: InputsForScheduleRoom) {
-  if (!validInputsNormals(schedule)) {
+export function fieldsValid(schedule: InputsForScheduleRoom, option: string) {
+  if (!validInputsNormals(schedule, option)) {
     return false;
   }
   if (!validDateInput(schedule)) {
@@ -102,11 +102,15 @@ export function fieldsValid(schedule: InputsForScheduleRoom) {
   return true;
 }
 
-export function validInputsNormals(schedule: InputsForScheduleRoom) {
+export function validInputsNormals(
+  schedule: InputsForScheduleRoom,
+  option: string,
+) {
   if (
     !schedule.inputs ||
     !schedule.options.value ||
-    !schedule.inputsLongs.description
+    !schedule.inputsLongs.description ||
+    !option
   ) {
     return false;
   }

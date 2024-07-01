@@ -15,4 +15,9 @@ export default {
   thursday: "Thursday",
   friday: "Friday",
   saturday: "Saturday",
+  no: "no",
+  daily: "Daily",
+  monthly: "Monthly",
+  weekly: "Weekly",
+  repeat: "Repeat",
 };

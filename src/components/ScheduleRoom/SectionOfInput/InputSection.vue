@@ -21,19 +21,19 @@
         />
       </div>
     </div>
-    <div class="col-12 q-py-md">
+    <div class="row q-py-sm">
       <q-input
         outlined
         v-model="formScheduleRoom.inputsLongs.description"
         :label="$t('text.descriptionOfEvent')"
         type="text"
       />
+      <SelectRepeat
+        @option-repeat="(val) => $emit('optionRepeat', val)"
+        v-show="!showRepeat"
+      />
     </div>
-    <div
-      class="custom-color font-custom text-white q-pa-md text-h6 q-px-xl relative-position"
-    >
-      {{ $t("text.supportMaterial") }}
-    </div>
+
     <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom
         :checks="formScheduleRoom.booleanInfos"
@@ -55,7 +55,7 @@ import { inputsForScheduleRoom, resetObject } from "../addScheduleRoom/lib";
 import { useEvents } from "../../../stores/events";
 const eventStorage = useEvents();
 const formScheduleRoom = reactive(inputsForScheduleRoom);
-const emits = defineEmits(["envityRoom"]);
+const emits = defineEmits(["envityRoom", "optionRepeat"]);
 
 watchEffect(() => {
   emits("envityRoom", formScheduleRoom);
@@ -70,6 +70,11 @@ onMounted(() => {
   resetObject(formScheduleRoom);
   eventStorage.resetDateSelected;
 });
+const showRepeat = computed(
+  () =>
+    !formScheduleRoom.dateInfos.finalTime.value ||
+    !formScheduleRoom.dateInfos.initialTime.value,
+);
 </script>
 <style scoped>
 .border-color {

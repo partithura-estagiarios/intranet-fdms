@@ -12,6 +12,7 @@ export const useEvents = defineStore(id, {
     dataFull: "",
     closeModal: false,
     dateSelected: "",
+    dateRepeat: false,
   }),
   getters: {
     getFullData(state) {
@@ -36,6 +37,9 @@ export const useEvents = defineStore(id, {
     getDateSelected(state) {
       return state.dateSelected;
     },
+    getRepeatDate(state) {
+      return state.dateRepeat;
+    },
   },
   actions: {
     nextData: async (number: Number) => {
@@ -43,7 +47,7 @@ export const useEvents = defineStore(id, {
       const { nextEvents }: { nextEvents: string } = await runQuery(
         NextEvents,
         {
-          data: eventStorage.dataFull,
+          date: eventStorage.dataFull,
           nextOrOld: number,
         },
       );
@@ -71,7 +75,7 @@ export const useEvents = defineStore(id, {
     loadEvents: async () => {
       const eventStorage = useEvents();
       const { loadEventsInData }: { loadEventsInData: EventRoom[] } =
-        await runQuery(LoadEventsInData, { data: eventStorage.dataFull });
+        await runQuery(LoadEventsInData, { date: eventStorage.dataFull });
       return loadEventsInData;
     },
     setDateSelected(date: string) {
@@ -83,6 +87,10 @@ export const useEvents = defineStore(id, {
     resetDateSelected() {
       const eventStorage = useEvents();
       return (eventStorage.dateSelected = "");
+    },
+    isRepeat() {
+      const eventStorage = useEvents();
+      eventStorage.dateRepeat = !eventStorage.dateRepeat;
     },
   },
 });

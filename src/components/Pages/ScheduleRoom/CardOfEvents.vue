@@ -35,6 +35,7 @@ import { insertColor, getHours } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
 import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
+import { DateTime } from "luxon";
 const emits = defineEmits(["reloadEvent", "close"]);
 const { t } = useI18n();
 const eventStorage = useEvents();
@@ -64,7 +65,18 @@ async function reloadEvents() {
 }
 function selectEvent(event: EventRoom) {
   card.value = true;
-  eventSelected.value = event;
+  const initialTime = DateTime.fromISO(event.initialTime.toString()).plus({
+    hours: 3,
+  });
+  const finalTime = DateTime.fromISO(event.finalTime.toString()).plus({
+    hours: 3,
+  });
+  const auxEvent = {
+    ...event,
+    initialTime: DateTime.fromISO(initialTime.toString()),
+    finalTime: DateTime.fromISO(finalTime.toString()),
+  };
+  eventSelected.value = auxEvent;
 }
 async function excludeEvent(eventId: string) {
   const { excludeMeet }: { excludeMeet: Boolean } = await runMutation(
