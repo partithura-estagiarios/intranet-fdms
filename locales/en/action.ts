@@ -56,4 +56,5 @@ export default {
   systemManager: "System Manager",
   systemModuleOptions: "System Module Options",
   deleteMeet: "Exclude Meet",
+  editMeet: "Edit meet",
 };

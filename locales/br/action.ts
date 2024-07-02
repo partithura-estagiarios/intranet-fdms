@@ -55,4 +55,5 @@ export default {
   systemManager: "Gerenciador de Sistemas",
   systemModuleOptions: "Opções Módulo de Sistema",
   deleteMeet: "Excluir Reunião",
+  editMeet: "Editar reunião",
 };
