@@ -54,8 +54,8 @@ watchEffect(async () => {
   }
 });
 async function reloadEvents() {
-  const auxEvents: EventRoom[] = await eventStorage.loadEvents();
-  if (auxEvents.length) {
+  const auxEvents = await eventStorage.loadEvents(eventStorage.dataFull);
+  if (auxEvents) {
     auxEvents.forEach((event) => {
       event.colorRoom = insertColor(event.location);
     });

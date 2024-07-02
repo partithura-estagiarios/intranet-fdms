@@ -106,7 +106,7 @@ import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
-import { insertColor, rooms } from "./lib";
+import { createEvent, insertColor, rooms } from "./lib";
 import { DateTime } from "luxon";
 import {
   CalendarItem,
@@ -165,8 +165,7 @@ async function loadSchedule() {
 
     event.colorRoom = insertColor(event.location);
   });
-
-  events.value = scheduleRoomLoad;
+  events.value = createEvent(scheduleRoomLoad);
 }
 
 const openVideo = () => {
@@ -185,17 +184,21 @@ const reloadModalAddScheduleRoom = () => {
 
 const onClickDay = async (data: CalendarItem) => {
   const { date, time } = data.scope.timestamp;
-  events.value.forEach((event: Event) => {
-    eventsDay.value = events.value.filter(
-      (event: EventRoom) => event.finalDate === date,
-    );
+  eventsDay.value = events.value.filter((event: EventRoom) => {
+    const eventInitialDate = DateTime.fromISO(
+      event.initialTime.toString(),
+    ).toISODate();
+    const eventFinalDate = DateTime.fromISO(
+      event.finalTime.toString(),
+    ).toISODate();
+    return eventInitialDate === date || eventFinalDate === date;
   });
-  if (eventsDay.value) {
+  if (eventsDay.value.length) {
     eventStorage.dataFull = date.toString();
     cardEvents.value = true;
     return eventsDay;
   }
-  return negativeNotify(t("userScheduleRoom.thereAreNoEvents"));
+  closeCardEvents();
 };
 
 watchEffect(() => {

@@ -1,18 +1,23 @@
 import { defineStore } from "pinia";
 import LoadEventsInData from "../graphql/scheduleRoom/LoadEventsInData.gql";
-import NextEvents from "../graphql/scheduleRoom/NextEvents.gql";
+import GetPreviousAndNext from "../graphql/scheduleRoom/GetPreviousAndNext.gql";
 
 import { DateTime } from "luxon";
 
 import { EventRoom } from "../entities/scheduleRoom";
 const id = "events";
-
+interface NextAndOldDate {
+  nextDate: string;
+  oldDate: string;
+}
 export const useEvents = defineStore(id, {
   state: () => ({
     dataFull: "",
     closeModal: false,
     dateSelected: "",
     dateRepeat: false,
+    dateNext: "",
+    dateOld: "",
   }),
   getters: {
     getFullData(state) {
@@ -42,40 +47,15 @@ export const useEvents = defineStore(id, {
     },
   },
   actions: {
-    nextData: async (number: Number) => {
+    loadEvents: async (date: string) => {
       const eventStorage = useEvents();
-      const { nextEvents }: { nextEvents: string } = await runQuery(
-        NextEvents,
-        {
-          date: eventStorage.dataFull,
-          nextOrOld: number,
-        },
-      );
-      const dateTime1 = DateTime.fromISO(nextEvents, { zone: "utc" });
-      const currentDateTime = DateTime.fromISO(eventStorage.dataFull);
-
-      if (dateTime1.toISODate() === currentDateTime.toISODate()) {
-        return eventStorage.toggleCloseModal;
-      }
-      const dateTime = DateTime.fromISO(nextEvents, { zone: "utc" });
-      if (
-        dateTime.hour === 0 &&
-        dateTime.minute === 0 &&
-        dateTime.second === 0 &&
-        dateTime.millisecond === 0
-      ) {
-        const adjustedDateTime = dateTime.plus({ hours: 3 });
-        const formattedDate = adjustedDateTime.toFormat("yyyy-MM-dd");
-        return (eventStorage.dataFull = formattedDate);
-      }
-      const formattedDate = dateTime.toFormat("yyyy-MM-dd");
-
-      return (eventStorage.dataFull = formattedDate);
-    },
-    loadEvents: async () => {
-      const eventStorage = useEvents();
+      eventStorage.dataFull = date;
       const { loadEventsInData }: { loadEventsInData: EventRoom[] } =
-        await runQuery(LoadEventsInData, { date: eventStorage.dataFull });
+        await runQuery(LoadEventsInData, { date: date });
+      const { getPreviousAndNext }: { getPreviousAndNext: NextAndOldDate } =
+        await runQuery(GetPreviousAndNext, { date: date });
+      eventStorage.dateOld = getPreviousAndNext.oldDate;
+      eventStorage.dateNext = getPreviousAndNext.nextDate;
       return loadEventsInData;
     },
     setDateSelected(date: string) {

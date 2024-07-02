@@ -21,8 +21,8 @@ export const monthsAux = [
 ];
 export function formatDate(date: Date): string {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Adiciona zero à esquerda se o mês for menor que 10
-  const day = String(date.getDate()).padStart(2, "0"); // Adiciona zero à esquerda se o dia for menor que 10
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 export function insertColor(room: string): string {
@@ -43,7 +43,7 @@ export function insertColor(room: string): string {
 export function getHours(date: DateTime) {
   const auxDate = date.toString();
   const dataObj = DateTime.fromISO(auxDate, { zone: "utc" });
-  const hora = dataObj.toFormat("HH:mm");
+  const hora = dataObj.toFormat("dd-MM HH:mm");
   return hora;
 }
 
@@ -68,3 +68,48 @@ export const rooms = [
   { name: "roomC", color: "yellow" },
   { name: "roomOfReunion", color: "orange" },
 ];
+
+export function createEvent(events: any[]) {
+  const eventsAux: any[] = [];
+
+  events.forEach((element) => {
+    if (
+      element.initialTime.year === element.finalTime.year &&
+      element.initialTime.month === element.finalTime.month &&
+      element.initialTime.day === element.finalTime.day
+    ) {
+      const dailyEvent = {
+        ...element,
+        initialTime: element.initialTime.toISO({ includeOffset: true }),
+        finalTime: element.finalTime.toISO({ includeOffset: true }),
+      };
+      return eventsAux.push(dailyEvent);
+    }
+    createEvents(element, eventsAux);
+  });
+  return eventsAux;
+}
+
+function createEvents(event: any, events: any[]) {
+  const initialTime = DateTime.fromMillis(event.initialTime.ts);
+  const finalTime = DateTime.fromMillis(event.finalTime.ts);
+  let currentDate = initialTime.startOf("day");
+  while (currentDate <= finalTime) {
+    const endOfDay = currentDate
+      .endOf("day")
+      .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+      .setZone("utc-3");
+
+    const isLastDay = currentDate.hasSame(finalTime, "day");
+
+    const adjustedFinalTime = isLastDay ? finalTime : endOfDay;
+
+    const dailyEvent = {
+      ...event,
+      initialTime: currentDate.toISO({ includeOffset: true }),
+      finalTime: adjustedFinalTime.toISO({ includeOffset: true }),
+    };
+    events.push(dailyEvent);
+    currentDate = currentDate.plus({ days: 1 }).startOf("day");
+  }
+}
