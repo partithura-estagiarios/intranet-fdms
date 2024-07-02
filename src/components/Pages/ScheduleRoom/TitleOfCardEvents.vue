@@ -5,7 +5,8 @@
       icon="arrow_back"
       class="custom-color q-py-lg"
       size="xl"
-      @click="eventStorage.nextData(0)"
+      v-if="eventStorage.dateOld"
+      @click="eventStorage.loadEvents(eventStorage.dateOld)"
     />
     <div class="q-py-md">
       <q-separator color="green" size="0.1rem" />
@@ -30,9 +31,10 @@
     </div>
     <q-btn
       flat
-      @click="eventStorage.nextData(1)"
+      @click="eventStorage.loadEvents(eventStorage.dateNext)"
       icon="arrow_forward"
       clickable
+      v-if="eventStorage.dateNext"
       class="custom-color q-py-lg"
       size="xl"
     />

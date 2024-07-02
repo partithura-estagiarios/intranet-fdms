@@ -1,0 +1,6 @@
+query GetPreviousAndNext($date: String!) {
+  getPreviousAndNext(date: $date) {
+    nextDate
+    oldDate
+  }
+}

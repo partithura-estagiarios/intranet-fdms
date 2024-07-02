@@ -1,3 +1,0 @@
-query NextEvents($nextOrOld: Int!, $date: String!) {
-  nextEvents(nextOrOld: $nextOrOld, date: $date)
-}

@@ -5,11 +5,7 @@
       class="row items-center"
     >
       <div v-if="shouldDisplayEvent(index)">
-        <q-badge
-          rounded
-          :color="event.colorRoom"
-          @click.stop="selectEvent(event)"
-        >
+        <q-badge rounded :color="event.colorRoom">
           <q-tooltip>
             {{ event.host.name }}
           </q-tooltip>
@@ -23,16 +19,6 @@
       >
     </div>
   </q-item>
-  <q-dialog v-model="card">
-    <q-card>
-      <DialogHeader
-        @close="(val) => (card = val)"
-        :option="eventSelected.rules"
-      />
-      <q-separator />
-      <DialogScheduleRoom :event-show="eventSelected" />
-    </q-card>
-  </q-dialog>
 </template>
 
 <script setup lang="ts">
@@ -49,12 +35,6 @@ const props = defineProps({
     default: () => [],
   },
 });
-const eventSelected = ref();
-function selectEvent(event: object) {
-  card.value = true;
-  eventSelected.value = event;
-}
-const card = ref(false);
 
 function getEventsByDate(date: string) {
   return props.events.filter((event) => {

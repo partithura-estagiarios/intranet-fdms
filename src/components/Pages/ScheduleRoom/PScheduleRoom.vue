@@ -184,9 +184,13 @@ const reloadModalAddScheduleRoom = () => {
 
 const onClickDay = async (data: CalendarItem) => {
   const { date, time } = data.scope.timestamp;
-  eventsDay.value = events.value.filter((event) => {
-    const eventInitialDate = DateTime.fromISO(event.initialTime).toISODate();
-    const eventFinalDate = DateTime.fromISO(event.finalTime).toISODate();
+  eventsDay.value = events.value.filter((event: EventRoom) => {
+    const eventInitialDate = DateTime.fromISO(
+      event.initialTime.toString(),
+    ).toISODate();
+    const eventFinalDate = DateTime.fromISO(
+      event.finalTime.toString(),
+    ).toISODate();
     return eventInitialDate === date || eventFinalDate === date;
   });
   if (eventsDay.value.length) {

@@ -21,8 +21,8 @@ export const monthsAux = [
 ];
 export function formatDate(date: Date): string {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Adiciona zero à esquerda se o mês for menor que 10
-  const day = String(date.getDate()).padStart(2, "0"); // Adiciona zero à esquerda se o dia for menor que 10
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 export function insertColor(room: string): string {
@@ -43,7 +43,7 @@ export function insertColor(room: string): string {
 export function getHours(date: DateTime) {
   const auxDate = date.toString();
   const dataObj = DateTime.fromISO(auxDate, { zone: "utc" });
-  const hora = dataObj.toFormat("HH:mm");
+  const hora = dataObj.toFormat("dd-MM HH:mm");
   return hora;
 }
 

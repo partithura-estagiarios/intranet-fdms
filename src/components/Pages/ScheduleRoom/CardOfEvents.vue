@@ -54,8 +54,8 @@ watchEffect(async () => {
   }
 });
 async function reloadEvents() {
-  const auxEvents: EventRoom[] = await eventStorage.loadEvents();
-  if (auxEvents.length) {
+  const auxEvents = await eventStorage.loadEvents(eventStorage.dataFull);
+  if (auxEvents) {
     auxEvents.forEach((event) => {
       event.colorRoom = insertColor(event.location);
     });
@@ -90,7 +90,6 @@ async function excludeEvent(eventId: string) {
   }
   return negativeNotify(t("text.meetCanceledError"));
 }
-console.log(1);
 </script>
 <style scoped>
 .font-custom {
