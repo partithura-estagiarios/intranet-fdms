@@ -9,7 +9,7 @@
         </q-item>
         <q-item clickable v-close-popup>
           <q-item-section class="text-black">{{
-            $t("action.deleteMeet")
+            $t("action.editMeet")
           }}</q-item-section>
         </q-item>
       </q-list>
@@ -25,5 +25,3 @@
 <script setup lang="ts">
 const openModal = ref(false);
 </script>
-
-<style scoped></style>
