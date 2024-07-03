@@ -3,12 +3,12 @@
     <TitleOfCardEvents class="q-py-md no-wrap" />
     <q-list padding class="size-list scroll">
       <q-item v-ripple v-for="event in events" :key="event.id">
-        <ExcludeM @exclude="excludeEvent(event.id)" />
         <q-item-section class="text-no-wrap" @click="selectEvent(event)">
           <div class="items-center text-h6 font-custom">
             <q-badge class="q-mx-sm no-wrap" :color="event.colorRoom" />
             <span>{{ event.host.name }} - </span>
             <span>{{ event.rules }}</span>
+            <MenuOptsRoom @exclude="excludeEvent(event.id)" />
           </div>
           <span class="text-bold font-custom q-px-lg">
             {{ getHours(event.initialTime) }} -
