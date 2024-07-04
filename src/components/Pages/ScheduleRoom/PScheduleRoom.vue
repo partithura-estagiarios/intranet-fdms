@@ -165,7 +165,7 @@ async function loadSchedule() {
 
     event.colorRoom = insertColor(event.location);
   });
-  events.value = scheduleRoomLoad;
+  events.value = createEvent(scheduleRoomLoad);
 }
 
 const openVideo = () => {
