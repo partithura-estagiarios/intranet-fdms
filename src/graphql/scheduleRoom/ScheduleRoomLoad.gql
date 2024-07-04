@@ -1,7 +1,6 @@
 query ScheduleRoomLoad {
   scheduleRoomLoad {
     id
-    idRoomParent
     host {
       name
       ramalNumber
