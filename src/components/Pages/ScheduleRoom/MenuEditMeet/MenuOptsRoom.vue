@@ -15,7 +15,7 @@
       </q-list>
     </q-menu>
   </q-btn>
-  <ModalExcludeEvent
+  <ModalExcludeMeet
     :confirm="openModal"
     @close="openModal = !openModal"
     @exclude="$emit('exclude')"
