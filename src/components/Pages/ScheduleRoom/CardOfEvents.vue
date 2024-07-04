@@ -8,7 +8,11 @@
             <q-badge class="q-mx-sm no-wrap" :color="event.colorRoom" />
             <span>{{ event.host.name }} - </span>
             <span>{{ event.rules }}</span>
-            <MenuOptsRoom @exclude="excludeEvent(event.id)" />
+            <MenuOptsRoom
+              @exclude="excludeEvent(event.id)"
+              :meet="event"
+              @edit="(val) => editEvent(val.value, event)"
+            />
           </div>
           <span class="text-bold font-custom q-px-lg">
             {{ getHours(event.initialTime) }} -
@@ -35,7 +39,13 @@ import { insertColor, getHours } from "./lib";
 import { EventRoom } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
 import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
+import EditEvent from "../../../graphql/scheduleRoom/EditMeet.gql";
 import { DateTime } from "luxon";
+import {
+  StatusCreateMeeting,
+  StatusResponse,
+} from "../../../support/contracts";
+import { ScheduleRoom } from "../../../modules/graphql/graphql";
 const emits = defineEmits(["reloadEvent", "close"]);
 const { t } = useI18n();
 const eventStorage = useEvents();
@@ -53,6 +63,15 @@ watchEffect(async () => {
     reloadEvents();
   }
 });
+const notifyUser = (message: string, type: string) => {
+  if (type === StatusCreateMeeting.SUCCESS) {
+    return positiveNotify(message);
+  }
+  if (type === StatusCreateMeeting.DATE_CONFLICT) {
+    return negativeNotify(message);
+  }
+  negativeNotify(message);
+};
 async function reloadEvents() {
   const auxEvents = await eventStorage.loadEvents(eventStorage.dataFull);
   if (auxEvents) {
@@ -89,6 +108,14 @@ async function excludeEvent(eventId: string) {
     return positiveNotify(t("text.meetCanceled"));
   }
   return negativeNotify(t("text.meetCanceledError"));
+}
+async function editEvent(event: Object, eventNow: ScheduleRoom) {
+  const { editEvent }: { editEvent: string } = await runMutation(EditEvent, {
+    room: event,
+  });
+
+  notifyUser(t(`userScheduleRoom.${editEvent}`), editEvent);
+  reloadEvents();
 }
 </script>
 <style scoped>

@@ -1,0 +1,3 @@
+mutation EditMeet($room: NewScheduleRoom!, $meetId: ID!) {
+  editMeet(room: $room, meetId: $meetId)
+}
