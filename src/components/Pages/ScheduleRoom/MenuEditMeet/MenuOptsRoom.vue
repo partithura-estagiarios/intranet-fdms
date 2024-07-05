@@ -8,7 +8,7 @@
           </q-item-section>
         </q-item>
         <q-item clickable v-close-popup>
-          <q-item-section class="text-black">{{
+          <q-item-section class="text-black" @click="openEdit = !openEdit">{{
             $t("action.editMeet")
           }}</q-item-section>
         </q-item>
@@ -20,8 +20,27 @@
     @close="openModal = !openModal"
     @exclude="$emit('exclude')"
   />
+  <EditCardMeet
+    :meet="props.meet"
+    :confirm="openEdit"
+    @close="openEdit = !openEdit"
+    @edit="handleConfirm"
+  />
 </template>
 
 <script setup lang="ts">
+import { EditEventInterface } from "../../../../entities/scheduleRoom";
+const emits = defineEmits(["edit", "exclude"]);
+const props = defineProps({
+  meet: {
+    type: Object,
+    required: true,
+  },
+});
 const openModal = ref(false);
+const openEdit = ref(false);
+function handleConfirm(val: EditEventInterface) {
+  openEdit.value = !openEdit.value;
+  emits("edit", val);
+}
 </script>

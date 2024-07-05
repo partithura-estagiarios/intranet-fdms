@@ -1,0 +1,3 @@
+mutation EditMeet($room: EditScheduleRoom!) {
+  editMeet(room: $room)
+}
