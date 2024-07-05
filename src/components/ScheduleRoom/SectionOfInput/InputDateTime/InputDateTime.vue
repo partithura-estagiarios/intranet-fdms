@@ -45,9 +45,8 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
-  if (dateInitial && dateInitial === dateFinal) {
-    return (eventStorage.dateRepeat = !eventStorage.dateRepeat);
+  if (dateFinal.value && dateInitial.value) {
+    eventStorage.isSameDate(dateFinal.value, dateInitial.value);
   }
-  return (eventStorage.dateRepeat = !eventStorage.dateRepeat);
 });
 </script>
