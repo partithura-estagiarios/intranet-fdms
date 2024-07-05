@@ -5,6 +5,7 @@
         class="bg-green text-white q-px-md"
         :label="$t('text.addRamal')"
         @click="openDialog()"
+        v-if="userStorage.getToken"
       />
     </div>
     <q-input
@@ -36,6 +37,8 @@
   </div>
 </template>
 <script setup lang="ts">
+const userStorage = useUsers();
+
 import { Ramal } from "../../entities/ramal";
 const dialogVisible = ref(false);
 const emits = defineEmits(["envityRamal-table", "reload"]);
