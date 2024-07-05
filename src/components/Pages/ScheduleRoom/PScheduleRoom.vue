@@ -65,6 +65,7 @@
           :daysEvents="eventsDay"
           @reloadEvent="loadSchedule()"
           @close="closeCardEvents()"
+          @editSuccess="loadSchedule()"
         />
       </q-card>
     </div>
