@@ -5,7 +5,6 @@
       :label="$t('userScheduleRoom.totalPeople')"
       type="number"
       class="q-px-md"
-      @update:model-value="edits.totalPeoples = edits.totalPeoples"
     />
     <EditSelectEvent
       :option="edits.location"

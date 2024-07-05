@@ -8,7 +8,7 @@
           </q-item-section>
         </q-item>
         <q-item clickable v-close-popup>
-          <q-item-section class="text-black" @click="openEdit = !openEdit">{{
+          <q-item-section class="text-black" @click="openEdit = true">{{
             $t("action.editMeet")
           }}</q-item-section>
         </q-item>
@@ -40,7 +40,7 @@ const props = defineProps({
 const openModal = ref(false);
 const openEdit = ref(false);
 function handleConfirm(val: EditEventInterface) {
-  openEdit.value = !openEdit.value;
+  openEdit.value = false;
   emits("edit", val);
 }
 </script>

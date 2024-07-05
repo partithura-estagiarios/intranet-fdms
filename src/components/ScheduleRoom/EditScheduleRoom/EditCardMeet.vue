@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <q-dialog v-model="props.confirm">
-      <q-card>
-        <DialogHeader option="action.editMeet" @close="$emit('close')" />
-        <InputsEditEvent
-          :meet="props.meet"
-          @envity-edit="(val) => (host = val)"
-        />
-        <CardButtonConfirm @confirm="handleConfirm" />
-      </q-card>
-    </q-dialog>
-  </div>
+  <q-dialog v-model="props.confirm">
+    <q-card>
+      <DialogHeader option="action.editMeet" @close="$emit('close')" />
+      <InputsEditEvent
+        :meet="props.meet"
+        @envity-edit="(val) => (host = val)"
+      />
+      <CardButtonConfirm @confirm="handleConfirm" />
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">

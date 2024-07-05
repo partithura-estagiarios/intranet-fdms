@@ -54,20 +54,20 @@ const props = defineProps({
 const eventSelected = ref();
 const card = ref(false);
 const events: Ref<EventRoom[]> = ref([]);
+
 watchEffect(async () => {
   if (eventStorage.dataFull) {
     reloadEvents();
   }
 });
+
 const notifyUser = (message: string, type: string) => {
   if (type === StatusCreateMeeting.SUCCESS) {
     return positiveNotify(message);
   }
-  if (type === StatusCreateMeeting.DATE_CONFLICT) {
-    return negativeNotify(message);
-  }
   negativeNotify(message);
 };
+
 async function reloadEvents() {
   const auxEvents = await eventStorage.loadEvents(eventStorage.dataFull);
   if (auxEvents) {
