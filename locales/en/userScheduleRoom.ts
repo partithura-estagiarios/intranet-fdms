@@ -20,4 +20,6 @@ export default {
   monthly: "Monthly",
   weekly: "Weekly",
   repeat: "Repeat",
+  intervalExceeded: "Meeting time exceeded",
+  tempMax: "Maximum time 24 hours",
 };
