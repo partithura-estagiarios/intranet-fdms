@@ -42,7 +42,7 @@ import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
 import EditMeet from "../../../graphql/scheduleRoom/EditMeet.gql";
 import { DateTime } from "luxon";
 import { StatusCreateMeeting } from "../../../support/contracts";
-const emits = defineEmits(["reloadEvent", "close"]);
+const emits = defineEmits(["reloadEvent", "close", "editSuccess"]);
 const { t } = useI18n();
 const eventStorage = useEvents();
 const props = defineProps({
@@ -124,6 +124,7 @@ async function editEvent(event: EditEventInterface) {
   });
   notifyUser(t(`userScheduleRoom.${editMeet}`), editMeet);
   reloadEvents();
+  emits("editSuccess");
 }
 </script>
 <style scoped>
