@@ -12,19 +12,22 @@
       class="custom-q-select q-px-md"
       @envity-new-room="(val) => (edits.location = val)"
     />
-    <div class="row q-px-md">
-      <InputEditDateTime
-        :title="$t('text.startDateAndTime')"
-        :label="edits.initialTime"
-        @envityDates="(val) => (edits.initialTime = val)"
-      />
-      <q-space class="q-px-sm" />
-      <InputEditDateTime
-        :title="$t('text.endDateAndTime')"
-        :label="edits.finalTime"
-        @envityDates="(val) => (edits.finalTime = val)"
-      />
-    </div>
+    <InputEditDateTime
+      :title="$t('text.startDateAndTime')"
+      :label="edits.initialTime"
+      @envityDates="(val) => (edits.initialTime = val)"
+      class="q-px-sm"
+    />
+    <InputEditDateTime
+      :title="$t('text.endDateAndTime')"
+      :label="edits.finalTime"
+      @envityDates="(val) => (edits.finalTime = val)"
+      class="q-px-sm"
+    />
+    <CardSectionEditMaterialHelp
+      :materials="edits.support"
+      @envity-sup="(val) => (edits.support = val)"
+    />
   </div>
 </template>
 
@@ -44,6 +47,7 @@ const edits = reactive({
   location: props.meet.location,
   initialTime: formatDate(props.meet.initialTime),
   finalTime: formatDate(props.meet.finalTime),
+  support: props.meet.support,
 });
 watchEffect(() => {
   emits("envity-edit", edits);

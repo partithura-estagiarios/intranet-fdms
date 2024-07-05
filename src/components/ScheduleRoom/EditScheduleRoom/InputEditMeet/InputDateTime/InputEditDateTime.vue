@@ -7,13 +7,6 @@
       v-model="input"
       :label="props.title"
     >
-      <template #prepend>
-        <q-icon
-          name="event"
-          class="custom-color full-height q-px-md"
-          color="white"
-        />
-      </template>
       <q-popup-proxy>
         <div v-if="showDatePopup && !showTimePopup">
           <CardDate @dateSelected="handleDateSelected" />
