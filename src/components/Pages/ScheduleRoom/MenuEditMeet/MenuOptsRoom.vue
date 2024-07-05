@@ -24,11 +24,13 @@
     :meet="props.meet"
     :confirm="openEdit"
     @close="openEdit = !openEdit"
-    @edit="(val) => $emit('edit', val)"
+    @edit="handleConfirm"
   />
 </template>
 
 <script setup lang="ts">
+import { EditEventInterface } from "../../../../entities/scheduleRoom";
+const emits = defineEmits(["edit", "exclude"]);
 const props = defineProps({
   meet: {
     type: Object,
@@ -37,4 +39,8 @@ const props = defineProps({
 });
 const openModal = ref(false);
 const openEdit = ref(false);
+function handleConfirm(val: EditEventInterface) {
+  openEdit.value = !openEdit.value;
+  emits("edit", val);
+}
 </script>

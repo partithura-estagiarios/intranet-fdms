@@ -1,6 +1,22 @@
 import { EventRoom } from "../../../entities/scheduleRoom";
 import { DateTime } from "luxon";
 
+export function convertDateTimeTo0300Z(dateTimeString: DateTime) {
+  const auxDate = dateTimeString.toString();
+  const [datePart, timePart] = auxDate.split(" ");
+  const [year, month, day] = datePart.split("/");
+  const [hour, minute] = timePart.split(":");
+  const dt = DateTime.fromObject({
+    year: parseInt(year),
+    month: parseInt(month),
+    day: parseInt(day),
+    hour: parseInt(hour),
+    minute: parseInt(minute),
+  }).setZone("utc-3");
+  const formattedDate = dt.toFormat("yyyy-MM-dd'T'HH:mm:ss.0300'Z'");
+  return formattedDate;
+}
+
 export const countryCodes: { [key: string]: string } = {
   BR: "pt-BR",
   US: "en-US",

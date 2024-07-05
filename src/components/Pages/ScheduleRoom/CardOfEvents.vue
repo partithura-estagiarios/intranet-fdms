@@ -11,7 +11,7 @@
             <MenuOptsRoom
               @exclude="excludeEvent(event.id)"
               :meet="event"
-              @edit="(val) => editEvent(val.value, event)"
+              @edit="(val) => editEvent(val.value)"
             />
           </div>
           <span class="text-bold font-custom q-px-lg">
@@ -35,17 +35,13 @@
 </template>
 
 <script setup lang="ts">
-import { insertColor, getHours } from "./lib";
-import { EventRoom } from "../../../entities/scheduleRoom";
+import { insertColor, getHours, convertDateTimeTo0300Z } from "./lib";
+import { EventRoom, EditEventInterface } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
 import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
-import EditEvent from "../../../graphql/scheduleRoom/EditMeet.gql";
+import EditMeet from "../../../graphql/scheduleRoom/EditMeet.gql";
 import { DateTime } from "luxon";
-import {
-  StatusCreateMeeting,
-  StatusResponse,
-} from "../../../support/contracts";
-import { ScheduleRoom } from "../../../modules/graphql/graphql";
+import { StatusCreateMeeting } from "../../../support/contracts";
 const emits = defineEmits(["reloadEvent", "close"]);
 const { t } = useI18n();
 const eventStorage = useEvents();
@@ -109,12 +105,24 @@ async function excludeEvent(eventId: string) {
   }
   return negativeNotify(t("text.meetCanceledError"));
 }
-async function editEvent(event: Object, eventNow: ScheduleRoom) {
-  const { editEvent }: { editEvent: string } = await runMutation(EditEvent, {
-    room: event,
-  });
+async function editEvent(event: EditEventInterface) {
+  const initialTime = event.initialTime.toString().endsWith("Z")
+    ? event.initialTime
+    : convertDateTimeTo0300Z(event.initialTime);
+  const finalTime = event.finalTime.toString().endsWith("Z")
+    ? event.finalTime
+    : convertDateTimeTo0300Z(event.finalTime);
 
-  notifyUser(t(`userScheduleRoom.${editEvent}`), editEvent);
+  const auxEvent = {
+    ...event,
+    totalPeoples: event.totalPeoples.toString(),
+    initialTime: initialTime,
+    finalTime: finalTime,
+  };
+  const { editMeet }: { editMeet: string } = await runMutation(EditMeet, {
+    room: auxEvent,
+  });
+  notifyUser(t(`userScheduleRoom.${editMeet}`), editMeet);
   reloadEvents();
 }
 </script>

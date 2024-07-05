@@ -76,6 +76,23 @@ interface DateInfos {
   };
 }
 
+export interface EditEventInterface {
+  id: number;
+  totalPeoples: number;
+  location: string;
+  initialTime: DateTime;
+  finalTime: DateTime;
+  support: {
+    computer: boolean;
+    projector: boolean;
+    water: boolean;
+    coffee: boolean;
+    flipSharp: boolean;
+    equipamentSong: boolean;
+    helpers: null;
+  };
+}
+
 interface InputsLongs {
   supportMaterialExtras: string;
   description: string;
