@@ -18,6 +18,7 @@ export const useEvents = defineStore(id, {
     dateRepeat: false,
     dateNext: "",
     dateOld: "",
+    isSameDate: false,
   }),
   getters: {
     getFullData(state) {
@@ -68,9 +69,15 @@ export const useEvents = defineStore(id, {
       const eventStorage = useEvents();
       return (eventStorage.dateSelected = "");
     },
-    isRepeat() {
+    isSameDate(dateInit: any, dateFinal: any) {
       const eventStorage = useEvents();
-      eventStorage.dateRepeat = !eventStorage.dateRepeat;
+      const dateInitPart = dateInit.split(" ");
+      const dateFinalPart = dateFinal.split(" ");
+      if (dateInitPart[0] === dateFinalPart[0]) {
+        return (eventStorage.dateRepeat = true);
+      }
+
+      return (eventStorage.dateRepeat = false);
     },
   },
 });
