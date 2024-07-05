@@ -11,7 +11,12 @@
         :class="coloringItem(item.name)"
         @click="handleTabClick(item.name)"
       />
-      <q-btn icon="edit" flat class="absolute-right">
+      <q-btn
+        icon="edit"
+        flat
+        class="absolute-right"
+        v-if="userStorage.getToken"
+      >
         <q-menu anchor="top right" self="top left" class="text-black">
           <q-list>
             <q-item clickable v-close-popup>
@@ -47,6 +52,8 @@ import { useFiles } from "../../../stores/files";
 import { isDeletion, isFile, isFolder } from "./lib";
 import { AuxFolder } from "../../../entities/files";
 import BuildPath from "./BuildPath.vue";
+const userStorage = useUsers();
+
 const fileStorage = useFiles();
 const tab = ref("");
 const openDialog = ref(false);

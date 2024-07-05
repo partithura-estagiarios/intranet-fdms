@@ -1,5 +1,5 @@
 <template>
-  <q-btn color="black" icon="edit" flat @click.stop>
+  <q-btn color="black" icon="edit" flat @click.stop v-if="userStorage.getToken">
     <q-menu anchor="bottom right" self="bottom left">
       <q-list>
         <q-item clickable v-close-popup>
@@ -30,6 +30,8 @@
 
 <script setup lang="ts">
 import { EditEventInterface } from "../../../../entities/scheduleRoom";
+import { useUsers } from "../../../../stores/user";
+const userStorage = useUsers();
 const emits = defineEmits(["edit", "exclude"]);
 const props = defineProps({
   meet: {
