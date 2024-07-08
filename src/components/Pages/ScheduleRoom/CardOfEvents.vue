@@ -128,7 +128,6 @@ async function editEvent(event: EditEventInterface, val2: any) {
       helpers: auxSupport.value,
     },
   };
-  console.log({ auxEvent });
   const { editMeet }: { editMeet: string } = await runMutation(EditMeet, {
     room: auxEvent,
   });
