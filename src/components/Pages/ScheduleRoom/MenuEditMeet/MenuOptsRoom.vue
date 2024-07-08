@@ -41,8 +41,8 @@ const props = defineProps({
 });
 const openModal = ref(false);
 const openEdit = ref(false);
-function handleConfirm(val: EditEventInterface) {
+function handleConfirm(val: EditEventInterface, val2: string) {
   openEdit.value = !openEdit.value;
-  emits("edit", val);
+  emits("edit", val, val2);
 }
 </script>

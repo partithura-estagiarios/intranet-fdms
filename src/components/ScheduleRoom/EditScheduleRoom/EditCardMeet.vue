@@ -7,6 +7,11 @@
           :meet="props.meet"
           @envity-edit="(val) => (host = val)"
         />
+        <q-input
+          v-model="otherMaterials"
+          class="q-px-sm"
+          :label="$t('text.otherMaterials')"
+        />
         <CardButtonConfirm @confirm="handleConfirm" />
       </q-card>
     </q-dialog>
@@ -21,7 +26,8 @@ const props = defineProps({
   meet: { type: Object, required: true },
 });
 const host = ref();
+const otherMaterials = ref(props.meet.support.helpers);
 function handleConfirm() {
-  emits("edit", host);
+  emits("edit", host, otherMaterials);
 }
 </script>
