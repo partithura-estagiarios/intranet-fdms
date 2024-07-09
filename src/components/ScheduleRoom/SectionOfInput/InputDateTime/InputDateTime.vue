@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+import { useEvents } from "../../../../stores/events";
 const emits = defineEmits(["envityDates"]);
 const eventStorage = useEvents();
 const dateInitial = ref();

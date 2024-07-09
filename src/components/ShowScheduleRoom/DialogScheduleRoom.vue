@@ -27,26 +27,19 @@
   <q-card-section class="row text-weight-bold color-custom">
     {{ $t("text.supportMaterial") }}:
     <div
-      class="row text-weight-bold q-px-md"
-      v-for="(item, index) in renameKeysOfSupport(room.support)"
+      class="row text-weight-bold q-px-sm"
+      v-for="(item, index) in roomSupport"
       v-show="item"
       :key="index"
     >
-      <q-icon :name="item?.toString()" size="sm" />
-      <p>{{ $t("text." + index) }}</p>
+      <p>{{ $t(`text.${index}`) }}</p>
     </div>
-    <q-icon
-      name="new_releases"
-      size="sm"
-      v-show="helpersValueFromMaterialSup"
-    />
     <p>{{ helpersValueFromMaterialSup }}</p>
   </q-card-section>
 </template>
 
 <script setup lang="ts">
-import { getHours, renameKeys } from "./lib";
-import { SuPMaterials } from "../../entities/supportMaterials";
+import { getHours } from "./lib";
 const props = defineProps({
   eventShow: {
     type: Object,
@@ -56,18 +49,20 @@ const props = defineProps({
 
 const room = ref();
 const helpersValueFromMaterialSup = ref();
+const roomSupport = ref();
+
 watchEffect(() => {
   if (props.eventShow) {
     room.value = props.eventShow;
+    roomSupport.value = {};
+    for (const key in room.value.support) {
+      if (key !== "helpers") {
+        roomSupport.value[key] = room.value.support[key];
+      }
+    }
+    helpersValueFromMaterialSup.value = room.value.support["helpers"];
   }
 });
-function renameKeysOfSupport(materialsSup: SuPMaterials) {
-  if (materialsSup["helpers"]) {
-    helpersValueFromMaterialSup.value = materialsSup["helpers"];
-    delete materialsSup["helpers"];
-  }
-  return renameKeys(materialsSup);
-}
 </script>
 <style scoped>
 .color-custom {

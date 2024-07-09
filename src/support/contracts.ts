@@ -9,12 +9,3 @@ export enum StatusCreateMeeting {
   DATE_CONFLICT = "dateConflict",
   SUCCESS = "reunionAccept",
 }
-
-export enum ValidKeys {
-  projector = "projector",
-  water = "water",
-  flipSharp = "flipSharp",
-  equipamentSong = "equipamentSong",
-  coffee = "coffee",
-  computer = "computer",
-}

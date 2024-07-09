@@ -1,21 +1,28 @@
 <template>
   <div class="q-px-sm row">
     <div
-      v-for="(_, key) in materialsState"
+      v-for="(_, key) in roomSupport"
       :key="key"
       @click="toggleCheckbox(key)"
+      class="clickable"
     >
       <q-input
         :label="$t('text.' + key)"
         class="q-px-sm"
         readonly
-        v-model="inputValue"
+        v-model="room"
       >
         <template #append>
-          <q-checkbox v-model="materialsState[key]" />
+          <q-checkbox v-model="roomSupport[key]" />
         </template>
       </q-input>
     </div>
+    <q-input
+      v-model="helpersValueFromMaterialSup"
+      :label="$t('text.otherMaterials')"
+      class="q-px-sm q-input-custom"
+      @update:model-value="toggleInput(helpersValueFromMaterialSup)"
+    />
   </div>
 </template>
 
@@ -28,21 +35,36 @@ const props = defineProps({
     required: true,
   },
 });
-delete props.materials.helpers;
 
-const materialsState: Record<string, boolean> = reactive({});
+const room = ref();
+const helpersValueFromMaterialSup = ref();
+const roomSupport = ref();
 
-const inputValue = ref("");
-
-const toggleCheckbox = (key: string) => {
-  materialsState[key] = !materialsState[key];
-  emits("envity-sup", materialsState);
+const toggleCheckbox = (key: string | number) => {
+  roomSupport.value[key] = !roomSupport.value[key];
+  roomSupport.value["helpers"] = helpersValueFromMaterialSup.value;
+  emits("envity-sup", roomSupport.value);
 };
-onMounted(() => {
-  for (const key in props.materials) {
-    materialsState[key] =
-      !!props.materials[key] || typeof props.materials[key] === "string";
+
+const toggleInput = (input: string) => {
+  roomSupport.value["helpers"] = input;
+  emits("envity-sup", roomSupport.value);
+};
+
+watchEffect(() => {
+  if (props.materials) {
+    roomSupport.value = {};
+    for (const key in props.materials) {
+      if (key !== "helpers") {
+        roomSupport.value[key] = props.materials[key];
+      }
+    }
+    helpersValueFromMaterialSup.value = props.materials["helpers"] || "";
   }
-  emits("envity-sup", materialsState);
 });
 </script>
+<style scoped>
+.q-input-custom {
+  width: 31rem;
+}
+</style>
