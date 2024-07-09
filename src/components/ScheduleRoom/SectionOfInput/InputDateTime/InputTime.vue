@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useEvents } from "../../../../stores/events";
+import { DateTime } from "luxon";
 
 const eventStorage = useEvents();
 const emits = defineEmits(["envityDates"]);
@@ -54,10 +55,15 @@ const handleTimeSelected = (time: string) => {
   showDatePopup.value = false;
 };
 
+function formatToDDMMYYYY(dateString: string) {
+  const dateObj = DateTime.fromJSDate(new Date(dateString));
+  return dateObj.toFormat("dd/MM/yyyy");
+}
+
 watchEffect(() => {
   if (eventStorage.getDateSelected) {
     showDatePopup.value = false;
-    input.value = eventStorage.getDateSelected;
+    input.value = formatToDDMMYYYY(eventStorage.getDateSelected);
     showTimePopup.value = true;
   }
 });

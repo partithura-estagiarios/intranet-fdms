@@ -2,7 +2,7 @@
   <q-card class="limit-size-date">
     <q-date
       v-model="date"
-      mask="YYYY/MM/DD"
+      mask="DD/MM/YYYY"
       class="text-black q-px-xl"
       @update:model-value="updateDate"
       minimal
