@@ -3,16 +3,8 @@ import { DateTime } from "luxon";
 
 export function convertDateTimeTo0300Z(dateTimeString: DateTime) {
   const auxDate = dateTimeString.toString();
-  const [datePart, timePart] = auxDate.split(" ");
-  const [year, month, day] = datePart.split("/");
-  const [hour, minute] = timePart.split(":");
-  const dt = DateTime.fromObject({
-    year: parseInt(year),
-    month: parseInt(month),
-    day: parseInt(day),
-    hour: parseInt(hour),
-    minute: parseInt(minute),
-  }).setZone("utc-3");
+  const dateTimeObj = DateTime.fromFormat(auxDate, "dd/MM/yyyy HH:mm");
+  const dt = dateTimeObj.setZone("utc-3");
   const formattedDate = dt.toFormat("yyyy-MM-dd'T'HH:mm:ss.0300'Z'");
   return formattedDate;
 }
@@ -59,7 +51,7 @@ export function insertColor(room: string): string {
 export function getHours(date: DateTime) {
   const auxDate = date.toString();
   const dataObj = DateTime.fromISO(auxDate, { zone: "utc" });
-  const hora = dataObj.toFormat("dd-MM HH:mm");
+  const hora = dataObj.toFormat("HH:mm dd/MM");
   return hora;
 }
 
