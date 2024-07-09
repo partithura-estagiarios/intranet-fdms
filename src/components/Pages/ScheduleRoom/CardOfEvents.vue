@@ -105,6 +105,7 @@ async function excludeEvent(eventId: string) {
   }
   return negativeNotify(t("text.meetCanceledError"));
 }
+
 async function editEvent(event: EditEventInterface) {
   const initialTime = event.initialTime.toString().endsWith("Z")
     ? event.initialTime
@@ -112,7 +113,6 @@ async function editEvent(event: EditEventInterface) {
   const finalTime = event.finalTime.toString().endsWith("Z")
     ? event.finalTime
     : convertDateTimeTo0300Z(event.finalTime);
-
   const auxEvent = {
     ...event,
     totalPeoples: event.totalPeoples.toString(),

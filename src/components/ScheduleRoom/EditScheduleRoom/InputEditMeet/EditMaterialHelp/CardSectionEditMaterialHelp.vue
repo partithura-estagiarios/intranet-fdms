@@ -1,58 +1,45 @@
 <template>
-  <div class="q-px-sm">
-    <q-checkbox
-      v-for="(material, key) in support"
+  <div class="q-px-sm row">
+    <div
+      v-for="key in Object.keys(materialsState)"
       :key="key"
-      :label="$t('text.' + key)"
-      v-model="support[key]"
-      @click="toggleCheckbox(material)"
-      class="text-black"
-    />
-  </div>
-  <div>
-    <q-input
-      v-model="model"
-      :label="$t('text.otherMaterials')"
-      class="q-px-md"
-    />
+      @click="toggleCheckbox(key)"
+    >
+      <q-input
+        :label="$t('text.' + key)"
+        class="q-px-sm"
+        readonly
+        v-model="inputValue"
+      >
+        <template #append>
+          <q-checkbox v-model="materialsState[key]" />
+        </template>
+      </q-input>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const emits = defineEmits(["envity-sup"]);
+
 const props = defineProps({
   materials: {
-    type: Object,
+    type: Object as () => Record<string, boolean>,
     required: true,
   },
 });
-const toggleCheckbox = (item: any) => {
-  item.value = !item.value;
+delete props.materials.helpers;
+
+const materialsState: Record<string, boolean> = reactive({});
+for (const key in props.materials) {
+  materialsState[key] =
+    typeof props.materials[key] === "boolean" ? props.materials[key] : true;
+}
+
+const inputValue = ref("");
+
+const toggleCheckbox = (key: string) => {
+  materialsState[key] = !materialsState[key];
+  emits("envity-sup", materialsState);
 };
-const model = ref();
-const support = ref();
-watchEffect(() => {
-  support.value = {
-    coffee: props.materials.coffee,
-    computer: props.materials.computer,
-    equipamentSong: props.materials.equipamentSong,
-    flipSharp: props.materials.flipSharp,
-    projector: props.materials.projector,
-    water: props.materials.water,
-  };
-  model.value = props.materials.helpers;
-});
-watchEffect(() => {
-  const aux = {
-    ...props.materials,
-    coffee: support.value.coffee,
-    computer: support.value.computer,
-    equipamentSong: support.value.equipamentSong,
-    flipSharp: support.value.flipSharp,
-    projector: support.value.projector,
-    water: support.value.water,
-    helpers: model.value,
-  };
-  emits("envity-sup", aux);
-});
 </script>
