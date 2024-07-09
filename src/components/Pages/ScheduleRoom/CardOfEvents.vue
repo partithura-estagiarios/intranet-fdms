@@ -11,7 +11,7 @@
             <MenuOptsRoom
               @exclude="excludeEvent(event.id)"
               :meet="event"
-              @edit="(val, val2) => editEvent(val.value, val2)"
+              @edit="(val) => editEvent(val.value)"
             />
           </div>
           <span class="text-bold font-custom q-px-lg">
@@ -106,12 +106,7 @@ async function excludeEvent(eventId: string) {
   return negativeNotify(t("text.meetCanceledError"));
 }
 
-interface AuxSupport {
-  value: string;
-}
-
-async function editEvent(event: EditEventInterface, val2: any) {
-  const auxSupport: AuxSupport = val2;
+async function editEvent(event: EditEventInterface) {
   const initialTime = event.initialTime.toString().endsWith("Z")
     ? event.initialTime
     : convertDateTimeTo0300Z(event.initialTime);
@@ -123,10 +118,6 @@ async function editEvent(event: EditEventInterface, val2: any) {
     totalPeoples: event.totalPeoples.toString(),
     initialTime: initialTime,
     finalTime: finalTime,
-    support: {
-      ...event.support,
-      helpers: auxSupport.value,
-    },
   };
   const { editMeet }: { editMeet: string } = await runMutation(EditMeet, {
     room: auxEvent,
