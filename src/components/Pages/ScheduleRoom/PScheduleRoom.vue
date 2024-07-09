@@ -209,8 +209,9 @@ watchEffect(() => {
   }
 });
 
-function closeCardEvents() {
+async function closeCardEvents() {
   cardEvents.value = false;
+  await loadSchedule();
   negativeNotify(t(`text.noMoreEvents`));
 }
 

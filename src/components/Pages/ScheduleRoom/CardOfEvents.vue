@@ -70,7 +70,7 @@ const notifyUser = (message: string, type: string) => {
 };
 async function reloadEvents() {
   const auxEvents = await eventStorage.loadEvents(eventStorage.dataFull);
-  if (auxEvents) {
+  if (auxEvents.length) {
     auxEvents.forEach((event) => {
       event.colorRoom = insertColor(event.location);
     });
@@ -99,7 +99,7 @@ async function excludeEvent(eventId: string) {
     { id: eventId },
   );
   if (excludeMeet) {
-    reloadEvents();
+    await reloadEvents();
     emits("reloadEvent");
     return positiveNotify(t("text.meetCanceled"));
   }
