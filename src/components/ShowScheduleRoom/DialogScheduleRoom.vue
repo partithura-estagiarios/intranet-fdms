@@ -9,23 +9,32 @@
     </div>
   </q-card-section>
   <q-separator />
-  <q-card-section class="row color-custom">
-    <div class="text-weight-bold q-col q-px-sm">
+  <q-card-section class="row color-custom q-px-sm justify-between">
+    <div class="text-weight-bold q-px-sm">
+      <q-icon name="person" size="sm" />
       {{ $t("text.organizer") }}: {{ room.host.name }}
     </div>
-    <div class="text-weight-bold q-col q-px-sm">
+    <div class="text-weight-bold q-px-sm">
+      <q-icon name="people" size="sm" />
       {{ $t("text.participants") }}: {{ room.totalPeoples }}
     </div>
-    <div class="text-weight-bold q-col q-px-sm">
+  </q-card-section>
+  <q-separator />
+  <q-card-section class="row color-custom q-px-sm justify-between">
+    <div class="text-weight-bold q-px-sm">
+      <q-icon name="call" size="sm" />
       {{ $t("text.ramal") }}: {{ room.host.ramalNumber }}
     </div>
-    <div class="text-weight-bold q-col q-px-sm">
+    <div class="text-weight-bold q-px-sm">
+      <q-icon name="credit_card" size="sm" />
       {{ $t("text.registration") }}: {{ room.host.userRegistration }}
     </div>
   </q-card-section>
   <q-separator />
+  <q-card-section class="text-weight-bold color-custom text-center">
+    <div class="bold">{{ $t("text.supportMaterial") }}</div>
+  </q-card-section>
   <q-card-section class="row text-weight-bold color-custom">
-    {{ $t("text.supportMaterial") }}:
     <div
       class="row text-weight-bold q-px-sm"
       v-for="(item, index) in roomSupport"
