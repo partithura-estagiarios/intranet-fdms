@@ -1,7 +1,7 @@
 <template>
   <div class="q-px-sm row">
     <div
-      v-for="key in Object.keys(materialsState)"
+      v-for="(_, key) in materialsState"
       :key="key"
       @click="toggleCheckbox(key)"
     >
@@ -31,10 +31,6 @@ const props = defineProps({
 delete props.materials.helpers;
 
 const materialsState: Record<string, boolean> = reactive({});
-for (const key in props.materials) {
-  materialsState[key] =
-    typeof props.materials[key] === "boolean" ? props.materials[key] : true;
-}
 
 const inputValue = ref("");
 
@@ -42,4 +38,11 @@ const toggleCheckbox = (key: string) => {
   materialsState[key] = !materialsState[key];
   emits("envity-sup", materialsState);
 };
+onMounted(() => {
+  for (const key in props.materials) {
+    materialsState[key] =
+      !!props.materials[key] || typeof props.materials[key] === "string";
+  }
+  emits("envity-sup", materialsState);
+});
 </script>
