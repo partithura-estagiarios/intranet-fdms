@@ -45,6 +45,7 @@
     <ItemSystem
       @receveid="loadSystems()"
       @activeBadgeExclusion="showBadgeExclusion = !showBadgeExclusion"
+      v-if="userStorage.getToken"
     />
   </div>
 </template>
@@ -52,9 +53,10 @@
 <script setup lang="ts">
 import LoadSystems from "../../graphql/system/queries.gql";
 import DeleteSystem from "../../graphql/system/DeleteSystem.gql";
-
+import { useUsers } from "../../stores/user";
 import { router } from "../../modules/router";
 
+const userStorage = useUsers();
 const props = defineProps({
   sistema: {
     type: String!,
