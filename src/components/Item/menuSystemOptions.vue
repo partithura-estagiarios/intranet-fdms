@@ -29,7 +29,7 @@
     v-if="modalCreateSystem"
     :card="modalCreateSystem"
     @close="modalCreateSystem = false"
-    @received="handleReceived"
+    @receveid="handleReceived"
     :label="$t('action.addSystem')"
   />
 </template>
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { options } from "./lib";
 
-const emits = defineEmits(["received", "activeDeleteSystem"]);
+const emits = defineEmits(["receveid", "activeDeleteSystem"]);
 
 const optionDisable = reactive({
   disable: false,
@@ -57,7 +57,7 @@ function openModal(modal: string) {
 }
 
 function handleReceived() {
-  emits("received");
+  emits("receveid");
   modalCreateSystem.value = false;
 }
 </script>
