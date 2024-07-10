@@ -1,1 +1,1 @@
-export const options = ["addSystem", "editSystem", "deleteSystem"];
+export const options = ["addSystem", "deleteSystem"];

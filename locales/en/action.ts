@@ -55,6 +55,7 @@ export default {
   deleteSystem: "Delete System",
   systemManager: "System Manager",
   systemModuleOptions: "System Module Options",
+  disableDeleteSystems: "Disable the option to delete systems",
   deleteMeet: "Exclude Meet",
   editMeet: "Edit meet",
 };
