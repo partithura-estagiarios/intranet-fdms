@@ -53,6 +53,7 @@ export default {
   editSystem: "Editar Sistema",
   deleteSystem: "Deletar Sistema",
   systemManager: "Gerenciador de Sistemas",
+  disableDeleteSystems: "Desativar a opção de deletar sistemas",
   systemModuleOptions: "Opções Módulo de Sistema",
   deleteMeet: "Excluir Reunião",
   editMeet: "Editar reunião",

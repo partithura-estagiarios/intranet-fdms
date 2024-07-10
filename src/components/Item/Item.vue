@@ -4,9 +4,17 @@
     :class="$q.screen.lt.lg ? 'justify-between' : 'justify-center'"
   >
     <div v-for="item in sistemas">
-      <q-item clickable @click="goToRoute(item.link)">
+      <q-item :clickable="!showBadgeExclusion" @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
           <q-avatar class="border-color row bg-white shadow-14" size="7.99rem">
+            <q-badge
+              color="red cursor-pointer"
+              floating
+              v-if="showBadgeExclusion"
+              :clickable="showBadgeExclusion"
+              @click="excludeSystemId(item.system_id)"
+              ><q-icon name="delete" size="sm"
+            /></q-badge>
             <q-icon
               :name="item.icon"
               class="custom-color icon-partithura q-py-md"
@@ -34,14 +42,21 @@
         </div>
       </q-item>
     </div>
-    <!-- <ItemSystem @receveid="loadSystems()" /> -->
+    <ItemSystem
+      @receveid="loadSystems()"
+      @activeBadgeExclusion="showBadgeExclusion = !showBadgeExclusion"
+      v-if="userStorage.getToken"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import LoadSystems from "../../graphql/system/queries.gql";
+import DeleteSystem from "../../graphql/system/DeleteSystem.gql";
+import { useUsers } from "../../stores/user";
 import { router } from "../../modules/router";
 
+const userStorage = useUsers();
 const props = defineProps({
   sistema: {
     type: String!,
@@ -50,6 +65,7 @@ const props = defineProps({
 });
 const sistemas = ref();
 const openModalCeo = ref();
+const showBadgeExclusion = ref(false);
 
 onMounted(async () => {
   loadSystems();
@@ -70,6 +86,16 @@ async function loadSystems() {
     sistema: props.sistema,
   });
   sistemas.value = loadSystems;
+}
+async function excludeSystemId(id: number) {
+  const { deleteSystem }: { deleteSystem: Object } = await runQuery(
+    DeleteSystem,
+    {
+      systemId: id,
+    },
+  );
+  sistemas.value = deleteSystem;
+  await loadSystems();
 }
 </script>
 
