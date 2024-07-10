@@ -1,5 +1,8 @@
 <template>
-  <div class="row justify-center">
+  <div
+    class="row"
+    :class="$q.screen.lt.lg ? 'justify-between' : 'justify-center'"
+  >
     <div v-for="item in sistemas">
       <q-item clickable @click="goToRoute(item.link)">
         <q-item-section class="border-radius-inherit">
@@ -38,6 +41,7 @@
 <script setup lang="ts">
 import LoadSystems from "../../graphql/system/queries.gql";
 import { router } from "../../modules/router";
+
 const props = defineProps({
   sistema: {
     type: String!,
@@ -46,9 +50,11 @@ const props = defineProps({
 });
 const sistemas = ref();
 const openModalCeo = ref();
+
 onMounted(async () => {
   loadSystems();
 });
+
 function goToRoute(rout: String) {
   if (rout.includes("https")) {
     return window.open(`${rout}`);
@@ -58,6 +64,7 @@ function goToRoute(rout: String) {
   }
   return router.push(`${rout}`);
 }
+
 async function loadSystems() {
   const { loadSystems }: { loadSystems: Object } = await runQuery(LoadSystems, {
     sistema: props.sistema,
