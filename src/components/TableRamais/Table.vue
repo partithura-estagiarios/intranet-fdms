@@ -18,7 +18,7 @@
       </template>
       <template v-slot:body-cell-icon="props">
         <q-td :props="props">
-          <q-avatar>
+          <q-avatar v-if="userStorage.getToken">
             <DropdownSettings
               :options="['deleteRamal', 'editRamal']"
               :ramal="props.row"
@@ -47,6 +47,7 @@
 </template>
 
 <script setup lang="ts">
+import { useUsers } from "../../stores/user";
 import RamaisForPageLoad from "../../graphql/ramais/RamaisForPageLoad.gql";
 import { columns, pagesOfTable } from "./lib";
 import { Column } from "../../entities/column";
@@ -59,6 +60,7 @@ const pages = ref();
 const pagination = ref({
   rowsPerPage: pagesOfTable,
 });
+const userStorage = useUsers();
 const saveIndexPages = ref();
 async function getRamais(page: number) {
   saveIndexPages.value = page;
