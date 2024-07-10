@@ -88,7 +88,6 @@ async function loadSystems() {
   sistemas.value = loadSystems;
 }
 async function excludeSystemId(id: number) {
-  console.log(id);
   const { deleteSystem }: { deleteSystem: Object } = await runQuery(
     DeleteSystem,
     {
