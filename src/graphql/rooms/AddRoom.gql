@@ -1,0 +1,3 @@
+mutation AddRoom($room: InputRoom!) {
+  addRoom(room: $room)
+}

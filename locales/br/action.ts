@@ -58,4 +58,8 @@ export default {
   deleteMeet: "Excluir Reunião",
   editMeet: "Editar reunião",
   addRoom: "Adicionar Sala",
+  existRoomName: "Já existe uma Sala com esse nome",
+  existRoomColor: "Já existe uma Sala com essa cor",
+  roomAccepted: "Sala criada com sucesso",
+  enterNameRoom: "Dê nome a sala ",
 };
