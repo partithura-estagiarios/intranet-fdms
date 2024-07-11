@@ -54,4 +54,6 @@ export default {
   messageExcludeEvent: "Tem certeza que deseja excluir a reunião",
   meetCanceled: "Reunião cancelada com sucesso",
   meetCanceledError: "Ocorreu um erro na exclusão da reunião",
+  nameRoom: "Nome da Sala",
+  colorRoom: "Cor",
 };

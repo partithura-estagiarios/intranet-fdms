@@ -92,6 +92,8 @@
       </q-calendar-month>
     </div>
   </div>
+  <ButtonOpts />
+
   <div class="row justify-center font-custom">
     <div v-for="item in rooms" class="col-auto q-pa-md">
       <div class="row items-center">

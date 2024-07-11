@@ -58,4 +58,5 @@ export default {
   disableDeleteSystems: "Disable the option to delete systems",
   deleteMeet: "Exclude Meet",
   editMeet: "Edit meet",
+  addRoom: "Add Room",
 };

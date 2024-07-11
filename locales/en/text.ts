@@ -53,4 +53,6 @@ export default {
   messageExcludeEvent: "Are you sure you want to delete the meeting",
   meetCanceled: "Meeting canceled successfully",
   meetCanceledError: "An error occurred while deleting the meeting",
+  nameRoom: "Name Room",
+  colorRoom: "Color",
 };

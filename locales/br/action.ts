@@ -57,4 +57,5 @@ export default {
   systemModuleOptions: "Opções Módulo de Sistema",
   deleteMeet: "Excluir Reunião",
   editMeet: "Editar reunião",
+  addRoom: "Adicionar Sala",
 };
