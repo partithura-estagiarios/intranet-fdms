@@ -33,20 +33,6 @@ export function formatDate(date: Date): string {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
-export function insertColor(room: string): string {
-  switch (room) {
-    case "SALA A":
-      return "red";
-    case "SALA B":
-      return "green";
-    case "SALA C":
-      return "yellow";
-    case "SALA DE REUNIÃO":
-      return "orange";
-    default:
-      return "";
-  }
-}
 
 export function getHours(date: DateTime) {
   const auxDate = date.toString();
@@ -69,13 +55,6 @@ export function getFullDate(data: EventRoom) {
 
   return formattedDate;
 }
-
-export const rooms = [
-  { name: "roomA", color: "red" },
-  { name: "roomB", color: "green" },
-  { name: "roomC", color: "yellow" },
-  { name: "roomOfReunion", color: "orange" },
-];
 
 export function createEvent(events: any[]) {
   const eventsAux: any[] = [];

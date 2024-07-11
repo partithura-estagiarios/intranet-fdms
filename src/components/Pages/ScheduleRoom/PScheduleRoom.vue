@@ -96,7 +96,7 @@
     <div v-for="item in rooms" class="col-auto q-pa-md">
       <div class="row items-center">
         <q-badge rounded :color="item.color" class="q-mx-sm" />
-        <span class="text-body1 text-black">{{ $t(`text.${item.name}`) }}</span>
+        <span class="text-body1 text-black">{{ item.name }}</span>
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@ import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
-import { createEvent, insertColor, rooms } from "./lib";
+import { createEvent } from "./lib";
 import { DateTime } from "luxon";
 import {
   CalendarItem,
@@ -115,6 +115,8 @@ import {
   EventRoom,
 } from "../../../entities/scheduleRoom";
 import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
+import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
+
 import { useEvents } from "../../../stores/events";
 const eventStorage = useEvents();
 const selectedDate = ref(today());
@@ -125,6 +127,8 @@ const card = ref(false);
 const cardEvents = ref(false);
 const eventsDay = ref();
 const modalVideo = ref(false);
+const rooms = ref();
+
 function onClickHeadDay(item: CalendarItem) {
   const { date, time } = item.scope.timestamp;
   eventStorage.setDateSelected(date + " " + time);
@@ -163,8 +167,6 @@ async function loadSchedule() {
 
     event.initialTime = DateTime.fromISO(initialTime.toString());
     event.finalTime = DateTime.fromISO(finalTime.toString());
-
-    event.colorRoom = insertColor(event.location);
   });
   events.value = createEvent(scheduleRoomLoad);
 }
@@ -229,8 +231,15 @@ function getHeadDay(item: CalendarTimeStamp) {
   const data = new Date(date);
   return daysOfWeek[data.getDay()];
 }
+
+async function carregarSalas() {
+  const { loadRooms }: { loadRooms: Object } = await runQuery(LoadRooms);
+  rooms.value = loadRooms;
+}
+
 onMounted(() => {
   loadSchedule();
+  carregarSalas();
 });
 </script>
 <style scoped>

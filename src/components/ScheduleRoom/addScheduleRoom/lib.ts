@@ -10,7 +10,7 @@ export const inputsForScheduleRoom = {
     totalPeople: { value: null, icon: "groups" },
   },
   options: {
-    rooms: ["SALA A", "SALA B", "SALA C", "SALA DE REUNIÃO"],
+    rooms: [],
     icon: "share_location",
     value: "",
   },

@@ -8,7 +8,7 @@
       @update:model-value="edits.totalPeoples = edits.totalPeoples"
     />
     <EditSelectEvent
-      :option="edits.location"
+      :option="edits.location.name"
       class="custom-q-select q-px-md"
       @envity-new-room="(val) => (edits.location = val)"
     />

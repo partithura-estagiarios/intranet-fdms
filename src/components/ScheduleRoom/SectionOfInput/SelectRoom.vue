@@ -2,7 +2,7 @@
   <div class="q-pa-sl q-pt-md col-6">
     <q-select
       v-model="model"
-      :options="props.options.rooms"
+      :options="rooms"
       :label="$t('text.selectRoom')"
       class="col-4 border"
     >
@@ -24,8 +24,10 @@
 </template>
 
 <script setup lang="ts">
+import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
+import { Rooms } from "../../../entities/rooms";
 const emits = defineEmits(["envityDates"]);
-
+const rooms = ref<string[]>([]);
 const props = defineProps({
   options: {
     type: Object,
@@ -33,10 +35,21 @@ const props = defineProps({
   },
 });
 const model = ref(props.options.value);
+
+async function carregarSalas() {
+  const { loadRooms }: { loadRooms: Rooms[] } = await runQuery(LoadRooms);
+  loadRooms.forEach((room: Rooms) => {
+    rooms.value.push(room.name);
+  });
+}
+
 watchEffect(() => {
   if (model.value) {
     emits("envityDates", model.value);
   }
+});
+onMounted(async () => {
+  carregarSalas();
 });
 </script>
 

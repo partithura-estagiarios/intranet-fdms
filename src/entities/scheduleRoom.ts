@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-
+import { Rooms } from "../entities/rooms";
 export interface EventRoom {
   id: string;
   host: {
@@ -8,7 +8,7 @@ export interface EventRoom {
     userRegistration: string;
     email: string;
   };
-  location: string;
+  location: Rooms;
   rules: string;
   totalPeoples: string;
   initialTime: DateTime;
