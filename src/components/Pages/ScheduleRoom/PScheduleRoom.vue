@@ -92,16 +92,20 @@
       </q-calendar-month>
     </div>
   </div>
-  <ButtonOpts />
 
   <div class="row justify-center font-custom">
     <div v-for="item in rooms" class="col-auto q-pa-md">
       <div class="row items-center">
-        <q-badge rounded :color="item.color" class="q-mx-sm" />
+        <q-badge
+          rounded
+          :style="`background-color:${item.color}`"
+          class="q-mx-sm"
+        />
         <span class="text-body1 text-black">{{ item.name }}</span>
       </div>
     </div>
   </div>
+  <ButtonOptsRooms @reloadRoom="carregarSalas()" v-if="userStroage.getToken" />
 </template>
 
 <script setup lang="ts">
@@ -118,8 +122,9 @@ import {
 } from "../../../entities/scheduleRoom";
 import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
 import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
-
+import { useUsers } from "../../../stores/user";
 import { useEvents } from "../../../stores/events";
+const userStroage = useUsers();
 const eventStorage = useEvents();
 const selectedDate = ref(today());
 const { t } = useI18n();

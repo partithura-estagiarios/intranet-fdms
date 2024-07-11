@@ -17,6 +17,14 @@
 </template>
 
 <script setup lang="ts">
+const emits = defineEmits(["envityRoom"]);
 const nameRoom = ref("");
 const color = ref("#1279e0");
+watchEffect(() => {
+  const auxNewRoom = {
+    name: nameRoom.value,
+    color: color.value,
+  };
+  emits("envityRoom", auxNewRoom);
+});
 </script>
