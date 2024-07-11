@@ -1,0 +1,7 @@
+query LoadRooms {
+  loadRooms {
+    id
+    name
+    color
+  }
+}

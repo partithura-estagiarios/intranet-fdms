@@ -5,7 +5,7 @@
       class="row items-center"
     >
       <div v-if="shouldDisplayEvent(index)">
-        <q-badge rounded :color="event.colorRoom">
+        <q-badge rounded :color="event.location.color">
           <q-tooltip>
             {{ event.host.name }}
           </q-tooltip>

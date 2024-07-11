@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { insertColor, getHours, convertDateTimeTo0300Z } from "./lib";
+import { getHours, convertDateTimeTo0300Z } from "./lib";
 import { EventRoom, EditEventInterface } from "../../../entities/scheduleRoom";
 import { useEvents } from "../../../stores/events";
 import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
@@ -71,9 +71,6 @@ const notifyUser = (message: string, type: string) => {
 async function reloadEvents() {
   const auxEvents = await eventStorage.loadEvents(eventStorage.dataFull);
   if (auxEvents.length) {
-    auxEvents.forEach((event) => {
-      event.colorRoom = insertColor(event.location);
-    });
     return (events.value = auxEvents);
   }
   emits("close");

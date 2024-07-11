@@ -7,7 +7,11 @@ query ScheduleRoomLoad {
       userRegistration
       email
     }
-    location
+    location {
+      id
+      name
+      color
+    }
     rules
     totalPeoples
     initialTime

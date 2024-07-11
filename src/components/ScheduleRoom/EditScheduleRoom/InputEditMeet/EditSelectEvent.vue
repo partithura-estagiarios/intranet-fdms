@@ -11,7 +11,9 @@
 </template>
 
 <script setup lang="ts">
-const rooms = ["SALA A", "SALA B", "SALA C", "SALA DE REUNIÃO"];
+import LoadRooms from "../../../../graphql/rooms/LoadRooms.gql";
+import { Rooms } from "../../../../entities/rooms";
+
 const emits = defineEmits(["envity-new-room"]);
 const props = defineProps({
   option: {
@@ -19,8 +21,18 @@ const props = defineProps({
     required: true,
   },
 });
+const rooms = ref<string[]>([]);
+async function carregarSalas() {
+  const { loadRooms }: { loadRooms: Rooms[] } = await runQuery(LoadRooms);
+  loadRooms.forEach((room: Rooms) => {
+    rooms.value.push(room.name);
+  });
+}
 const model = ref(props.option);
 watchEffect(() => {
   emits("envity-new-room", model.value);
+});
+onMounted(() => {
+  carregarSalas();
 });
 </script>
