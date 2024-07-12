@@ -7,7 +7,7 @@
     @click="card = !card"
   />
   <q-card class="my-card bordered-card" v-show="card">
-    <q-card-actions vertical>
+    <q-card-actions vertical align="center">
       <q-item
         class="q-px-sm position-btn"
         clickable
@@ -127,6 +127,7 @@ watchEffect(() => {
 }
 
 .position-btn {
-  top: 0.16rem;
+  top: 0.17rem;
+  right: 0.3rem;
 }
 </style>
