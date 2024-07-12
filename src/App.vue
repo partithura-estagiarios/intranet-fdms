@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BarUp v-if="showTabHeader" />
+    <BarUp />
     <BackgroundIntranet v-if="showTabHeader" />
     <RouterView />
   </div>

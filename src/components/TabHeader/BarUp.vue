@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar class="color-custom q-py-lg">
+  <q-toolbar class="color-custom q-py-lg z-top">
     <q-btn flat to="/home" class="q-py-sm q-px-md absolute-top-left">
       <img src="/ico/LOGO_FUNDIMISA.png" class="q-py-md" />
     </q-btn>
