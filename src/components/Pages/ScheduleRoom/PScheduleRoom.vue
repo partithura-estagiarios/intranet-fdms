@@ -92,11 +92,7 @@
       </q-calendar-month>
     </div>
   </div>
-  <<<<<<< HEAD
-  <div class="q-py-sm">
-    <ButtonOptsRooms @opt-delete="deleteRooms = !deleteRooms" />
-  </div>
-  ======= >>>>>>> develop
+
   <div class="row justify-center font-custom">
     <div v-for="item in rooms" class="col-auto q-pa-md">
       <div class="row items-center">
