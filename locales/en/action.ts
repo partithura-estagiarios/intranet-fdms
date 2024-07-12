@@ -59,4 +59,8 @@ export default {
   deleteMeet: "Exclude Meet",
   editMeet: "Edit meet",
   addRoom: "Add Room",
+  existRoomName: "A Room with that name already exists",
+  existRoomColor: "There is already a Room with this color",
+  roomAccepted: "Room created successfully",
+  enterNameRoom: "Give the room a name",
 };

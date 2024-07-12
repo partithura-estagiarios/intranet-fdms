@@ -92,13 +92,19 @@
       </q-calendar-month>
     </div>
   </div>
+  <<<<<<< HEAD
   <div class="q-py-sm">
     <ButtonOptsRooms @opt-delete="deleteRooms = !deleteRooms" />
   </div>
+  ======= >>>>>>> develop
   <div class="row justify-center font-custom">
     <div v-for="item in rooms" class="col-auto q-pa-md">
       <div class="row items-center">
-        <q-badge rounded :color="item.color" class="q-mx-sm" />
+        <q-badge
+          rounded
+          :style="`background-color:${item.color}`"
+          class="q-mx-sm"
+        />
         <span class="text-body1 text-black">{{ item.name }}</span>
         <q-icon
           color="red"
@@ -111,6 +117,7 @@
       </div>
     </div>
   </div>
+  <ButtonOptsRooms @reloadRoom="carregarSalas()" v-if="userStroage.getToken" />
 </template>
 
 <script setup lang="ts">
@@ -128,10 +135,11 @@ import {
 import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
 import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
 import DeleteRoom from "../../../graphql/rooms/DeleteRoom.gql";
-
 import { useEvents } from "../../../stores/events";
+import { useUsers } from "../../../stores/user";
 
 const deleteRooms = ref(false);
+const userStroage = useUsers();
 const eventStorage = useEvents();
 const selectedDate = ref(today());
 const dateNow = today();
