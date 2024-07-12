@@ -37,6 +37,11 @@ export const useUsers = defineStore(id, {
     logout: () => {
       const user = useUsers();
       user.stateUser = userStorage;
+      return router.push("/home");
+    },
+    login: () => {
+      const user = useUsers();
+      user.stateUser = userStorage;
       return router.push("/login");
     },
   },

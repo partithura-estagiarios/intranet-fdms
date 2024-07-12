@@ -1,39 +1,24 @@
 <template>
-  <div class="row justify-center">
-    <q-item clickable @click="modalCreateSystem">
-      <q-item-section class="border-radius-inherit">
-        <q-avatar class="border-color row bg-white shadow-14" size="7.99rem">
-          <q-icon
-            :name="item.icon"
-            class="custom-color icon-partithura q-py-md"
-          />
-        </q-avatar>
-      </q-item-section>
-      <div class="label text-start row">
-        <q-item>
-          <q-item-section>
-            <q-item-label
-              class="custom-color text-h5 text-weight-bolder font-custom"
-            >
-              {{ $t(`${item.label}`) }}
-            </q-item-label>
-
-            <q-item-label class="text-green text-bold text-h5 font-custom">
-              {{ $t(`${item.subLabel}`) }}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </div>
-      <MenuSystemOptions
-        @receveid="$emit('receveid')"
-        @activeDeleteSystem="changeItem((change = !change))"
-      />
-    </q-item>
-  </div>
+  <q-icon
+    :name="item.icon"
+    clickable
+    @click="modalCreateSystem"
+    class="position-icon cursor-pointer"
+    v-if="userStorage.getToken"
+  >
+    <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+      {{ $t("action.systemModuleOptions") }}
+    </q-tooltip>
+    <MenuSystemOptions @activeDeleteSystem="changeItem((change = !change))" />
+  </q-icon>
 </template>
 
 <script setup lang="ts">
-const emits = defineEmits(["activeBadgeExclusion", "receveid"]);
+import { useUsers } from "../../stores/user";
+import { useSystems } from "../../stores/system";
+
+const userStorage = useUsers();
+const systemStorage = useSystems();
 const modalCreateSystem = ref();
 const change = ref(false);
 const editItem = {
@@ -50,10 +35,10 @@ const item = ref(editItem);
 
 function changeItem(val: boolean) {
   if (val) {
-    emits("activeBadgeExclusion");
+    systemStorage.toogleBadgeExclusion;
     return (item.value = newItem);
   }
-  emits("activeBadgeExclusion");
+  systemStorage.toogleBadgeExclusion;
   return (item.value = editItem);
 }
 </script>
@@ -71,5 +56,8 @@ function changeItem(val: boolean) {
 .icon-partithura {
   height: 5.7rem;
   bottom: 0.35rem;
+}
+.position-icon {
+  bottom: 0.2rem;
 }
 </style>

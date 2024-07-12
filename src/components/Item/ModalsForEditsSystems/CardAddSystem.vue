@@ -19,6 +19,9 @@
 <script setup lang="ts">
 import { InputSystem } from "../../../entities/system";
 import CreateSystem from "../../../graphql/system/CreateSystem.gql";
+import { useSystems } from "../../../stores/system";
+
+const systemStorage = useSystems();
 const emits = defineEmits(["receveid", "close"]);
 const { t } = useI18n();
 const props = defineProps({
@@ -36,7 +39,8 @@ const createSystem = () => {
   if (form) {
     runMutation(CreateSystem, { newSystem: form.value }).then((res: any) => {
       if (res.createSystem.enum) {
-        emits("receveid", res.createSystem.enum);
+        systemStorage.loadSystems("gestao");
+        emits("close");
         return positiveNotify(t(res.createSystem.message));
       }
       negativeNotify(t(res.createSystem.message));
