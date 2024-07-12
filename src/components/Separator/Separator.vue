@@ -1,10 +1,19 @@
 <template>
   <q-separator class="color-separator" size="1vh" />
   <img src="/SEPARATOR.png" />
-  <h4 class="text-bold text-white position-text">{{ texto }}</h4>
+  <h4 class="text-bold text-white position-text">
+    {{ texto }}
+    <ItemSystem
+      @receveid="emits('receveid')"
+      @activeDeleteSystem="emits('activeBadgeExclusion')"
+    />
+  </h4>
 </template>
 
 <script setup lang="ts">
+import ItemSystem from "../Item/ItemSystem.vue";
+
+const emits = defineEmits(["receveid", "activeBadgeExclusion"]);
 const props = defineProps({
   texto: {
     type: String,

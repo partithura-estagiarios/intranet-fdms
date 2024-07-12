@@ -1,6 +1,7 @@
 <template>
-  <q-menu touch-position>
+  <q-menu fit>
     <q-list>
+      <q-space class="q-py-sm" />
       <q-item
         v-if="!optionDisable.disable"
         clickable
@@ -29,7 +30,6 @@
     v-if="modalCreateSystem"
     :card="modalCreateSystem"
     @close="modalCreateSystem = false"
-    @receveid="handleReceived"
     :label="$t('action.addSystem')"
   />
 </template>
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { options } from "./lib";
 
-const emits = defineEmits(["receveid", "activeDeleteSystem"]);
+const emits = defineEmits(["activeDeleteSystem"]);
 
 const optionDisable = reactive({
   disable: false,
@@ -54,10 +54,5 @@ function openModal(modal: string) {
     optionDisable.disable = !optionDisable.disable;
     return emits("activeDeleteSystem");
   }
-}
-
-function handleReceived() {
-  emits("receveid");
-  modalCreateSystem.value = false;
 }
 </script>

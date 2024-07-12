@@ -7,11 +7,11 @@
     @click="card = !card"
   />
   <q-card class="my-card bordered-card" v-show="card">
-    <q-card-actions vertical>
+    <q-card-actions vertical align="center">
       <q-item
-        class="q-px-sm"
+        class="q-px-sm position-btn"
         clickable
-        @click="userStorage.logout()"
+        @click="handleLogOff(text)"
         v-close-popup
       >
         <q-icon
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { useUsers } from "../../../stores";
+import { useUsers } from "../../../stores/user";
 const userStorage = useUsers();
 const text = ref("");
 const card = ref(false);
@@ -44,12 +44,21 @@ function updateColors() {
     text.value = "action.logout";
     borderColor.value = "bg-red";
     textColor.value = "text-red";
+    card.value = !card;
     return (iconColor.value = "red");
   }
   text.value = "action.login";
   borderColor.value = "bg-indigo";
   textColor.value = "text-indigo";
+  card.value = !card;
   return (iconColor.value = "indigo-5");
+}
+
+function handleLogOff(val: String) {
+  if (val.includes("login")) {
+    return userStorage.login();
+  }
+  return userStorage.logout();
 }
 
 watchEffect(() => {
@@ -114,6 +123,11 @@ watchEffect(() => {
 
 .custom-font {
   font-family: Fira Sans;
-  font-size: 1.05rem;
+  display: flex;
+}
+
+.position-btn {
+  top: 0.17rem;
+  right: 0.3rem;
 }
 </style>

@@ -3,16 +3,19 @@
     class="row"
     :class="$q.screen.lt.lg ? 'justify-between' : 'justify-center'"
   >
-    <div v-for="item in sistemas">
-      <q-item :clickable="!showBadgeExclusion" @click="goToRoute(item.link)">
+    <div v-for="item in systemStorage.getSistemas">
+      <q-item
+        :clickable="!systemStorage.getBadgeExclusion"
+        @click="systemStorage.goToRoute(item.link)"
+      >
         <q-item-section class="border-radius-inherit">
           <q-avatar class="border-color row bg-white shadow-14" size="7.99rem">
             <q-badge
               color="red cursor-pointer"
               floating
-              v-if="showBadgeExclusion"
-              :clickable="showBadgeExclusion"
-              @click="excludeSystemId(item.system_id)"
+              v-if="systemStorage.getBadgeExclusion"
+              :clickable="systemStorage.getBadgeExclusion"
+              @click="systemStorage.excludeSystemId(item.system_id)"
               ><q-icon name="delete" size="sm"
             /></q-badge>
             <q-icon
@@ -30,8 +33,8 @@
                 {{ item.label }}
               </q-item-label>
               <DialogContatDirector
-                @close="openModalCeo = false"
-                :open="openModalCeo"
+                @close="systemStorage.openModalCeo = false"
+                :open="systemStorage.openModalCeo"
               />
 
               <q-item-label class="text-green text-bold text-h5 font-custom">
@@ -42,61 +45,23 @@
         </div>
       </q-item>
     </div>
-    <ItemSystem
-      @receveid="loadSystems()"
-      @activeBadgeExclusion="showBadgeExclusion = !showBadgeExclusion"
-      v-if="userStorage.getToken"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import LoadSystems from "../../graphql/system/queries.gql";
-import DeleteSystem from "../../graphql/system/DeleteSystem.gql";
-import { useUsers } from "../../stores/user";
-import { router } from "../../modules/router";
+import { useSystems } from "../../stores/system";
 
-const userStorage = useUsers();
+const systemStorage = useSystems();
 const props = defineProps({
   sistema: {
     type: String!,
     required: true,
   },
 });
-const sistemas = ref();
-const openModalCeo = ref();
-const showBadgeExclusion = ref(false);
 
 onMounted(async () => {
-  loadSystems();
+  systemStorage.loadSystems(props.sistema);
 });
-
-function goToRoute(rout: String) {
-  if (rout.includes("https")) {
-    return window.open(`${rout}`);
-  }
-  if (rout.includes("contatoCeo")) {
-    return (openModalCeo.value = true);
-  }
-  return router.push(`${rout}`);
-}
-
-async function loadSystems() {
-  const { loadSystems }: { loadSystems: Object } = await runQuery(LoadSystems, {
-    sistema: props.sistema,
-  });
-  sistemas.value = loadSystems;
-}
-async function excludeSystemId(id: number) {
-  const { deleteSystem }: { deleteSystem: Object } = await runQuery(
-    DeleteSystem,
-    {
-      systemId: id,
-    },
-  );
-  sistemas.value = deleteSystem;
-  await loadSystems();
-}
 </script>
 
 <style scoped>
