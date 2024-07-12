@@ -51,6 +51,7 @@
           :option="$t('text.organizerEvent')"
         />
         <AddScheduleRoom @reload="reloadModalAddScheduleRoom" />
+        <LoadingEvent :visible="eventStorage.loading" />
       </q-card>
     </div>
   </q-dialog>
@@ -113,7 +114,11 @@
       </div>
     </div>
   </div>
-  <ButtonOptsRooms @reloadRoom="carregarSalas()" v-if="userStroage.getToken" />
+  <ButtonOptsRooms
+    @reloadRoom="carregarSalas()"
+    v-if="userStroage.getToken"
+    @opt-delete="deleteRooms = !deleteRooms"
+  />
 </template>
 
 <script setup lang="ts">
@@ -133,6 +138,7 @@ import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
 import DeleteRoom from "../../../graphql/rooms/DeleteRoom.gql";
 import { useEvents } from "../../../stores/events";
 import { useUsers } from "../../../stores/user";
+import LoadingEvent from "../../Loading/LoadingEvent.vue";
 
 const deleteRooms = ref(false);
 const userStroage = useUsers();

@@ -56,4 +56,5 @@ export default {
   meetCanceledError: "Ocorreu um erro na exclusão da reunião",
   nameRoom: "Nome da Sala",
   colorRoom: "Cor",
+  pleaseWait: "Por favor aguarde",
 };

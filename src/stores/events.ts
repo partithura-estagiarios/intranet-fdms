@@ -19,6 +19,8 @@ export const useEvents = defineStore(id, {
     dateNext: "",
     dateOld: "",
     isSameDate: false,
+    loading: false,
+    loadingCardEdit: false,
   }),
   getters: {
     getFullData(state) {
@@ -45,6 +47,12 @@ export const useEvents = defineStore(id, {
     },
     getRepeatDate(state) {
       return state.dateRepeat;
+    },
+    toogleReload(state) {
+      return (state.loading = !state.loading);
+    },
+    toogleReloadCardEdit(state) {
+      return (state.loadingCardEdit = !state.loadingCardEdit);
     },
   },
   actions: {

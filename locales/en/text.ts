@@ -55,4 +55,5 @@ export default {
   meetCanceledError: "An error occurred while deleting the meeting",
   nameRoom: "Name Room",
   colorRoom: "Color",
+  pleaseWait: "Please Wait",
 };

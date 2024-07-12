@@ -8,7 +8,7 @@
           </q-item-section>
         </q-item>
         <q-item clickable v-close-popup>
-          <q-item-section class="text-black" @click="openEdit = !openEdit">{{
+          <q-item-section class="text-black" @click="openEdit = true">{{
             $t("action.editMeet")
           }}</q-item-section>
         </q-item>
@@ -31,7 +31,11 @@
 <script setup lang="ts">
 import { EditEventInterface } from "../../../../entities/scheduleRoom";
 import { useUsers } from "../../../../stores/user";
+import { useEvents } from "../../../../stores/events";
+
 const userStorage = useUsers();
+const eventStorage = useEvents();
+
 const emits = defineEmits(["edit", "exclude"]);
 const props = defineProps({
   meet: {
@@ -42,7 +46,11 @@ const props = defineProps({
 const openModal = ref(false);
 const openEdit = ref(false);
 function handleConfirm(val: EditEventInterface, val2: string) {
-  openEdit.value = !openEdit.value;
   emits("edit", val, val2);
 }
+watchEffect(() => {
+  if (!eventStorage.loadingCardEdit) {
+    openEdit.value = false;
+  }
+});
 </script>

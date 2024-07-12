@@ -5,7 +5,11 @@
       <q-item v-ripple v-for="event in events" :key="event.id">
         <q-item-section class="text-no-wrap" @click="selectEvent(event)">
           <div class="items-center text-h6 font-custom">
-            <q-badge class="q-mx-sm no-wrap" :color="event.colorRoom" />
+            <q-badge
+              :style="`background-color:${event.location.color}`"
+              class="q-mx-sm no-wrap"
+              :color="event.colorRoom"
+            />
             <span>{{ event.host.name }} - </span>
             <span>{{ event.rules }}</span>
             <MenuOptsRoom
@@ -42,6 +46,7 @@ import ExcludeMeet from "../../../graphql/scheduleRoom/ExcludeMeet.gql";
 import EditMeet from "../../../graphql/scheduleRoom/EditMeet.gql";
 import { DateTime } from "luxon";
 import { StatusCreateMeeting } from "../../../support/contracts";
+
 const emits = defineEmits(["reloadEvent", "close", "editSuccess"]);
 const { t } = useI18n();
 const eventStorage = useEvents();
@@ -54,11 +59,13 @@ const props = defineProps({
 const eventSelected = ref();
 const card = ref(false);
 const events: Ref<EventRoom[]> = ref([]);
+
 watchEffect(async () => {
   if (eventStorage.dataFull) {
     reloadEvents();
   }
 });
+
 const notifyUser = (message: string, type: string) => {
   if (type === StatusCreateMeeting.SUCCESS) {
     return positiveNotify(message);
@@ -68,6 +75,7 @@ const notifyUser = (message: string, type: string) => {
   }
   negativeNotify(message);
 };
+
 async function reloadEvents() {
   const auxEvents = await eventStorage.loadEvents(eventStorage.dataFull);
   if (auxEvents.length) {
@@ -75,6 +83,7 @@ async function reloadEvents() {
   }
   emits("close");
 }
+
 function selectEvent(event: EventRoom) {
   card.value = true;
   const initialTime = DateTime.fromISO(event.initialTime.toString()).plus({
@@ -90,6 +99,7 @@ function selectEvent(event: EventRoom) {
   };
   eventSelected.value = auxEvent;
 }
+
 async function excludeEvent(eventId: string) {
   const { excludeMeet }: { excludeMeet: Boolean } = await runMutation(
     ExcludeMeet,
@@ -104,6 +114,7 @@ async function excludeEvent(eventId: string) {
 }
 
 async function editEvent(event: EditEventInterface) {
+  eventStorage.toogleReloadCardEdit;
   const initialTime = event.initialTime.toString().endsWith("Z")
     ? event.initialTime
     : convertDateTimeTo0300Z(event.initialTime);
@@ -121,6 +132,7 @@ async function editEvent(event: EditEventInterface) {
   });
   notifyUser(t(`userScheduleRoom.${editMeet}`), editMeet);
   reloadEvents();
+  eventStorage.toogleReloadCardEdit;
   emits("editSuccess");
 }
 </script>

@@ -8,12 +8,16 @@
           @envity-edit="(val) => (host = val)"
         />
         <CardButtonConfirm @confirm="handleConfirm" />
+        <LoadingEvent :visible="eventStorage.loadingCardEdit" />
       </q-card>
     </q-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useEvents } from "../../../stores/events";
+
+const eventStorage = useEvents();
 const emits = defineEmits(["edit", "close"]);
 
 const props = defineProps({
