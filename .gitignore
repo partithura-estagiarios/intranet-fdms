@@ -32,3 +32,5 @@ package-lock.json
 src/auto-imports.d.ts
 src/modules/graphql/*
 graphql.schema.json
+src/auto-imports.d.ts
+src/components.d.ts
