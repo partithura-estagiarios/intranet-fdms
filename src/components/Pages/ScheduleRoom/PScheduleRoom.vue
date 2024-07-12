@@ -92,7 +92,11 @@
       </q-calendar-month>
     </div>
   </div>
-
+  <<<<<<< HEAD
+  <div class="q-py-sm">
+    <ButtonOptsRooms @opt-delete="deleteRooms = !deleteRooms" />
+  </div>
+  ======= >>>>>>> develop
   <div class="row justify-center font-custom">
     <div v-for="item in rooms" class="col-auto q-pa-md">
       <div class="row items-center">
@@ -102,6 +106,14 @@
           class="q-mx-sm"
         />
         <span class="text-body1 text-black">{{ item.name }}</span>
+        <q-icon
+          color="red"
+          size="sm"
+          name="delete"
+          v-if="deleteRooms"
+          clicklable
+          @click="delRoom(item.id)"
+        />
       </div>
     </div>
   </div>
@@ -122,11 +134,15 @@ import {
 } from "../../../entities/scheduleRoom";
 import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
 import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
-import { useUsers } from "../../../stores/user";
+import DeleteRoom from "../../../graphql/rooms/DeleteRoom.gql";
 import { useEvents } from "../../../stores/events";
+import { useUsers } from "../../../stores/user";
+
+const deleteRooms = ref(false);
 const userStroage = useUsers();
 const eventStorage = useEvents();
 const selectedDate = ref(today());
+const dateNow = today();
 const { t } = useI18n();
 const events = ref();
 const instance = getCurrentInstance();
@@ -242,6 +258,18 @@ function getHeadDay(item: CalendarTimeStamp) {
 async function carregarSalas() {
   const { loadRooms }: { loadRooms: Object } = await runQuery(LoadRooms);
   rooms.value = loadRooms;
+}
+
+async function delRoom(id: number) {
+  const { deleteRoom }: { deleteRoom: boolean } = await runMutation(
+    DeleteRoom,
+    { roomId: id, date: dateNow },
+  );
+  if (deleteRoom) {
+    carregarSalas();
+    return loadSchedule();
+  }
+  negativeNotify(t("errors.existsMeets"));
 }
 
 onMounted(() => {

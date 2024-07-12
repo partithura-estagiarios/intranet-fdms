@@ -10,12 +10,12 @@
       @close="addRoomModal = false"
       @reload="closeModal()"
     />
-    <q-fab-action color="indigo" icon="alarm" />
+    <q-fab-action color="indigo" icon="delete" @click="emits('optDelete')" />
   </q-fab>
 </template>
 
 <script setup lang="ts">
-const emits = defineEmits(["reloadRoom"]);
+const emits = defineEmits(["reloadRoom", "optDelete"]);
 const addRoomModal = ref();
 function closeModal() {
   addRoomModal.value = false;

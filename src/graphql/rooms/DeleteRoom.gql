@@ -1,0 +1,3 @@
+mutation DeleteRoom($roomId: ID!, $date: String!) {
+  deleteRoom(roomId: $roomId, date: $date)
+}
