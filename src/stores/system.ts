@@ -17,6 +17,14 @@ interface State {
   showBadgeExclusion: boolean;
 }
 
+interface InputSystem {
+  label: string;
+  sublabel: string;
+  icon: string;
+  sistema: string;
+  link: string;
+}
+
 export const useSystems = defineStore(id, {
   state: (): State => ({
     sistemas: [],
@@ -64,6 +72,17 @@ export const useSystems = defineStore(id, {
         },
       );
       systemStorage.loadSystems("gestao");
+    },
+    verifyFields: (form: InputSystem) => {
+      for (const key in form) {
+        if (Object.prototype.hasOwnProperty.call(form, key)) {
+          const value = form[key as keyof InputSystem];
+          if (value === undefined || value === null || value === "") {
+            return false;
+          }
+        }
+      }
+      return true;
     },
   },
 });

@@ -1,27 +1,42 @@
 <template>
-  <q-menu>
-    <div class="q-px-md row scroll height-limit">
-      <q-list>
-        <q-item
-          clickable
-          v-close-popup
-          v-for="option in icons"
-          @click="$emit('receveid', option)"
-        >
-          <q-item-section>
-            <q-icon :name="option" class="custom-color" size="2rem" />
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </div>
+  <q-menu :auto-close="false" v-model="props.enablePicker">
+    <q-icon-picker
+      v-model="value"
+      :icons="icons"
+      class="menu-icons"
+      tooltips
+      @click="emits('auto-close', value)"
+    />
   </q-menu>
 </template>
 
 <script setup lang="ts">
-import { icons } from "./lib";
+import { QIconPicker } from "@quasar/quasar-ui-qiconpicker";
+
+const emits = defineEmits(["auto-close"]);
+const props = defineProps({
+  enablePicker: {
+    type: Boolean,
+    required: true,
+  },
+});
+const value = ref();
+const icons = [
+  { name: "camera" },
+  { name: "home" },
+  { name: "login" },
+  { name: "close" },
+  { name: "menu" },
+  { name: "check" },
+];
 </script>
 <style scoped>
 .custom-color {
+  color: rgb(31, 73, 125);
+}
+.menu-icons {
+  height: 5rem;
+  width: 11rem;
   color: rgb(31, 73, 125);
 }
 </style>
