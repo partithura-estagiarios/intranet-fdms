@@ -2,7 +2,9 @@
   <q-card-section class="q-pa-md example-row-reverse">
     <InputSection
       @envity-room="(room) => (roomSchedule = room)"
-      @option-repeat="(val) => (option = val)"
+      @option-repeat="
+        (val, val2) => ((opt.option = val), (opt.date = new Date(val2)))
+      "
     />
   </q-card-section>
   <q-card-section align="right">
@@ -11,7 +13,6 @@
         color="green"
         :label="$t('formRamal.confirm')"
         @click="saveRoom()"
-        :disable="disableSaveRoom"
       />
     </div>
   </q-card-section>
@@ -37,10 +38,11 @@ const notifyUser = (message: string, type: string) => {
   }
   negativeNotify(message);
 };
-const disableSaveRoom = computed(
-  () => !fieldsValid(roomSchedule.value, option.value),
-);
-const option = ref();
+
+const opt = reactive({
+  option: "",
+  date: new Date(),
+});
 
 async function saveRoom() {
   eventStorage.toogleReload;
@@ -48,7 +50,7 @@ async function saveRoom() {
   const { createScheduleRoom }: { createScheduleRoom: string } =
     await runMutation(CreateScheduleRoom, {
       room: roomSchedule.value,
-      optionRepeat: option.value,
+      opt: opt,
     });
   eventStorage.toogleReload;
   notifyUser(t(`userScheduleRoom.${createScheduleRoom}`), createScheduleRoom);

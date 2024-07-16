@@ -1,3 +1,3 @@
-mutation CreateScheduleRoom($room: NewScheduleRoom!, $optionRepeat: String!) {
-  createScheduleRoom(room: $room, optionRepeat: $optionRepeat)
+mutation CreateScheduleRoom($room: NewScheduleRoom!, $opt: OptionRepeat!) {
+  createScheduleRoom(room: $room, opt: $opt)
 }

@@ -21,20 +21,10 @@
         />
       </div>
     </div>
-    <div class="row q-py-sm">
-      <q-input
-        outlined
-        v-model="formScheduleRoom.inputsLongs.description"
-        :label="$t('text.descriptionOfEvent')"
-        type="text"
-        dense
-      />
-      <SelectRepeat
-        @option-repeat="(val) => $emit('optionRepeat', val)"
-        v-show="!showRepeat"
-      />
-    </div>
-
+    <InputDescriptionEvent
+      :inputDescription="formScheduleRoom.inputsLongs.description"
+      @option-repeat="(val, val2) => $emit('optionRepeat', val, val2)"
+    />
     <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom
         :checks="formScheduleRoom.booleanInfos"
@@ -46,7 +36,6 @@
         outlined
         v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
         :label="$t('text.otherMaterials')"
-        dense
       />
     </div>
   </div>
