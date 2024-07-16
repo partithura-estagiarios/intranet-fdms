@@ -16,6 +16,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.9",
     "@quasar/quasar-ui-qcalendar": "^4.0.0-beta.19",
+    "@quasar/quasar-ui-qiconpicker": "^2.0.7",
     "@rollup/plugin-graphql": "^2.0.4",
     "@vee-validate/zod": "^4.12.5",
     "@vueuse/core": "^10.9.0",

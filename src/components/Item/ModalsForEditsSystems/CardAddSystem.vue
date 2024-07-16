@@ -7,6 +7,7 @@
         <q-btn
           v-close-popup
           flat
+          type="submit"
           color="green"
           :label="$t('action.confirm')"
           @click="createSystem"
@@ -36,7 +37,7 @@ const props = defineProps({
 });
 const form = ref<InputSystem>();
 const createSystem = () => {
-  if (form) {
+  if (form.value && systemStorage.verifyFields(form.value)) {
     runMutation(CreateSystem, { newSystem: form.value }).then((res: any) => {
       if (res.createSystem.enum) {
         systemStorage.loadSystems("gestao");
@@ -45,6 +46,8 @@ const createSystem = () => {
       }
       negativeNotify(t(res.createSystem.message));
     });
+    return;
   }
+  negativeNotify(t("errors.fillAllFields"));
 };
 </script>

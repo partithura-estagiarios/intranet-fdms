@@ -5,6 +5,7 @@
       stack-label
       :label="$t('text.label')"
       class="q-px-md"
+      :rules="[(val) => (val && val.length > 0) || $t(`auth.fillField`)]"
     />
     <InputsIcons @receveid="(val) => (formSystem.icon = val)" />
   </q-card-section>
@@ -14,12 +15,14 @@
       stack-label
       :label="$t('text.subLabel')"
       class="q-px-md"
+      :rules="[(val) => (val && val.length > 0) || $t(`auth.fillField`)]"
     />
     <q-input
       v-model="formSystem.sistema"
       stack-label
       :label="$t('text.system')"
       class="q-px-md"
+      disable
     />
   </q-card-section>
   <q-card-section>
@@ -28,12 +31,12 @@
       stack-label
       label="Link"
       class="q-px-md"
+      :rules="[(val) => (val && val.length > 0) || $t(`auth.fillField`)]"
     />
   </q-card-section>
 </template>
 
 <script setup lang="ts">
-import { verifyInputsSystems } from "./lib";
 import { InputSystem } from "../../../entities/system";
 const emits = defineEmits(["receveid"]);
 const formSystem = reactive<InputSystem>({
@@ -44,9 +47,6 @@ const formSystem = reactive<InputSystem>({
   link: "",
 });
 watchEffect(() => {
-  if (verifyInputsSystems(formSystem)) {
-    return emits("receveid", formSystem);
-  }
-  emits("receveid", false);
+  return emits("receveid", formSystem);
 });
 </script>
