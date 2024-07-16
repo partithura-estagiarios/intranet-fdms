@@ -6,6 +6,7 @@
       v-model="model"
       :options="buttonsRepeat.map((opt) => $t('userScheduleRoom.' + opt))"
       input-class="custom-select"
+      dense
       :disable="!blockSelect"
     >
       <template #option="{ opt }">

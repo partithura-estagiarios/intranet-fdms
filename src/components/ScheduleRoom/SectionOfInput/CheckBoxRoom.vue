@@ -11,6 +11,7 @@
           :label="$t('text.' + index)"
           class="border"
           readonly
+          dense
           v-model="inputValue"
         >
           <template #prepend>

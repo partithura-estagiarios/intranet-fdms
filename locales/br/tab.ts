@@ -6,4 +6,5 @@ export default {
   extensions: "Ramais",
   hRdiscloses: "RH Divulga",
   menu: "Cardápio",
+  scheduler: "Agendador",
 };

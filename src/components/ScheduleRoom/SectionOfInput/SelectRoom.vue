@@ -5,6 +5,7 @@
       :options="rooms"
       :label="$t('text.selectRoom')"
       class="col-4 border"
+      dense
     >
       <template #option="{ opt }">
         <q-item class="text-black" clickable>

@@ -1,5 +1,6 @@
 <template>
-  <q-toolbar class="row justify-center">
+  <Separator :texto="$t('tab.scheduler')" />
+  <q-toolbar class="row justify-center padding-join-separator custom-toolbar">
     <q-item class="font-custom custom-margin">
       <q-item-section class="items-center">
         <q-btn
@@ -44,16 +45,14 @@
     </q-item>
   </q-toolbar>
   <q-dialog v-model="card">
-    <div class="my-card relative-position no-scroll">
-      <q-card class="no-scroll" flat>
-        <DialogHeader
-          @close="(item) => (card = item)"
-          :option="$t('text.organizerEvent')"
-        />
-        <AddScheduleRoom @reload="reloadModalAddScheduleRoom" />
-        <LoadingEvent :visible="eventStorage.loading" />
-      </q-card>
-    </div>
+    <q-card>
+      <DialogHeader
+        @close="(item) => (card = item)"
+        :option="$t('text.organizerEvent')"
+      />
+      <AddScheduleRoom @reload="reloadModalAddScheduleRoom" />
+      <LoadingEvent :visible="eventStorage.loading" />
+    </q-card>
   </q-dialog>
   <q-dialog v-model="cardEvents">
     <div class="relative-position no-scroll">
@@ -115,6 +114,7 @@
     </div>
   </div>
   <ButtonOptsRooms
+    style="padding: 0"
     @reloadRoom="carregarSalas()"
     v-if="userStroage.getToken"
     @opt-delete="deleteRooms = !deleteRooms"
@@ -291,5 +291,8 @@ onMounted(() => {
 }
 .custom-margin {
   margin-right: 15rem;
+}
+.custom-toolbar {
+  margin-top: -8rem;
 }
 </style>
