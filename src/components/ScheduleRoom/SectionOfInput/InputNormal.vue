@@ -1,6 +1,7 @@
 <template>
   <div class="col-6 q-px-sl q-pr-md">
     <q-input
+      dense
       :label="$t('userScheduleRoom.name')"
       class="border mb-4"
       v-model="formInputNormal.name.value"
@@ -15,6 +16,7 @@
       </template>
     </q-input>
     <q-input
+      dense
       :label="$t('userScheduleRoom.email')"
       class="border"
       v-model="formInputNormal.email.value"
@@ -31,6 +33,7 @@
   </div>
   <div class="col-6">
     <q-input
+      dense
       :label="$t('userScheduleRoom.ramal')"
       class="border mb-4"
       v-model="formInputNormal.ramal.value"
@@ -45,6 +48,7 @@
       </template>
     </q-input>
     <q-input
+      dense
       :label="$t('userScheduleRoom.totalPeople')"
       class="border"
       v-model="formInputNormal.totalPeople.value"
@@ -61,6 +65,7 @@
   </div>
   <div class="col-6 q-pa-sl q-py-md q-pr-md">
     <q-input
+      dense
       :label="$t('userScheduleRoom.userRegistration')"
       class="border"
       v-model="formInputNormal.userRegistration.value"

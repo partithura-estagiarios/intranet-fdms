@@ -27,6 +27,7 @@
         v-model="formScheduleRoom.inputsLongs.description"
         :label="$t('text.descriptionOfEvent')"
         type="text"
+        dense
       />
       <SelectRepeat
         @option-repeat="(val) => $emit('optionRepeat', val)"
@@ -45,6 +46,7 @@
         outlined
         v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
         :label="$t('text.otherMaterials')"
+        dense
       />
     </div>
   </div>

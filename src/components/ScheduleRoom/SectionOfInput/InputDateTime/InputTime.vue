@@ -6,6 +6,7 @@
       :label="dateReceived"
       v-bind="$attrs"
       v-model="input"
+      dense
     >
       <template #prepend>
         <q-icon
