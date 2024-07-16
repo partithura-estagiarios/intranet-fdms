@@ -48,6 +48,6 @@ const createSystem = () => {
     });
     return;
   }
-  negativeNotify("Por favor, preencha todos os campos.");
+  negativeNotify(t("errors.fillAllFields"));
 };
 </script>
