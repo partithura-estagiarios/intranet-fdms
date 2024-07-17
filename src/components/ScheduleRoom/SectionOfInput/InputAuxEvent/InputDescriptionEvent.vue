@@ -16,19 +16,25 @@
       </template>
     </q-input>
   </div>
-  <SelectRepeat
-    @optionRepeat="(val, val2) => $emit('optionRepeat', val, val2)"
-  />
+  <SelectRepeat @optionRepeat="handleOptionRepeat" />
 </template>
 
 <script setup lang="ts">
+const date = ref();
 const text = ref();
+const emits = defineEmits(["optionRepeat"]);
 const props = defineProps({
   inputDescription: {
     type: String,
     required: true,
   },
 });
+
+function handleOptionRepeat(val: string, val2: Date) {
+  text.value = val;
+  date.value = val2;
+  emits("optionRepeat", text, date);
+}
 </script>
 <style scoped>
 .size {

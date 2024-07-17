@@ -2,9 +2,7 @@
   <q-card-section class="q-pa-md example-row-reverse">
     <InputSection
       @envity-room="(room) => (roomSchedule = room)"
-      @option-repeat="
-        (val, val2) => ((opt.option = val), (opt.date = new Date(val2)))
-      "
+      @optionRepeat="handleOptionRepeat"
     />
   </q-card-section>
   <q-card-section align="right">
@@ -41,8 +39,13 @@ const notifyUser = (message: string, type: string) => {
 
 const opt = reactive({
   option: "",
-  date: new Date(),
+  date: "",
 });
+
+function handleOptionRepeat(val: string, val2: string) {
+  opt.option = val;
+  opt.date = val2;
+}
 
 async function saveRoom() {
   eventStorage.toogleReload;

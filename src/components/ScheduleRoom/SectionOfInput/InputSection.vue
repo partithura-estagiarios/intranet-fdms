@@ -23,7 +23,7 @@
     </div>
     <InputDescriptionEvent
       :inputDescription="formScheduleRoom.inputsLongs.description"
-      @option-repeat="(val, val2) => $emit('optionRepeat', val, val2)"
+      @optionRepeat="handleOptionRepeat"
     />
     <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom
@@ -34,6 +34,7 @@
     <div class="col-12">
       <q-input
         outlined
+        dense
         v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
         :label="$t('text.otherMaterials')"
       />
@@ -47,6 +48,8 @@ import { useEvents } from "../../../stores/events";
 const eventStorage = useEvents();
 const formScheduleRoom = reactive(inputsForScheduleRoom);
 const emits = defineEmits(["envityRoom", "optionRepeat"]);
+const text = ref();
+const date = ref();
 
 watchEffect(() => {
   emits("envityRoom", formScheduleRoom);
@@ -61,11 +64,11 @@ onMounted(() => {
   resetObject(formScheduleRoom);
   eventStorage.resetDateSelected;
 });
-const showRepeat = computed(
-  () =>
-    !formScheduleRoom.dateInfos.finalTime.value ||
-    !formScheduleRoom.dateInfos.initialTime.value,
-);
+function handleOptionRepeat(val: string, val2: Date) {
+  text.value = val;
+  date.value = val2;
+  emits("optionRepeat", text.value, date.value);
+}
 </script>
 <style scoped>
 .border-color {

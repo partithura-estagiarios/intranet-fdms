@@ -55,10 +55,11 @@ watchEffect(() => {
 
 const changeModel = (option: string) => {
   model.value = option;
-  console.log(model.value, date.value);
 };
 watchEffect(() => {
-  emits("optionRepeat", model.value, date.value);
+  if (model.value && date.value) {
+    emits("optionRepeat", model.value, date.value);
+  }
 });
 </script>
 
