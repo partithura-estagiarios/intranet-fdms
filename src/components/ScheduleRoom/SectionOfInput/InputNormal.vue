@@ -6,7 +6,7 @@
       class="border mb-4"
       v-model="formInputNormal.name.value"
       type="text"
-      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
     >
       <template #prepend>
@@ -23,7 +23,7 @@
       class="border"
       v-model="formInputNormal.email.value"
       type="text"
-      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
     >
       <template #prepend>
@@ -42,7 +42,7 @@
       class="border mb-4"
       v-model="formInputNormal.ramal.value"
       type="number"
-      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
     >
       <template #prepend>
@@ -59,7 +59,7 @@
       class="border"
       v-model="formInputNormal.totalPeople.value"
       type="number"
-      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
     >
       <template #prepend>
@@ -78,7 +78,7 @@
       class="border"
       v-model="formInputNormal.userRegistration.value"
       type="number"
-      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
     >
       <template #prepend>
@@ -93,6 +93,7 @@
 </template>
 
 <script setup lang="ts">
+const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   inputs: {

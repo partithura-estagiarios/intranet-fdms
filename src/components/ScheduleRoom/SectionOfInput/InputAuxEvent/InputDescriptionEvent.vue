@@ -7,7 +7,7 @@
       class="q-py-md"
       dense
       type="text"
-      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
     >
       <template #prepend>
@@ -26,6 +26,7 @@
 const date = ref();
 const text = ref();
 const input = ref();
+const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["optionRepeat", "desc"]);
 const props = defineProps({
   inputDescription: {

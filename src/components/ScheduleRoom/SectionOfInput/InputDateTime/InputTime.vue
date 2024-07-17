@@ -7,7 +7,7 @@
       v-bind="$attrs"
       v-model="input"
       dense
-      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
     >
       <template #prepend>
@@ -30,11 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { useEvents } from "../../../../stores/events";
 import { DateTime } from "luxon";
 
 const eventStorage = useEvents();
+const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   label: { type: String, required: true },
