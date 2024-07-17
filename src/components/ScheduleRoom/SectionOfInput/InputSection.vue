@@ -24,6 +24,7 @@
     <InputDescriptionEvent
       :inputDescription="formScheduleRoom.inputsLongs.description"
       @optionRepeat="handleOptionRepeat"
+      @desc="(val) => (formScheduleRoom.inputsLongs.description = val)"
     />
     <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom

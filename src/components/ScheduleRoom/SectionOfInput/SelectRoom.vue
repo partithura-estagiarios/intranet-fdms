@@ -6,6 +6,8 @@
       :label="$t('text.selectRoom')"
       class="col-4 border"
       dense
+      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      hide-bottom-space
     >
       <template #option="{ opt }">
         <q-item class="text-black" clickable>

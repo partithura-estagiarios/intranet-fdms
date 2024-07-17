@@ -7,6 +7,8 @@
       v-bind="$attrs"
       v-model="input"
       dense
+      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon

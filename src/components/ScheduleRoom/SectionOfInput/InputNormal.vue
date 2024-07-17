@@ -6,6 +6,8 @@
       class="border mb-4"
       v-model="formInputNormal.name.value"
       type="text"
+      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon
@@ -20,7 +22,9 @@
       :label="$t('userScheduleRoom.email')"
       class="border"
       v-model="formInputNormal.email.value"
-      type="email"
+      type="text"
+      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon
@@ -38,6 +42,8 @@
       class="border mb-4"
       v-model="formInputNormal.ramal.value"
       type="number"
+      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon
@@ -53,6 +59,8 @@
       class="border"
       v-model="formInputNormal.totalPeople.value"
       type="number"
+      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon
@@ -70,6 +78,8 @@
       class="border"
       v-model="formInputNormal.userRegistration.value"
       type="number"
+      :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon

@@ -7,6 +7,8 @@
     outlined
     @click="showDatePopup = true"
     :disable="!blockSelect"
+    :rules="[(val) => (val && val.length > 0) || $t('auth.fillField')]"
+    hide-bottom-space
   >
     <q-popup-proxy>
       <div v-if="showDatePopup">

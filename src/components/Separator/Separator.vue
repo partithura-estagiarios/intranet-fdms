@@ -27,7 +27,7 @@ const props = defineProps({
 }
 .position-text {
   font-family: Fira Sans;
-  bottom: 6rem;
+  bottom: 6.5rem;
   position: relative;
 }
 </style>
