@@ -1,19 +1,17 @@
 <template>
-  <q-card-section class="q-pa-md example-row-reverse">
-    <InputSection
-      @envity-room="(room) => (roomSchedule = room)"
-      @optionRepeat="handleOptionRepeat"
-    />
-  </q-card-section>
-  <q-card-section align="right">
-    <div class="font-custom">
-      <q-btn
-        color="green"
-        :label="$t('formRamal.confirm')"
-        @click="saveRoom()"
+  <q-form @submit="saveRoom()">
+    <q-card-section class="q-pa-md example-row-reverse">
+      <InputSection
+        @envity-room="(room) => (roomSchedule = room)"
+        @optionRepeat="handleOptionRepeat"
       />
-    </div>
-  </q-card-section>
+    </q-card-section>
+    <q-card-section align="right">
+      <div class="font-custom">
+        <q-btn color="green" :label="$t('formRamal.confirm')" type="submit" />
+      </div>
+    </q-card-section>
+  </q-form>
 </template>
 
 <script setup lang="ts">

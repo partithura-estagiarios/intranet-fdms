@@ -7,6 +7,8 @@
     outlined
     @click="showDatePopup = true"
     :disable="!blockSelect"
+    :rules="[(val) => validateNotEmpty(val)]"
+    hide-bottom-space
   >
     <q-popup-proxy>
       <div v-if="showDatePopup">
@@ -26,18 +28,16 @@
 <script setup lang="ts">
 import { useEvents } from "../../../../stores/events";
 
+const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDateLimit"]);
 const eventStorage = useEvents();
-
 const input = ref();
 const showDatePopup = ref(false);
-
 const handleDateSelected = (date: string) => {
   showDatePopup.value = false;
   input.value = date;
   emits("envityDateLimit", date);
 };
-
 const blockSelect = ref();
 
 watchEffect(() => {

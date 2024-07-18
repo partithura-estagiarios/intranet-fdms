@@ -6,6 +6,8 @@
       :label="$t('text.selectRoom')"
       class="col-4 border"
       dense
+      :rules="[(val) => validateNotEmpty(val)]"
+      hide-bottom-space
     >
       <template #option="{ opt }">
         <q-item class="text-black" clickable>
@@ -27,6 +29,8 @@
 <script setup lang="ts">
 import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
 import { Rooms } from "../../../entities/rooms";
+
+const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDates"]);
 const rooms = ref<string[]>([]);
 const props = defineProps({

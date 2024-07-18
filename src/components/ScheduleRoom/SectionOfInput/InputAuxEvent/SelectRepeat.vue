@@ -35,8 +35,8 @@
 <script setup lang="ts">
 import { useEvents } from "../../../../stores/events";
 
+const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["optionRepeat"]);
-
 const eventStorage = useEvents();
 const model = ref();
 const date = ref();

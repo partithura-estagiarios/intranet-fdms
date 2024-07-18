@@ -2,10 +2,13 @@
   <div class="row size">
     <q-input
       outlined
-      v-model="props.inputDescription"
+      v-model="input"
       :label="$t('text.descriptionOfEvent')"
       class="q-py-md"
       dense
+      type="text"
+      :rules="[(val) => validateNotEmpty(val)]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon
@@ -22,7 +25,9 @@
 <script setup lang="ts">
 const date = ref();
 const text = ref();
-const emits = defineEmits(["optionRepeat"]);
+const input = ref();
+const { validateNotEmpty } = useFieldValidation();
+const emits = defineEmits(["optionRepeat", "desc"]);
 const props = defineProps({
   inputDescription: {
     type: String,
@@ -33,7 +38,7 @@ const props = defineProps({
 function handleOptionRepeat(val: string, val2: Date) {
   text.value = val;
   date.value = val2;
-  emits("optionRepeat", text, date);
+  emits("optionRepeat", text, date, input);
 }
 </script>
 <style scoped>

@@ -7,6 +7,8 @@
       v-bind="$attrs"
       v-model="input"
       dense
+      :rules="[(val) => validateNotEmpty(val)]"
+      hide-bottom-space
     >
       <template #prepend>
         <q-icon
@@ -28,11 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { useEvents } from "../../../../stores/events";
 import { DateTime } from "luxon";
 
 const eventStorage = useEvents();
+const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   label: { type: String, required: true },
