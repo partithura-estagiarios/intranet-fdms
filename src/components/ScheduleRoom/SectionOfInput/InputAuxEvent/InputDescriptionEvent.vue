@@ -1,25 +1,23 @@
 <template>
-  <div class="row size">
-    <q-input
-      outlined
-      v-model="input"
-      :label="$t('text.descriptionOfEvent')"
-      class="q-py-md"
-      dense
-      type="text"
-      :rules="[(val) => validateNotEmpty(val)]"
-      hide-bottom-space
-    >
-      <template #prepend>
-        <q-icon
-          class="custom-color full-height q-px-md"
-          color="white"
-          name="title"
-        />
-      </template>
-    </q-input>
-  </div>
-  <SelectRepeat @optionRepeat="handleOptionRepeat" />
+  <q-input
+    outlined
+    v-model="input"
+    :label="$t('text.descriptionOfEvent')"
+    class="q-py-md"
+    dense
+    type="text"
+    :rules="[(val) => validateNotEmpty(val)]"
+    hide-bottom-space
+  >
+    <template #prepend>
+      <q-icon
+        class="custom-color full-height q-px-md"
+        color="white"
+        name="title"
+      />
+    </template>
+  </q-input>
+  <!-- <SelectRepeat @optionRepeat="handleOptionRepeat" /> -->
 </template>
 
 <script setup lang="ts">
@@ -42,9 +40,6 @@ function handleOptionRepeat(val: string, val2: Date) {
 }
 </script>
 <style scoped>
-.size {
-  width: 15.6rem;
-}
 .custom-color {
   background-color: rgb(31, 73, 125);
   right: 0.7rem;

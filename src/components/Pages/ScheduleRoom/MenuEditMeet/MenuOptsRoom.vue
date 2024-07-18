@@ -1,5 +1,11 @@
 <template>
-  <q-btn color="black" icon="edit" flat @click.stop v-if="userStorage.getToken">
+  <q-btn
+    color="black"
+    icon="delete"
+    flat
+    @click.stop
+    v-if="userStorage.getToken"
+  >
     <q-menu anchor="bottom right" self="bottom left">
       <q-list>
         <q-item clickable v-close-popup>
@@ -7,11 +13,11 @@
             >{{ $t("action.deleteMeet") }}
           </q-item-section>
         </q-item>
-        <q-item clickable v-close-popup>
+        <!-- <q-item clickable v-close-popup>
           <q-item-section class="text-black" @click="openEdit = true">{{
             $t("action.editMeet")
           }}</q-item-section>
-        </q-item>
+        </q-item> -->
       </q-list>
     </q-menu>
   </q-btn>

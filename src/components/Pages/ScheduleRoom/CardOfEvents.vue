@@ -28,10 +28,17 @@
   </div>
   <q-dialog v-model="card">
     <q-card>
-      <DialogHeader
-        @close="(val) => (card = val)"
-        :option="eventSelected.rules"
-      />
+      <q-card-section class="custom-color row justify-between text-white">
+        <div class="q-pa-md text-h5 font-custom text-white">
+          {{ eventSelected.rules }}
+        </div>
+        <q-icon
+          name="close"
+          class="pt-2 cursor-pointer"
+          size="45px"
+          @click="emits('close', false)"
+        />
+      </q-card-section>
       <q-separator />
       <DialogScheduleRoom :event-show="eventSelected" />
     </q-card>
@@ -146,5 +153,8 @@ async function editEvent(event: EditEventInterface) {
   position: relative;
   padding-right: 20.2rem;
   color: rgb(31, 73, 125);
+}
+.custom-color {
+  background-color: rgb(31, 73, 125);
 }
 </style>

@@ -1,3 +1,9 @@
-mutation CreateScheduleRoom($room: NewScheduleRoom!, $opt: OptionRepeat!) {
-  createScheduleRoom(room: $room, opt: $opt)
+mutation CreateScheduleRoom($room: NewScheduleRoom!, $opt: String!) {
+  createScheduleRoom(room: $room, opt: $opt) {
+    message
+    meets {
+      date
+      hostName
+    }
+  }
 }
