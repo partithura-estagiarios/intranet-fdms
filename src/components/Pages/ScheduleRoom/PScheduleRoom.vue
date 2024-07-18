@@ -10,7 +10,7 @@
           class="text-body1 text-white"
           @click="openModalAddScheduleRoom"
         />
-        <p class="text-green-8">
+        <!-- <p class="text-green-8">
           {{ $t("text.selectDayForRoom") }}
           <q-icon
             name="help"
@@ -30,7 +30,7 @@
               </q-card>
             </div>
           </q-dialog>
-        </p>
+        </p> -->
       </q-item-section>
     </q-item>
     <q-item>
@@ -77,7 +77,6 @@
         v-model="selectedDate"
         locale="pt-br"
         :day-min-height="100"
-        @click-date="onClickHeadDay"
         @click-day="onClickDay"
         class="cursor-pointer"
       >
@@ -113,12 +112,6 @@
       </div>
     </div>
   </div>
-  <ButtonOptsRooms
-    style="padding: 0"
-    @reloadRoom="carregarSalas()"
-    v-if="userStroage.getToken"
-    @opt-delete="deleteRooms = !deleteRooms"
-  />
 </template>
 
 <script setup lang="ts">
@@ -239,7 +232,7 @@ watchEffect(() => {
 async function closeCardEvents() {
   cardEvents.value = false;
   await loadSchedule();
-  negativeNotify(t(`text.noMoreEvents`));
+  warningNotify(t(`text.noMoreEvents`));
 }
 
 function getHeadDay(item: CalendarTimeStamp) {

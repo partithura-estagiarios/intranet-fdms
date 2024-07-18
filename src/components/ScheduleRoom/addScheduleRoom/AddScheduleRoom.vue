@@ -48,13 +48,18 @@ function handleOptionRepeat(val: string, val2: string) {
 async function saveRoom() {
   eventStorage.toogleReload;
   roomSchedule.value = adaptScheduleToRoom(roomSchedule.value);
-  const { createScheduleRoom }: { createScheduleRoom: string } =
-    await runMutation(CreateScheduleRoom, {
+  const { createScheduleRoom }: { createScheduleRoom: any } = await runMutation(
+    CreateScheduleRoom,
+    {
       room: roomSchedule.value,
-      opt: opt,
-    });
+      opt: "Não",
+    },
+  );
   eventStorage.toogleReload;
-  notifyUser(t(`userScheduleRoom.${createScheduleRoom}`), createScheduleRoom);
+  notifyUser(
+    t(`userScheduleRoom.${createScheduleRoom.message}`),
+    createScheduleRoom.message,
+  );
   return emits("reload", true);
 }
 </script>

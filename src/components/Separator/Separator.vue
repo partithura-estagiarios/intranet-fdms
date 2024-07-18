@@ -4,6 +4,7 @@
   <h4 class="text-bold text-white position-text">
     {{ texto }}
     <ItemSystem
+      v-if="!showTabHeader"
       @receveid="emits('receveid')"
       @activeDeleteSystem="emits('activeBadgeExclusion')"
     />
@@ -11,8 +12,13 @@
 </template>
 
 <script setup lang="ts">
-import ItemSystem from "../Item/ItemSystem.vue";
+import { useRoute } from "vue-router";
 
+const router = useRoute();
+const exceptionRoutes = ["/home"];
+const showTabHeader = computed(() => {
+  return !exceptionRoutes.some((route) => router.fullPath.includes(route));
+});
 const emits = defineEmits(["receveid", "activeBadgeExclusion"]);
 const props = defineProps({
   texto: {

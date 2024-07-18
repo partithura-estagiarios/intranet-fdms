@@ -21,11 +21,24 @@
         />
       </div>
     </div>
-    <InputDescriptionEvent
-      :inputDescription="formScheduleRoom.inputsLongs.description"
-      @optionRepeat="handleOptionRepeat"
-      @desc="(val) => (formScheduleRoom.inputsLongs.description = val)"
-    />
+    <q-input
+      outlined
+      v-model="formScheduleRoom.inputsLongs.description"
+      :label="$t('text.descriptionOfEvent')"
+      class="q-py-md col-12"
+      dense
+      type="text"
+      :rules="[(val) => validateNotEmpty(val)]"
+      hide-bottom-space
+    >
+      <template #prepend>
+        <q-icon
+          class="custom-color size full-height q-px-md"
+          color="white"
+          name="title"
+        />
+      </template>
+    </q-input>
     <div class="content row relative-position q-py-sm justify-between">
       <CheckBoxRoom
         :checks="formScheduleRoom.booleanInfos"
@@ -46,6 +59,8 @@
 <script setup lang="ts">
 import { inputsForScheduleRoom, resetObject } from "../addScheduleRoom/lib";
 import { useEvents } from "../../../stores/events";
+
+const { validateNotEmpty } = useFieldValidation();
 const eventStorage = useEvents();
 const formScheduleRoom = reactive(inputsForScheduleRoom);
 const emits = defineEmits(["envityRoom", "optionRepeat"]);
@@ -84,5 +99,9 @@ function handleOptionRepeat(val: string, val2: Date) {
 }
 .font-custom {
   font-family: Fira Sans;
+}
+.size {
+  right: 0.7rem;
+  width: 1.5rem;
 }
 </style>
