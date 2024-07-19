@@ -36,7 +36,7 @@
           name="close"
           class="pt-2 cursor-pointer"
           size="45px"
-          @click="emits('close', false)"
+          @click="card = !card"
         />
       </q-card-section>
       <q-separator />
