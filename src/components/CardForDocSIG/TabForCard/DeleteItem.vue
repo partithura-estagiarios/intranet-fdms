@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card-actions align="right" class="text-green">
+    <q-card-actions align="right" class="text-green font-custom">
       <q-btn
         flat
         :label="$t('action.confirm')"
@@ -39,3 +39,8 @@ const isPathValid = computed(() => {
   return !!arr[firstIndex];
 });
 </script>
+<style scoped>
+.font-custom {
+  font-family: Fira Sans;
+}
+</style>

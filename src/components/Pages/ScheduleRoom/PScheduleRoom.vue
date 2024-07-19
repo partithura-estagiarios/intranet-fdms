@@ -34,7 +34,7 @@
       </q-item-section>
     </q-item>
     <q-item>
-      <q-item-section class="items-center">
+      <q-item-section class="items-center font-custom">
         <Month :select-date="selectedDate" />
         <NavigationScheduleRoom
           @today="onToday"

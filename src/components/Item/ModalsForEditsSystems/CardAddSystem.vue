@@ -10,6 +10,7 @@
           type="submit"
           color="green"
           :label="$t('action.confirm')"
+          class="font-custom"
           @click="createSystem"
         />
       </q-card-actions>
@@ -51,3 +52,8 @@ const createSystem = () => {
   negativeNotify(t("errors.fillAllFields"));
 };
 </script>
+<style scoped>
+.font-custom {
+  font-family: Fira Sans;
+}
+</style>

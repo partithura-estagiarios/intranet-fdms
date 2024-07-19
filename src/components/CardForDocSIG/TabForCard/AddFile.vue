@@ -15,6 +15,7 @@
     <q-card-actions align="right" class="text-green">
       <q-btn
         flat
+        class="font-custom"
         :label="$t('action.confirm')"
         v-close-popup
         @click="addFile()"
@@ -61,3 +62,9 @@ const mar = ref();
 const nameFile = ref();
 const input = ref();
 </script>
+<style scoped>
+.font-custom {
+  font-family: Fira Sans;
+  height: 3rem;
+}
+</style>

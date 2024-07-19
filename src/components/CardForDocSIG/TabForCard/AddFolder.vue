@@ -6,6 +6,7 @@
       :label="$t('action.confirm')"
       v-close-popup
       @click="addFolder()"
+      class="font-custom"
     />
   </q-card-actions>
 </template>
@@ -34,3 +35,9 @@ async function addFolder() {
   negativeNotify(t("action.errorCreatingFolder"));
 }
 </script>
+<style scoped>
+.font-custom {
+  font-family: Fira Sans;
+  height: 3rem;
+}
+</style>

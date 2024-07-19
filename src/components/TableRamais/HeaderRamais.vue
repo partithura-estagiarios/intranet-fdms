@@ -2,7 +2,7 @@
   <div class="row justify-between">
     <div class="q-pa-md">
       <q-btn
-        class="bg-green text-white q-px-md"
+        class="bg-green text-white q-px-md font-custom"
         :label="$t('text.addRamal')"
         @click="openDialog()"
         v-if="userStorage.getToken"
@@ -53,3 +53,8 @@ async function searchRamalInBack() {
   emits("envityRamal-table", search.value);
 }
 </script>
+<style scoped>
+.font-custom {
+  font-family: Fira Sans;
+}
+</style>
