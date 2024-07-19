@@ -10,7 +10,7 @@
         <q-icon name="attach_file" />
       </template>
     </q-file>
-    <q-input stack-label v-model="mar" label="MAR" type="number" />
+    <q-input stack-label v-model="mar" label="MAR" />
     <q-input stack-label v-model="nameFile" :label="$t('folders.fileName')" />
     <q-card-actions align="right" class="text-green">
       <q-btn

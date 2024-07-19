@@ -5,16 +5,20 @@ import DeleteFolder from "../graphql/folders/DeleteFolder.gql";
 const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
 );
-const local_directory = getEnvironmentVariable("VITE_LOCATION_FOR_ARCHIVES");
 function isNewFileName(newName: string) {
   if (newName) {
     return newName + ".pdf";
   }
 }
-function trimFilePath(filePath: string): string {
-  const basePath = local_directory;
-  const regex = new RegExp(`^${basePath}`);
-  return filePath.replace(regex, "");
+function trimFilePath(filePath: string) {
+  const parts = filePath.split("/");
+
+  const startIndex = 6;
+
+  const trimmedParts = parts.slice(startIndex);
+
+  const trimmedPath = "/" + trimmedParts.join("/");
+  return trimmedPath;
 }
 
 interface Message {
