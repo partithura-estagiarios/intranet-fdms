@@ -64,19 +64,23 @@ const userStorage = useUsers();
 const saveIndexPages = ref();
 async function getRamais(page: number) {
   saveIndexPages.value = page;
+  if (searchRamalWord.value) {
+    return await searchRamal(searchRamalWord.value);
+  }
   const { ramaisForPageLoad }: { ramaisForPageLoad: Array<Ramal> } =
     await runQuery(RamaisForPageLoad, {
       page: saveIndexPages.value,
     });
 
   ramais.value = ramaisForPageLoad;
-  getSizeOfRamais();
+  getSizeOfRamais("");
 }
-async function getSizeOfRamais() {
+async function getSizeOfRamais(word: string) {
   const { getLenghtRamais }: { getLenghtRamais: String } = await runQuery(
     GetLenghtRamais,
     {
       maxPages: pagesOfTable,
+      word: word,
     },
   );
   pages.value = getLenghtRamais;
@@ -91,6 +95,7 @@ async function searchRamal(word: string) {
     },
   );
   ramais.value = searchRamal;
+  getSizeOfRamais(word);
 }
 async function reloadRamais() {
   if (!searchRamalWord.value) {

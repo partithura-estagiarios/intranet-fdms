@@ -1,4 +1,4 @@
-query SearchRamal($word: String!) {
+query SearchRamal($word: String) {
   searchRamal(word: $word) {
     id
     name

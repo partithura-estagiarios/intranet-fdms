@@ -1,3 +1,3 @@
-query GetLenghtRamais($maxPages: Int!) {
-  getLenghtRamais(maxPages: $maxPages)
+query GetLenghtRamais($maxPages: Int!, $word: String) {
+  getLenghtRamais(maxPages: $maxPages, word: $word)
 }
