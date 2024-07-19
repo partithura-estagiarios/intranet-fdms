@@ -19,7 +19,7 @@ const props = defineProps({
   border-bottom: 5px solid var(--separator-color, #e50101);
 }
 .text {
-  top: 35px;
+  top: 30px;
   border: 5px solid white;
   background-color: red;
   padding: 10px;

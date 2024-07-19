@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-xl box-shadow q-mx-xl q-my-xl bg-white">
+  <div class="q-px-md box-shadow q-mx-xl bg-white">
     <HeaderRamais
       @envityRamal-table="(wordRamal) => searchRamal(wordRamal)"
       @reload="reloadRamais"
