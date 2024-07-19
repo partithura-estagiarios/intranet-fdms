@@ -2,14 +2,14 @@
   <div class="row justify-around">
     <InputTime
       :label="$t('text.startDateAndTime')"
-      class="col q-mr-sm"
+      class="col"
       :dateInput="dateInitial"
       @envity-dates="receivedDateInitial"
     />
-
+    <q-space class="q-px-md" />
     <InputTime
       :label="$t('text.endDateAndTime')"
-      class="col"
+      class="col position-custom"
       @envity-dates="receivedDateFinal"
       :dateInput="dateFinal"
     />
@@ -51,3 +51,9 @@ watchEffect(() => {
   }
 });
 </script>
+<style scoped>
+.position-custom {
+  right: 1rem;
+  position: relative;
+}
+</style>

@@ -1,58 +1,45 @@
 <template>
-  <div class="content row relative-position justify-bewtween">
-    <div class="q-px-dm row">
-      <InputNormal
-        :inputs="formScheduleRoom.inputs"
-        @envity-dates="(dates) => (formScheduleRoom.inputs = dates)"
-        :options="formScheduleRoom.options"
-      />
-      <SelectRoom
-        :options="formScheduleRoom.options"
-        @envity-dates="(dates) => (formScheduleRoom.options.value = dates)"
-      />
-      <div class="col-12">
-        <InputDateTime
-          @envity-dates="
-            (item1, item2) => (
-              (formScheduleRoom.dateInfos.finalTime.value = item2),
-              (formScheduleRoom.dateInfos.initialTime.value = item1)
-            )
-          "
-        />
-      </div>
-    </div>
+  <div class="row">
+    <InputNormal
+      :inputs="formScheduleRoom.inputs"
+      @envity-dates="(dates) => (formScheduleRoom.inputs = dates)"
+      :options="formScheduleRoom.options"
+      @envitySelect="(val) => (formScheduleRoom.options.value = val)"
+    />
+  </div>
+
+  <InputDateTime
+    @envity-dates="
+      (item1, item2) => (
+        (formScheduleRoom.dateInfos.finalTime.value = item2),
+        (formScheduleRoom.dateInfos.initialTime.value = item1)
+      )
+    "
+  />
+  <q-input
+    outlined
+    v-model="formScheduleRoom.inputsLongs.description"
+    :label="$t('text.descriptionOfEvent')"
+    class="q-py-sm size"
+    dense
+    type="text"
+    :rules="[(val) => validateNotEmpty(val)]"
+    hide-bottom-space
+  >
+  </q-input>
+  <div class="row">
+    <CheckBoxRoom
+      :checks="formScheduleRoom.booleanInfos"
+      @envity-dates="(items) => (formScheduleRoom.booleanInfos = items)"
+    />
+  </div>
+  <div class="size">
     <q-input
       outlined
-      v-model="formScheduleRoom.inputsLongs.description"
-      :label="$t('text.descriptionOfEvent')"
-      class="q-py-md col-12"
       dense
-      type="text"
-      :rules="[(val) => validateNotEmpty(val)]"
-      hide-bottom-space
-    >
-      <template #prepend>
-        <q-icon
-          class="custom-color size full-height q-px-md"
-          color="white"
-          name="title"
-        />
-      </template>
-    </q-input>
-    <div class="content row relative-position q-py-sm justify-between">
-      <CheckBoxRoom
-        :checks="formScheduleRoom.booleanInfos"
-        @envity-dates="(items) => (formScheduleRoom.booleanInfos = items)"
-      />
-    </div>
-    <div class="col-12">
-      <q-input
-        outlined
-        dense
-        v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
-        :label="$t('text.otherMaterials')"
-      />
-    </div>
+      v-model="formScheduleRoom.inputsLongs.supportMaterialExtras"
+      :label="$t('text.otherMaterials')"
+    />
   </div>
 </template>
 
@@ -102,6 +89,6 @@ function handleOptionRepeat(val: string, val2: Date) {
 }
 .size {
   right: 0.7rem;
-  width: 1.5rem;
+  width: 32rem;
 }
 </style>

@@ -6,10 +6,13 @@
         @optionRepeat="handleOptionRepeat"
       />
     </q-card-section>
-    <q-card-section align="right">
-      <div class="font-custom">
-        <q-btn color="green" :label="$t('formRamal.confirm')" type="submit" />
-      </div>
+    <q-card-section align="right" class="q-py-sm">
+      <q-btn
+        class="font-custom"
+        color="green"
+        :label="$t('formRamal.confirm')"
+        type="submit"
+      />
     </q-card-section>
   </q-form>
 </template>

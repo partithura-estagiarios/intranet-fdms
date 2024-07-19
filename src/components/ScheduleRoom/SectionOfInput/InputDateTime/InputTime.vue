@@ -2,7 +2,6 @@
   <div @click="showDatePopup = true">
     <q-input
       class="border"
-      readonly
       :label="dateReceived"
       v-bind="$attrs"
       v-model="input"

@@ -1,29 +1,27 @@
 <template>
-  <div class="q-pa-sl q-pt-md col-6">
-    <q-select
-      v-model="model"
-      :options="rooms"
-      :label="$t('text.selectRoom')"
-      class="col-4 border"
-      dense
-      :rules="[(val) => validateNotEmpty(val)]"
-      hide-bottom-space
-    >
-      <template #option="{ opt }">
-        <q-item class="text-black" clickable>
-          <q-item-section @click="model = opt" v-close-popup>
-            <q-item-label>{{ opt }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </template>
-      <template #prepend>
-        <q-icon
-          :name="props.options.icon"
-          class="full-height q-px-md custom-color"
-          color="white"
-        /> </template
-    ></q-select>
-  </div>
+  <q-select
+    v-model="model"
+    :options="rooms"
+    :label="$t('text.selectRoom')"
+    class="col-4 border"
+    dense
+    :rules="[(val) => validateNotEmpty(val)]"
+    hide-bottom-space
+  >
+    <template #option="{ opt }">
+      <q-item class="text-black" clickable>
+        <q-item-section @click="model = opt" v-close-popup>
+          <q-item-label>{{ opt }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </template>
+    <template #prepend>
+      <q-icon
+        :name="props.options.icon"
+        class="full-height q-px-md custom-color"
+        color="white"
+      /> </template
+  ></q-select>
 </template>
 
 <script setup lang="ts">

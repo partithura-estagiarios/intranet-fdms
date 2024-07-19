@@ -49,6 +49,7 @@
       <DialogHeader
         @close="(item) => (card = item)"
         :option="$t('text.organizerEvent')"
+        class="q-py-sm"
       />
       <AddScheduleRoom @reload="reloadModalAddScheduleRoom" />
       <LoadingEvent :visible="eventStorage.loading" />
