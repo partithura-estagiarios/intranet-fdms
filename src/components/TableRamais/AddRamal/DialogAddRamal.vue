@@ -1,60 +1,68 @@
 <template>
   <q-dialog v-model="props.open" persistent>
     <q-card>
-      <q-card-section
-        class="custom-color font-custom row justify-between text-white"
-      >
-        <div class="q-pa-md text-h5">{{ $t("text." + props.option) }}</div>
-        <q-icon
-          name="close"
-          class="pt-2 cursor-pointer"
-          size="45px"
-          @click="emits('close', false)"
-        />
-      </q-card-section>
-      <div v-if="props.option != 'deleteRamal'">
-        <q-card-section>
-          <q-input
-            white
-            v-model="labelDefinite.sector"
-            :label="$t(`formRamal.nameOfRamal`)"
-            type="text"
+      <q-form @submit="optionRamal">
+        <q-card-section
+          class="custom-color font-custom row justify-between text-white"
+        >
+          <div class="q-pa-md text-h5">{{ $t("text." + props.option) }}</div>
+          <q-icon
+            name="close"
+            class="pt-2 cursor-pointer"
+            size="45px"
+            @click="emits('close', false)"
           />
         </q-card-section>
-
-        <q-card-section class="row justify-between no-wrap overflow-hidden">
-          <div class="pr-12 col-7">
+        <div v-if="props.option != 'deleteRamal'">
+          <q-card-section>
             <q-input
               white
-              class="no-padding"
-              v-model="labelDefinite.number"
-              :label="$t(`formRamal.numberOfRamal`)"
-              type="number"
-            />
-          </div>
-          <div class="pl-12 col-5">
-            <q-input
-              white
-              v-model="labelDefinite.name"
-              :label="$t(`formRamal.userOfRamal`)"
+              v-model="labelDefinite.sector"
+              :label="$t(`formRamal.nameOfRamal`)"
               type="text"
+              :rules="[(val) => validateNotEmpty(val)]"
             />
-          </div>
-        </q-card-section>
-      </div>
-      <div v-else>
-        <q-card-section class="text-grey font-custom">
-          {{ $t("formRamal.deleteRamalMessage.mainMessage") }}
-          {{ labelDefinite.number }}
-          {{ $t("formRamal.deleteRamalMessage.auxMessage") }} {{
-          }}{{ labelDefinite.name }}
-          {{ $t("formRamal.deleteRamalMessage.auxMessage1") }}
-          {{ labelDefinite.sector }}
-        </q-card-section>
-      </div>
-      <q-card-actions align="right" class="pt-12 pa-5 text-green-8 font-custom">
-        <q-btn flat :label="$t('formRamal.confirm')" @click="optionRamal" />
-      </q-card-actions>
+          </q-card-section>
+
+          <q-card-section class="row justify-between no-wrap overflow-hidden">
+            <div class="pr-12 col-7">
+              <q-input
+                white
+                class="no-padding"
+                v-model="labelDefinite.number"
+                :label="$t(`formRamal.numberOfRamal`)"
+                type="number"
+                :rules="[(val) => validateNotEmpty(val)]"
+              />
+            </div>
+            <div class="pl-12 col-5">
+              <q-input
+                white
+                v-model="labelDefinite.name"
+                :label="$t(`formRamal.userOfRamal`)"
+                type="text"
+                :rules="[(val) => validateNotEmpty(val)]"
+              />
+            </div>
+          </q-card-section>
+        </div>
+        <div v-else>
+          <q-card-section class="text-grey font-custom">
+            {{ $t("formRamal.deleteRamalMessage.mainMessage") }}
+            {{ labelDefinite.number }}
+            {{ $t("formRamal.deleteRamalMessage.auxMessage") }} {{
+            }}{{ labelDefinite.name }}
+            {{ $t("formRamal.deleteRamalMessage.auxMessage1") }}
+            {{ labelDefinite.sector }}
+          </q-card-section>
+        </div>
+        <q-card-actions
+          align="right"
+          class="pt-12 pa-5 text-green-8 font-custom"
+        >
+          <q-btn flat :label="$t('formRamal.confirm')" type="submit" />
+        </q-card-actions>
+      </q-form>
     </q-card>
   </q-dialog>
 </template>
@@ -66,6 +74,7 @@ import EditRamal from "../../../graphql/ramais/EditRamal.gql";
 
 import { resetFields } from "./lib";
 
+const { validateNotEmpty } = useFieldValidation();
 const props = defineProps({
   open: {
     type: Boolean,
