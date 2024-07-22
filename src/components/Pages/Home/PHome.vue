@@ -1,10 +1,13 @@
 <template>
-  <q-img src="/WELCOME_INTRANET.png" />
-  <Separator :texto="$t('text.systems')" />
-  <Item sistema="gestao" class="position-systems relative-position" />
+  <div>
+    <q-img src="/WELCOME_INTRANET.png" />
+    <Separator :texto="$t('text.systems')" />
+    <Item sistema="gestao" class="item-gestao" />
+  </div>
 </template>
+
 <style scoped>
-.position-systems {
-  bottom: 6rem;
+.item-gestao {
+  margin-top: -6rem;
 }
 </style>
