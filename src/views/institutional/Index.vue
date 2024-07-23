@@ -1,0 +1,3 @@
+<template>
+  <PageInstitutional />
+</template>
