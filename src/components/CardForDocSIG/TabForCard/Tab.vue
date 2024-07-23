@@ -12,8 +12,9 @@
         @click="handleTabClick(item.name)"
       />
       <q-btn
-        icon="edit"
+        icon="more_vert"
         flat
+        size="lg"
         class="absolute-right"
         v-if="userStorage.getToken"
       >

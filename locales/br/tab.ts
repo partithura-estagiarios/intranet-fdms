@@ -7,4 +7,6 @@ export default {
   hRdiscloses: "RH Divulga",
   menu: "Cardápio",
   scheduler: "Agendador",
+  processes: "Processos",
+  institutional: "Institucional",
 };
