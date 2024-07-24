@@ -5,7 +5,10 @@ export const server_express_url = getEnvironmentVariable(
 import CreateFolderForInt from "../graphql/institutionalImgs/CreateFolderForInt.gql";
 import ExcludeFolderForInt from "../graphql/institutionalImgs/ExcludeFolderForInt.gql";
 
-import { Message } from "../modules/graphql/graphql";
+interface Message {
+  enum: boolean;
+  message: string;
+}
 
 interface State {
   folders: string[];
@@ -42,19 +45,19 @@ export const useImgs = defineStore(id, {
           "search-path": path,
         },
       });
-      if (!response.ok) {
-        return;
+      if (response.ok) {
+        imgsStorage.refreshReload;
+        return true;
       }
-      return imgsStorage.refreshReload;
+      return false;
     },
     insertFolder: async (folderName: string) => {
-      const imgsStorage = useImgs();
-
       const { createFolderForInt }: { createFolderForInt: Message } =
         await runMutation(CreateFolderForInt, {
           folder: folderName,
         });
-      return imgsStorage.refreshReload;
+
+      return createFolderForInt;
     },
     excludeFolder: async (path: String) => {
       const imgsStorage = useImgs();

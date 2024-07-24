@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import { useImgs } from "../../../../stores/imgs";
 
+const { t } = useI18n();
 const imgsStorage = useImgs();
 const emits = defineEmits(["update-card-folder"]);
 const nameFolder = ref();
@@ -27,8 +28,14 @@ const props = defineProps({
     required: true,
   },
 });
-function addFolder() {
-  imgsStorage.insertFolder(nameFolder.value);
-  closeDialog();
+async function addFolder() {
+  const result = await imgsStorage.insertFolder(nameFolder.value);
+  if (result.enum) {
+    imgsStorage.refreshReload;
+    closeDialog();
+    return positiveNotify(t(`action.${result.message}`));
+  }
+  negativeNotify(t(`action.${result.message}`));
+  nameFolder.value = "";
 }
 </script>

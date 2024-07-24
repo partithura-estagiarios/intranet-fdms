@@ -45,6 +45,7 @@ export default {
   fillAll: "Preencha as informações sobre o arquivo",
   fileSuccess: "Arquivo criado com sucesso",
   repeatFile: "Arquivo repetido escolha outro nome",
+  alreadyExistFile: "Arquivo já existe",
   deleteSuccess: "Exclusão concluída com sucesso",
   errorCreatingFolder: "Error ao tentar da Pasta",
   errorCreatingFile: "Error ao tentar da Arquivo",

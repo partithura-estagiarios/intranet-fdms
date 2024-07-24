@@ -3,7 +3,7 @@
     name="delete"
     color="black"
     size="md"
-    v-if="userStorage.getToken"
+    v-if="userStorage.getToken && noImage"
     class="absolute-right cursor-pointer z-top"
     @click.stop="excludeDocInt(filteredImages[POSITION_IMG])"
   />
@@ -11,7 +11,6 @@
     <q-img
       :src="getImageUrl(filteredImages[POSITION_IMG])"
       class="image-item"
-      spinner-color="white"
     />
   </div>
   <div v-if="filteredImages.length > FIRST_SLIDE">

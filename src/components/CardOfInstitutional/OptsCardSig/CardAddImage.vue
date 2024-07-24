@@ -23,7 +23,7 @@ const props = defineProps({
     required: true,
   },
 });
-
+const { t } = useI18n();
 const folder = ref();
 const img = ref();
 const emits = defineEmits(["update-card"]);
@@ -32,8 +32,11 @@ function closeDialog() {
   emits("update-card", false);
 }
 
-function addImg() {
-  imgsStorage.insertImg(folder.value, img.value);
-  closeDialog();
+async function addImg() {
+  const response = await imgsStorage.insertImg(folder.value, img.value);
+  if (response) {
+    closeDialog();
+    positiveNotify(t("action.fileSuccess"));
+  }
 }
 </script>

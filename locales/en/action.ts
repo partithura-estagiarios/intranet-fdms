@@ -45,6 +45,7 @@ export default {
   createFolderSuccess: "Folder created successfully",
   fillAll: "Fill in the file information",
   fileSuccess: "File created successfully",
+  alreadyExistFile: "File already exists",
   repeatFile: "Repeated file choose another name",
   deleteSuccess: "Deletion completed successfully",
   errorCreatingFolder: "Error when trying Folder",
