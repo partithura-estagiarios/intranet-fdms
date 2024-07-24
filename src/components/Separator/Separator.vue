@@ -3,11 +3,8 @@
   <img src="/SEPARATOR.png" />
   <h4 class="text-bold text-white position-text">
     {{ texto }}
-    <ItemSystem
-      v-if="!showTabHeader"
-      @receveid="emits('receveid')"
-      @activeDeleteSystem="emits('activeBadgeExclusion')"
-    />
+    <ItemSystem v-if="!showTabHeader" />
+    <IconOpts v-if="router.fullPath === '/institutional'" />
   </h4>
 </template>
 

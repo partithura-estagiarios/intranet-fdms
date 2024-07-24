@@ -1,47 +1,39 @@
 <template>
-  <div>
-    <div v-if="filteredImages.length === FIRST_SLIDE">
-      <q-icon
-        name="delete"
-        color="black"
-        size="md"
-        class="absolute-right cursor-pointer"
-        @click="excludeDocInt(filteredImages[POSITION_IMG])"
-      />
-      <q-img
-        :src="getImageUrl(filteredImages[POSITION_IMG])"
-        class="image-item"
-        spinner-color="white"
-      />
-    </div>
-    <div v-if="filteredImages.length > FIRST_SLIDE">
-      <q-carousel
-        v-model="slide"
-        prev-icon="arrow_circle_left"
-        next-icon="arrow_circle_right"
-        swipeable
-        animated
-        arrows
-        thumbnails
-        infinite
-        control-color="green"
-        class="carousel-image"
+  <q-icon
+    name="delete"
+    color="black"
+    size="md"
+    v-if="userStorage.getToken"
+    class="absolute-right cursor-pointer z-top"
+    @click.stop="excludeDocInt(filteredImages[POSITION_IMG])"
+  />
+  <div v-if="filteredImages.length === FIRST_SLIDE && noImage">
+    <q-img
+      :src="getImageUrl(filteredImages[POSITION_IMG])"
+      class="image-item"
+      spinner-color="white"
+    />
+  </div>
+  <div v-if="filteredImages.length > FIRST_SLIDE">
+    <q-carousel
+      v-model="slide"
+      prev-icon="arrow_circle_left"
+      next-icon="arrow_circle_right"
+      swipeable
+      animated
+      arrows
+      thumbnails
+      infinite
+      control-color="green"
+      class="carousel-image"
+    >
+      <q-carousel-slide
+        v-for="(img, index) in filteredImages"
+        :name="index"
+        :img-src="getImageUrl(img)"
       >
-        <q-carousel-slide
-          v-for="(img, index) in filteredImages"
-          :name="index"
-          :img-src="getImageUrl(img)"
-        >
-          <q-icon
-            name="delete"
-            color="black"
-            size="md"
-            class="absolute-right cursor-pointer"
-            @click="excludeDocInt(filteredImages[POSITION_IMG])"
-          />
-        </q-carousel-slide>
-      </q-carousel>
-    </div>
+      </q-carousel-slide>
+    </q-carousel>
   </div>
 </template>
 
@@ -49,7 +41,9 @@
 import { FoldersIntitutional } from "../../../entities/imgsInstitutional";
 import { server_express_url } from "../lib";
 import { useImgs } from "../../../stores/imgs";
+import { useUsers } from "../../../stores/user";
 
+const userStorage = useUsers();
 const imgsStorage = useImgs();
 const FIRST_SLIDE = 1;
 const POSITION_IMG = 0;
@@ -63,6 +57,7 @@ const props = defineProps({
     required: true,
   },
 });
+const noImage = ref(false);
 const slide = ref(FIRST_SLIDE);
 const filteredImages = computed(() => {
   const folder = props.folders.find((folder) => folder.name === props.name);
@@ -77,6 +72,14 @@ const getImageUrl = (imageName: string) => {
 function excludeDocInt(item: string) {
   imgsStorage.excludeFolder(item);
 }
+watchEffect(() => {
+  if (props.name) {
+    if (filteredImages.value[0].includes("null")) {
+      return (noImage.value = false);
+    }
+    return (noImage.value = true);
+  }
+});
 </script>
 
 <style scoped>

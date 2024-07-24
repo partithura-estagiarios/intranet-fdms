@@ -34,5 +34,6 @@ function closeDialog() {
 
 function addImg() {
   imgsStorage.insertImg(folder.value, img.value);
+  closeDialog();
 }
 </script>

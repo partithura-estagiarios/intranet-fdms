@@ -1,20 +1,17 @@
 <template>
-  <div class="absolute-center position-div-custom">
-    <IconOpts />
-    <q-card class="my-card" bordered>
-      <q-card-section horizontal>
-        <q-card-section>
-          <FoldersNamesImgs
-            :foldersName="namesOfImgs"
-            @envity-name="(val: string) => (titleImg = val)"
-          />
-        </q-card-section>
-        <q-card-section class="col-19 flex flex-center">
-          <ImgsInstitutional :folders="allFolders" :name="titleImg" />
-        </q-card-section>
+  <q-card class="my-card" bordered>
+    <q-card-section horizontal>
+      <q-card-section>
+        <FoldersNamesImgs
+          :foldersName="namesOfImgs"
+          @envity-name="(val: string) => (titleImg = val)"
+        />
       </q-card-section>
-    </q-card>
-  </div>
+      <q-card-section class="col-19 flex flex-center">
+        <ImgsInstitutional :folders="allFolders" :name="titleImg" />
+      </q-card-section>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script setup lang="ts">
@@ -27,20 +24,31 @@ const imgsStorage = useImgs();
 const namesOfImgs = ref<string[]>([]);
 const allFolders = ref<any[]>([]);
 const titleImg = ref();
-onMounted(async () => {
+
+async function loadAllDocsInt() {
   const { getAllImgs }: { getAllImgs: FoldersIntitutional[] } =
     await runQuery(GetAllImgs);
   allFolders.value = createPath(getAllImgs);
   namesOfImgs.value = getAllImgs.map((folder) => folder.name);
   imgsStorage.setFoldersImgs(namesOfImgs.value);
+}
+
+watchEffect(() => {
+  if (imgsStorage.reload) {
+    loadAllDocsInt();
+    imgsStorage.refreshReload;
+  }
+});
+
+onMounted(async () => {
+  loadAllDocsInt();
 });
 </script>
 <style scoped>
 .my-card {
+  max-height: 45rem;
   height: 45rem;
+  width: 89rem;
   padding-inline: 5rem;
-}
-.position-div-custom {
-  padding-top: 5rem;
 }
 </style>

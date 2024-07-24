@@ -1,7 +1,7 @@
 <template>
   <q-menu>
-    <q-list style="min-width: 100px" class="text-black">
-      <q-item clickable v-close-popup>
+    <q-list class="text-black">
+      <q-item clickable v-close-popup v-if="imgsStorage.folders">
         <q-item-section @click="showCard = true">{{
           $t("cardDocSig.addImg")
         }}</q-item-section>
@@ -27,6 +27,9 @@
 </template>
 
 <script setup lang="ts">
+import { useImgs } from "../../../stores/imgs";
+
+const imgsStorage = useImgs();
 const showCard = ref(false);
 const showCardFolder = ref(false);
 </script>

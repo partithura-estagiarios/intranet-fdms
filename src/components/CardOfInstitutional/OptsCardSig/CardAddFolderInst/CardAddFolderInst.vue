@@ -29,5 +29,6 @@ const props = defineProps({
 });
 function addFolder() {
   imgsStorage.insertFolder(nameFolder.value);
+  closeDialog();
 }
 </script>

@@ -1,7 +1,23 @@
 <template>
-  <q-icon name="add" color="black" class="cursor-pointer">
+  <q-icon
+    name="more_vert"
+    color="white"
+    @click="modalCreateSystem"
+    v-if="userStorage.getToken"
+    class="position-icon cursor-pointer"
+    clickable
+  >
     <MenuOptsCardSig />
   </q-icon>
 </template>
+<script setup lang="ts">
+import { useUsers } from "../../../stores/user";
 
-<script setup lang="ts"></script>
+const modalCreateSystem = ref();
+const userStorage = useUsers();
+</script>
+<style scoped>
+.position-icon {
+  bottom: 0.2rem;
+}
+</style>

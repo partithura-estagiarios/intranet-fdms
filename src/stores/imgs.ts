@@ -9,14 +9,20 @@ import { Message } from "../modules/graphql/graphql";
 
 interface State {
   folders: string[];
+  reload: boolean;
 }
 
 const id = "imgs";
 export const useImgs = defineStore(id, {
   state: (): State => ({
     folders: [],
+    reload: false,
   }),
-  getters: {},
+  getters: {
+    refreshReload(state) {
+      return (state.reload = !state.reload);
+    },
+  },
   actions: {
     setFoldersImgs: (folderName: string[]) => {
       const imgsStorage = useImgs();
@@ -26,6 +32,7 @@ export const useImgs = defineStore(id, {
       });
     },
     insertImg: async (path: string, file: any) => {
+      const imgsStorage = useImgs();
       const formData = new FormData();
       formData.append("file", file);
       const response = await fetch(`${server_express_url}/upload-img`, {
@@ -36,20 +43,24 @@ export const useImgs = defineStore(id, {
         },
       });
       if (!response.ok) {
-        throw new Error(`Erro ao enviar imagem: ${response.statusText}`);
+        return;
       }
+      return imgsStorage.refreshReload;
     },
     insertFolder: async (folderName: string) => {
-      const store = useFiles();
+      const imgsStorage = useImgs();
 
       const { createFolderForInt }: { createFolderForInt: Message } =
         await runMutation(CreateFolderForInt, {
           folder: folderName,
         });
+      return imgsStorage.refreshReload;
     },
     excludeFolder: async (path: String) => {
+      const imgsStorage = useImgs();
       const { excludeFolderForInt }: { excludeFolderForInt: Message } =
         await runMutation(ExcludeFolderForInt, { folder: path });
+      imgsStorage.refreshReload;
     },
   },
 });

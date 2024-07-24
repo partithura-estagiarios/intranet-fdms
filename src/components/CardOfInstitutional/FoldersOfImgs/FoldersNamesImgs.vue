@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <q-list :class="{ 'max-size-list': isScrollableList }">
     <q-item
       clickable
       v-for="name in foldersName"
@@ -12,30 +12,30 @@
       <q-icon
         name="delete"
         size="sm"
+        v-if="userStorage.getToken"
         class="cursor-pointer"
-        @click="excludeFolderInt(name)"
+        @click.stop="excludeFolderInt(name)"
       />
     </q-item>
   </q-list>
 </template>
 
 <script setup lang="ts">
+import { useUsers } from "../../../stores/user";
 import { useImgs } from "../../../stores/imgs";
 
+const userStorage = useUsers();
 const imgsStorage = useImgs();
 const emits = defineEmits(["envity-name"]);
 const selectedItem = ref<string | null>(null);
 
-function selectItem(name: string) {
-  selectedItem.value = name;
-  emits("envity-name", name);
-}
 const props = defineProps({
   foldersName: {
     type: Array as () => string[],
     required: true,
   },
 });
+
 const itemClasses = computed(() => {
   return (name: string) => {
     const isSelected = selectedItem.value === name;
@@ -46,7 +46,27 @@ const itemClasses = computed(() => {
   };
 });
 
+function selectItem(name: string) {
+  selectedItem.value = name;
+  emits("envity-name", name);
+}
+
 function excludeFolderInt(item: string) {
   imgsStorage.excludeFolder(item);
 }
+
+const isScrollableList = computed(() => {
+  const maxHeight = 43;
+  const listItemHeight = 5;
+  const totalListHeight = props.foldersName.length * listItemHeight;
+
+  return totalListHeight > maxHeight;
+});
 </script>
+
+<style scoped>
+.max-size-list {
+  max-height: 43rem;
+  overflow-y: scroll;
+}
+</style>
