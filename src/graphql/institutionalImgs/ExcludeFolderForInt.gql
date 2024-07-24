@@ -1,0 +1,6 @@
+mutation ExcludeFolderForInt($folder: String!) {
+  excludeFolderForInt(folder: $folder) {
+    enum
+    message
+  }
+}

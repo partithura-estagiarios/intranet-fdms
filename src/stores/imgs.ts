@@ -2,6 +2,10 @@ import { defineStore } from "pinia";
 export const server_express_url = getEnvironmentVariable(
   "VITE_URL_BACK_SERVER_EXPRESS_FOR_ARCHIVES",
 );
+import CreateFolderForInt from "../graphql/institutionalImgs/CreateFolderForInt.gql";
+import ExcludeFolderForInt from "../graphql/institutionalImgs/ExcludeFolderForInt.gql";
+
+import { Message } from "../modules/graphql/graphql";
 
 interface State {
   folders: string[];
@@ -34,6 +38,18 @@ export const useImgs = defineStore(id, {
       if (!response.ok) {
         throw new Error(`Erro ao enviar imagem: ${response.statusText}`);
       }
+    },
+    insertFolder: async (folderName: string) => {
+      const store = useFiles();
+
+      const { createFolderForInt }: { createFolderForInt: Message } =
+        await runMutation(CreateFolderForInt, {
+          folder: folderName,
+        });
+    },
+    excludeFolder: async (path: String) => {
+      const { excludeFolderForInt }: { excludeFolderForInt: Message } =
+        await runMutation(ExcludeFolderForInt, { folder: path });
     },
   },
 });

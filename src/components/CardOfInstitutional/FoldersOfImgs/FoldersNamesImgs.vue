@@ -9,11 +9,20 @@
       @click="selectItem(name)"
     >
       {{ name }}
+      <q-icon
+        name="delete"
+        size="sm"
+        class="cursor-pointer"
+        @click="excludeFolderInt(name)"
+      />
     </q-item>
   </q-list>
 </template>
 
 <script setup lang="ts">
+import { useImgs } from "../../../stores/imgs";
+
+const imgsStorage = useImgs();
 const emits = defineEmits(["envity-name"]);
 const selectedItem = ref<string | null>(null);
 
@@ -36,4 +45,8 @@ const itemClasses = computed(() => {
     return "text-black";
   };
 });
+
+function excludeFolderInt(item: string) {
+  imgsStorage.excludeFolder(item);
+}
 </script>

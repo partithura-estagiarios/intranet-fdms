@@ -1,6 +1,13 @@
 <template>
   <div>
     <div v-if="filteredImages.length === FIRST_SLIDE">
+      <q-icon
+        name="delete"
+        color="black"
+        size="md"
+        class="absolute-right cursor-pointer"
+        @click="excludeDocInt(filteredImages[POSITION_IMG])"
+      />
       <q-img
         :src="getImageUrl(filteredImages[POSITION_IMG])"
         class="image-item"
@@ -25,6 +32,13 @@
           :name="index"
           :img-src="getImageUrl(img)"
         >
+          <q-icon
+            name="delete"
+            color="black"
+            size="md"
+            class="absolute-right cursor-pointer"
+            @click="excludeDocInt(filteredImages[POSITION_IMG])"
+          />
         </q-carousel-slide>
       </q-carousel>
     </div>
@@ -34,6 +48,9 @@
 <script setup lang="ts">
 import { FoldersIntitutional } from "../../../entities/imgsInstitutional";
 import { server_express_url } from "../lib";
+import { useImgs } from "../../../stores/imgs";
+
+const imgsStorage = useImgs();
 const FIRST_SLIDE = 1;
 const POSITION_IMG = 0;
 const props = defineProps({
@@ -57,6 +74,9 @@ const filteredImages = computed(() => {
 const getImageUrl = (imageName: string) => {
   return `${server_express_url}/serve-image/${encodeURIComponent(imageName)}`;
 };
+function excludeDocInt(item: string) {
+  imgsStorage.excludeFolder(item);
+}
 </script>
 
 <style scoped>

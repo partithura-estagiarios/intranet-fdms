@@ -1,0 +1,6 @@
+mutation CreateFolderForInt($folder: String!) {
+  createFolderForInt(folder: $folder) {
+    enum
+    message
+  }
+}
