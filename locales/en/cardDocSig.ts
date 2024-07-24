@@ -19,4 +19,5 @@ export default {
   attachments: "Attachments",
   writeFileName: "Write the file name",
   writeMarName: "Enter MAR number",
+  addIng: "Add Institutional Document",
 };

@@ -19,4 +19,5 @@ export default {
   attachments: "Anexos",
   writeFileName: "Escreva o nome do arquivo",
   writeMarName: "Digite o número do MAR",
+  addImg: "Adicionar Documento Institucional",
 };

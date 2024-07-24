@@ -32,7 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from "vue";
 import { FoldersIntitutional } from "../../../entities/imgsInstitutional";
 import { server_express_url } from "../lib";
 const FIRST_SLIDE = 1;

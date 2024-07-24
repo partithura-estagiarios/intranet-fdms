@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
 const emits = defineEmits(["envity-name"]);
 const selectedItem = ref<string | null>(null);
 
