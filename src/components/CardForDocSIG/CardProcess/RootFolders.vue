@@ -57,7 +57,7 @@ watch(
 
 <style scoped>
 .height-limited {
-  max-height: 40rem;
+  max-height: 30rem;
   width: 15rem;
 }
 .coloring-text {

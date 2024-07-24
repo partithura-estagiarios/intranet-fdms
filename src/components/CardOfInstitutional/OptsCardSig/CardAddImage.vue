@@ -3,10 +3,10 @@
     <q-card class="my-card">
       <DialogHeader @close="closeDialog" :option="$t('cardDocSig.addImg')" />
       <q-card-section>
-        <SelectFolderForImg @envity-folder="(val) => (folder = val)" />
+        <SelectFolderForImg @envity-folder="(val: string) => (folder = val)" />
       </q-card-section>
       <q-card-section>
-        <InputImg @envity-img="(val) => (img = val)" />
+        <InputImg @envity-img="(val: File) => (img = val)" />
       </q-card-section>
       <CardButtonConfirm @confirm="addImg()" />
     </q-card>

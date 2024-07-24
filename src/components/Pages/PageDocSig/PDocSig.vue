@@ -4,6 +4,8 @@
 </template>
 <style scoped>
 .spacing-card {
-  padding-top: 5rem;
+  margin-inline: 12rem;
+  position: relative;
+  margin-top: -7rem;
 }
 </style>

@@ -5,6 +5,7 @@
     {{ texto }}
     <ItemSystem v-if="!showTabHeader" />
     <IconOpts v-if="router.fullPath === '/institutional'" />
+    <ButtonOptsForProcess v-if="router.fullPath === '/processes'" />
   </h4>
 </template>
 

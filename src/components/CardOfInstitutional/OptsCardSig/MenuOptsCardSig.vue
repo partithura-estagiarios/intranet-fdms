@@ -1,7 +1,7 @@
 <template>
   <q-menu>
     <q-list class="text-black">
-      <q-item clickable v-close-popup v-if="imgsStorage.folders">
+      <q-item clickable v-close-popup v-if="imgsStorage.folders.length">
         <q-item-section @click="showCard = true">{{
           $t("cardDocSig.addImg")
         }}</q-item-section>

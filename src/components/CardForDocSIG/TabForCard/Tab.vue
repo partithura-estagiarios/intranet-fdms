@@ -11,39 +11,6 @@
         :class="coloringItem(item.name)"
         @click="handleTabClick(item.name)"
       />
-      <q-btn
-        icon="more_vert"
-        flat
-        size="lg"
-        class="absolute-right"
-        v-if="userStorage.getToken"
-      >
-        <q-menu anchor="top right" self="top left" class="text-black">
-          <q-list>
-            <q-item clickable v-close-popup>
-              <q-item-section @click="openModal(isFolder)">{{
-                $t("action.addFolder")
-              }}</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section @click="openModal(isFile)">{{
-                $t("action.addFile")
-              }}</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section @click="openModal(isDeletion)"
-                >{{ $t("action.deleteItem") }}
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-      <q-dialog v-model="openDialog">
-        <q-card>
-          <DialogHeader @close="(val) => (openDialog = val)" :option="title" />
-          <BuildPath :active-dialog="openDialog" :option="title" />
-        </q-card>
-      </q-dialog>
     </q-tabs>
   </div>
 </template>
