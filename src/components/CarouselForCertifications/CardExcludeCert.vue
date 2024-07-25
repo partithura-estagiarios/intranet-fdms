@@ -44,7 +44,9 @@ function closeDialog() {
   emits("update-card", false);
 }
 function excludeCert() {
-  imgsStorage.excludeCertification(select.value);
-  closeDialog();
+  if (select) {
+    imgsStorage.excludeCertification(select.value);
+    closeDialog();
+  }
 }
 </script>
