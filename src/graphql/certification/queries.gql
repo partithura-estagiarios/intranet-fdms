@@ -1,6 +1,0 @@
-query LoadCertifications($title: String) {
-  loadCertifications(title: $title) {
-    name
-    image
-  }
-}

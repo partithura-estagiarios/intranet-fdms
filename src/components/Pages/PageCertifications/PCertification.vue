@@ -1,8 +1,11 @@
 <template>
-  <CarouselCertifications class="padding relative-position" />
+  <Separator :texto="$t('tab.certifications')" class="no-margin no-padding" />
+  <div class="position-card">
+    <CardCertifications />
+  </div>
 </template>
 <style scoped>
-.padding {
-  top: 10%;
+.position-card {
+  margin-top: -9rem;
 }
 </style>
