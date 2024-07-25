@@ -1,5 +1,7 @@
 <template>
-  <q-img :src="getImageUrl(img)" class="size" />
+  <div class="size">
+    <q-img :src="getImageUrl(img)" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -17,6 +19,6 @@ const getImageUrl = (imageName: string) => {
 
 <style scoped>
 .size {
-  width: 50rem;
+  width: 37rem;
 }
 </style>
