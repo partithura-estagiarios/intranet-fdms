@@ -3,16 +3,20 @@
   <img src="/SEPARATOR.png" />
   <h4 class="text-bold text-white position-text">
     {{ texto }}
-    <ItemSystem v-if="!showTabHeader" />
-    <IconOpts v-if="router.fullPath === '/institutional'" />
-    <ButtonOptsForProcess v-if="router.fullPath === '/processes'" />
-    <IconOptsCert v-if="router.fullPath === '/certifications'" />
+    <span v-if="userStorage.getToken" class="no-padding no-border">
+      <ItemSystem v-if="router.fullPath === '/home'" />
+      <IconOpts v-if="router.fullPath === '/institutional'" />
+      <ButtonOptsForProcess v-if="router.fullPath === '/processes'" />
+      <IconOptsCert v-if="router.fullPath === '/certifications'" />
+    </span>
   </h4>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import { useUsers } from "../../stores";
 
+const userStorage = useUsers();
 const router = useRoute();
 const exceptionRoutes = ["/home"];
 const showTabHeader = computed(() => {
