@@ -1,7 +1,7 @@
 <template>
   <q-toolbar class="color-custom q-py-lg z-top">
     <q-btn flat to="/home" class="q-py-sm q-px-md absolute-top-left">
-      <img src="/ico/LOGO_FUNDIMISA.png" class="q-py-md" />
+      <img src="/ico/LOGO_FUNDIMISA.png" class="q-py-lg" />
     </q-btn>
 
     <q-space class="q-px-xl q-mx-xl" />
@@ -17,7 +17,7 @@
         @click="goToRoute(item.name)"
         flat
         size="1.2rem"
-        class="q-py-xs q-mx-sm q-px-sm"
+        class="q-py-xs padding-custom-btn"
         dense
         :label="$t(`tab.${item.label}`)"
       />
@@ -56,5 +56,8 @@ onMounted(() => {
 }
 .color-custom {
   background-color: rgb(31, 73, 125);
+}
+.padding-custom-btn {
+  padding-inline: 0.5rem;
 }
 </style>

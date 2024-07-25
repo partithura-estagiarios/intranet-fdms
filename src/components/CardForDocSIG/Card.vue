@@ -1,5 +1,8 @@
 <template>
-  <div class="q-mt-xl">
+  <div
+    class="row"
+    :class="$q.screen.lt.lg ? 'justify-between' : 'justify-center q-py-sm'"
+  >
     <q-card class="card no-padding no-margin">
       <q-card-section class="custom-color text-h6 row text-white">
         <div class="col-12">

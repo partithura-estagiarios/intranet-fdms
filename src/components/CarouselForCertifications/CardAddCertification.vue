@@ -9,9 +9,9 @@
       <q-card-section
         ><InputsForCertification
           @envity-all-inputs="
-            (val1, val2, val3) => {
-              nameCert = val1;
-              numberCert = val2;
+            (val1: number, val2: string, val3: File) => {
+              numberCert = val1;
+              nameCert = val2;
               img = val3;
             }
           "
@@ -41,5 +41,6 @@ function closeDialog() {
 }
 async function addFolder() {
   await addCertifcation(nameCert.value, numberCert.value, img.value);
+  closeDialog();
 }
 </script>

@@ -43,7 +43,7 @@ export const useImgs = defineStore(id, {
     },
     setFoldersCertifications: (folderName: string[]) => {
       const imgsStorage = useImgs();
-      imgsStorage.folders = [];
+      imgsStorage.certifications = [];
       folderName.forEach((val) => {
         imgsStorage.certifications.push(val);
       });

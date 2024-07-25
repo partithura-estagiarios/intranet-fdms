@@ -8,7 +8,7 @@
       </q-item>
     </q-card-section>
 
-    <q-card-section class="col-8">
+    <q-card-section class="col-8" v-if="imgsStorage.certifications.length">
       <q-img :src="getImageUrl(selectedTab)" />
     </q-card-section>
   </q-card>
@@ -66,8 +66,9 @@ watchEffect(async () => {
 
 <style scoped>
 .my-card {
-  width: 50rem;
+  width: 80rem;
   margin-inline: 8rem;
-  top: 2rem;
+  height: 49rem;
+  margin-top: -9rem;
 }
 </style>

@@ -1,21 +1,25 @@
 <template>
-  <q-input v-model="re" label="Numero da Certificação" type="number" />
-  <q-input v-model="re2" label="Nome da Certificação" />
-  <q-file
-    v-model="img"
-    :label="$t('cardDocSig.addImg')"
-    flat
-    @update:model-value="$emit('envity-img', img)"
+  <q-input
+    v-model="numberCertification"
+    label="Numero da Certificação"
+    type="number"
   />
+  <q-input v-model="nameCertification" label="Nome da Certificação" />
+  <q-file v-model="certification" :label="$t('cardDocSig.addImg')" flat />
 </template>
 
 <script setup>
 const emits = defineEmits("envity-all-inputs");
 
-const re = ref();
-const re2 = ref();
-const img = ref();
+const numberCertification = ref();
+const nameCertification = ref();
+const certification = ref();
 watchEffect(() => {
-  emits("envity-all-inputs", re.value, re2.value, img.value);
+  emits(
+    "envity-all-inputs",
+    numberCertification.value,
+    nameCertification.value,
+    certification.value,
+  );
 });
 </script>
