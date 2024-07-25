@@ -66,7 +66,7 @@ const isScrollableList = computed(() => {
 
 <style scoped>
 .max-size-list {
-  max-height: 43rem;
+  max-height: 39rem;
   overflow-y: scroll;
 }
 </style>
