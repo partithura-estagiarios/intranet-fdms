@@ -1,7 +1,7 @@
 <template>
   <q-card class="row my-card">
     <q-card-section class="col-4">
-      <q-item clickable v-for="name in certifications" :key="name">
+      <q-item clickable v-for="name in imgsStorage.certifications" :key="name">
         <q-item-section :class="itemClasses(name)" @click="selectItem(name)">
           {{ formatTabLabel(name) }}
         </q-item-section>
@@ -17,19 +17,21 @@
 <script setup lang="ts">
 import LoadCertifications from "../../graphql/certification/LoadCertifications.gql";
 import { server_express_url } from "../CardOfInstitutional/lib";
+import { useImgs } from "../../stores/imgs";
 
+const imgsStorage = useImgs();
 const selectedTab = ref<string>("");
-const certifications = ref<string[]>([]);
 const CUSTOM_REPLACE = /([a-zA-Z])([0-9])/g;
 const ADD_HIFEN = "$1-$2";
 
-onMounted(async () => {
+async function loadCertifications() {
   const { loadCertifications }: { loadCertifications: string[] } =
     await runQuery(LoadCertifications);
-  certifications.value = loadCertifications;
-  if (certifications.value.length > 0) {
-    selectedTab.value = certifications.value[0];
-  }
+  imgsStorage.setFoldersCertifications(loadCertifications);
+}
+
+onMounted(async () => {
+  loadCertifications();
 });
 
 const getImageUrl = (imageName: string) => {
@@ -53,6 +55,13 @@ const itemClasses = computed(() => {
 function selectItem(name: string) {
   selectedTab.value = name;
 }
+
+watchEffect(async () => {
+  if (imgsStorage.reloadCertification) {
+    await loadCertifications();
+    return imgsStorage.refreshCertificationsReload;
+  }
+});
 </script>
 
 <style scoped>

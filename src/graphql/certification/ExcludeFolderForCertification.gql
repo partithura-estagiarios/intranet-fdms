@@ -1,0 +1,6 @@
+mutation ExcludeFolderForCertification($folder: String!) {
+  excludeFolderForCertification(folder: $folder) {
+    enum
+    message
+  }
+}

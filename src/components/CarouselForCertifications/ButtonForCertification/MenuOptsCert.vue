@@ -18,6 +18,10 @@
     :card="showCard"
     @update-card-folder="showCard = false"
   />
+  <CardExcludeCert
+    @update-card="showCardFolder = false"
+    :card="showCardFolder"
+  />
 </template>
 
 <script setup>

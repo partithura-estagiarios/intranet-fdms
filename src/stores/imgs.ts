@@ -4,7 +4,7 @@ export const server_express_url = getEnvironmentVariable(
 );
 import CreateFolderForInt from "../graphql/institutionalImgs/CreateFolderForInt.gql";
 import ExcludeFolderForInt from "../graphql/institutionalImgs/ExcludeFolderForInt.gql";
-
+import ExcludeFolderForCertification from "../graphql/certification/ExcludeFolderForCertification.gql";
 interface Message {
   enum: boolean;
   message: string;
@@ -13,17 +13,24 @@ interface Message {
 interface State {
   folders: string[];
   reload: boolean;
+  certifications: string[];
+  reloadCertification: boolean;
 }
 
 const id = "imgs";
 export const useImgs = defineStore(id, {
   state: (): State => ({
     folders: [],
+    certifications: [],
     reload: false,
+    reloadCertification: false,
   }),
   getters: {
     refreshReload(state) {
       return (state.reload = !state.reload);
+    },
+    refreshCertificationsReload(state) {
+      return (state.reloadCertification = !state.reloadCertification);
     },
   },
   actions: {
@@ -32,6 +39,13 @@ export const useImgs = defineStore(id, {
       imgsStorage.folders = [];
       folderName.forEach((val) => {
         imgsStorage.folders.push(val);
+      });
+    },
+    setFoldersCertifications: (folderName: string[]) => {
+      const imgsStorage = useImgs();
+      imgsStorage.folders = [];
+      folderName.forEach((val) => {
+        imgsStorage.certifications.push(val);
       });
     },
     insertImg: async (path: string, file: any) => {
@@ -64,6 +78,16 @@ export const useImgs = defineStore(id, {
       const { excludeFolderForInt }: { excludeFolderForInt: Message } =
         await runMutation(ExcludeFolderForInt, { folder: path });
       imgsStorage.refreshReload;
+    },
+    excludeCertification: async (path: String) => {
+      const imgsStorage = useImgs();
+      const {
+        excludeFolderForCertification,
+      }: { excludeFolderForCertification: Message } = await runMutation(
+        ExcludeFolderForCertification,
+        { folder: path },
+      );
+      imgsStorage.refreshCertificationsReload;
     },
   },
 });
