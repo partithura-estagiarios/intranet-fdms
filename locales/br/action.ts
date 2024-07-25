@@ -63,4 +63,5 @@ export default {
   existRoomColor: "Já existe uma Sala com essa cor",
   roomAccepted: "Sala criada com sucesso",
   enterNameRoom: "Dê nome a sala ",
+  deleteCertification: "Deletar Certificação",
 };

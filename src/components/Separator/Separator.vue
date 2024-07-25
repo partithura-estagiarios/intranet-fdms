@@ -6,6 +6,7 @@
     <ItemSystem v-if="!showTabHeader" />
     <IconOpts v-if="router.fullPath === '/institutional'" />
     <ButtonOptsForProcess v-if="router.fullPath === '/processes'" />
+    <IconOptsCert v-if="router.fullPath === '/certifications'" />
   </h4>
 </template>
 

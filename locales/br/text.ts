@@ -10,7 +10,7 @@ export default {
   searchRamal: "Buscar Ramal",
   editRamal: "Editar Ramal",
   deleteRamal: "Deletar Ramal",
-  systems: "SISTEMAS",
+  systems: "Sistemas",
   coffee: "Café",
   projector: "Projetor",
   flipSharp: "Quadro",

@@ -9,4 +9,5 @@ export default {
   scheduler: "Agendador",
   processes: "Processos",
   institutional: "Institucional",
+  addCertifications: "Adicionar Certificação",
 };
