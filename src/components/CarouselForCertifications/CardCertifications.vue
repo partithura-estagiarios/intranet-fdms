@@ -8,7 +8,10 @@
       </q-item>
     </q-card-section>
 
-    <q-card-section class="col-8" v-if="imgsStorage.certifications.length">
+    <q-card-section
+      :class="$q.screen.lt.lg ? 'col-8' : 'col-5'"
+      v-if="imgsStorage.certifications.length"
+    >
       <q-img :src="getImageUrl(selectedTab)" />
     </q-card-section>
   </q-card>
