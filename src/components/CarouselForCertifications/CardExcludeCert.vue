@@ -3,12 +3,13 @@
     <q-card class="my-card">
       <DialogHeader
         @close="closeDialog"
-        :option="$t('tab.addCertifications')"
+        :option="$t('action.deleteCertification')"
       />
 
       <q-card-section>
         <q-select
           v-model="select"
+          :label="$t('text.file')"
           :options="imgsStorage.certifications"
           class="text-black"
           ><template #option="{ opt }" class="size-select-custom">
@@ -44,5 +45,6 @@ function closeDialog() {
 }
 function excludeCert() {
   imgsStorage.excludeCertification(select.value);
+  closeDialog();
 }
 </script>

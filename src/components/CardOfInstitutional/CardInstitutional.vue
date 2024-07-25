@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card" bordered>
+  <q-card class="my-card">
     <q-card-section horizontal>
       <q-card-section>
         <FoldersNamesImgs
@@ -46,9 +46,6 @@ onMounted(async () => {
 </script>
 <style scoped>
 .my-card {
-  max-height: 45rem;
-  height: 45rem;
-  width: 89rem;
-  padding-inline: 5rem;
+  height: 40rem;
 }
 </style>

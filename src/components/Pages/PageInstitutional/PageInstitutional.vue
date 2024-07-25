@@ -1,12 +1,11 @@
 <template>
   <Separator :texto="$t('tab.institutional')" class="z-top" />
-  <CardInstitutional class="position-center" />
+  <div class="absolute-center save-size">
+    <CardInstitutional />
+  </div>
 </template>
-
 <style scoped>
-.position-center {
-  margin-top: -6rem;
-  margin-inline: 12rem;
-  position: relative;
+.save-size {
+  width: 60rem;
 }
 </style>

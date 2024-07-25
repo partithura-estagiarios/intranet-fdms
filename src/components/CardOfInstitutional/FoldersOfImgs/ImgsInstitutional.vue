@@ -8,10 +8,7 @@
     @click.stop="excludeDocInt(filteredImages[POSITION_IMG])"
   />
   <div v-if="filteredImages.length === FIRST_SLIDE && noImage">
-    <q-img
-      :src="getImageUrl(filteredImages[POSITION_IMG])"
-      class="image-item"
-    />
+    <CompontImg :img="filteredImages[POSITION_IMG]" />
   </div>
   <div v-if="filteredImages.length > FIRST_SLIDE">
     <q-carousel
@@ -26,11 +23,8 @@
       control-color="green"
       class="carousel-image"
     >
-      <q-carousel-slide
-        v-for="(img, index) in filteredImages"
-        :name="index"
-        :img-src="getImageUrl(img)"
-      >
+      <q-carousel-slide v-for="(img, index) in filteredImages" :name="index">
+        <CompontImg :img="img" />
       </q-carousel-slide>
     </q-carousel>
   </div>
@@ -38,9 +32,9 @@
 
 <script setup lang="ts">
 import { FoldersIntitutional } from "../../../entities/imgsInstitutional";
-import { server_express_url } from "../lib";
 import { useImgs } from "../../../stores/imgs";
 import { useUsers } from "../../../stores/user";
+import CompontImg from "./CompontImg.vue";
 
 const userStorage = useUsers();
 const imgsStorage = useImgs();
@@ -65,14 +59,15 @@ const filteredImages = computed(() => {
   }
   return [];
 });
-const getImageUrl = (imageName: string) => {
-  return `${server_express_url}/serve-image/${encodeURIComponent(imageName)}`;
-};
+
 function excludeDocInt(item: string) {
   imgsStorage.excludeFolder(item);
 }
 watchEffect(() => {
   if (props.name) {
+    if (filteredImages.value.length === 0) {
+      return (noImage.value = false);
+    }
     if (filteredImages.value[0].includes("null")) {
       return (noImage.value = false);
     }
@@ -80,15 +75,3 @@ watchEffect(() => {
   }
 });
 </script>
-
-<style scoped>
-.image-item {
-  width: 60rem;
-  height: 43rem;
-}
-
-.carousel-image {
-  width: 60rem;
-  height: 43rem;
-}
-</style>
