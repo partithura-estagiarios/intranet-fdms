@@ -56,4 +56,5 @@ export default {
   nameRoom: "Name Room",
   colorRoom: "Color",
   pleaseWait: "Please Wait",
+  eventsInMonth: "Events in Month",
 };

@@ -1,0 +1,29 @@
+query LoadAllEventsInMonth($month: String!) {
+  loadAllEventsInMonth(month: $month) {
+    id
+    host {
+      name
+      ramalNumber
+      userRegistration
+      email
+    }
+    location {
+      id
+      name
+      color
+    }
+    rules
+    totalPeoples
+    initialTime
+    finalTime
+    support {
+      computer
+      projector
+      water
+      coffee
+      flipSharp
+      equipamentSong
+      helpers
+    }
+  }
+}
