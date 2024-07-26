@@ -12,7 +12,9 @@ import erroRamal from "./erroRamal";
 import sucessRamal from "./sucessRamal";
 import emailDirector from "./emailDirector";
 import folders from "./folders";
+import label from "./label";
 export default {
+  label,
   emailDirector,
   userScheduleRoom,
   erroRamal,
