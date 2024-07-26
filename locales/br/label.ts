@@ -13,4 +13,8 @@ export default {
     november: "Novembro",
     december: "Dezembro",
   },
+  year: "Ano",
+  month: "Mês",
+  day: "Dia",
+  week: "Semana",
 };

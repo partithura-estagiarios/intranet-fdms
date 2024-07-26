@@ -10,27 +10,6 @@
           class="text-body1 text-white"
           @click="openModalAddScheduleRoom"
         />
-        <!-- <p class="text-green-8">
-          {{ $t("text.selectDayForRoom") }}
-          <q-icon
-            name="help"
-            color="indigo-8"
-            size="2rem"
-            class="cursor-pointer"
-            @click="openVideo"
-          />
-          <q-dialog v-model="modalVideo">
-            <div class="my-card relative-position no-scroll">
-              <q-card class="no-scroll" flat>
-                <DialogHeader
-                  @close="(item) => (modalVideo = item)"
-                  :option="$t('text.helpScheduleRoom')"
-                />
-                <VideoHelpForScheduleRoom />
-              </q-card>
-            </div>
-          </q-dialog>
-        </p> -->
       </q-item-section>
     </q-item>
     <q-item>
@@ -72,24 +51,31 @@
     </div>
   </q-dialog>
   <div class="row justify-center font-custom">
+    <div class="q-px-sm">
+      <ButtonGoScheduleYear @change-schedule="(val) => (slideSchedule = val)" />
+    </div>
     <div class="text-h5 calendar-size text-uppercase">
-      <q-calendar-month
-        ref="calendar"
-        v-model="selectedDate"
-        locale="pt-br"
-        :day-min-height="100"
-        @click-day="onClickDay"
-        class="cursor-pointer"
-      >
-        <template #head-day="{ scope: { timestamp } }">
-          <div class="fit row justify-center text-white custom-color">
-            {{ getHeadDay(timestamp) }}
-          </div>
-        </template>
-        <template #day="{ scope: { timestamp } }">
-          <BadgeEvents :data="timestamp.date" :events="events" />
-        </template>
-      </q-calendar-month>
+      <q-slide-transition>
+        <q-calendar-month
+          ref="calendar"
+          v-if="slideSchedule == 'month'"
+          v-model="selectedDate"
+          locale="pt-br"
+          :day-min-height="100"
+          @click-day="onClickDay"
+          class="cursor-pointer"
+        >
+          <template #head-day="{ scope: { timestamp } }">
+            <div class="fit row justify-center text-white custom-color">
+              {{ getHeadDay(timestamp) }}
+            </div>
+          </template>
+          <template #day="{ scope: { timestamp } }">
+            <BadgeEvents :data="timestamp.date" :events="events" />
+          </template>
+        </q-calendar-month>
+        <CardGridMonths v-if="slideSchedule == 'year'" />
+      </q-slide-transition>
     </div>
   </div>
 
@@ -102,14 +88,6 @@
           class="q-mx-sm"
         />
         <span class="text-body1 text-black">{{ item.name }}</span>
-        <q-icon
-          color="red"
-          size="sm"
-          name="delete"
-          v-if="deleteRooms"
-          clicklable
-          @click="delRoom(item.id)"
-        />
       </div>
     </div>
   </div>
@@ -129,30 +107,19 @@ import {
 } from "../../../entities/scheduleRoom";
 import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
 import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
-import DeleteRoom from "../../../graphql/rooms/DeleteRoom.gql";
 import { useEvents } from "../../../stores/events";
-import { useUsers } from "../../../stores/user";
 import LoadingEvent from "../../Loading/LoadingEvent.vue";
 
-const deleteRooms = ref(false);
-const userStroage = useUsers();
 const eventStorage = useEvents();
 const selectedDate = ref(today());
-const dateNow = today();
 const { t } = useI18n();
 const events = ref();
 const instance = getCurrentInstance();
 const card = ref(false);
 const cardEvents = ref(false);
 const eventsDay = ref();
-const modalVideo = ref(false);
 const rooms = ref();
-
-function onClickHeadDay(item: CalendarItem) {
-  const { date, time } = item.scope.timestamp;
-  eventStorage.setDateSelected(date + " " + time);
-  card.value = true;
-}
+const slideSchedule = ref("month");
 
 function onToday() {
   if (instance && instance.refs && instance.refs.calendar) {
@@ -189,10 +156,6 @@ async function loadSchedule() {
   });
   events.value = createEvent(scheduleRoomLoad);
 }
-
-const openVideo = () => {
-  modalVideo.value = true;
-};
 
 const openModalAddScheduleRoom = () => {
   card.value = true;
@@ -254,18 +217,6 @@ function getHeadDay(item: CalendarTimeStamp) {
 async function carregarSalas() {
   const { loadRooms }: { loadRooms: Object } = await runQuery(LoadRooms);
   rooms.value = loadRooms;
-}
-
-async function delRoom(id: number) {
-  const { deleteRoom }: { deleteRoom: boolean } = await runMutation(
-    DeleteRoom,
-    { roomId: id, date: dateNow },
-  );
-  if (deleteRoom) {
-    carregarSalas();
-    return loadSchedule();
-  }
-  negativeNotify(t("errors.existsMeets"));
 }
 
 onMounted(() => {
