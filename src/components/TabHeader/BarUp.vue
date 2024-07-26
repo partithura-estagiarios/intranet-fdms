@@ -22,8 +22,7 @@
         :label="$t(`tab.${item.label}`)"
       />
     </q-tabs>
-    <BtDropDocSig class="z-top" />
-
+    <BtDropDocSig />
     <q-space />
     <div class="row absolute-top-right q-py-md q-px-sm">
       <BtDropSet />
@@ -36,7 +35,6 @@ import { tabItems } from "./lib";
 import { router } from "../../modules/router";
 
 const tab = ref("home");
-const enableDrop = ref();
 function tabClass(itemName: string) {
   if (`/${itemName}` === router.currentRoute.value.path)
     return "text-green bg-white rounded-borders	";

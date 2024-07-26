@@ -2,7 +2,7 @@ export default {
   home: "Início",
   bookRoom: "Agendar Sala",
   certifications: "Certificações",
-  gisDocumentation: "Documentação GIS",
+  gisDocumentation: "Documentação SIG",
   extensions: "Ramais",
   hRdiscloses: "RH Divulga",
   menu: "Cardápio",

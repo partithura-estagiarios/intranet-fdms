@@ -6,6 +6,9 @@
     clickable
     @click="modalCreateSystem"
   >
+    <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+      {{ $t("action.systemModuleCertifications") }}
+    </q-tooltip>
     <MenuOptsCert />
   </q-icon>
 </template>
