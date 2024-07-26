@@ -5,6 +5,9 @@
     color="white"
     v-if="userStorage.getToken"
   >
+    <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+      {{ $t("action.systemModuleProccesses") }}
+    </q-tooltip>
     <q-menu anchor="top right" self="top left" class="text-black">
       <q-list>
         <q-item clickable v-close-popup>

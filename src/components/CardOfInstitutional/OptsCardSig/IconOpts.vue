@@ -7,6 +7,9 @@
     class="position-icon cursor-pointer"
     clickable
   >
+    <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+      {{ $t("action.systemModuleInstitutional") }}
+    </q-tooltip>
     <MenuOptsCardSig />
   </q-icon>
 </template>

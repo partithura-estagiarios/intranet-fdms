@@ -1,9 +1,11 @@
 <template>
   <q-btn
-    class="text-white font-custom"
+    class="text-white font-custom text-h6"
     no-caps
     :label="$t('tab.gisDocumentation')"
     flat
+    padding="xs md"
+    size="1.2rem"
     :class="tabClass()"
   >
     <q-menu class="z-top text-black">
@@ -16,7 +18,9 @@
           @click="selectOption(opt)"
         >
           <q-item-section>
-            <q-item-label>{{ removeCharacterSpecial(opt) }}</q-item-label>
+            <q-item-label class="q-mx-xl">{{
+              removeCharacterSpecial(opt)
+            }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -51,6 +55,7 @@ function selectOption(opt: string) {
 <style scoped>
 .font-custom {
   font-family: Fira Sans;
-  font-size: 1.3rem;
+  top: -0.1rem;
+  padding: 0.6rem;
 }
 </style>

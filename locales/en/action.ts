@@ -65,4 +65,7 @@ export default {
   roomAccepted: "Room created successfully",
   enterNameRoom: "Give the room a name",
   deleteCertification: "Delete Certification",
+  systemModuleInstitutional: "Institutional Module Options",
+  systemModuleProccesses: "Process Module Options",
+  systemModuleCertifications: "Certifications Module Options",
 };
