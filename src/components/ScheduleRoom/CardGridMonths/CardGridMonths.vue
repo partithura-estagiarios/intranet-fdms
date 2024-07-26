@@ -1,13 +1,16 @@
 <template>
   <div class="row">
-    <q-card v-for="month in monthsAux" class="color-custom q-py-md col-3">
+    <q-card
+      v-for="month in monthsStorage.months"
+      class="color-custom q-py-md col-3"
+    >
       <q-item>
         <q-item-section>
           <q-item-label class="text-hover-custom cursor-pointer">{{
-            $t(`label.months.${month.label}`)
+            $t(`label.months.${month.name}`)
           }}</q-item-label>
           <q-item-label class="text-hover-custom cursor-pointer"></q-item-label>
-          <q-badge color="red" floating>12</q-badge>
+          <BadgeEventsInMonth :month="month" />
         </q-item-section>
       </q-item>
     </q-card>
@@ -16,6 +19,11 @@
 
 <script setup lang="ts">
 import { monthsAux } from "./lib";
+import { useMonths } from "../../../stores/months";
+const monthsStorage = useMonths();
+onMounted(async () => {
+  await monthsStorage.loadEvents(monthsAux);
+});
 </script>
 
 <style scoped>
