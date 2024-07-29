@@ -1,28 +1,12 @@
 <template>
   <Separator :texto="$t('tab.scheduler')" />
-  <q-toolbar class="row justify-center padding-join-separator custom-toolbar">
-    <q-item class="font-custom custom-margin">
-      <q-item-section class="items-center">
-        <q-btn
-          no-caps
-          color="green"
-          :label="$t('text.schedulEvent')"
-          class="text-body1 text-white"
-          @click="openModalAddScheduleRoom"
-        />
-      </q-item-section>
-    </q-item>
-    <q-item>
-      <q-item-section class="items-center font-custom">
-        <Month :select-date="selectedDate" />
-        <NavigationScheduleRoom
-          @today="onToday"
-          @prev="onPrev"
-          @next="onNext"
-        />
-      </q-item-section>
-    </q-item>
-  </q-toolbar>
+  <ToolbarCalendar
+    :date="selectedDate"
+    @today="onToday"
+    @prev="onPrev"
+    @next="onNext"
+    @openModalAdd="openModalAddScheduleRoom"
+  />
   <q-dialog v-model="card">
     <q-card>
       <DialogHeader
@@ -78,48 +62,63 @@
       </q-slide-transition>
     </div>
   </div>
-
-  <div class="row justify-center font-custom">
-    <div v-for="item in rooms" class="col-auto q-pa-md">
-      <div class="row items-center">
-        <q-badge
-          rounded
-          :style="`background-color:${item.color}`"
-          class="q-mx-sm"
-        />
-        <span class="text-body1 text-black">{{ item.name }}</span>
-      </div>
-    </div>
-  </div>
+  <BagdeRooms :rooms="rooms" />
 </template>
 
 <script setup lang="ts">
-import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
+import { today, QCalendarMonth } from "@quasar/quasar-ui-qcalendar/";
+import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
-import { createEvent } from "./lib";
-import { DateTime } from "luxon";
-import {
-  CalendarItem,
-  CalendarTimeStamp,
-  EventRoom,
-} from "../../../entities/scheduleRoom";
-import ScheduleRoomLoad from "../../../graphql/scheduleRoom/ScheduleRoomLoad.gql";
-import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
 import { useEvents } from "../../../stores/events";
 import LoadingEvent from "../../Loading/LoadingEvent.vue";
+import { DateTime } from "luxon";
+import { createEvent, getHeadDay } from "../../Schedule/ScheduleRoom/lib";
+import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
 
+const instance = getCurrentInstance();
 const eventStorage = useEvents();
 const selectedDate = ref(today());
 const { t } = useI18n();
-const events = ref();
-const instance = getCurrentInstance();
 const card = ref(false);
 const cardEvents = ref(false);
-const eventsDay = ref();
 const rooms = ref();
 const slideSchedule = ref("month");
+const reloadBeforeAdd = ref();
+const eventsDay = ref();
+const events = ref();
+
+watchEffect(() => {
+  if (eventStorage.closeModal) {
+    closeCardEvents();
+    return eventStorage.toggleCloseModal;
+  }
+});
+
+async function closeCardEvents() {
+  cardEvents.value = false;
+  warningNotify(t(`text.noMoreEvents`));
+}
+
+const onClickDay = async (data: CalendarItem) => {
+  const { date, time } = data.scope.timestamp;
+  eventsDay.value = events.value.filter((event: EventRoom) => {
+    const eventInitialDate = DateTime.fromISO(
+      event.initialTime.toString(),
+    ).toISODate();
+    const eventFinalDate = DateTime.fromISO(
+      event.finalTime.toString(),
+    ).toISODate();
+    return eventInitialDate === date || eventFinalDate === date;
+  });
+  if (eventsDay.value.length) {
+    eventStorage.dataFull = date.toString();
+    cardEvents.value = true;
+    return eventsDay;
+  }
+  closeCardEvents();
+};
 
 function onToday() {
   if (instance && instance.refs && instance.refs.calendar) {
@@ -161,67 +160,12 @@ const openModalAddScheduleRoom = () => {
   card.value = true;
   eventStorage.resetDateSelected();
 };
-
-const reloadModalAddScheduleRoom = () => {
+const reloadModalAddScheduleRoom = async () => {
   card.value = false;
-  loadSchedule();
-};
-
-const onClickDay = async (data: CalendarItem) => {
-  const { date, time } = data.scope.timestamp;
-  eventsDay.value = events.value.filter((event: EventRoom) => {
-    const eventInitialDate = DateTime.fromISO(
-      event.initialTime.toString(),
-    ).toISODate();
-    const eventFinalDate = DateTime.fromISO(
-      event.finalTime.toString(),
-    ).toISODate();
-    return eventInitialDate === date || eventFinalDate === date;
-  });
-  if (eventsDay.value.length) {
-    eventStorage.dataFull = date.toString();
-    cardEvents.value = true;
-    return eventsDay;
-  }
-  closeCardEvents();
-};
-
-watchEffect(() => {
-  if (eventStorage.closeModal) {
-    closeCardEvents();
-    return eventStorage.toggleCloseModal;
-  }
-});
-
-async function closeCardEvents() {
-  cardEvents.value = false;
   await loadSchedule();
-  warningNotify(t(`text.noMoreEvents`));
-}
-
-function getHeadDay(item: CalendarTimeStamp) {
-  const daysOfWeek = [
-    t("userScheduleRoom.monday"),
-    t("userScheduleRoom.tuesday"),
-    t("userScheduleRoom.wednesday"),
-    t("userScheduleRoom.thursday"),
-    t("userScheduleRoom.friday"),
-    t("userScheduleRoom.saturday"),
-    t("userScheduleRoom.sunday"),
-  ];
-  const { date } = item;
-  const data = new Date(date);
-  return daysOfWeek[data.getDay()];
-}
-
-async function carregarSalas() {
-  const { loadRooms }: { loadRooms: Object } = await runQuery(LoadRooms);
-  rooms.value = loadRooms;
-}
-
+};
 onMounted(() => {
   loadSchedule();
-  carregarSalas();
 });
 </script>
 <style scoped>
@@ -233,11 +177,5 @@ onMounted(() => {
 }
 .font-custom {
   font-family: Fira Sans;
-}
-.custom-margin {
-  margin-right: 15rem;
-}
-.custom-toolbar {
-  margin-top: -8rem;
 }
 </style>

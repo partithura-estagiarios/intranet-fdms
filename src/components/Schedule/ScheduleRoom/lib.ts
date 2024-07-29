@@ -1,4 +1,4 @@
-import { EventRoom } from "../../../entities/scheduleRoom";
+import { CalendarTimeStamp, EventRoom } from "../../../entities/scheduleRoom";
 import { DateTime } from "luxon";
 
 export function convertDateTimeTo0300Z(dateTimeString: DateTime) {
@@ -99,4 +99,20 @@ function createEvents(event: any, events: any[]) {
     events.push(dailyEvent);
     currentDate = currentDate.plus({ days: 1 }).startOf("day");
   }
+}
+
+export function getHeadDay(item: CalendarTimeStamp) {
+  const { t } = useI18n();
+  const daysOfWeek = [
+    t("userScheduleRoom.monday"),
+    t("userScheduleRoom.tuesday"),
+    t("userScheduleRoom.wednesday"),
+    t("userScheduleRoom.thursday"),
+    t("userScheduleRoom.friday"),
+    t("userScheduleRoom.saturday"),
+    t("userScheduleRoom.sunday"),
+  ];
+  const { date } = item;
+  const data = new Date(date);
+  return daysOfWeek[data.getDay()];
 }
