@@ -1,14 +1,17 @@
 <template>
-  <q-card-section class="row text-black justify-center" vertical>
-    <div
+  <q-card-section
+    class="row text-black justify-center size-list scroll"
+    vertical
+  >
+    <q-list
       v-for="item in props.events"
       :key="item.id"
       @click="selectEvent(item)"
-      class="cursor-pointer col-3 q-px-sm q-py-sm"
+      class="cursor-pointer q-px-sm q-py-sm"
     >
       <q-badge :style="`background-color:${item.location.color}`" />
       <span class="q-px-xs">{{ item.host.name }} </span>
-    </div>
+    </q-list>
   </q-card-section>
   <q-dialog v-model="card">
     <q-card>
@@ -63,5 +66,9 @@ function selectEvent(event: EventRoom) {
 }
 .font-custom {
   font-family: Fira Sans;
+}
+.size-list {
+  max-height: 40rem;
+  color: rgb(31, 73, 125);
 }
 </style>
