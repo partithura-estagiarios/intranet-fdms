@@ -5,6 +5,7 @@
       <TitleCardEventsMonth
         :monthName="props.monthName"
         class="justify-center"
+        @envityEvents="(val) => (eventsCard = val)"
       />
       <AllEventsInMonth :events="eventsCard" />
     </q-card>
@@ -13,7 +14,6 @@
 
 <script setup lang="ts">
 import { EventRoom } from "../../../../entities/scheduleRoom";
-import { Month } from "../../../../stores/months";
 
 const emits = defineEmits(["close"]);
 const props = defineProps({

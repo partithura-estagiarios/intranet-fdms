@@ -9,7 +9,6 @@
           <q-item-label class="text-hover-custom cursor-pointer">{{
             $t(`label.months.${month.name}`)
           }}</q-item-label>
-          <q-item-label class="text-hover-custom cursor-pointer"></q-item-label>
           <BadgeEventsInMonth :month="month" />
         </q-item-section>
       </q-item>
@@ -18,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { monthsAux } from "./lib";
+import { monthsAux } from "../../../stores/months";
 import { useMonths } from "../../../stores/months";
 const monthsStorage = useMonths();
 onMounted(async () => {
