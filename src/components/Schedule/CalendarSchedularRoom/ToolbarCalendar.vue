@@ -25,19 +25,12 @@
 </template>
 
 <script setup lang="ts">
-import { useEvents } from "../../../stores/events";
-
 const props = defineProps({
   date: {
     type: String,
     required: true,
   },
 });
-
-const eventStorage = useEvents();
-const card = ref(false);
-
-const openModalAddScheduleRoom = () => {};
 </script>
 <style scoped>
 .custom-toolbar {
