@@ -58,7 +58,10 @@
             <BadgeEvents :data="timestamp.date" :events="events" />
           </template>
         </q-calendar-month>
-        <CardGridMonths v-if="slideSchedule == 'year'" />
+        <CardGridMonths
+          v-if="slideSchedule == 'year'"
+          @envity-month="goToSpecificMonth"
+        />
       </q-slide-transition>
     </div>
   </div>
@@ -85,7 +88,6 @@ const card = ref(false);
 const cardEvents = ref(false);
 const rooms = ref();
 const slideSchedule = ref("month");
-const reloadBeforeAdd = ref();
 const eventsDay = ref();
 const events = ref();
 
@@ -167,6 +169,15 @@ const reloadModalAddScheduleRoom = async () => {
 onMounted(() => {
   loadSchedule();
 });
+async function goToSpecificMonth(targetYear: number, targetMonth: number) {
+  slideSchedule.value = "month";
+  await nextTick();
+  if (selectedDate) {
+    const targetDate = `${targetYear}-${String(targetMonth).padStart(2, "0")}-01`;
+    selectedDate.value = targetDate;
+    await nextTick();
+  }
+}
 </script>
 <style scoped>
 .custom-color {

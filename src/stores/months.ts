@@ -2,18 +2,18 @@ import { defineStore } from "pinia";
 import { EventRoom } from "../entities/scheduleRoom";
 import LoadAllEventsInMonth from "../graphql/scheduleRoom/LoadAllEventsInMonth.gql";
 export const monthsAux = [
-  { label: "january", value: 1 },
-  { label: "february", value: 2 },
-  { label: "march", value: 3 },
-  { label: "april", value: 4 },
-  { label: "may", value: 5 },
-  { label: "june", value: 6 },
-  { label: "july", value: 7 },
-  { label: "august", value: 8 },
-  { label: "september", value: 9 },
-  { label: "october", value: 10 },
-  { label: "november", value: 11 },
-  { label: "december", value: 12 },
+  { label: "january", numberMonth: 1 },
+  { label: "february", numberMonth: 2 },
+  { label: "march", numberMonth: 3 },
+  { label: "april", numberMonth: 4 },
+  { label: "may", numberMonth: 5 },
+  { label: "june", numberMonth: 6 },
+  { label: "july", numberMonth: 7 },
+  { label: "august", numberMonth: 8 },
+  { label: "september", numberMonth: 9 },
+  { label: "october", numberMonth: 10 },
+  { label: "november", numberMonth: 11 },
+  { label: "december", numberMonth: 12 },
 ];
 
 function getPreviousMonth(monthName: string): string {
@@ -41,7 +41,7 @@ export interface Month {
 }
 export interface AuxMonth {
   label: string;
-  value: number;
+  numberMonth: number;
 }
 
 interface State {
@@ -62,7 +62,7 @@ export const useMonths = defineStore(id, {
         return {
           name: mes.label,
           events: loadAllEventsInMonth,
-          value: mes.value,
+          value: mes.numberMonth,
         };
       });
       const monthsData = await Promise.all(promises);
