@@ -1,7 +1,7 @@
 <template>
   <Separator :texto="$t('tab.scheduler')" />
   <ToolbarCalendar
-    :date="selectedDate || ''"
+    :date="selectedDate"
     @today="onToday"
     @prev="onPrev"
     @next="onNext"
@@ -85,7 +85,7 @@ import { TIME_MAKER, MIN_DAY_HEIGHT } from "../../../support/constants";
 
 const instance = getCurrentInstance();
 const eventStorage = useEvents();
-const selectedDate = ref<string | null>(today());
+const selectedDate = ref<string>(today());
 const { t } = useI18n();
 const card = ref(false);
 const cardEvents = ref(false);
@@ -210,7 +210,7 @@ async function goToSpecificYear(opt: string) {
       month: 1,
       day: 1,
     }).toISODate();
-    selectedDate.value = targetDate;
+    selectedDate.value = targetDate as string;
   }
 }
 </script>

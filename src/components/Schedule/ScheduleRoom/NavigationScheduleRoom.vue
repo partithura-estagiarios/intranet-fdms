@@ -4,7 +4,6 @@
       <q-btn
         no-caps
         class="button color-custom text-uppercase bg-white"
-        style="margin: 2px"
         @click="$emit('prev')"
       >
         &lt; {{ $t("text.previous") }}
@@ -12,7 +11,6 @@
       <q-btn
         no-caps
         class="button color-custom text-uppercase bg-white"
-        style="margin: 2px"
         @click="$emit('today')"
       >
         {{ $t("text.now") }}
@@ -20,7 +18,6 @@
       <q-btn
         no-caps
         class="button color-custom text-uppercase bg-white"
-        style="margin: 2px"
         @click="$emit('next')"
       >
         {{ $t("text.next") }}
