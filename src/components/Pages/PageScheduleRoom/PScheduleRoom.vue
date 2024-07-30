@@ -6,6 +6,7 @@
     @prev="onPrev"
     @next="onNext"
     @openModalAdd="openModalAddScheduleRoom"
+    :viewMode="viewMode"
   />
   <q-dialog v-model="card">
     <q-card>
@@ -36,16 +37,16 @@
   </q-dialog>
   <div class="row justify-center font-custom">
     <div class="q-px-sm">
-      <ButtonGoScheduleYear @change-schedule="(val) => (slideSchedule = val)" />
+      <ButtonGoScheduleYear @change-schedule="(val) => (viewMode = val)" />
     </div>
     <div class="text-h5 calendar-size text-uppercase">
       <q-slide-transition>
         <q-calendar-month
           ref="calendar"
-          v-if="slideSchedule == 'month'"
+          v-if="viewMode === TIME_MAKER.MONTH"
           v-model="selectedDate"
           locale="pt-br"
-          :day-min-height="100"
+          :day-min-height="MIN_DAY_HEIGHT"
           @click-day="onClickDay"
           class="cursor-pointer"
         >
@@ -59,8 +60,9 @@
           </template>
         </q-calendar-month>
         <CardGridMonths
-          v-if="slideSchedule == 'year'"
+          v-if="viewMode === TIME_MAKER.YEAR"
           @envity-month="goToSpecificMonth"
+          :year="selectedDate || ''"
         />
       </q-slide-transition>
     </div>
@@ -79,15 +81,16 @@ import LoadingEvent from "../../Loading/LoadingEvent.vue";
 import { DateTime } from "luxon";
 import { createEvent, getHeadDay } from "../../Schedule/ScheduleRoom/lib";
 import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
+import { TIME_MAKER, MIN_DAY_HEIGHT } from "../../../support/constants";
 
 const instance = getCurrentInstance();
 const eventStorage = useEvents();
-const selectedDate = ref(today());
+const selectedDate = ref<string>(today());
 const { t } = useI18n();
 const card = ref(false);
 const cardEvents = ref(false);
 const rooms = ref();
-const slideSchedule = ref("month");
+const viewMode = ref(TIME_MAKER.MONTH);
 const eventsDay = ref();
 const events = ref();
 
@@ -114,7 +117,7 @@ const onClickDay = async (data: CalendarItem) => {
     ).toISODate();
     return eventInitialDate === date || eventFinalDate === date;
   });
-  if (eventsDay.value.length) {
+  if (eventsDay) {
     eventStorage.dataFull = date.toString();
     cardEvents.value = true;
     return eventsDay;
@@ -123,18 +126,27 @@ const onClickDay = async (data: CalendarItem) => {
 };
 
 function onToday() {
+  if (viewMode.value == TIME_MAKER.YEAR) {
+    return goToSpecificYear("=");
+  }
   if (instance && instance.refs && instance.refs.calendar) {
     (instance.refs.calendar as QCalendarMonth).moveToToday();
   }
 }
 
 function onPrev() {
+  if (viewMode.value == TIME_MAKER.YEAR) {
+    return goToSpecificYear("-");
+  }
   if (instance && instance.refs && instance.refs.calendar) {
     (instance.refs.calendar as QCalendarMonth).prev();
   }
 }
 
 function onNext() {
+  if (viewMode.value == TIME_MAKER.YEAR) {
+    return goToSpecificYear("+");
+  }
   if (instance && instance.refs && instance.refs.calendar) {
     (instance.refs.calendar as QCalendarMonth).next();
   }
@@ -170,12 +182,35 @@ onMounted(() => {
   loadSchedule();
 });
 async function goToSpecificMonth(targetYear: number, targetMonth: number) {
-  slideSchedule.value = "month";
+  viewMode.value = TIME_MAKER.MONTH;
   await nextTick();
   if (selectedDate) {
     const targetDate = `${targetYear}-${String(targetMonth).padStart(2, "0")}-01`;
     selectedDate.value = targetDate;
     await nextTick();
+  }
+}
+async function goToSpecificYear(opt: string) {
+  viewMode.value = TIME_MAKER.YEAR;
+  await nextTick();
+  if (selectedDate.value) {
+    const currentDate = DateTime.fromISO(selectedDate.value);
+    let targetYear = currentDate.year;
+    if (opt === "+") {
+      targetYear += 1;
+    }
+    if (opt === "-") {
+      targetYear -= 1;
+    }
+    if (opt === "=") {
+      targetYear = DateTime.now().year;
+    }
+    const targetDate = DateTime.fromObject({
+      year: targetYear,
+      month: 1,
+      day: 1,
+    }).toISODate();
+    selectedDate.value = targetDate as string;
   }
 }
 </script>

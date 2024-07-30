@@ -21,18 +21,45 @@
 <script setup lang="ts">
 import { monthsAux } from "../../../stores/months";
 import { useMonths } from "../../../stores/months";
+import {
+  RADIX_DECIMAL,
+  START_INDEX,
+  YEAR_LENGTH,
+} from "../../../support/constants";
+
+const props = defineProps({
+  year: {
+    type: String,
+    required: true,
+  },
+});
 const monthsStorage = useMonths();
 const emits = defineEmits(["envityMonth"]);
+
 onMounted(async () => {
-  await monthsStorage.loadEvents(monthsAux);
+  await monthsStorage.loadEvents(monthsAux, getYear());
 });
 
 async function goToSpecificMonth(monthName: string) {
   const month = monthsAux.find(
     (month) => month.label === monthName.toLowerCase(),
   );
-  emits("envityMonth", new Date().getFullYear(), month?.numberMonth);
+  emits("envityMonth", getYear(), month?.numberMonth);
 }
+
+const getYear = () => {
+  const yearString = props.year;
+  return parseInt(
+    yearString.substring(START_INDEX, YEAR_LENGTH),
+    RADIX_DECIMAL,
+  );
+};
+
+watchEffect(async () => {
+  if (props.year) {
+    await monthsStorage.loadEvents(monthsAux, getYear());
+  }
+});
 </script>
 
 <style scoped>

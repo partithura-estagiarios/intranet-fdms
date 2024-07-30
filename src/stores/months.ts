@@ -53,12 +53,15 @@ export const useMonths = defineStore(id, {
   }),
   getters: {},
   actions: {
-    loadEvents: async (months: AuxMonth[]) => {
+    loadEvents: async (months: AuxMonth[], year: number) => {
       const monthsStorage = useMonths();
       monthsStorage.months = [];
       const promises = months.map(async (mes: AuxMonth) => {
         const { loadAllEventsInMonth }: { loadAllEventsInMonth: EventRoom[] } =
-          await runQuery(LoadAllEventsInMonth, { month: mes.label });
+          await runQuery(LoadAllEventsInMonth, {
+            month: mes.label,
+            yearSelect: year,
+          });
         return {
           name: mes.label,
           events: loadAllEventsInMonth,
@@ -69,7 +72,6 @@ export const useMonths = defineStore(id, {
       monthsStorage.months = monthsData.sort((a, b) => a.value - b.value);
     },
     previousMonth: async (monthName: string) => {
-      const monthsStorage = useMonths();
       const { loadAllEventsInMonth }: { loadAllEventsInMonth: EventRoom[] } =
         await runQuery(LoadAllEventsInMonth, {
           month: getPreviousMonth(monthName),
@@ -80,7 +82,6 @@ export const useMonths = defineStore(id, {
       };
     },
     nextMonth: async (monthName: string) => {
-      const monthsStorage = useMonths();
       const { loadAllEventsInMonth }: { loadAllEventsInMonth: EventRoom[] } =
         await runQuery(LoadAllEventsInMonth, {
           month: getNextMonth(monthName),
