@@ -1,5 +1,5 @@
-query LoadAllEventsInMonth($month: String!) {
-  loadAllEventsInMonth(month: $month) {
+query LoadAllEventsInMonth($month: String!, $yearSelect: Int!) {
+  loadAllEventsInMonth(month: $month, yearSelect: $yearSelect) {
     id
     host {
       name

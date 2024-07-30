@@ -13,7 +13,7 @@
     </q-item>
     <q-item>
       <q-item-section class="items-center font-custom">
-        <Month :select-date="props.date" />
+        <Month :select-date="props.date" :viewMode="props.viewMode" />
         <NavigationScheduleRoom
           @today="$emit('today')"
           @prev="$emit('prev')"
@@ -27,6 +27,10 @@
 <script setup lang="ts">
 const props = defineProps({
   date: {
+    type: String,
+    required: true,
+  },
+  viewMode: {
     type: String,
     required: true,
   },
