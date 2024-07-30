@@ -5,17 +5,17 @@
         no-caps
         class="button color-custom text-uppercase bg-white"
         style="margin: 2px"
-        @click="$emit('today')"
+        @click="$emit('prev')"
       >
-        {{ $t("text.now") }}
+        &lt; {{ $t("text.previous") }}
       </q-btn>
       <q-btn
         no-caps
         class="button color-custom text-uppercase bg-white"
         style="margin: 2px"
-        @click="$emit('prev')"
+        @click="$emit('today')"
       >
-        &lt; {{ $t("text.previous") }}
+        {{ $t("text.now") }}
       </q-btn>
       <q-btn
         no-caps
