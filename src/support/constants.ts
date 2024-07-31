@@ -6,6 +6,7 @@ export enum TIME_MAKER {
   YEAR = "year",
   MONTH = "month",
   DAY = "day",
+  WEEK = "week",
 }
 
 export const MIN_DAY_HEIGHT = 100;

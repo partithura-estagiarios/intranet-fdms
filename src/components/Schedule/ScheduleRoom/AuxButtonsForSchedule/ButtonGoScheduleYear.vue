@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-const items = ["month", "year"];
+const items = ["month", "year", "week"];
 const emits = defineEmits(["changeSchedule"]);
 const selectedItem = ref<string | null>("month");
 
