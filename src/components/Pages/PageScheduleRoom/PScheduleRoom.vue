@@ -8,33 +8,19 @@
     @openModalAdd="openModalAddScheduleRoom"
     :viewMode="viewMode"
   />
-  <q-dialog v-model="card">
-    <q-card>
-      <DialogHeader
-        @close="(item) => (card = item)"
-        :option="$t('text.organizerEvent')"
-        class="q-py-sm"
-      />
-      <AddScheduleRoom @reload="reloadModalAddScheduleRoom" />
-      <LoadingEvent :visible="eventStorage.loading" />
-    </q-card>
-  </q-dialog>
-  <q-dialog v-model="cardEvents">
-    <div class="relative-position no-scroll">
-      <q-card class="no-scroll" flat>
-        <DialogHeader
-          @close="(item) => (cardEvents = item)"
-          :option="$t('text.eventsDay')"
-        />
-        <CardOfEvents
-          :daysEvents="eventsDay"
-          @reloadEvent="loadSchedule()"
-          @close="closeCardEvents()"
-          @editSuccess="loadSchedule()"
-        />
-      </q-card>
-    </div>
-  </q-dialog>
+  <AddScheduleRoom
+    @reload="reloadModalAddScheduleRoom"
+    :card="card"
+    @close="card = false"
+  />
+  <CardOfEvents
+    :daysEvents="eventsDay"
+    @reloadEvent="loadSchedule()"
+    @close="closeCardEvents()"
+    @editSuccess="loadSchedule()"
+    :cardEvents="cardEvents"
+    @closeCardEvents="cardEvents = false"
+  />
   <div class="row justify-center font-custom">
     <div class="q-px-sm">
       <ButtonGoScheduleYear @change-schedule="(val) => (viewMode = val)" />
@@ -62,7 +48,9 @@
         <CardGridMonths
           v-if="viewMode === TIME_MAKER.YEAR"
           @envity-month="goToSpecificMonth"
-          :year="selectedDate || ''"
+          :year="selectedDate"
+          :reloadCard="reloadCardGridMonths"
+          @reloadDesactive="reloadCardGridMonths = false"
         />
       </q-slide-transition>
     </div>
@@ -77,7 +65,6 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import { useEvents } from "../../../stores/events";
-import LoadingEvent from "../../Loading/LoadingEvent.vue";
 import { DateTime } from "luxon";
 import { createEvent, getHeadDay } from "../../Schedule/ScheduleRoom/lib";
 import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
@@ -93,16 +80,18 @@ const rooms = ref();
 const viewMode = ref(TIME_MAKER.MONTH);
 const eventsDay = ref();
 const events = ref();
+const reloadCardGridMonths = ref();
 
 watchEffect(() => {
   if (eventStorage.closeModal) {
-    closeCardEvents();
+    warningNotify(t(`text.noMoreEvents`));
     return eventStorage.toggleCloseModal;
   }
 });
 
-async function closeCardEvents() {
+function closeCardEvents() {
   cardEvents.value = false;
+  loadSchedule();
   warningNotify(t(`text.noMoreEvents`));
 }
 
@@ -117,12 +106,12 @@ const onClickDay = async (data: CalendarItem) => {
     ).toISODate();
     return eventInitialDate === date || eventFinalDate === date;
   });
-  if (eventsDay) {
+  if (eventsDay.value.length) {
     eventStorage.dataFull = date.toString();
     cardEvents.value = true;
     return eventsDay;
   }
-  closeCardEvents();
+  warningNotify(t(`text.noMoreEvents`));
 };
 
 function onToday() {
@@ -176,6 +165,7 @@ const openModalAddScheduleRoom = () => {
 };
 const reloadModalAddScheduleRoom = async () => {
   card.value = false;
+  reloadCardGridMonths.value = true;
   await loadSchedule();
 };
 onMounted(() => {

@@ -112,3 +112,8 @@ export interface InputsForScheduleRoom {
   inputsLongs: InputsLongs;
   booleanInfos: BooleanInfos;
 }
+
+export interface ResultCreateMeet {
+  enum: boolean;
+  message: string;
+}

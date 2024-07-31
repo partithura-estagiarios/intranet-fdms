@@ -32,9 +32,13 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  reloadCard: {
+    type: Boolean,
+    default: false,
+  },
 });
 const monthsStorage = useMonths();
-const emits = defineEmits(["envityMonth"]);
+const emits = defineEmits(["envityMonth", "reloadDesactive"]);
 
 onMounted(async () => {
   await monthsStorage.loadEvents(monthsAux, getYear());
@@ -58,6 +62,13 @@ const getYear = () => {
 watchEffect(async () => {
   if (props.year) {
     await monthsStorage.loadEvents(monthsAux, getYear());
+  }
+});
+
+watchEffect(async () => {
+  if (props.reloadCard) {
+    await monthsStorage.loadEvents(monthsAux, getYear());
+    emits("reloadDesactive");
   }
 });
 </script>
