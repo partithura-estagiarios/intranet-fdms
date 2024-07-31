@@ -9,6 +9,12 @@
     animated
     locale="pt-br"
   >
+    <template #head-day="{ scope: { timestamp } }">
+      <div class="fit row justify-center text-white custom-color">
+        <div>{{ getHeadDay(timestamp) }}</div>
+        <div>{{ getDayPart(timestamp.date) }}</div>
+      </div>
+    </template>
     <template #day="{ scope: { timestamp } }">
       <BadgeEventsInWeekSchedule :data="timestamp.date" :events="events" />
     </template>
@@ -28,6 +34,7 @@ import { EventRoom } from "../../../entities/scheduleRoom";
 
 const selectedDate = ref(today());
 const events = ref();
+const FORMAT_DATE = "dd";
 
 async function loadSchedule() {
   const { scheduleRoomLoad } = (await runQuery(ScheduleRoomLoad)) as {
@@ -47,6 +54,11 @@ async function loadSchedule() {
   events.value = createEvent(scheduleRoomLoad);
 }
 
+function getDayPart(date: string): string {
+  const dt = DateTime.fromISO(date);
+  return dt.toFormat(FORMAT_DATE);
+}
+
 onMounted(() => {
   loadSchedule();
 });
@@ -56,8 +68,11 @@ onMounted(() => {
   background-color: rgb(31, 73, 125);
 }
 .agenda-size {
-  height: 40rem;
-  max-height: 45rem;
-  overflow-y: scroll;
+  max-height: 40rem;
+  overflow-y: auto;
+}
+.fit {
+  display: flex;
+  flex-direction: column; /* Adicionado para garantir a quebra de linha */
 }
 </style>

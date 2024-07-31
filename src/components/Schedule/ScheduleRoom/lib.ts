@@ -116,3 +116,19 @@ export function getHeadDay(item: CalendarTimeStamp) {
   const data = new Date(date);
   return daysOfWeek[data.getDay()];
 }
+
+export function getHeadDayInWeek(item: CalendarTimeStamp) {
+  const { t } = useI18n();
+  const daysOfWeek = [
+    t("userScheduleRoom.monday"),
+    t("userScheduleRoom.tuesday"),
+    t("userScheduleRoom.wednesday"),
+    t("userScheduleRoom.thursday"),
+    t("userScheduleRoom.friday"),
+    t("userScheduleRoom.saturday"),
+    t("userScheduleRoom.sunday"),
+  ];
+  const { date } = item;
+  const data = new Date(date);
+  return daysOfWeek[data.getDay()];
+}
