@@ -54,7 +54,7 @@ import RamaisForPageLoad from "../../graphql/ramais/RamaisForPageLoad.gql";
 import { columns, pagesOfTable } from "./lib";
 import { Column } from "../../entities/column";
 import GetLenghtRamais from "../../graphql/ramais/GetLenghtRamais.gql";
-import { Ramal } from "../../modules/graphql/graphql";
+import { Ramal } from "../../entities/ramal";
 import SearchRamal from "../../graphql/ramais/SearchRamal.gql";
 const searchRamalWord = ref();
 const ramais = ref();
