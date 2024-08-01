@@ -46,6 +46,7 @@
 <script setup lang="ts">
 import { inputsForScheduleRoom, resetObject } from "../addScheduleRoom/lib";
 import { useEvents } from "../../../stores/events";
+import { useFieldValidation } from "../../../composables/rules";
 
 const { validateNotEmpty } = useFieldValidation();
 const eventStorage = useEvents();

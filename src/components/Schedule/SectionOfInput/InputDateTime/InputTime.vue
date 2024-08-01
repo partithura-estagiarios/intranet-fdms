@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import { useEvents } from "../../../../stores/events";
 import { DateTime } from "luxon";
+import { useFieldValidation } from "../../../../composables/rules";
 
 const eventStorage = useEvents();
 const { validateNotEmpty } = useFieldValidation();

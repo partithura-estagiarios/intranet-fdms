@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useUsers } from "../stores";
 import routes from "~pages";
+import { warningNotify } from "../helpers";
 
 const history = createWebHistory();
 

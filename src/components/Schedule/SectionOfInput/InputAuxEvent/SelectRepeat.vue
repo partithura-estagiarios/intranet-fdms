@@ -34,6 +34,7 @@
 
 <script setup lang="ts">
 import { useEvents } from "../../../../stores/events";
+import { useFieldValidation } from "../../../../composables/rules";
 
 const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["optionRepeat"]);

@@ -105,6 +105,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFieldValidation } from "../../../composables/rules";
+
 const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDates", "envitySelect"]);
 const props = defineProps({

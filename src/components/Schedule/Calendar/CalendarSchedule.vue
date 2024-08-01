@@ -34,6 +34,7 @@ import { createEvent, getHeadDay } from "../ScheduleRoom/lib";
 import { DateTime } from "luxon";
 import { useEvents } from "../../../stores/events";
 import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
+import { warningNotify } from "../../../helpers";
 
 const eventsDay = ref();
 const eventStorage = useEvents();

@@ -69,6 +69,7 @@ import { DateTime } from "luxon";
 import { createEvent, getHeadDay } from "../../Schedule/ScheduleRoom/lib";
 import { CalendarItem, EventRoom } from "../../../entities/scheduleRoom";
 import { TIME_MAKER, MIN_DAY_HEIGHT } from "../../../support/constants";
+import { warningNotify } from "../../../helpers";
 
 const instance = getCurrentInstance();
 const eventStorage = useEvents();

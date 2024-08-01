@@ -71,7 +71,7 @@
 import AddRamal from "../../../graphql/ramais/AddRamal.gql";
 import DeleteRamal from "../../../graphql/ramais/DeleteRamal.gql";
 import EditRamal from "../../../graphql/ramais/EditRamal.gql";
-
+import { useFieldValidation } from "../../../composables/rules";
 import { resetFields } from "./lib";
 
 const { validateNotEmpty } = useFieldValidation();

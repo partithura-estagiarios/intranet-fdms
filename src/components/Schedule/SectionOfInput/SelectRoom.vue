@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import LoadRooms from "../../../graphql/rooms/LoadRooms.gql";
 import { Rooms } from "../../../entities/rooms";
+import { useFieldValidation } from "../../../composables/rules";
 
 const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDates"]);

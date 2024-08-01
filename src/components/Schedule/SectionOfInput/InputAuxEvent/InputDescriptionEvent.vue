@@ -21,6 +21,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFieldValidation } from "../../../../composables/rules";
+
 const date = ref();
 const text = ref();
 const input = ref();
