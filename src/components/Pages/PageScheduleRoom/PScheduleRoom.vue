@@ -52,7 +52,6 @@
           :reloadCard="reloadCardGridMonths"
           @reloadDesactive="reloadCardGridMonths = false"
         />
-        <CardWeekSchedule v-if="viewMode === TIME_MAKER.WEEK" />
       </q-slide-transition>
     </div>
   </div>
