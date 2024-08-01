@@ -10,16 +10,6 @@ function isNewFileName(newName: string) {
     return newName + ".pdf";
   }
 }
-function trimFilePath(filePath: string) {
-  const parts = filePath.split("/");
-
-  const startIndex = 6;
-
-  const trimmedParts = parts.slice(startIndex);
-
-  const trimmedPath = "/" + trimmedParts.join("/");
-  return trimmedPath;
-}
 
 interface Message {
   enum: boolean;
@@ -87,8 +77,9 @@ export const useFiles = defineStore(id, {
   },
   actions: {
     displayPdf: async (filePath: string) => {
-      const file = trimFilePath(filePath);
-      const response = await fetch(`${server_express_url}/serve-pdf/${file}`);
+      const response = await fetch(
+        `${server_express_url}/serve-pdf/${filePath}`,
+      );
       if (response.ok) {
         const pdfUrl = URL.createObjectURL(await response.blob());
         return window.open(pdfUrl, "_blank");
