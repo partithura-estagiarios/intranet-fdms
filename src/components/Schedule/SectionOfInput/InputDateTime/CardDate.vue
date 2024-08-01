@@ -5,12 +5,14 @@
       mask="DD/MM/YYYY"
       class="text-black q-px-xl"
       @update:model-value="updateDate"
+      :locale="myLocale"
       minimal
     />
   </q-card>
 </template>
 
 <script setup lang="ts">
+import { myLocale } from "./lib";
 const date = ref("");
 const emits = defineEmits(["dateSelected"]);
 
