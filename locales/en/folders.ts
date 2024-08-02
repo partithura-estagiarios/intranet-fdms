@@ -4,4 +4,5 @@ export default {
   folderChild: "Select Inner Section Folder",
   selectFile: "Select file",
   fileName: "File Name",
+  insertFile: "Insert a File",
 };

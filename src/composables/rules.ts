@@ -8,17 +8,24 @@ export function useFieldValidation() {
   }
   function validateDateTime(val: string): boolean | string {
     if (!val) {
-      return "Informe Data e Hora";
+      return t("auth.insertDateTime");
     }
     const dateTimePattern = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/;
     const match = val.match(dateTimePattern);
     if (!match) {
-      return "Informe a Hora";
+      return t("auth.insertTime");
     }
     return true;
+  }
+  function validateInputOfFileOrImg(val: any): boolean | string {
+    if (typeof val === "object") {
+      return true;
+    }
+    return t("folders.insertFile");
   }
   return {
     validateNotEmpty: computed(() => validateNotEmpty),
     validateDateTime: computed(() => validateDateTime),
+    validateInputOfFileOrImg: computed(() => validateInputOfFileOrImg),
   };
 }
