@@ -11,11 +11,6 @@
           $t("action.addFolder")
         }}</q-item-section>
       </q-item>
-      <q-item clickable v-close-popup>
-        <q-item-section @click="showCardFolder = true">{{
-          $t("action.deleteItem")
-        }}</q-item-section>
-      </q-item>
       <q-separator />
     </q-list>
   </q-menu>
