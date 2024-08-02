@@ -4,8 +4,6 @@
     no-caps
     :label="$t('tab.gisDocumentation')"
     flat
-    padding="xs md"
-    size="1.2rem"
     :class="tabClass()"
   >
     <q-menu class="z-top text-black">
@@ -55,7 +53,5 @@ function selectOption(opt: string) {
 <style scoped>
 .font-custom {
   font-family: Fira Sans;
-  top: -0.1rem;
-  padding: 0.6rem;
 }
 </style>
