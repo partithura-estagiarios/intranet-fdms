@@ -5,4 +5,5 @@ export default {
   selectFile: "Selecione o arquivo",
   fileName: "Nome do Arquivo",
   insertFile: "Insira um arquivo",
+  insertNameFolder: "Insira o nome na pasta",
 };

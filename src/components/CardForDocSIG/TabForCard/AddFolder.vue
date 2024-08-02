@@ -25,14 +25,17 @@ const props = defineProps({
 });
 const input = ref();
 async function addFolder() {
-  const result = await fileStorage.insertFolder(props.path, input.value);
-  if (result.includes(StatusResponse.SUCCESS)) {
-    return positiveNotify(t("action.createFolderSuccess"));
+  if (props.path) {
+    const result = await fileStorage.insertFolder(props.path, input.value);
+    if (result.includes(StatusResponse.SUCCESS)) {
+      return positiveNotify(t("action.createFolderSuccess"));
+    }
+    if (result.includes(StatusResponse.REPEAT)) {
+      return negativeNotify(t("action.folderAlreadyExists"));
+    }
+    return negativeNotify(t("action.errorCreatingFolder"));
   }
-  if (result.includes(StatusResponse.REPEAT)) {
-    return negativeNotify(t("action.folderAlreadyExists"));
-  }
-  negativeNotify(t("action.errorCreatingFolder"));
+  negativeNotify(t("folders.insertNameFolder"));
 }
 </script>
 <style scoped>
