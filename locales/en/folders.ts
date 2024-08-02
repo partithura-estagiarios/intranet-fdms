@@ -1,7 +1,7 @@
 export default {
-  folderGrandParent: "Select the Grandparent Folder",
-  folderParent: "Select Parent Folder",
-  folderChild: "Select Child Folder",
+  folderGrandParent: "Select Top Section Folder",
+  folderParent: "Select Left Section Folder",
+  folderChild: "Select Inner Section Folder",
   selectFile: "Select file",
   fileName: "File Name",
 };
