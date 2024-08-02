@@ -22,37 +22,32 @@
     @closeCardEvents="cardEvents = false"
   />
   <div class="row justify-center font-custom">
-    <div class="q-px-sm">
-      <ButtonGoScheduleYear @change-schedule="(val) => (viewMode = val)" />
-    </div>
     <div class="text-h5 calendar-size text-uppercase">
-      <q-slide-transition>
-        <q-calendar-month
-          ref="calendar"
-          v-if="viewMode === TIME_MAKER.MONTH"
-          v-model="selectedDate"
-          locale="pt-br"
-          :day-min-height="MIN_DAY_HEIGHT"
-          @click-day="onClickDay"
-          class="cursor-pointer"
-        >
-          <template #head-day="{ scope: { timestamp } }">
-            <div class="fit row justify-center text-white custom-color">
-              {{ getHeadDay(timestamp) }}
-            </div>
-          </template>
-          <template #day="{ scope: { timestamp } }">
-            <BadgeEvents :data="timestamp.date" :events="events" />
-          </template>
-        </q-calendar-month>
-        <CardGridMonths
-          v-if="viewMode === TIME_MAKER.YEAR"
-          @envity-month="goToSpecificMonth"
-          :year="selectedDate"
-          :reloadCard="reloadCardGridMonths"
-          @reloadDesactive="reloadCardGridMonths = false"
-        />
-      </q-slide-transition>
+      <q-calendar-month
+        ref="calendar"
+        v-if="viewMode === TIME_MAKER.MONTH"
+        v-model="selectedDate"
+        locale="pt-br"
+        :day-min-height="MIN_DAY_HEIGHT"
+        @click-day="onClickDay"
+        class="cursor-pointer"
+      >
+        <template #head-day="{ scope: { timestamp } }">
+          <div class="fit row justify-center text-white custom-color">
+            {{ getHeadDay(timestamp) }}
+          </div>
+        </template>
+        <template #day="{ scope: { timestamp } }">
+          <BadgeEvents :data="timestamp.date" :events="events" />
+        </template>
+      </q-calendar-month>
+      <CardGridMonths
+        v-if="viewMode === TIME_MAKER.YEAR"
+        @envity-month="goToSpecificMonth"
+        :year="selectedDate"
+        :reloadCard="reloadCardGridMonths"
+        @reloadDesactive="reloadCardGridMonths = false"
+      />
     </div>
   </div>
   <BagdeRooms :rooms="rooms" />
