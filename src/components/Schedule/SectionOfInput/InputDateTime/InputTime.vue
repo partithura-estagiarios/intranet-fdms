@@ -7,6 +7,7 @@
       v-model="input"
       dense
       hide-bottom-space
+      :rules="[(val) => validateNotEmpty(val)]"
       @update:model-value="verify(input)"
     >
       <template #prepend>
@@ -29,11 +30,13 @@
 </template>
 
 <script setup lang="ts">
+import { useFieldValidation } from "../../../../composables/rules";
+
 const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   label: { type: String, required: true },
 });
-
+const { validateNotEmpty } = useFieldValidation();
 const input = ref("");
 const inputHours = ref("");
 const inputMinutes = ref("");
