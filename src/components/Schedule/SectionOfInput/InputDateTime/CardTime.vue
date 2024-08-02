@@ -7,11 +7,15 @@
       color="grey"
       mask="HH:mm"
       @update:model-value="updateTime"
+      :rules="[(val: Event) => validateNotEmpty(val)]"
     />
   </q-card>
 </template>
 
 <script setup lang="ts">
+import { useFieldValidation } from "../../../../composables/rules";
+
+const { validateNotEmpty } = useFieldValidation();
 const time = ref("");
 const emits = defineEmits(["timeSelected"]);
 

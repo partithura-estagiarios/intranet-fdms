@@ -6,8 +6,8 @@
       v-bind="$attrs"
       v-model="input"
       dense
-      :rules="[(val) => validateNotEmpty(val)]"
       hide-bottom-space
+      @update:model-value="verify(input)"
     >
       <template #prepend>
         <q-icon
@@ -17,7 +17,7 @@
         />
       </template>
       <q-popup-proxy>
-        <div v-if="showDatePopup && !showTimePopup">
+        <div v-if="showCardDate">
           <CardDate @dateSelected="handleDateSelected" />
         </div>
         <div v-if="showTimePopup">
@@ -29,47 +29,43 @@
 </template>
 
 <script setup lang="ts">
-import { useEvents } from "../../../../stores/events";
-import { DateTime } from "luxon";
-import { useFieldValidation } from "../../../../composables/rules";
-
-const eventStorage = useEvents();
-const { validateNotEmpty } = useFieldValidation();
 const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   label: { type: String, required: true },
 });
 
 const input = ref("");
+const inputHours = ref("");
+const inputMinutes = ref("");
 const dateReceived = ref(props.label);
 const showDatePopup = ref(false);
 const showTimePopup = ref(false);
+const closePopUp = ref(false);
+
+const showCardDate = computed(() => {
+  return !closePopUp.value && !showTimePopup.value;
+});
 
 const handleDateSelected = (date: string) => {
-  showDatePopup.value = false;
+  inputHours.value = date;
   input.value = date;
   showTimePopup.value = true;
+  closePopUp.value = false;
 };
 
 const handleTimeSelected = (time: string) => {
-  showTimePopup.value = false;
-  input.value = input.value + " " + time;
+  inputMinutes.value = time;
+  input.value = `${input.value} ${time}`;
   emits("envityDates", input.value);
-  showDatePopup.value = false;
+  showTimePopup.value = false;
+  closePopUp.value = true;
 };
 
-function formatToDDMMYYYY(dateString: string) {
-  const dateObj = DateTime.fromJSDate(new Date(dateString));
-  return dateObj.toFormat("dd/MM/yyyy");
+function verify(input: string) {
+  const [date, time] = input.split(" ");
+  showTimePopup.value = !time && !!date;
+  closePopUp.value = !!time;
 }
-
-watchEffect(() => {
-  if (eventStorage.getDateSelected) {
-    showDatePopup.value = false;
-    input.value = formatToDDMMYYYY(eventStorage.getDateSelected);
-    showTimePopup.value = true;
-  }
-});
 </script>
 
 <style scoped>
