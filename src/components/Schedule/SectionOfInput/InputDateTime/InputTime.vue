@@ -7,7 +7,7 @@
       v-model="input"
       dense
       hide-bottom-space
-      :rules="[(val) => validateNotEmpty(val)]"
+      :rules="[(val) => validateRules(val)]"
       @update:model-value="verify(input)"
     >
       <template #prepend>
@@ -30,13 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { useFieldValidation } from "../../../../composables/rules";
-
 const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   label: { type: String, required: true },
 });
-const { validateNotEmpty } = useFieldValidation();
 const input = ref("");
 const inputHours = ref("");
 const inputMinutes = ref("");
@@ -44,6 +41,7 @@ const dateReceived = ref(props.label);
 const showDatePopup = ref(false);
 const showTimePopup = ref(false);
 const closePopUp = ref(false);
+const verifyTimeIsNotEmpty = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/;
 
 const showCardDate = computed(() => {
   return !closePopUp.value && !showTimePopup.value;
@@ -68,6 +66,15 @@ function verify(input: string) {
   const [date, time] = input.split(" ");
   showTimePopup.value = !time && !!date;
   closePopUp.value = !!time;
+}
+function validateRules(val: string) {
+  if (!val) {
+    return "Data e hora são obrigatórios";
+  }
+  const match = val.match(verifyTimeIsNotEmpty);
+  if (!match) {
+    return "Informe a hora da reunião";
+  }
 }
 </script>
 
