@@ -12,7 +12,7 @@
           :label="$t('text.file')"
           :options="imgsStorage.certifications"
           class="text-black"
-          :rules="[(val) => !!val || 'Selecione uma opção']"
+          :rules="[(val) => !!val || $t('folders.selectFile')]"
           ><template #option="{ opt }" class="size-select-custom">
             <div class="size-select">
               <q-item class="text-black" clickable>
