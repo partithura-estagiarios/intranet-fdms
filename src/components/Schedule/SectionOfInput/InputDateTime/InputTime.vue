@@ -17,7 +17,7 @@
         />
       </template>
       <q-popup-proxy>
-        <div v-if="!closePopUp && !showTimePopup">
+        <div v-if="showCardDate">
           <CardDate @dateSelected="handleDateSelected" />
         </div>
         <div v-if="showTimePopup">
@@ -41,6 +41,10 @@ const dateReceived = ref(props.label);
 const showDatePopup = ref(false);
 const showTimePopup = ref(false);
 const closePopUp = ref(false);
+
+const showCardDate = computed(() => {
+  return !closePopUp.value && !showTimePopup.value;
+});
 
 const handleDateSelected = (date: string) => {
   inputHours.value = date;
