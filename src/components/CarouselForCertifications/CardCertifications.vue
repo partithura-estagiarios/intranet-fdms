@@ -10,7 +10,7 @@
 
     <q-card-section
       :class="$q.screen.lt.lg ? 'col-6' : 'col-5'"
-      v-if="imgsStorage.certifications.length"
+      v-if="isImageValid"
     >
       <q-img :src="getImageUrl(selectedTab)" />
     </q-card-section>
@@ -26,6 +26,11 @@ const imgsStorage = useImgs();
 const selectedTab = ref<string>("");
 const CUSTOM_REPLACE = /([a-zA-Z])([0-9])/g;
 const ADD_HIFEN = "$1-$2";
+const FIRST_CERTIFICATION_INDEX = 0;
+const EMPTY_IMAGE_NAME = "";
+const isImageValid = computed(() => {
+  return imgsStorage.certifications.includes(selectedTab.value);
+});
 
 async function loadCertifications() {
   const { loadCertifications }: { loadCertifications: string[] } =
@@ -34,7 +39,7 @@ async function loadCertifications() {
 }
 
 onMounted(async () => {
-  loadCertifications();
+  await loadCertifications();
 });
 
 const getImageUrl = (imageName: string) => {
@@ -46,22 +51,27 @@ const formatTabLabel = (name: string) => {
   const formattedName = nameWithoutExtension.replace(CUSTOM_REPLACE, ADD_HIFEN);
   return formattedName;
 };
+
 const itemClasses = computed(() => {
   return (name: string) => {
     const isSelected = selectedTab.value === name;
-    if (isSelected) {
-      return "bg-green text-white";
-    }
-    return "text-black";
+    return isSelected ? "bg-green text-white" : "text-black";
   };
 });
+
 function selectItem(name: string) {
   selectedTab.value = name;
 }
 
-watchEffect(async () => {
+watchEffect(() => {
+  if (!isImageValid.value) {
+    selectedTab.value =
+      imgsStorage.certifications.length > FIRST_CERTIFICATION_INDEX
+        ? imgsStorage.certifications[FIRST_CERTIFICATION_INDEX]
+        : EMPTY_IMAGE_NAME;
+  }
   if (imgsStorage.reloadCertification) {
-    await loadCertifications();
+    loadCertifications();
     return imgsStorage.refreshCertificationsReload;
   }
 });

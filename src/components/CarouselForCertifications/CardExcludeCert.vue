@@ -12,6 +12,7 @@
           :label="$t('text.file')"
           :options="imgsStorage.certifications"
           class="text-black"
+          :rules="[(val) => !!val || $t('folders.selectFile')]"
           ><template #option="{ opt }" class="size-select-custom">
             <div class="size-select">
               <q-item class="text-black" clickable>
@@ -40,11 +41,14 @@ const props = defineProps({
   },
 });
 const select = ref();
+
 function closeDialog() {
+  select.value = null;
   emits("update-card", false);
 }
+
 function excludeCert() {
-  if (select) {
+  if (select.value) {
     imgsStorage.excludeCertification(select.value);
     closeDialog();
   }

@@ -17,9 +17,11 @@ import sucessRamal from "./sucessRamal";
 import emailDirector from "./emailDirector";
 import folders from "./folders";
 import label from "./label";
+import certification from "./certification";
 
 export default {
   emailDirector,
+  certification,
   label,
   userScheduleRoom,
   sucessRamal,

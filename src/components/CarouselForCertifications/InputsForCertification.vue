@@ -1,16 +1,28 @@
 <template>
   <q-input
     v-model="numberCertification"
-    label="Numero da Certificação"
+    :label="$t('certification.name')"
     type="number"
+    :rules="[(val) => validateNotEmpty(val)]"
   />
-  <q-input v-model="nameCertification" label="Nome da Certificação" />
-  <q-file v-model="certification" :label="$t('cardDocSig.addImg')" flat />
+  <q-input
+    v-model="nameCertification"
+    :label="$t('certification.number')"
+    :rules="[(val) => validateNotEmpty(val)]"
+  />
+  <q-file
+    v-model="certification"
+    :label="$t('cardDocSig.addImg')"
+    flat
+    :rules="[(val) => validateInputOfFileOrImg(val)]"
+  />
 </template>
 
 <script setup>
-const emits = defineEmits("envity-all-inputs");
+import { useFieldValidation } from "../../composables/rules";
 
+const { validateNotEmpty, validateInputOfFileOrImg } = useFieldValidation();
+const emits = defineEmits("envity-all-inputs");
 const numberCertification = ref();
 const nameCertification = ref();
 const certification = ref();
