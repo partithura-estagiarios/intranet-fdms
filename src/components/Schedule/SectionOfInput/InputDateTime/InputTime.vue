@@ -1,5 +1,5 @@
 <template>
-  <div @click="showPopup">
+  <div @click="showDatePopup = true">
     <q-input
       class="border"
       :label="dateReceived"
@@ -7,8 +7,7 @@
       v-model="input"
       dense
       hide-bottom-space
-      :rules="[(val) => validateDateTime(val)]"
-      @input="handleInput"
+      @update:model-value="verify(input)"
     >
       <template #prepend>
         <q-icon
@@ -18,7 +17,7 @@
         />
       </template>
       <q-popup-proxy>
-        <div v-if="showDatePopup">
+        <div v-if="showCardDate">
           <CardDate @dateSelected="handleDateSelected" />
         </div>
         <div v-if="showTimePopup">
@@ -30,61 +29,43 @@
 </template>
 
 <script setup lang="ts">
-import { useFieldValidation } from "../../../../composables/rules";
-
-const { validateDateTime } = useFieldValidation();
 const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   label: { type: String, required: true },
 });
 
-const input = ref();
-const inputDate = ref("");
-const inputTime = ref("");
+const input = ref("");
+const inputHours = ref("");
+const inputMinutes = ref("");
 const dateReceived = ref(props.label);
-
 const showDatePopup = ref(false);
 const showTimePopup = ref(false);
+const closePopUp = ref(false);
+
+const showCardDate = computed(() => {
+  return !closePopUp.value && !showTimePopup.value;
+});
 
 const handleDateSelected = (date: string) => {
-  inputDate.value = date;
-  input.value = date + (" " + inputTime.value);
-  showDatePopup.value = false;
-  showTimePopup.value = !inputTime.value;
+  inputHours.value = date;
+  input.value = date;
+  showTimePopup.value = true;
+  closePopUp.value = false;
 };
 
 const handleTimeSelected = (time: string) => {
-  inputTime.value = time;
-  input.value = `${inputDate.value} ${time}`;
+  inputMinutes.value = time;
+  input.value = `${input.value} ${time}`;
+  emits("envityDates", input.value);
   showTimePopup.value = false;
+  closePopUp.value = true;
 };
 
-const handleInput = (value: string) => {
-  const [datePart, timePart] = value.split(" ");
-  inputDate.value = datePart;
-  inputTime.value = timePart;
-  if (!inputDate.value) {
-    showDatePopup.value = true;
-    return (showTimePopup.value = false);
-  }
-  if (inputDate.value && !inputTime.value) {
-    showDatePopup.value = false;
-    return (showTimePopup.value = true);
-  }
-  showDatePopup.value = false;
-  return (showTimePopup.value = false);
-};
-
-const showPopup = () => {
-  if (!inputDate.value && !inputTime.value) {
-    return (showDatePopup.value = true);
-  }
-  if (inputDate.value && !inputTime.value) {
-    showTimePopup.value = true;
-  }
-};
-
-watch(() => input.value, handleInput);
+function verify(input: string) {
+  const [date, time] = input.split(" ");
+  showTimePopup.value = !time && !!date;
+  closePopUp.value = !!time;
+}
 </script>
 
 <style scoped>
