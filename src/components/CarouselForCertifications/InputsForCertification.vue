@@ -1,13 +1,13 @@
 <template>
   <q-input
     v-model="numberCertification"
-    :label="$t('certification.name')"
+    :label="$t('certification.number')"
     type="number"
     :rules="[(val) => validateNotEmpty(val)]"
   />
   <q-input
     v-model="nameCertification"
-    :label="$t('certification.number')"
+    :label="$t('certification.name')"
     :rules="[(val) => validateNotEmpty(val)]"
   />
   <q-file

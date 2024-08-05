@@ -82,6 +82,6 @@ watchEffect(() => {
   width: 80rem;
   margin-inline: 8rem;
   height: 49rem;
-  margin-top: -9rem;
+  margin-top: -7rem;
 }
 </style>
