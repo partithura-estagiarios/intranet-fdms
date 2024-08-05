@@ -1,5 +1,5 @@
 <template>
-  <div @click="showDatePopup = true">
+  <div @click="showPopup">
     <q-input
       class="border"
       :label="dateReceived"
@@ -8,7 +8,7 @@
       dense
       hide-bottom-space
       :rules="[(val) => validateDateTime(val)]"
-      @update:model-value="verify(input)"
+      @input="handleInput"
     >
       <template #prepend>
         <q-icon
@@ -18,7 +18,7 @@
         />
       </template>
       <q-popup-proxy>
-        <div v-if="showCardDate">
+        <div v-if="showDatePopup">
           <CardDate @dateSelected="handleDateSelected" />
         </div>
         <div v-if="showTimePopup">
@@ -37,38 +37,54 @@ const emits = defineEmits(["envityDates"]);
 const props = defineProps({
   label: { type: String, required: true },
 });
-const input = ref("");
-const inputHours = ref("");
-const inputMinutes = ref("");
+
+const input = ref();
+const inputDate = ref("");
+const inputTime = ref("");
 const dateReceived = ref(props.label);
+
 const showDatePopup = ref(false);
 const showTimePopup = ref(false);
-const closePopUp = ref(false);
-
-const showCardDate = computed(() => {
-  return !closePopUp.value && !showTimePopup.value;
-});
 
 const handleDateSelected = (date: string) => {
-  inputHours.value = date;
-  input.value = date;
-  showTimePopup.value = true;
-  closePopUp.value = false;
+  inputDate.value = date;
+  input.value = date + (" " + inputTime.value);
+  showDatePopup.value = false;
+  showTimePopup.value = !inputTime.value;
 };
 
 const handleTimeSelected = (time: string) => {
-  inputMinutes.value = time;
-  input.value = `${input.value} ${time}`;
-  emits("envityDates", input.value);
+  inputTime.value = time;
+  input.value = `${inputDate.value} ${time}`;
   showTimePopup.value = false;
-  closePopUp.value = true;
 };
 
-function verify(input: string) {
-  const [date, time] = input.split(" ");
-  showTimePopup.value = !time && !!date;
-  closePopUp.value = !!time;
-}
+const handleInput = (value: string) => {
+  const [datePart, timePart] = value.split(" ");
+  inputDate.value = datePart;
+  inputTime.value = timePart;
+  if (!inputDate.value) {
+    showDatePopup.value = true;
+    return (showTimePopup.value = false);
+  }
+  if (inputDate.value && !inputTime.value) {
+    showDatePopup.value = false;
+    return (showTimePopup.value = true);
+  }
+  showDatePopup.value = false;
+  return (showTimePopup.value = false);
+};
+
+const showPopup = () => {
+  if (!inputDate.value && !inputTime.value) {
+    return (showDatePopup.value = true);
+  }
+  if (inputDate.value && !inputTime.value) {
+    showTimePopup.value = true;
+  }
+};
+
+watch(() => input.value, handleInput);
 </script>
 
 <style scoped>

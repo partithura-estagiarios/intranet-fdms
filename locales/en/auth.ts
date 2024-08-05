@@ -3,4 +3,5 @@ export default {
   fillField: "Fill in the field",
   insertDateTime: "Insert date and hora",
   insertTime: "Insert a time",
+  insertDate: "Insert a date",
 };
