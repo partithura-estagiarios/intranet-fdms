@@ -8,7 +8,11 @@
           </q-item-label>
           <q-item-label
             class="font-title-pdf text-black"
-            v-text="getLastPartOfPath(item)"
+            v-text="splitFileName(item)"
+          />
+          <q-item-label
+            class="font-title-pdf text-black size-text"
+            v-text="getNameMar(item)"
           />
         </q-item-section>
       </q-item>
@@ -18,7 +22,7 @@
 
 <script setup lang="ts">
 import { useFiles } from "../../../stores/files";
-import { getLastPartOfPath } from "../lib";
+import { splitFileName, getNameMar } from "../lib";
 
 const fileStorage = useFiles();
 const foldersList = ref();
@@ -37,5 +41,8 @@ watchEffect(() => {
 }
 .height-limit {
   max-height: 35rem;
+}
+.size-text {
+  width: 6rem;
 }
 </style>
