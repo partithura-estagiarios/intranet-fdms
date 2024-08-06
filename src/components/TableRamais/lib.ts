@@ -20,5 +20,5 @@ export const columns = [
   },
 ];
 export const pagesOfTable = 8;
-
+export const firstIndex = 1;
 export const firstPage = 0;

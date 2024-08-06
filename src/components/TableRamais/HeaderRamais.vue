@@ -28,7 +28,6 @@
       @close="
         (value) => {
           dialogVisible = value;
-          $emit('reload');
         }
       "
       @add-ramal="(item: Ramal) => (receivedRamal = item)"
@@ -37,11 +36,11 @@
   </div>
 </template>
 <script setup lang="ts">
-const userStorage = useUsers();
-
 import { Ramal } from "../../entities/ramal";
+
+const userStorage = useUsers();
+const ramaisStorage = useRamais();
 const dialogVisible = ref(false);
-const emits = defineEmits(["envityRamal-table", "reload"]);
 const search = ref();
 const receivedRamal = ref();
 
@@ -50,7 +49,7 @@ function openDialog() {
 }
 
 async function searchRamalInBack() {
-  emits("envityRamal-table", search.value);
+  ramaisStorage.searchRamal(search.value);
 }
 </script>
 <style scoped>
